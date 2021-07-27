@@ -7,15 +7,16 @@
 #Terminal output:
 #Enter username:jeremy
 #Username is: jeremy
-# PS C:\Users\EvertJ> 
+# PS C:\Users\EvertJ>
 
 # this did not get me the full story.
 # I needed it to be an integer.
 # so I went to:
 # https://www.geeksforgeeks.org/how-to-take-integer-input-in-python/
-# and they had this: 
+# and they had this:
 # type cast into integer
 #input_a = int(input_a)
+# this will make sure we store our inputs as integers and not strings.
 
 
 # From Book:
