@@ -15,11 +15,13 @@ def winner():
     return keep_game_going
 
 def go_fishing_no_honey(random_number):
+    print('so here we are, fishing with no honey.')
     keep_game_going = True
     if 0.60 <= random_number:
         keep_game_going = winner()
     else:
-        go_fishing(have_honey)
+        print('you did not catch a fish.')
+        print('you did not have any honey.')
     return keep_game_going
 
 def go_fishing(have_honey):
@@ -40,11 +42,12 @@ def go_fishing(have_honey):
         if choice == n:
             go_fishing_no_honey(random_number)
     else:
-        go_fishing_no_honey(random_number)
+        print('you are going to try to fish without honey.')
+        keep_game_going = go_fishing_no_honey(random_number)
     return keep_game_going
 
 
-user_agreement = input('would you like to keep playting? (y/n)\n')
+user_agreement = input('would you like to keep playing? (y/n)\n')
 if 'n' == user_agreement:
     print('so long and thank you for stopping.')
     keep_game_going = False
@@ -53,3 +56,9 @@ else:
 while keep_game_going:
 
     keep_game_going = go_fishing(have_honey)
+    user_agreement = input('would you like to keep playing? (y/n)\n')
+    if 'n' == user_agreement:
+        print('so long and thank you for stopping.')
+        keep_game_going = False
+    else:
+        print('we will keep playing.')
