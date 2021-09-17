@@ -1,20 +1,29 @@
 import random
 print('You wake up in the forest.')
 print('You are hungry.')
+print('you have 3 days of food.')
+print('a single great fish can feed you for 3 days.')
 print('You need to catch a fish to win.')
 
+
 have_honey = False
+keep_game_going = True
 
 def winner():
     print('you have caught a fish!')
+    keep_game_going = False
+    return keep_game_going
 
 def go_fishing_no_honey(random_number):
+    keep_game_going = True
     if 0.60 <= random_number:
-        winner()
+        keep_game_going = winner()
     else:
         go_fishing(have_honey)
+    return keep_game_going
 
 def go_fishing(have_honey):
+    keep_game_going = True
     print('you have decided to go fishing.')
     random_number = random.random()
     print('our random number was:' + \
@@ -25,13 +34,22 @@ def go_fishing(have_honey):
         if choice == y:
             have_honey = False
             if 0.75 >= random_number:
-                winner()
+                keep_game_going = winner()
             else:
                 go_fishing(have_honey)
         if choice == n:
             go_fishing_no_honey(random_number)
     else:
         go_fishing_no_honey(random_number)
+    return keep_game_going
 
 
-go_fishing(have_honey)
+user_agreement = input('would you like to keep playting? (y/n)\n')
+if 'n' == user_agreement:
+    print('so long and thank you for stopping.')
+    keep_game_going = False
+else:
+    print('we will keep playing.')
+while keep_game_going:
+
+    keep_game_going = go_fishing(have_honey)
