@@ -23,6 +23,7 @@ number = questions_for_madlib.question_2()
 adjetive = questions_for_madlib.question_3()
 color = questions_for_madlib.question_4()
 noun = questions_for_madlib.question_5()
+food = questions_for_madlib.question_6()
 
 
 
@@ -33,3 +34,5 @@ adjetive, 'things:')
 print('\t1. I would drive the biggest', color, ' car in the',\
 'country. And that car would go faster than any other',\
 noun, 'in the world!')
+
+print('\t2. Everyone would eat pepperoni', food, 'for dinner.')

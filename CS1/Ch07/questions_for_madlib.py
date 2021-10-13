@@ -23,3 +23,8 @@ def question_5 ():
     noun = \
     input('please enter a noun: ')
     return noun
+
+def question_6 ():
+    food = \
+    input('please enter a plural form of a food: ')
+    return food
