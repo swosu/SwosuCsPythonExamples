@@ -28,3 +28,13 @@ def question_6 ():
     food = \
     input('please enter a plural form of a food: ')
     return food
+
+def question_7 ():
+    second_noun = \
+    input('please enter a different noun: ')
+    return second_noun
+
+def question_8 ():
+    ing_verb = \
+    input('please enter a verb enging in "ING": ')
+    return ing_verb
