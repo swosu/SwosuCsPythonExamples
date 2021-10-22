@@ -1,6 +1,9 @@
 # Building a Choose Your Own Adventure Guide
 Welcome to a set of notes on how to make a choose your own adventure game. The goal is to have some fun with Python programming. The idea behind this is that you have several fun tools from working in programming classes, and now you can taste the fruits of your labor. Making your own story allows you to put your own stamp on an idea. Hopefully you enjoy your idea enough that you keep working on it. As you keep working on it, you will also keep making the game better. Improvements in the game will likely call on your programming and problem solving skills. Thank you for continuing to invest in your own personal development.
 
+### Link to a markdown cheetsheet
+https://guides.github.com/pdfs/markdown-cheatsheet-online.pdf
+
 # Notes
 Every level of learning can accommodate a different level of production. Even the humble print statement can be used to tell a joke.
 >```python
@@ -25,7 +28,7 @@ This is the process for some:
 Hopefully this process is rewarding for you. This is also a lesson in design. Sometimes you need to scale your design back. That is a hard lesson to learn.
 
 ## Notes on project design
-The goal of this project is to help you improve your skills. Design is one of those skills. These projects take time, but they also bring joy to many. Sometimes teams can spend more than a week designing their project. The end result is a great plan, but not much fun to play as a user. 
+The goal of this project is to help you improve your skills. Design is one of those skills. These projects take time, but they also bring joy to many. Sometimes teams can spend more than a week designing their project. The end result is a great plan, but not much fun to play as a user.
 
 ## Chapter 1 list of tools
 
