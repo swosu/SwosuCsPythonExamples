@@ -47,12 +47,13 @@ with open('eggs.csv', newline='') as csvfile:
     spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
     for row in spamreader:
         print(', '.join(row))
-
+data = []
 with open('herman_strength.csv',  newline='') as csv_health_file:
     health_reader = csv.reader(csv_health_file, delimiter=',',
                             quotechar=' ')
-    read_in_herman_health = int(open('herman_strength.csv','r')
-    #for row in health_reader:
-    #    print(', '.join(row))
+    #read_in_herman_health = int(open('herman_strength.csv','r')
+    for row in health_reader:
+        data
+        print(', '.join(row))
 
-print('herman health is', read_in_herman_health)
+#print('herman health is', str(read_in_herman_health))
