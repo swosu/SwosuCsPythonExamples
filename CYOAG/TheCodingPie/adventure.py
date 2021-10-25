@@ -87,6 +87,14 @@ def diamond_room():
     # call game_over() with "reason"
     game_over("Go and learn how to type a number.")
 
+# game_over function accepts an argument called "reason"
+def game_over(reason):
+  # print the "reason" in a new line (\n)
+  print("\n" + reason)
+  print("Game Over!")
+  # ask player to play again or not by activating play_again() function
+  play_again()
+
 if __name__ == "__main__":
    print('We begin the game.')
    # start the game
