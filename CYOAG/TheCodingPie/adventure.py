@@ -95,6 +95,20 @@ def game_over(reason):
   # ask player to play again or not by activating play_again() function
   play_again()
 
+# function to ask play again or not
+def play_again():
+  print("\nDo you want to play again? (y or n)")
+
+  # convert the player's input to lower_case
+  answer = input(">").lower()
+
+  if "y" in answer:
+    # if player typed "yes" or "y" start the game from the beginning
+    start()
+  else:
+    # if user types anything besides "yes" or "y", exit() the program
+    exit()
+
 if __name__ == "__main__":
    print('We begin the game.')
    # start the game
