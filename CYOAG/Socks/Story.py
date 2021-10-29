@@ -35,6 +35,7 @@ class Story_class:
         print('it is nice to meet you,', player.get_name(), '.')
 
     def show_menu(self, player, disk):
+        print('you are playing as', player.get_name())
         print('press q to quit.')
         print('press s to save.')
         print('press m for menu.')

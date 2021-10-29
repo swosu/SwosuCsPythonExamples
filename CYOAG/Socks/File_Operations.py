@@ -1,5 +1,5 @@
 from Player import Player_class
-import pickle
+import json
 
 class File_operation_class:
     """Tools for story telling."""
@@ -8,8 +8,12 @@ class File_operation_class:
 
     def save_character(self,player):
         print('start saving,', end = '')
-        with open('player_data.pickle', 'wb') as file_object:
-            pickle.dump(player, file_object, pickle.HIGHEST_PROTOCOL)
+        print('change data into a list')
+        player_data_list = []
+        print(player.get_name())
+        player_data_list.append(player.get_name())
+        with open('player_data.json', 'w') as file_object:
+            json.dump(player_data_list, file_object)
             file_object.close()
         print('... done saving.')
 

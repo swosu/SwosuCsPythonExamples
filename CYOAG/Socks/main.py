@@ -11,6 +11,13 @@ if __name__ == "__main__":
    disk = File_operation_class()
 
    tale.print_start()
-   player = tale.load_or_new_player_menu(disk, player)
+   tale.create_player(player)
 
-   tale.show_menu(player,disk)
+   print('checking, you said,', player.get_name())
+
+   disk.save_character(player)
+
+
+   #player = tale.load_or_new_player_menu(disk, player)
+
+   #tale.show_menu(player,disk)
