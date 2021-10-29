@@ -10,12 +10,7 @@ if __name__ == "__main__":
    player = Player_class()
    disk = File_operation_class()
 
-
    tale.print_start()
    player = tale.load_or_new_player_menu(disk, player)
-
-
-
-
 
    tale.show_menu(player,disk)
