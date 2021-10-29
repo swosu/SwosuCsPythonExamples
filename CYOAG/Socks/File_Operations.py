@@ -19,4 +19,5 @@ class File_operation_class:
             player = pickle.load(file_object)
             file_object.close()
             print(' done loading')
-            return player
+            print(player)
+            #return player

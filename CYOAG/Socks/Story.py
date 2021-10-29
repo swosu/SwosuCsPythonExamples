@@ -24,7 +24,7 @@ class Story_class:
             print('it is nice to meet you,', player.get_name(), '.')
         elif 2 == user_choice:
             self.create_player(player)
-            return player
+            #return player
         else:
             self.load_or_new_player_menu()
 
@@ -41,8 +41,8 @@ class Story_class:
         user_choice = input().lower()
         if 's' == user_choice:
             disk.save_character(player)
-            self.show_menu()
+            self.show_menu(player, disk)
         elif 'm' == user_choice:
-            self.show_menu()
+            self.show_menu(player, disk)
         else:
             print('so long and thanks for playing.')
