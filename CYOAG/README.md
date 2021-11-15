@@ -61,3 +61,12 @@ One way to start to have fun here is with some simple MadLibs. In this game, you
 Here is a tutorial that can help you get started: https://kidscodecs.com/python-mad-libs/
 
 ## Chapter 2 list of tools
+There should be some stuff here.
+
+# CYOAG tutorial
+I did a search for python text based adventure game.
+Here is the link I cam up with:
+https://thecodingpie.com/post/make-your-own-text-based-adventure-game-in-python3
+We will see how this goes.
+part of the game story is taken from the book Learn Python The Hard Way written by Zed Shaw.
+https://learnpythonthehardway.org/python3/ex45.html
