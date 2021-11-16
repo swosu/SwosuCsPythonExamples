@@ -1,30 +1,29 @@
 import random
 random.seed()
 
-# have a person have a birthday from 1 to 366
-"""
-for i in range(100000):
-    my_birthday = random.randint(1,367)
-    if(my_birthday == 366):
-        print(my_birthday)
-"""
+def did_anyone_have_a_birthday_match(people_in_room):
+    birthdays_in_room_list = []
+    for index in range(people_in_room):
+        my_birthday = random.randint(1,367)
+        birthdays_in_room_list.append(my_birthday)
+    # see if two people have the same birthday.
+    birthdays_in_room_set = set(birthdays_in_room_list)
+    if (len(birthdays_in_room_set) != len(birthdays_in_room_list)):
+        return True
+    else:
+        return False
 
-my_birthday = random.randint(1,367)
+if __name__ == '__main__':
+    people_in_room = 27
 
-# make a room full of birthdays
-#print(my_birthday)
-birthdays_in_room_list = []
-
-number_of_people_in_the_room = 23
-
-for index in range(number_of_people_in_the_room):
-    my_birthday = random.randint(1,367)
-    birthdays_in_room_list.append(my_birthday)
-
-print(birthdays_in_room_list)
-
-# see if two people have the same birthday.
-birthdays_in_room_set = set(birthdays_in_room_list)
-
-if (len(birthdays_in_room_set) != len(birthdays_in_room_list)):
-    print('We had at least one pair of people with the same birthday')
+    match_count = 0
+    sample_size = 10000
+    for index in range(sample_size):
+        we_had_a_match = did_anyone_have_a_birthday_match(people_in_room)
+        if(we_had_a_match):
+            #print('we had a match')
+            match_count += 1
+        #else:
+            #print('no match')
+    percent_match = (match_count / sample_size) * 100.0
+    print('Out of a sample size of {0}, we had {1} matches, or {2}%. {3} people in the room.'.format(sample_size, match_count, percent_match, people_in_room))
