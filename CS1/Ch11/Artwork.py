@@ -4,6 +4,7 @@ from Artist import Artist
 class Artwork:
     # TODO: Define constructor with parameters to initialize instance attributes
     #       (title, year_created, artist)
+    #       (name, birth_year, death_year)
     def __init__(self, title='None', year_created=0, artist=Artist()):
         self.title = title
         self.year_created = year_created
