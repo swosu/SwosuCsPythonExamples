@@ -41,12 +41,12 @@ if __name__ == '__main__':
     #print('Out of a sample size of {0}, {1}% had a room with at least 2 people with matching birthdays when {2} people are in the room.'.format(sample_size, percent_match, people_in_room))
     """
 
-    sample_size = 5000
+    sample_size = 10000
     print('sample size', sample_size)
 
     data = {}
 
-    for people_count in range (1,10+1):
+    for people_count in range (1,75+1):
         percent_match = percent_chance_of_a_match_for_one_number_of_people_in_room(people_count, sample_size )
         print('People in room {0}, {1}% chance'.format(people_count, percent_match))
         #print('sample size of {0}, {1}% had a room with at least 2 people with matching birthdays when {2} people are in the room.'.format(sample_size, percent_match, people_count))
