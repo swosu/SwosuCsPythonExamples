@@ -7,13 +7,13 @@ random.seed()
 import matplotlib.pyplot as plt
 
 def did_anyone_have_a_birthday_match(people_in_room):
-    birthdays_in_room_list = []
+    birthdays_in_room_maybe_repeats = []
     for index in range(people_in_room):
         my_birthday = random.randint(1,367)
-        birthdays_in_room_list.append(my_birthday)
+        birthdays_in_room_maybe_repeats.append(my_birthday)
     # see if two people have the same birthday.
-    birthdays_in_room_set = set(birthdays_in_room_list)
-    if (len(birthdays_in_room_set) != len(birthdays_in_room_list)):
+    birthdays_in_room_no_repeats = set(birthdays_in_room_maybe_repeats)
+    if (len(birthdays_in_room_no_repeats) != len(birthdays_in_room_maybe_repeats)):
         return True
     else:
         return False
@@ -41,12 +41,12 @@ if __name__ == '__main__':
     #print('Out of a sample size of {0}, {1}% had a room with at least 2 people with matching birthdays when {2} people are in the room.'.format(sample_size, percent_match, people_in_room))
     """
 
-    sample_size = 10000
+    sample_size = 1000
     print('sample size', sample_size)
 
     data = {}
 
-    for people_count in range (1,75+1):
+    for people_count in range (1,55+1):
         percent_match = percent_chance_of_a_match_for_one_number_of_people_in_room(people_count, sample_size )
         print('People in room {0}, {1}% chance'.format(people_count, percent_match))
         #print('sample size of {0}, {1}% had a room with at least 2 people with matching birthdays when {2} people are in the room.'.format(sample_size, percent_match, people_count))
