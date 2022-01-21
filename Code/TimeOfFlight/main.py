@@ -27,8 +27,10 @@ def print_greeting():
 def calculate_range(launch_angle):
     initial_velocity = 20
     gravity = 9.807
-    range =  (initial_velocity * initial_velocity * \
-    (math.sin ( math.radians(2 * launch_angle) ))) / gravity
+    range = \
+    initial_velocity * initial_velocity * \
+    math.sin ( math.radians(2 * launch_angle)) \
+    / gravity
     return range
 
 if __name__ == '__main__':
