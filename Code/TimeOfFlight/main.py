@@ -33,9 +33,17 @@ def calculate_range(launch_angle):
     / gravity
     return range
 
+def simple_optimization():
+    print('start of our optimization')
+
+    print('end of our optimization')
+
 if __name__ == '__main__':
     print_greeting()
 
     launch_angle = 45
     range = calculate_range(launch_angle)
+    print('verify our code: 45 degrees is 40.78719282145406  meters')
     print("angle", launch_angle, "range", range, " meters")
+
+    simple_optimization()
