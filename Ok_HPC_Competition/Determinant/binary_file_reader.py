@@ -22,7 +22,8 @@ class binary_file_reader:
             self.download_file(self.file_name)
             self.load_matrix(matrix_side_length)
         self.matrix = self.read_matrix(matrix_side_length, self.file_name)
-        print(self.matrix)
+        #print(self.matrix)
+        return self.matrix
 
     def read_matrix(self, matrix_side_length, file_name):
         print(f'loading matrix: {file_name}')
@@ -33,7 +34,7 @@ class binary_file_reader:
             self.matrix = np.fromfile(file_name,  dtype=np.float64, count = -1)
             #print(self.matrix)
             self.matrix = np.reshape(self.matrix, (matrix_side_length, matrix_side_length))
-            print(self.matrix)
+            #print(self.matrix)
             return self.matrix
         else:
             print('\n\n\n SOMETHING IS WRONG, FILE IS MISSING!!! RETRY !!!\n\n\n')
