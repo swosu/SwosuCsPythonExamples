@@ -9,3 +9,37 @@ class upper_triangular:
     def get_sum(self,num1,num2):
         self.sum_ = num1+num2
         return self.sum_
+
+    def make_upper_triangular(self, matrix):
+        import numpy as np
+        row_count = len(matrix)
+        print(f'row count is: {row_count}')
+        column_count = len(matrix[0])
+        print(f'column count is: {column_count}')
+
+        upper_triangular_matrix = matrix.copy()
+
+        for column_to_zero_index in range(0, column_count - 1):
+            print(f'column to work to 0s is: {column_to_zero_index}.')
+
+            squishing_factor_denominator = \
+            upper_triangular_matrix[0][column_to_zero_index]
+            print(f'squishing_factor_denominator is: {squishing_factor_denominator}.')
+
+            for row_to_work_index in range(column_to_zero_index + 1, row_count):
+                print(f'we want to work on row: {row_to_work_index}.')
+                squishing_factor_numerator = \
+                upper_triangular_matrix[row_to_work_index][column_to_zero_index]
+                print(f'squishing_factor_numerator is: {squishing_factor_numerator}.')
+                squishing_factor = \
+                squishing_factor_numerator / squishing_factor_denominator
+
+                for column_inside_index in range(column_to_zero_index, column_count):
+                    print(f'column_inside_index is: {column_inside_index}.')
+
+                    upper_triangular_matrix[row_to_work_index][column_inside_index] = \
+                    upper_triangular_matrix[row_to_work_index][column_inside_index] - \
+                    squishing_factor * \
+                    upper_triangular_matrix[column_to_zero_index][column_inside_index]
+
+        return upper_triangular_matrix
