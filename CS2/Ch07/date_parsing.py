@@ -65,18 +65,15 @@ def get_month_as_int(monthString):
 
 def get_date_as_int(stuff):
     new_date_as_int = ''
-    print(f'stuff is {stuff}.')
-    print(type(stuff))
-    new_stuff = stuff[0:1]
-    print(f'new stuff is {new_stuff}')
-    print(type(new_stuff))
+    #print(f'stuff is {stuff}.')
+    #print(type(stuff))
+    #new_stuff = stuff[0:1]
+    #print(f'new stuff is {new_stuff}')
+    #print(type(new_stuff))
     for index in stuff:
-
-        current_charachter = stuff[index:index+1]
-        #print('we are looking at ' + str())
-        #if stuff[index:index+1].isnumeric():
-        #    print(f'{stuff[index:index+1]} was numeric')
-        #    new_date_as_int.append(stuff[index:index+1])
+        if index.isnumeric():
+            #print(f'{index} was numeric')
+            new_date_as_int = new_date_as_int + index
         #else:
         #    print(f'{stuff(index)} was not numeric')
     return new_date_as_int
@@ -86,18 +83,21 @@ user_input = "bob"
 
 while str(-1) != user_input:
     user_input = input('please input your date.')
-    print(f'you entered {user_input}.')
+    #print(f'you entered {user_input}.')
     tokens = user_input.split()
-    print('our tokens are:')
-    print(tokens)
+    #print('our tokens are:')
+    #print(tokens)
 
-    date_month = get_month_as_int(tokens[0])
-    print(f'you entered {tokens[0]} and as an int it is {date_month}.')
+    if str(-1) == user_input:
+        break
+    else:
+        date_month = get_month_as_int(tokens[0])
+        #print(f'you entered {tokens[0]} and as an int it is {date_month}.')
 
-    date_day = get_date_as_int(tokens[1])
-    print(f'You entered {tokens[1]} and you get back {date_day}')
+        date_day = get_date_as_int(tokens[1])
+        #print(f'You entered {tokens[1]} and you get back {date_day}')
 
-    print(f'As numbers, {user_input} becomes {date_month}/{tokens[1]}/{tokens[2]}.')
+        print(f'As numbers, {user_input} becomes {date_month}/{date_day}/{tokens[2]}.')
 
 
 
