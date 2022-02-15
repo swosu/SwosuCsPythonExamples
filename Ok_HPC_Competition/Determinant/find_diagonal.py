@@ -6,10 +6,6 @@ class find_diagonal:
         self.file_name = ''
         self.matrix = []
 
-    def get_sum(self,num1,num2):
-        self.sum_ = num1+num2
-        return self.sum_
-
     def work_multiply_diagonal(self,upper_triangular_matrix):
         import math
 
