@@ -35,7 +35,7 @@ class Map_handler:
             for columnIndex in range(cols):
                 self.distance_table[rowIndex][columnIndex] = random.randint(10,99)
 
-        print(self.distance_table)
+        #print(self.distance_table)
         np.array(self.distance_table).tofile(file_name)
 
     def load_map(self):
@@ -53,7 +53,7 @@ class Map_handler:
             self.distance_table = np.fromfile(file_name,  dtype=np.int, count = -1)
             self.distance_table = \
             np.reshape(self.distance_table,(self.city_count,self.city_count))
-            print(self.distance_table)
+            #print(self.distance_table)
             #return distance_table
         else:
             print("File does not exist")

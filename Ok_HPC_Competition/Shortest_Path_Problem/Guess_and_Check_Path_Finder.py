@@ -13,7 +13,8 @@ class Guess_and_Check_Path_Finder:
         self.find_path()
         min_path_distance = map_handler_object.get_path_distance(self.path)
         min_path = list(self.path)
-        print(f'current min {min_path_distance}. {min_path}')
+        #print(f'current min {min_path_distance}. {min_path}')
+        print(f'current min {min_path_distance}.')
         tic = time.perf_counter()
         toc = time.perf_counter()
         while time_limit_in_seconds > (toc - tic):
@@ -23,7 +24,8 @@ class Guess_and_Check_Path_Finder:
             if current_path_distance < min_path_distance :
                 min_path_distance = current_path_distance
                 min_path = list(self.path)
-                print(f'new min {min_path_distance}. {min_path}')
+                #print(f'new min {min_path_distance}. {min_path}')
+                print(f'new min {min_path_distance}.')
             toc = time.perf_counter()
 
 
