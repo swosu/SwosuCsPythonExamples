@@ -1,6 +1,9 @@
 // in the terminal to compile the code (make executable files)
 // g++ main.cpp -fopenmp
 
+// to run the executable
+// ./a.out
+
 // in the terminal to pull down a file to test it out
 // wget http://morpheus.mcs.utulsa.edu/~papama/hpc/m5000x5000.bin
 // wget http://morpheus.mcs.utulsa.edu/~papama/hpc/m0016x0016.bin
@@ -11,6 +14,8 @@
 using namespace std;
 
 double startingTime = 0.0;
+double endingTime = 0.0;
+double timeToCalculate = 0.0;
 
 int arraySize = 16;
 // int arraySize =  32;
@@ -29,8 +34,6 @@ int arraySize = 16;
 //  int arraySize =  5000;
 
 double *matrix = new double[arraySize * arraySize];
-
-
 
 int main()
 {
@@ -80,6 +83,15 @@ int main()
     printf("Finished reading array file %s of size %dx%d\n",
            f_name, arraySize, arraySize);
 
+    /* for (int rowIndex = 0; rowIndex < arraySize; rowIndex++)
+    {
+        for (int columnIndex = 0; columnIndex < arraySize; columnIndex++)
+        {
+            std::cout << *(matrix + rowIndex * arraySize + columnIndex) << ", ";
+        }
+        std::cout << std::endl;
+    } */
+
     startingTime = omp_get_wtime();
 
     for (int columnIndex = 0; columnIndex < arraySize - 1; columnIndex++)
@@ -87,21 +99,30 @@ int main()
         // pragma omp parallel for //fastest but hard to make work with MPI
         for (int rowToZeroIndex = columnIndex + 1; rowToZeroIndex < arraySize; rowToZeroIndex++)
         {
-            if (columnIndex + 1 == rowToZeroIndex)
-            {
-                double rowReductionMultipier = *(matrix + rowToZeroIndex * arraySize + columnIndex) /
-                                               *(matrix + columnIndex * arraySize + columnIndex);
+
+            double rowReductionMultipier = *(matrix + rowToZeroIndex * arraySize + columnIndex) /
+                                           *(matrix + columnIndex * arraySize + columnIndex);
+
 #pragma omp parallel for
-                for (int rowAddressIndex = columnIndex + 1; rowAddressIndex < arraySize;
-                     rowAddressIndex++)
-                {
-                    *(matrix + rowToZeroIndex * arraySize + rowAddressIndex) =
-                        *(matrix + rowToZeroIndex * arraySize + rowAddressIndex) - rowReductionMultipier *
-                                                                                       *(matrix + columnIndex * arraySize + rowAddressIndex);
-                }
+            for (int rowAddressIndex = columnIndex + 1; rowAddressIndex < arraySize;
+                 rowAddressIndex++)
+            {
+                *(matrix + rowToZeroIndex * arraySize + rowAddressIndex) =
+                    *(matrix + rowToZeroIndex * arraySize + rowAddressIndex) - rowReductionMultipier *
+                                                                                   *(matrix + columnIndex * arraySize + rowAddressIndex);
             }
         }
     }
+
+    /* std::cout << "\n\n after getting zeros." << std::endl;
+    for (int rowIndex = 0; rowIndex < arraySize; rowIndex++)
+    {
+        for (int columnIndex = 0; columnIndex < arraySize; columnIndex++)
+        {
+            std::cout << *(matrix + rowIndex * arraySize + columnIndex) << ", ";
+        }
+        std::cout << std::endl;
+    } */
 
     double diagonalMultiplyResult = 1;
     double diagonalComponent = 0;
@@ -123,8 +144,16 @@ int main()
         diagonalLogResult = diagonalLogResult + diagonalLogComponent;
         // printf("diagonalLogResult %e\n", diagonalLogResult);
     }
-    std::cout << "Log sum Determinantt Result " << diagonalLogResult << std::endl;
-    // printf("Log Sum Determinantt Result %e\n", diagonalLogResult);
+
+    endingTime = omp_get_wtime();
+    timeToCalculate = endingTime - startingTime;
+
+    printf("The hard work is done.")
+
+    printf("Multiplication Determinant Result %e\n", diagonalMultiplyResult);
+    printf("Log Sum Determinant Result %e\n", diagonalLogResult);
+    
+    std::cout << "OpenMP Time to calculate: " << timeToCalculate << std::endl;
 
     std::cout << "Thank you for running the code. That is all." << std::endl;
     return 0;
