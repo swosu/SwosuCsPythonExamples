@@ -7,6 +7,10 @@
 // in the terminal to pull down a file to test it out
 // wget http://morpheus.mcs.utulsa.edu/~papama/hpc/m5000x5000.bin
 // wget http://morpheus.mcs.utulsa.edu/~papama/hpc/m0016x0016.bin
+// wget http://morpheus.mcs.utulsa.edu/~papama/hpc/m0032x0032.bin
+// wget http://morpheus.mcs.utulsa.edu/~papama/hpc/m0125x0128.bin
+// wget http://morpheus.mcs.utulsa.edu/~papama/hpc/m0512x0512.bin
+// wget http://morpheus.mcs.utulsa.edu/~papama/hpc/m1000x1000.bin
 #include <iostream>
 #include <omp.h>
 #include <math.h>
@@ -17,7 +21,7 @@ double startingTime = 0.0;
 double endingTime = 0.0;
 double timeToCalculate = 0.0;
 
-int arraySize = 16;
+// int arraySize = 16;
 // int arraySize =  32;
 // int arraySize =  64;
 // int arraySize =  128;
@@ -31,7 +35,7 @@ int arraySize = 16;
 // int arraySize =  3000;
 // int arraySize =  4000;
 // int arraySize =  4096;
-//  int arraySize =  5000;
+int arraySize =  5000;
 
 double *matrix = new double[arraySize * arraySize];
 
@@ -44,7 +48,7 @@ int main()
 
     char f_name[50];
     // Create filename
-    // sprintf(f_name, "m5000x5000.bin");
+    sprintf(f_name, "m5000x5000.bin");
     // sprintf(f_name,"m4096x4096.bin");
     // sprintf(f_name,"m4000x4000.bin");
     // sprintf(f_name,"m3000x3000.bin");
@@ -54,7 +58,7 @@ int main()
     // sprintf(f_name,"m1000x1000.bin");
     // sprintf(f_name,"m0512x0512.bin");
     // sprintf(f_name,"m0496x0496.bin");
-    sprintf(f_name, "m0016x0016.bin");
+    // sprintf(f_name, "m0016x0016.bin");
     // sprintf(f_name,"m0032x0032.bin");
     // sprintf(f_name,"m0064x0064.bin");
     // sprintf(f_name,"m0128x0128.bin");
@@ -148,7 +152,7 @@ int main()
     endingTime = omp_get_wtime();
     timeToCalculate = endingTime - startingTime;
 
-    printf("The hard work is done.")
+    printf("The hard work is done.");
 
     printf("Multiplication Determinant Result %e\n", diagonalMultiplyResult);
     printf("Log Sum Determinant Result %e\n", diagonalLogResult);
@@ -156,5 +160,8 @@ int main()
     std::cout << "OpenMP Time to calculate: " << timeToCalculate << std::endl;
 
     std::cout << "Thank you for running the code. That is all." << std::endl;
+
+    printf("Side Length\nDet\nlog abs det\ntime\n\n");
+    printf("%d\n%e\n%e\n%f\n", arraySize, diagonalMultiplyResult, diagonalLogResult, timeToCalculate);
     return 0;
 }
