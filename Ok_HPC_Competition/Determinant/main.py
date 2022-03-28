@@ -1,7 +1,7 @@
 import numpy as np
 import math
 import time
-
+#carlie is awesome
 import binary_file_reader
 import upper_triangular
 import find_diagonal
