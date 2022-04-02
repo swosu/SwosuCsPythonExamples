@@ -1,3 +1,7 @@
+// to set the number of threads:
+// export OMP_NUM_THREADS=4
+
+
 // in the terminal to compile the code (make executable files)
 // g++ main.cpp -fopenmp
 
@@ -163,5 +167,7 @@ int main()
 
     printf("Side Length\nDet\nlog abs det\ntime\n\n");
     printf("%d\n%e\n%e\n%f\n", arraySize, diagonalMultiplyResult, diagonalLogResult, timeToCalculate);
+    int nthreads = omp_get_num_threads();
+    std::cout <<"There are threads:" << nthreads << std::endl;
     return 0;
 }
