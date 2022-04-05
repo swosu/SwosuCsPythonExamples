@@ -11,7 +11,7 @@ def attack_player(player_health, \
     player_name):
     damage = random.randrange(0,7)
     print(f'{player_name} took {damage} damage.')
-    player_health -+ damage
+    player_health -= damage
     return player_health
 
 
@@ -44,8 +44,7 @@ if __name__ == '__main__':
         print(f'Round: {round_count}.')
         # have each player get attacked
 
-        player_One_Health = attack_player(player_One_Health, \
-        player_One_Name)
+        player_One_Health = attack_player(player_One_Health, player_One_Name)
 
 
         print_player_health(player_One_Name, \
