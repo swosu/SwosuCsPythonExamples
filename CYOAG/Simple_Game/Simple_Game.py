@@ -10,8 +10,8 @@ def get_initial_player_health():
 def attack_player(player_health, \
     player_name):
     damage = random.randrange(0,7)
-    print(f'{player_name} took {damage} damage.')
     player_health -= damage
+    print(f'{player_name} took {damage} damage and has {player_health} health.')
     return player_health
 
 
@@ -31,11 +31,8 @@ if __name__ == '__main__':
     player_One_Health = get_initial_player_health()
     player_Two_Health = get_initial_player_health()
 
-    print_player_health(player_One_Name, \
-    player_One_Health)
-
-    print_player_health(player_Two_Name, \
-    player_Two_Health)
+    print_player_health(player_One_Name, player_One_Health)
+    print_player_health(player_Two_Name, player_Two_Health)
 
     keep_playing = True
     round_count = 0
@@ -45,13 +42,16 @@ if __name__ == '__main__':
         # have each player get attacked
 
         player_One_Health = attack_player(player_One_Health, player_One_Name)
+        player_Two_Health = attack_player(player_Two_Health, player_Two_Name)
 
-
-        print_player_health(player_One_Name, \
-        player_One_Health)
-
-        if 3 <= round_count:
+        if 10 <= round_count:
             keep_playing = False
+        elif 0 >= player_One_Health or 0 >= player_Two_Health:
+            keep_playing = False
+            if player_One_Health > player_Two_Health :
+                print(f'{player_One_Name} has won.')
+            else:
+                print(f'{player_Two_Name} has won.')
 
     # player with the least health
     #  when one player is defeated loses
