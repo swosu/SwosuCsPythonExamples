@@ -1,10 +1,18 @@
+// on the terminal
 // to set the number of threads:
 // export OMP_NUM_THREADS=4
+// or
+// export OMP_NUM_THREADS=3
+// or
+// export OMP_NUM_THREADS=2
+// or
+// export OMP_NUM_THREADS=1
 
-
+// on the terminal
 // in the terminal to compile the code (make executable files)
-// g++ main.cpp -fopenmp
+// g++ main.cpp -fopenmp -O3
 
+// on the terminal
 // to run the executable
 // ./a.out
 
