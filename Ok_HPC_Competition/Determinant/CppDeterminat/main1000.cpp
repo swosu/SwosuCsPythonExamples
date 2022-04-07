@@ -10,7 +10,7 @@
 
 // on the terminal
 // in the terminal to compile the code (make executable files)
-// g++ -o Run.out  main.cpp -fopenmp -O3
+// g++ main.cpp -fopenmp -O3
 
 // on the terminal
 // to run the executable
@@ -35,12 +35,12 @@ double timeToCalculate = 0.0;
 
 // int arraySize = 16;
 // int arraySize =  32;
-int arraySize =  64;
+// int arraySize =  64;
 // int arraySize =  128;
 // int arraySize =  256;
 // int arraySize =  496;
 // int arraySize =  512;
-// int arraySize =  1000;
+int arraySize =  1000;
 // int arraySize =  1024;
 // int arraySize =  2000;
 // int arraySize =  2048;
@@ -67,12 +67,12 @@ int main()
     // sprintf(f_name,"m2048x2048.bin");
     // sprintf(f_name,"m2000x2000.bin");
     // sprintf(f_name,"m1024x1024.bin");
-    // sprintf(f_name,"m1000x1000.bin");
+     sprintf(f_name,"m1000x1000.bin");
     // sprintf(f_name,"m0512x0512.bin");
     // sprintf(f_name,"m0496x0496.bin");
     // sprintf(f_name, "m0016x0016.bin");
     // sprintf(f_name,"m0032x0032.bin");
-    sprintf(f_name,"m0064x0064.bin");
+    // sprintf(f_name,"m0064x0064.bin");
     // sprintf(f_name,"m0128x0128.bin");
     // sprintf(f_name,"m0256x0256.bin");
     // sprintf(f_name,"m6000x6000.bin");

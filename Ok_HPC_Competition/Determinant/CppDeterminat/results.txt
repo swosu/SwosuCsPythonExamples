@@ -1,0 +1,213 @@
+Hello, World!
+Hello, welcome to the SWOSU determinant code.
+The goal of this code is to run on a single pi as qucikly as possible.
+Reading array file m0016x0016.bin of size 16x16
+Finished reading array file m0016x0016.bin of size 16x16
+The hard work is done.Multiplication Determinant Result 3.346535e-04
+Log Sum Determinant Result -3.475405e+00
+OpenMP Time to calculate: 0.00766838
+Thank you for running the code. That is all.
+Side Length
+Det
+log abs det
+time
+
+16
+3.346535e-04
+-3.475405e+00
+0.007668
+There are threads:1
+Hello, World!
+Hello, welcome to the SWOSU determinant code.
+The goal of this code is to run on a single pi as qucikly as possible.
+Reading array file m0016x0016.bin of size 16x16
+Finished reading array file m0016x0016.bin of size 16x16
+The hard work is done.Multiplication Determinant Result 3.346535e-04
+Log Sum Determinant Result -3.475405e+00
+OpenMP Time to calculate: 0.000605676
+Thank you for running the code. That is all.
+Side Length
+Det
+log abs det
+time
+
+16
+3.346535e-04
+-3.475405e+00
+0.000606
+There are threads:1
+Hello, World!
+Hello, welcome to the SWOSU determinant code.
+The goal of this code is to run on a single pi as qucikly as possible.
+Reading array file m0016x0016.bin of size 16x16
+Finished reading array file m0016x0016.bin of size 16x16
+The hard work is done.Multiplication Determinant Result 3.346535e-04
+Log Sum Determinant Result -3.475405e+00
+OpenMP Time to calculate: 0.00772349
+Thank you for running the code. That is all.
+Side Length
+Det
+log abs det
+time
+
+16
+3.346535e-04
+-3.475405e+00
+0.007723
+There are threads:1
+Hello, World!
+Hello, welcome to the SWOSU determinant code.
+The goal of this code is to run on a single pi as qucikly as possible.
+Reading array file m0016x0016.bin of size 16x16
+Finished reading array file m0016x0016.bin of size 16x16
+The hard work is done.Multiplication Determinant Result 3.346535e-04
+Log Sum Determinant Result -3.475405e+00
+OpenMP Time to calculate: 0.00931354
+Thank you for running the code. That is all.
+Side Length
+Det
+log abs det
+time
+
+16
+3.346535e-04
+-3.475405e+00
+0.009314
+There are threads:1
+
+
+
+Start of the 32 x 32 data
+Hello, World!
+Hello, welcome to the SWOSU determinant code.
+The goal of this code is to run on a single pi as qucikly as possible.
+Reading array file m0032x0032.bin of size 32x32
+Hello, World!
+Hello, welcome to the SWOSU determinant code.
+The goal of this code is to run on a single pi as qucikly as possible.
+Reading array file m0032x0032.bin of size 32x32
+Hello, World!
+Hello, welcome to the SWOSU determinant code.
+The goal of this code is to run on a single pi as qucikly as possible.
+Reading array file m0032x0032.bin of size 32x32
+Hello, World!
+Hello, welcome to the SWOSU determinant code.
+The goal of this code is to run on a single pi as qucikly as possible.
+Reading array file m0032x0032.bin of size 32x32
+Finished reading array file m0032x0032.bin of size 32x32
+The hard work is done.Multiplication Determinant Result -2.633256e-01
+Log Sum Determinant Result -5.795069e-01
+OpenMP Time to calculate: 0.00282073
+Thank you for running the code. That is all.
+Side Length
+Det
+log abs det
+time
+
+32
+-2.633256e-01
+-5.795069e-01
+0.002821
+There are threads:1
+Hello, World!
+Hello, welcome to the SWOSU determinant code.
+The goal of this code is to run on a single pi as qucikly as possible.
+Reading array file m0032x0032.bin of size 32x32
+Finished reading array file m0032x0032.bin of size 32x32
+The hard work is done.Multiplication Determinant Result -2.633256e-01
+Log Sum Determinant Result -5.795069e-01
+OpenMP Time to calculate: 0.00129615
+Thank you for running the code. That is all.
+Side Length
+Det
+log abs det
+time
+
+32
+-2.633256e-01
+-5.795069e-01
+0.001296
+There are threads:1
+Hello, World!
+Hello, welcome to the SWOSU determinant code.
+The goal of this code is to run on a single pi as qucikly as possible.
+Reading array file m0032x0032.bin of size 32x32
+Finished reading array file m0032x0032.bin of size 32x32
+The hard work is done.Multiplication Determinant Result -2.633256e-01
+Log Sum Determinant Result -5.795069e-01
+OpenMP Time to calculate: 0.00881937
+Thank you for running the code. That is all.
+Side Length
+Det
+log abs det
+time
+
+32
+-2.633256e-01
+-5.795069e-01
+0.008819
+There are threads:1
+
+
+start of 64 x 64 data
+Hello, World!
+Hello, welcome to the SWOSU determinant code.
+The goal of this code is to run on a single pi as qucikly as possible.
+Reading array file m0064x0064.bin of size 64x64
+Finished reading array file m0064x0064.bin of size 64x64
+The hard work is done.Multiplication Determinant Result 3.788989e+07
+Log Sum Determinant Result 7.578523e+00
+OpenMP Time to calculate: 0.0333295
+Thank you for running the code. That is all.
+Side Length
+Det
+log abs det
+time
+
+64
+3.788989e+07
+7.578523e+00
+0.033329
+There are threads:1
+Hello, World!
+Hello, welcome to the SWOSU determinant code.
+The goal of this code is to run on a single pi as qucikly as possible.
+Reading array file m0064x0064.bin of size 64x64
+Finished reading array file m0064x0064.bin of size 64x64
+The hard work is done.Multiplication Determinant Result 3.788989e+07
+Log Sum Determinant Result 7.578523e+00
+OpenMP Time to calculate: 0.0147218
+Thank you for running the code. That is all.
+Side Length
+Det
+log abs det
+time
+
+64
+3.788989e+07
+7.578523e+00
+0.014722
+There are threads:1
+Hello, World!
+Hello, welcome to the SWOSU determinant code.
+The goal of this code is to run on a single pi as qucikly as possible.
+Reading array file m0064x0064.bin of size 64x64
+Finished reading array file m0064x0064.bin of size 64x64
+The hard work is done.Multiplication Determinant Result 3.788989e+07
+Log Sum Determinant Result 7.578523e+00
+OpenMP Time to calculate: 0.0790401
+Thank you for running the code. That is all.
+Side Length
+Det
+log abs det
+time
+
+64
+3.788989e+07
+7.578523e+00
+0.079040
+There are threads:1
+
+
+start of 128 by 128 data
+
