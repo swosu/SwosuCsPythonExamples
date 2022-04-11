@@ -1,5 +1,29 @@
 import random
 
+# user defined character class
+# Caden
+# Drake
+
+# Non-Player character class
+# Corbin
+# Tucker
+
+# Add this to a visual element
+# Carlie
+
+# Elnable saving and loading with files
+# Brock
+# Brooks
+# Zane
+
+# have more complex battles with better armor, weapons, attacks, and potions
+# Dalton
+# Byron
+
+# add a story to the game
+# Corinthe
+
+
 def print_greeting(player_name):
     print(f'Hello, {player_name}.')
 
