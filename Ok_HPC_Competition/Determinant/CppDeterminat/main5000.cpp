@@ -42,12 +42,12 @@ double timeToCalculate = 0.0;
 // int arraySize =  512;
 // int arraySize =  1000;
 // int arraySize =  1024;
-int arraySize =  2000;
+// int arraySize =  2000;
 // int arraySize =  2048;
 // int arraySize =  3000;
 // int arraySize =  4000;
 // int arraySize =  4096;
-// int arraySize =  5000;
+int arraySize =  5000;
 
 double *matrix = new double[arraySize * arraySize];
 
@@ -60,12 +60,12 @@ int main()
 
     char f_name[50];
     // Create filename
-    // sprintf(f_name, "m5000x5000.bin");
+    sprintf(f_name, "m5000x5000.bin");
     // sprintf(f_name,"m4096x4096.bin");
     // sprintf(f_name,"m4000x4000.bin");
     // sprintf(f_name,"m3000x3000.bin");
     // sprintf(f_name,"m2048x2048.bin");
-    sprintf(f_name,"m2000x2000.bin");
+    // sprintf(f_name,"m2000x2000.bin");
     // sprintf(f_name,"m1024x1024.bin");
     // sprintf(f_name,"m1000x1000.bin");
     // sprintf(f_name,"m0512x0512.bin");
