@@ -1,5 +1,5 @@
 import random
-
+from npc_character import npc_character
 #import Character_CYOAG
 # user defined character class
 # Caden
@@ -45,6 +45,9 @@ def print_player_health(player_name, player_health):
 
 if __name__ == '__main__':
     #print('Hello, World.')
+    
+    larry = npc_character("larry", 45)
+    npc_character.say_hello()
 
     # create 2 players
     player_One_Name = 'Zoe'
