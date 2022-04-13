@@ -1,5 +1,6 @@
 import random
 
+import Character_CYOAG
 # user defined character class
 # Caden
 # Drake
