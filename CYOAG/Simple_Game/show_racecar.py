@@ -1,5 +1,7 @@
 import pygame
 
+# Website:
+# https://pythonprogramming.net/displaying-images-pygame/
 
 pygame.init()
 
