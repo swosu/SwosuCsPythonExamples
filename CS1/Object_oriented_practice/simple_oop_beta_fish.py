@@ -5,7 +5,11 @@ from Parrot_Class_File import Parrot
 from Beta_Fish_Class_File import Fish
 
 if __name__ == '__main__':
-    print('hello')
+    
+    # instantiate a fish from the Fish class
+    fish_one = Fish("Pudge", 5)
+    fish_two = Fish("Bill", 5)
+    fish_three = Fish("Shark Bait", 5)
 
     # instantiate the Parrot class
     blu = Parrot("Blu", 10)
