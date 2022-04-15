@@ -2,6 +2,8 @@ import random
 
 from Parrot_Class_File import Parrot
 
+from Beta_Fish_Class_File import Fish
+
 if __name__ == '__main__':
     print('hello')
 
