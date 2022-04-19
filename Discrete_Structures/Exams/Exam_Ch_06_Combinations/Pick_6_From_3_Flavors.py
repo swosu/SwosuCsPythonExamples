@@ -10,7 +10,7 @@ if __name__ == '__main__':
     'bear claw', 'bavarian', 'apracot filled', 'cherry filled', \
     'chocolate filled', 'twist', 'donut holes', 'chocolate sprinkled maples',\
      'pink with white sprinkles', 'white with pink srpinkles', \
-     'chocolate with white sprinkles', 'old fashioned', 'cinnamon'], 6)
+     'chocolate with white sprinkles', 'old fashioned', 'cinnamon'], 12)
 
     # Print the obtained combinations
     count = 0
