@@ -1,5 +1,7 @@
 import random
 
+# this is some cool code. Jeremy wuz here...
+
 # https://www.programiz.com/python-programming/object-oriented-programming
 class Parrot:
 
