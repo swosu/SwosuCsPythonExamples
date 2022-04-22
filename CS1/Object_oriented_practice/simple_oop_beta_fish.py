@@ -4,7 +4,7 @@ import random
 class Beta_Fish:
 
     # class attribute
-    species = "bird"
+    species = "fish"
 
     # instance attribute
     def __init__(self, name, age):
@@ -27,55 +27,55 @@ class Beta_Fish:
 
 
 if __name__ == '__main__':
-    print('hello')
+    #print('hello')
 
     # instantiate the Beta_Fish class
     blu = Beta_Fish("Blu", 10)
     woo = Beta_Fish("Woo", 15)
 
-    rp = Beta_Fish("Red", 20)
-    sp = Beta_Fish("Fido", 20)
+    rooneys_fish = Beta_Fish("Red", 20)
+    sarahs_fish = Beta_Fish("Fido", 20)
 
-    sp.set_average_speed(random.randint(1,sp.age))
-    print(f"Sarah's bird can fly {sp.get_average_speed()} miles per hour right now.")
+    sarahs_fish.set_average_speed(random.randint(1,sarahs_fish.age))
+    print(f"Sarah's bird can fly {sarahs_fish.get_average_speed()} miles per hour right now.")
 
-    rp.set_average_speed(random.randint(1,rp.age))
-    print(f"Rooney's bird can fly {rp.get_average_speed()} miles per hour right now.")
+    rooneys_fish.set_average_speed(random.randint(1,rooneys_fish.age))
+    print(f"Rooney's bird can fly {rooneys_fish.get_average_speed()} miles per hour right now.")
 
     race_distance = 100
     keep_going = True
 
     while(keep_going):
         # find speed for this leg
-        rp.set_average_speed(random.randint(1,rp.age))
-        sp.set_average_speed(random.randint(1,sp.age))
+        rooneys_fish.set_average_speed(random.randint(1,rooneys_fish.age))
+        sarahs_fish.set_average_speed(random.randint(1,sarahs_fish.age))
 
-        print(f'{rp.name} and fly {rp.get_average_speed()}')
-        print(f'{sp.name} and fly {sp.get_average_speed()}')
+        print(f'{rooneys_fish.name} and fly {rooneys_fish.get_average_speed()}')
+        print(f'{sarahs_fish.name} and fly {sarahs_fish.get_average_speed()}')
 
         # add that time of flight times speed to the distance_covered
-        rp.add_to_distance(rp.get_average_speed())
-        sp.add_to_distance(sp.get_average_speed())
+        rooneys_fish.add_to_distance(rooneys_fish.get_average_speed())
+        sarahs_fish.add_to_distance(sarahs_fish.get_average_speed())
 
-        print(f'\n{rp.name} has covered {rp.get_distance()}')
-        print(f'{sp.name} has covered {sp.get_distance()}')
+        print(f'\n{rooneys_fish.name} has covered {rooneys_fish.get_distance()}')
+        print(f'{sarahs_fish.name} has covered {sarahs_fish.get_distance()}')
 
-        if rp.get_distance() > race_distance or sp.get_distance() > race_distance:
+        if rooneys_fish.get_distance() > race_distance or sarahs_fish.get_distance() > race_distance:
             keep_going = False
 
-    if rp.get_distance() > sp.get_distance():
-        print(f"{rp.name} is the winner!")
+    if rooneys_fish.get_distance() > sarahs_fish.get_distance():
+        print(f"{rooneys_fish.name} is the winner!")
     else:
-        print(f"{sp.name} is the winner!")
+        print(f"{sarahs_fish.name} is the winner!")
 
 
 
     # access the class attributes
     #print("Blu is a {}".format(blu.__class__.species))
     #print("Woo is also a {}".format(woo.__class__.species))
-    #print(f"{rp.name} is a {woo.__class__.species}.")
+    #print(f"{rooneys_fish.name} is a {woo.__class__.species}.")
 
     # access the instance attributes
     #print("{} is {} years old".format( blu.name, blu.age))
     #print("{} is {} years old".format( woo.name, woo.age))
-    #print("{} is {} years old".format( rp.name, rp.age))
+    #print("{} is {} years old".format( rooneys_fish.name, rooneys_fish.age))
