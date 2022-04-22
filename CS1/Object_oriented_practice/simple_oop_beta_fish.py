@@ -7,11 +7,8 @@ class Beta_Fish:
     species = "fish"
 
     # instance attribute
-    def __init__(self, name, age):
+    def __init__(self, name):
         self.name = name
-        self.age = age
-        self.average_speed = 0
-        self.distance_covered = 0
         self.has_weapon = True
         self.weapon_damage = 0
         self.armor_strength = 0
@@ -20,60 +17,32 @@ class Beta_Fish:
         self.magic_attack = 0
         self.magic_defend = 0
 
-    def set_average_speed(self, speed):
-        self.average_speed = speed
-
-    def get_average_speed(self):
-        return self.average_speed
-
-    def add_to_distance(self, distance):
-        self.distance_covered += distance
-
-    def get_distance(self):
-        return self.distance_covered
-
 
 if __name__ == '__main__':
     #print('hello')
 
     # instantiate the Beta_Fish class
-    blu = Beta_Fish("Blu", 10)
-    woo = Beta_Fish("Woo", 15)
+    blu = Beta_Fish("Blu")
+    woo = Beta_Fish("Woo")
 
-    rooneys_fish = Beta_Fish("Red", 20)
-    sarahs_fish = Beta_Fish("Fido", 20)
+    rooneys_fish = Beta_Fish("Red")
+    sarahs_fish = Beta_Fish("Fido")
 
-    sarahs_fish.set_average_speed(random.randint(1,sarahs_fish.age))
-    print(f"Sarah's bird can fly {sarahs_fish.get_average_speed()} miles per hour right now.")
+    #sarahs_fish.set_average_speed(random.randint(1,sarahs_fish.age))
+    #print(f"Sarah's bird can fly {sarahs_fish.get_average_speed()} miles per hour right now.")
 
-    rooneys_fish.set_average_speed(random.randint(1,rooneys_fish.age))
-    print(f"Rooney's bird can fly {rooneys_fish.get_average_speed()} miles per hour right now.")
-
-    race_distance = 100
     keep_going = True
+
+    rounds = 0
 
     while(keep_going):
         # find speed for this leg
-        rooneys_fish.set_average_speed(random.randint(1,rooneys_fish.age))
-        sarahs_fish.set_average_speed(random.randint(1,sarahs_fish.age))
+        #rooneys_fish.set_average_speed(random.randint(1,rooneys_fish.age))
+        rounds += 1
+        print('round complete')
 
-        print(f'{rooneys_fish.name} and fly {rooneys_fish.get_average_speed()}')
-        print(f'{sarahs_fish.name} and fly {sarahs_fish.get_average_speed()}')
-
-        # add that time of flight times speed to the distance_covered
-        rooneys_fish.add_to_distance(rooneys_fish.get_average_speed())
-        sarahs_fish.add_to_distance(sarahs_fish.get_average_speed())
-
-        print(f'\n{rooneys_fish.name} has covered {rooneys_fish.get_distance()}')
-        print(f'{sarahs_fish.name} has covered {sarahs_fish.get_distance()}')
-
-        if rooneys_fish.get_distance() > race_distance or sarahs_fish.get_distance() > race_distance:
+        if 3 < rounds:
             keep_going = False
-
-    if rooneys_fish.get_distance() > sarahs_fish.get_distance():
-        print(f"{rooneys_fish.name} is the winner!")
-    else:
-        print(f"{sarahs_fish.name} is the winner!")
 
 
 
