@@ -1,7 +1,7 @@
 import random
 
 # https://www.programiz.com/python-programming/object-oriented-programming
-class Parrot:
+class Beta_Fish:
 
     # class attribute
     species = "bird"
@@ -29,12 +29,12 @@ class Parrot:
 if __name__ == '__main__':
     print('hello')
 
-    # instantiate the Parrot class
-    blu = Parrot("Blu", 10)
-    woo = Parrot("Woo", 15)
+    # instantiate the Beta_Fish class
+    blu = Beta_Fish("Blu", 10)
+    woo = Beta_Fish("Woo", 15)
 
-    rp = Parrot("Red", 20)
-    sp = Parrot("Fido", 20)
+    rp = Beta_Fish("Red", 20)
+    sp = Beta_Fish("Fido", 20)
 
     sp.set_average_speed(random.randint(1,sp.age))
     print(f"Sarah's bird can fly {sp.get_average_speed()} miles per hour right now.")
