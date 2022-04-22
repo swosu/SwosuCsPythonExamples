@@ -12,6 +12,13 @@ class Beta_Fish:
         self.age = age
         self.average_speed = 0
         self.distance_covered = 0
+        self.has_weapon = True
+        self.weapon_damage = 0
+        self.armor_strength = 0
+        self.health = 0
+        self.has_magic = True
+        self.magic_attack = 0
+        self.magic_defend = 0
 
     def set_average_speed(self, speed):
         self.average_speed = speed
