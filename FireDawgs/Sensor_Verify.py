@@ -27,9 +27,9 @@ while True:
 	try:
 		print( "Prep for Read, slow blink")
 		GPIO.output(16,GPIO.HIGH)
-		time.sleep(0.2)
+		#time.sleep(0.2)
 		GPIO.output(16,GPIO.LOW)
-		time.sleep(0.2)
+		#time.sleep(0.2)
 		mlx.getFrame(frame) # read MLX temperatures into frame var
 		if 100 < frame.max():
 			print('FIRE')
@@ -37,9 +37,9 @@ while True:
 			for ticker in range (0,60):
 				print( "Valve on, fast blink")
 				GPIO.output(16,GPIO.HIGH)
-				time.sleep(0.05)
+				#time.sleep(0.05)
 				GPIO.output(16,GPIO.LOW)
-				time.sleep(0.05)
+				#time.sleep(0.05)
 		else:
 			GPIO.output(12,GPIO.LOW)
 			GPIO.output(16,GPIO.LOW)
