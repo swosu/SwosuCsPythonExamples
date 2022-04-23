@@ -25,24 +25,18 @@ frame = np.zeros((24*32,)) # setup array for storing all 768 temperatures
 # run the loop as long as you can
 while True:
 	try:
-		print( "Prep for Read, slow blink")
+		#print( "Prep for Read, slow blink")
 		GPIO.output(16,GPIO.HIGH)
 		#time.sleep(0.2)
-		GPIO.output(16,GPIO.LOW)
+		#GPIO.output(16,GPIO.LOW)
 		#time.sleep(0.2)
 		mlx.getFrame(frame) # read MLX temperatures into frame var
 		if 100 < frame.max():
-			print('FIRE')
+			#print('FIRE')
 			GPIO.output(12,GPIO.HIGH)
-			for ticker in range (0,60):
-				print( "Valve on, fast blink")
-				GPIO.output(16,GPIO.HIGH)
-				#time.sleep(0.05)
-				GPIO.output(16,GPIO.LOW)
-				#time.sleep(0.05)
 		else:
 			GPIO.output(12,GPIO.LOW)
-			GPIO.output(16,GPIO.LOW)
-			print('no fire')
+			#GPIO.output(16,GPIO.LOW)
+			#print('no fire')
 	except ValueError:
 		continue # if error, just read again
