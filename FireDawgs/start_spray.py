@@ -7,10 +7,7 @@
 import time,board,busio
 import numpy as np
 import adafruit_mlx90640
-
-# set up GPIO Pins
-import RPi.GPIO as GPIO
-import time
+import RPi.GPIO as GPIO # set up GPIO Pins
 
 i2c = busio.I2C(board.SCL, board.SDA, frequency=400000) # setup I2C
 mlx = adafruit_mlx90640.MLX90640(i2c) # begin MLX90640 with I2C comm
