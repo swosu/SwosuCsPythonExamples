@@ -8,7 +8,7 @@ import find_diagonal
 
 np.set_printoptions(formatter={'float': lambda x: "{0:0.2f}".format(x)})
 
-matrix_side_length = 512
+matrix_side_length = 5000
 
 # Read in the data
 reader = binary_file_reader.binary_file_reader()
