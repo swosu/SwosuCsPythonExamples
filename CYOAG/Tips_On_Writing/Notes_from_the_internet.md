@@ -10,6 +10,8 @@ We will read through these and see what is of value.
 The following link is a brief look at the blueprint of how to craft the story. Karen has also written a book on this.
 https://blog.karenwoodward.org/2014/06/how-to-write-choose-your-own-adventure.html
 
+Karen also has a book. I am going to take some time and read that book.
+
 
 Here is an article to explore if you want to focus more on the writing and app development. It is hosted by a publisher:
 https://www.chooseyourownadventurebooks.org/write.interactive.stories.html
