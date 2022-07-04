@@ -5,7 +5,34 @@ from file_system import file_system
 #import Character_CYOAG
 # user defined character class
 # Caden
-# Drake
+# Drake 
+# Working on branch Character
+
+class Character:
+
+    def __init__(self, attack_option):
+
+        self.__attack_option = attack_option
+
+
+    def attack(self):
+
+        if self.__attack_option == 1:
+            attack_points = random.randint(18,25)
+            return attack_points
+
+        elif self.__attack_option == 2:
+            attack_points = random.randint(10,35)
+            return attack_points
+
+
+    def heal(self):
+
+        heal_points = random.randint(18,25)
+        return heal_points    
+    
+    
+
 
 # Non-Player character class
 # Corbin
