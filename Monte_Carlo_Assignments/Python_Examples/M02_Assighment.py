@@ -64,3 +64,13 @@ for roll_index in range (number_of_rolls):
 
 n_100 = n
 print(f'after 100 rolls, we see {n}.')
+
+number_of_rolls = 100000
+
+for roll_index in range (number_of_rolls):
+    roll = roll_die()
+    roll_result_100000[roll - 1] += 1
+
+n = np.array(roll_result_100000)
+n_100000 = n
+print(f'after 100,000 rolls, we see {n}.')
