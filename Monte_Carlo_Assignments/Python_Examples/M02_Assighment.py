@@ -1,4 +1,4 @@
-print('hello.')
+#print('hello.')
 
 # imports
 from random import randint
@@ -12,7 +12,7 @@ import numpy as np
 def roll_die():
     number_of_sides = 6
     roll = randint(1, number_of_sides   )
-    print(f'our roll was {roll}, ', end = '')
+    #print(f'our roll was {roll}, ', end = '')
     return roll
 
 # set the bounds
@@ -22,10 +22,12 @@ def roll_die():
 #we are going to save this to an array.
 # creating the list
 roll_result_25 = [0, 0, 0, 0, 0, 0]
+roll_result_100 = [0, 0, 0, 0, 0, 0]
+roll_result_100000 = [0, 0, 0, 0, 0, 0]
 
 # creating 1-d array
 n = np.array(roll_result_25)
-print(n)
+#print(n)
 
 
 
@@ -37,11 +39,11 @@ print(n)
 number_of_rolls = 25
 
 for roll_index in range (number_of_rolls):
-    print(f'roll index {roll_index} ', end = '')
+    #print(f'roll index {roll_index} ', end = '')
     roll = roll_die()
     roll_result_25[roll - 1] += 1
     n = np.array(roll_result_25)
-    print(n)
+    #print(n)
 
 
 n_25 = n
@@ -49,3 +51,16 @@ print(f'after 25 rolls, we see {n}.')
 
 # make a chart that shows the probability of each number
 # occuring for each of these three scenarios
+
+number_of_rolls = 100
+
+for roll_index in range (number_of_rolls):
+    #print(f'roll index {roll_index} ', end = '')
+    roll = roll_die()
+    roll_result_100[roll - 1] += 1
+    n = np.array(roll_result_100)
+    #print(n)
+
+
+n_100 = n
+print(f'after 100 rolls, we see {n}.')
