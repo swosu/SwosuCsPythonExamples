@@ -5,6 +5,11 @@ from random import randint
 
 # importing the module
 import numpy as np
+import matplotlib.pyplot as plt; plt.rcdefaults()
+
+import numpy as np
+import matplotlib.pyplot as plt
+
 
 #  select distribution to simulate rolling a six sided die that is fair
 # here is an example code:
@@ -74,3 +79,24 @@ for roll_index in range (number_of_rolls):
 n = np.array(roll_result_100000)
 n_100000 = n
 print(f'after 100,000 rolls, we see {n}.')
+
+
+probability_25 = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+probability_100 = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+probability_100000 = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+for index in range(len(roll_result_25)):
+    print(f'index is {index}.')
+    probability_25[index] = float(roll_result_25[index]) / float(25)
+    probability_100[index] = float(roll_result_100[index]) / float(100)
+    probability_100000[index] = float(roll_result_100000[index]) / float(100000)
+
+
+objects = ('1', '2', '3', '4', '5', '6')
+y_pos = np.arange(len(objects))
+
+plt.bar(y_pos, probability_25, align='center', alpha=0.5)
+plt.xticks(y_pos, objects)
+plt.ylabel('Probability of occurance')
+plt.title('Data from 25 dice rolls')
+
+plt.show()
