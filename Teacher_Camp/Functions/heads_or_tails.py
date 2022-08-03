@@ -2,7 +2,6 @@ def greet_user():
     print('Welcome to our heads or tails game!')
 
 def get_user_selection():
-    # Get user selection
     user_selection = \
     input('please press 1 for heads or 2 for tails and then press enter')
 
@@ -17,7 +16,6 @@ def get_user_selection():
     return user_selection
 
 def get_flip_result():
-    # get flip result
     from random import random
     random_number = random()
     if 0.5 <= random_number:
