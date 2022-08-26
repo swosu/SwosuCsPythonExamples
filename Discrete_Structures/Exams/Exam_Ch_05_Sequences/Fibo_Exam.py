@@ -7,8 +7,8 @@ needed to compute them iteratively
 """
 
 class Data_tracker:
+    # DATA
     def __init__(self):
-        self.data = []
         self.number_of_times_function_called = 0
         self.if_count = 0
         self.add_count = 0
@@ -17,6 +17,7 @@ class Data_tracker:
         self.stop_time = 0
         self.assignment_count = 0
 
+    # BEHAVIOR
     def increment_assignment_count(self):
         self.assignment_count += 1
 
@@ -59,7 +60,7 @@ import time
 
 recursive_data = Data_tracker()
 
-number_of_terms = 40
+number_of_terms = 50
 
 recursive_data.start_time = time.time()
 
