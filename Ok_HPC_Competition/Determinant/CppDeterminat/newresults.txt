@@ -1,0 +1,76 @@
+Hello, World!
+Hello, welcome to the SWOSU determinant code.
+The goal of this code is to run on a single pi as qucikly as possible.
+Reading array file m3000x3000.bin of size 3000x3000
+Finished reading array file m3000x3000.bin of size 3000x3000
+The hard work is done.Multiplication Determinant Result -inf
+Log Sum Determinant Result 2.945781e+03
+OpenMP Time to calculate: 97.5716
+Thank you for running the code. That is all.
+Side Length
+Det
+log abs det
+time
+
+3000
+-inf
+2.945781e+03
+97.571648
+There are threads:1
+Hello, World!
+Hello, welcome to the SWOSU determinant code.
+The goal of this code is to run on a single pi as qucikly as possible.
+Reading array file m3000x3000.bin of size 3000x3000
+Finished reading array file m3000x3000.bin of size 3000x3000
+The hard work is done.Multiplication Determinant Result -inf
+Log Sum Determinant Result 2.945781e+03
+OpenMP Time to calculate: 93.5437
+Thank you for running the code. That is all.
+Side Length
+Det
+log abs det
+time
+
+3000
+-inf
+2.945781e+03
+93.543740
+There are threads:1
+Hello, World!
+Hello, welcome to the SWOSU determinant code.
+The goal of this code is to run on a single pi as qucikly as possible.
+Reading array file m3000x3000.bin of size 3000x3000
+Finished reading array file m3000x3000.bin of size 3000x3000
+The hard work is done.Multiplication Determinant Result -inf
+Log Sum Determinant Result 2.945781e+03
+OpenMP Time to calculate: 92.6072
+Thank you for running the code. That is all.
+Side Length
+Det
+log abs det
+time
+
+3000
+-inf
+2.945781e+03
+92.607165
+There are threads:1
+Hello, World!
+Hello, welcome to the SWOSU determinant code.
+The goal of this code is to run on a single pi as qucikly as possible.
+Reading array file m3000x3000.bin of size 3000x3000
+Finished reading array file m3000x3000.bin of size 3000x3000
+The hard work is done.Multiplication Determinant Result -inf
+Log Sum Determinant Result 2.945781e+03
+OpenMP Time to calculate: 126.842
+Thank you for running the code. That is all.
+Side Length
+Det
+log abs det
+time
+
+3000
+-inf
+2.945781e+03
+126.842311
+There are threads:1
