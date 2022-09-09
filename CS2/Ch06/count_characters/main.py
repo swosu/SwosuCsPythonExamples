@@ -37,6 +37,15 @@ def get_number_of_characters(user_string):
         char_count += 1
     return char_count
 
+def get_string_with_no_spaces(user_string):
+    new_string = ''
+    for characters in user_string:
+        if ' ' == characters:
+            print('that was a space.')
+        else:
+            new_string = new_string + characters
+    return new_string
+
 if __name__ == '__main__':
     say_hello()
 
@@ -45,3 +54,6 @@ if __name__ == '__main__':
 
     number_of_characters = get_number_of_characters(user_string)
     print(f'your string had {number_of_characters} characters.')
+
+    no_spaces_string = get_string_with_no_spaces(user_string)
+    print(f'your string with no spaces is {no_spaces_string}.')
