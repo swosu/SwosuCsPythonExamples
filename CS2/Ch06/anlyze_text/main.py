@@ -129,6 +129,32 @@ def print_menu():
     'p - print off current user string\n'\
     'q - Quit')
 
+def get_non_white_space_chracter_count(user_string):
+    char_count = 0
+    for character in user_string:
+        if ' ' == character:
+            print('that was a white space. removed...')
+        else:
+            char_count += 1
+    return char_count
+
+def get_word_count(user_string):
+    word_count = 1
+    previous_character = 'a'
+    for character in user_string:
+        if ' ' == character:
+            if ' ' == previous_character:
+                previous_character = ' '
+                print('we had multiple spaces in a row')
+            else:
+                print('we have reached the end of a word.')
+                word_count += 1
+                previous_character = ' '
+        else:
+            previous_character = character
+
+    return word_count
+
 if __name__ == '__main__':
     # Complete the main program here.
     user_string = get_user_string()
@@ -146,3 +172,11 @@ if __name__ == '__main__':
             print_user_string(user_string)
         elif 'p' == user_selection:
             print_user_string(user_string)
+        elif 'c' == user_selection:
+            non_white_space_character_count = \
+            get_non_white_space_chracter_count(user_string)
+            print(f'you have {non_white_space_character_count} '\
+            '\nnon whitespace characters in your string.')
+        elif 'w' == user_selection:
+            word_count = get_word_count(user_string)
+            print(f'that string has {word_count} words.')
