@@ -1,17 +1,24 @@
 """
 
 23.14 LAB*: Program: Authoring assistant
-(1) Prompt the user to enter a string of their choosing.
+DONE!!! (1) Prompt the user to enter a string of their choosing.
 Store the text in a string. Output the string. (1 pt)
 
 Ex:
 
 Enter a sample text:
-we'll continue our quest in space.  there will be more shuttle flights and more shuttle crews and,  yes;  more volunteers, more civilians,  more teachers in space.  nothing ends here;  our hopes and our journeys continue!
+we'll continue our quest in space.
+there will be more shuttle flights and more shuttle crews and,  yes;
+more volunteers, more civilians,  more teachers in space.
+nothing ends here;  our hopes and our journeys continue!
 
-You entered: we'll continue our quest in space.  there will be more shuttle flights and more shuttle crews and,  yes;  more volunteers, more civilians,  more teachers in space.  nothing ends here;  our hopes and our journeys continue!
+You entered: we'll continue our quest in space.
+there will be more shuttle flights and more shuttle crews and,  yes;
+more volunteers, more civilians,  more teachers in space.
+nothing ends here;  our hopes and our journeys continue!
 
-(2) Implement the print_menu() function to print the following command menu. (1 pt)
+DONE!!! (2) Implement the print_menu() function to print the following command menu.
+(1 pt)
 
 Ex:
 
@@ -23,12 +30,21 @@ r - Replace punctuation
 s - Shorten spaces
 q - Quit
 
-(3) Implement the execute_menu() function that takes 2 parameters: a character representing the user's choice and the user provided sample text. execute_menu() performs the menu options, according to the user's choice, by calling the appropriate functions described below. (1 pt)
+(3) Implement the execute_menu() function that takes 2 parameters:
+a character representing the user's choice and the user provided sample text.
+execute_menu() performs the menu options, according to the user's choice,
+by calling the appropriate functions described below. (1 pt)
 
 
-(4) In the main program, call print_menu() and prompt for the user's choice of menu options for analyzing/editing the string. Each option is represented by a single character.
+(4) In the main program, call print_menu()
+and prompt for the user's choice of menu options for analyzing/editing the string.
+Each option is represented by a single character.
 
-If an invalid character is entered, continue to prompt for a valid choice. When a valid option is entered, execute the option by calling execute_menu(). Then, print the menu and prompt for a new option. Continue until the user enters 'q'. Hint: Implement Quit before implementing other options. (1 pt)
+If an invalid character is entered, continue to prompt for a valid choice.
+When a valid option is entered, execute the option by calling execute_menu().
+Then, print the menu and prompt for a new option.
+Continue until the user enters 'q'.
+Hint: Implement Quit before implementing other options. (1 pt)
 
 Ex:
 
@@ -101,7 +117,32 @@ def get_user_string():
 def print_user_string(user_string):
     print(f'you entered: {user_string}')
 
+def print_menu():
+    print('\n'\
+    'MENU\n'\
+    'c - Number of non-whitespace characters\n'\
+    'w - Number of words\n'\
+    'f - Fix capitalization\n'\
+    'r - Replace punctuation\n'
+    's - Shorten spaces\n'\
+    'n - get new user string\n'\
+    'p - print off current user string\n'\
+    'q - Quit')
+
 if __name__ == '__main__':
     # Complete the main program here.
     user_string = get_user_string()
     print_user_string(user_string)
+    while True:
+        print_menu()
+        user_selection = input('please make a selection: ')
+        print(f'you entered {user_selection}.')
+
+        if 'q' == user_selection:
+            print('thank you and good bye.')
+            break
+        elif 'n' == user_selection:
+            user_string = get_user_string()
+            print_user_string(user_string)
+        elif 'p' == user_selection:
+            print_user_string(user_string)
