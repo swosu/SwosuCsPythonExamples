@@ -102,8 +102,13 @@ def get_user_string():
 def output_user_string(user_string):
     print(f'you entered the string: {user_string}.')
 
+def print_menu():
+    print('\nMENU\nc - Number of non-whitespace characters\nw - Number of words'\
+    'f - Fix capitalization\nr - Replace punctuation\ns - Shorten spaces\nq - Quit')
+
 if __name__ == '__main__':
     # Complete the main program here.
 
     user_string = get_user_string()
     output_user_string(user_string)
+    print_menu()
