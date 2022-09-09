@@ -5,9 +5,15 @@
 Ex:
 
 Enter a sample text:
-we'll continue our quest in space.  there will be more shuttle flights and more shuttle crews and,  yes;  more volunteers, more civilians,  more teachers in space.  nothing ends here;  our hopes and our journeys continue!
+we'll continue our quest in space.  there will be more shuttle flights
+and more shuttle crews and,  yes;  more volunteers, more civilians,
+more teachers in space.
+nothing ends here;  our hopes and our journeys continue!
 
-You entered: we'll continue our quest in space.  there will be more shuttle flights and more shuttle crews and,  yes;  more volunteers, more civilians,  more teachers in space.  nothing ends here;  our hopes and our journeys continue!
+You entered: we'll continue our quest in space.  there will be more
+shuttle flights and more shuttle crews and,  yes;  more volunteers,
+more civilians,  more teachers in space.
+nothing ends here;  our hopes and our journeys continue!
 
 (2) Implement the print_menu() function to print the following command menu. (1 pt)
 
@@ -21,12 +27,20 @@ r - Replace punctuation
 s - Shorten spaces
 q - Quit
 
-(3) Implement the execute_menu() function that takes 2 parameters: a character representing the user's choice and the user provided sample text. execute_menu() performs the menu options, according to the user's choice, by calling the appropriate functions described below. (1 pt)
+(3) Implement the execute_menu() function that takes 2 parameters:
+a character representing the user's choice and the user provided sample text.
+execute_menu() performs the menu options, according to the user's choice,
+by calling the appropriate functions described below. (1 pt)
 
 
-(4) In the main program, call print_menu() and prompt for the user's choice of menu options for analyzing/editing the string. Each option is represented by a single character.
+(4) In the main program, call print_menu() and prompt for the user's choice
+of menu options for analyzing/editing the string. Each option is represented
+by a single character.
 
-If an invalid character is entered, continue to prompt for a valid choice. When a valid option is entered, execute the option by calling execute_menu(). Then, print the menu and prompt for a new option. Continue until the user enters 'q'. Hint: Implement Quit before implementing other options. (1 pt)
+If an invalid character is entered, continue to prompt for a valid choice.
+When a valid option is entered, execute the option by calling execute_menu().
+Then, print the menu and prompt for a new option. Continue until the user
+enters 'q'. Hint: Implement Quit before implementing other options. (1 pt)
 
 Ex:
 
@@ -96,7 +110,7 @@ Starter Code:
 
 # Define your functions here.
 def get_user_string():
-    user_string = input('please enter a string of your choosing.')
+    user_string = input('please enter a string of your choosing for us to play with.')
     return user_string
 
 def output_user_string(user_string):
@@ -104,11 +118,28 @@ def output_user_string(user_string):
 
 def print_menu():
     print('\nMENU\nc - Number of non-whitespace characters\nw - Number of words'\
-    'f - Fix capitalization\nr - Replace punctuation\ns - Shorten spaces\nq - Quit')
+    'f - Fix capitalization\nr - Replace punctuation\n'\
+    's - Shorten spaces\nn - enter new user string\nq - Quit')
+
+def get_user_selection():
+    user_selection = input('which menu option would you like? ')
+    return user_selection
+
+def print_user_selection(user_selection):
+    print(f'you selected: {user_selection}.')
+
 
 if __name__ == '__main__':
     # Complete the main program here.
 
+    print('here are some things we are going to play with:')
+    print_menu()
     user_string = get_user_string()
     output_user_string(user_string)
-    print_menu()
+    while True:
+        print_menu()
+        user_selection = get_user_selection()
+        print_user_selection(user_selection)
+        if 'q' == user_selection:
+            print('thank you and good bye.')
+            break
