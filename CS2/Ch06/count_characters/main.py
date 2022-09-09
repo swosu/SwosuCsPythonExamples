@@ -23,4 +23,25 @@ You entered: The only thing we have to fear is fear itself.
 Number of characters: 46
 String with no whitespace: Theonlythingwehavetofearisfearitself.
 """
-print('hello world.')
+
+def say_hello():
+    print('Hello and welcome to our text analyzer.')
+
+def get_user_string():
+    user_string = input('please enter a string of your choice. ')
+    return user_string
+
+def get_number_of_characters(user_string):
+    char_count = 0
+    for characters in user_string:
+        char_count += 1
+    return char_count
+
+if __name__ == '__main__':
+    say_hello()
+
+    user_string = get_user_string()
+    print(f'you entered: {user_string}.')
+
+    number_of_characters = get_number_of_characters(user_string)
+    print(f'your string had {number_of_characters} characters.')
