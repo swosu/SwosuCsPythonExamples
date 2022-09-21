@@ -8,50 +8,42 @@ hole to hole and is called par (i.e. 3, 4, or 5).
 Each score's name is based on the actual strokes
 taken compared to par:
 
+
 "Eagle": number of strokes is two less than par
 "Birdie": number of strokes is one less than par
 "Par": number of strokes equals par
 "Bogey": number of strokes is one more than par
+
 Given two integers that represent par and
 the number of strokes used,
 write a program that prints the appropriate score name.
-Print "Error" if par is not 3, 4, or 5.
-
-Ex: If the input is:
-
-4
-3
-the output is:
-
-Birdie
-
-Starter code from book:
-''' Type your code here. '''
 """
 
-strokes_used = 6
-par_for_the_hole = 4
 
-par_minus_strokes = par_for_the_hole - strokes_used
-print(f'''You used {strokes_used}.
-The hole par was: {par_for_the_hole}.
-Par minus strokes was: {par_minus_strokes}.''')
+number_of_strokes = int(input())
+#number_of_strokes = int(input('please tell me how many strokes you took.'))
+#print(f'you said you took {number_of_strokes} strokes.')
 
-if 2 == par_minus_strokes:
-    print("Eagle")
-    print("This means: number of strokes is two less than par")
+par_for_the_hole = int(input())
+#par_for_the_hole = int(input('please tell me what is par for this hole.'))
+#print(f'you said this hole should take {par_for_the_hole} strokes.')
 
-elif 1 == par_minus_strokes:
-    print("Birdie")
-    print("This means: number of strokes is one less than par")
+stroke_difference = par_for_the_hole - number_of_strokes
+#print(f'the current stroke difference is {stroke_difference}.')
 
-elif 0 == par_minus_strokes:
-    print("Par")
-    print("This means: number of strokes equals par")
-
-elif -1 == par_minus_strokes:
-    print("Bogey")
-    print("This means: number of strokes is one more than par ")
-
+if 2 == stroke_difference:
+    print('Eagle')
+    
+elif 1 == stroke_difference:
+    print('Birdie')
+    
+elif 0 == stroke_difference:
+    print('Par')
+    
+elif -1 == stroke_difference:
+    print('Bogey')
+    
 else:
-    print('something has gone wrong.')
+    print('Error')
+    
+
