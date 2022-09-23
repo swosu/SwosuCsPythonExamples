@@ -7,4 +7,6 @@ import Faff_file
 
 our_object = Faff_file.User_interactions()
 
-our_object.say_hello()
+our_object.get_player_count()
+
+our_object.get_
