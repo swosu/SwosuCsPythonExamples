@@ -1,10 +1,12 @@
 class User_interactions:
 
+
     def __init__(self):
         self.data = []
         self.player_count = 0
         self.player_names = []
         self.testing = True
+        self.dice_on_table = [1, 2, 3, 4, 5]
 
     def testing_or_playing(self):
         user_response = input('1 to play, anything else to test: ')
@@ -15,7 +17,7 @@ class User_interactions:
             print('Welcome to the game.')
             self.testing = False
 
-    def get_player_count(self):
+    def ask_player_count(self):
         if self.testing:
             player_count = 3
         else:
@@ -29,7 +31,10 @@ class User_interactions:
         elif 2 <= self.player_count:
             print(f'you want {self.player_count} players.')
 
-    def get_player_names(self):
+    def get_player_count(self):
+        return self.player_count
+
+    def ask_player_names(self):
         if self.testing:
             self.player_names.append('bob')
             self.player_names.append('susan')
@@ -41,3 +46,15 @@ class User_interactions:
 
         print('for this game, we have the following player:')
         print(self.player_names)
+
+    def get_player_name(self, player_number):
+        return self.player_names[player_number]
+
+
+    def roll_new_five(self):
+        import random
+        print('New roll.')
+        for die in range(0, len(self.dice_on_table)):
+            self.dice_on_table[die] = random.randint(1,6)
+        print('here are the dice on the table.')
+        print(self.dice_on_table)
