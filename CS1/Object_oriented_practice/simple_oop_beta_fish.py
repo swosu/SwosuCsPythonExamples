@@ -1,63 +1,63 @@
 import random
 
-from Parrot_Class_File import Parrot
 
-from Beta_Fish_Class_File import Fish
+# https://www.programiz.com/python-programming/object-oriented-programming
+class Beta_Fish:
+
+    # class attribute
+    species = "fish"
+
+    # instance attribute
+    def __init__(self, name):
+        self.name = name
+        self.has_weapon = True
+        self.weapon_damage = 0
+        self.armor_strength = 0
+        self.health = 0
+        self.has_magic = True
+        self.magic_attack = 0
+        self.magic_defend = 0
+
 
 if __name__ == '__main__':
-    
-    # instantiate a fish from the Fish class
-    fish_one = Fish("Pudge", 5)
-    fish_two = Fish("Bill", 5)
-    fish_three = Fish("Shark Bait", 5)
+    #print('hello')
 
-    # instantiate the Parrot class
-    blu = Parrot("Blu", 10)
-    woo = Parrot("Woo", 15)
+    # instantiate the Beta_Fish class
+    blu = Beta_Fish("Blu")
+    woo = Beta_Fish("Woo")
 
-    rp = Parrot("Red", 20)
-    sp = Parrot("Fido", 20)
+    rooneys_fish = Beta_Fish("Red")
+    sarahs_fish = Beta_Fish("Fido")
 
-    sp.set_average_speed(random.randint(1,sp.age))
-    print(f"Sarah's bird can fly {sp.get_average_speed()} miles per hour right now.")
+    #sarahs_fish.set_average_speed(random.randint(1,sarahs_fish.age))
+    #print(f"Sarah's bird can fly {sarahs_fish.get_average_speed()} miles per hour right now.")
 
-    rp.set_average_speed(random.randint(1,rp.age))
-    print(f"Rooney's bird can fly {rp.get_average_speed()} miles per hour right now.")
-
-    race_distance = 100
     keep_going = True
+
+    rounds = 0
 
     while(keep_going):
         # find speed for this leg
-        rp.set_average_speed(random.randint(1,rp.age))
-        sp.set_average_speed(random.randint(1,sp.age))
+        #rooneys_fish.set_average_speed(random.randint(1,rooneys_fish.age))
+        rounds += 1
+        print('round complete')
 
-        print(f'{rp.name} and fly {rp.get_average_speed()}')
-        print(f'{sp.name} and fly {sp.get_average_speed()}')
-
-        # add that time of flight times speed to the distance_covered
-        rp.add_to_distance(rp.get_average_speed())
-        sp.add_to_distance(sp.get_average_speed())
-
-        print(f'\n{rp.name} has covered {rp.get_distance()}')
-        print(f'{sp.name} has covered {sp.get_distance()}')
-
-        if rp.get_distance() > race_distance or sp.get_distance() > race_distance:
+        if 3 < rounds:
             keep_going = False
 
-    if rp.get_distance() > sp.get_distance():
-        print(f"{rp.name} is the winner!")
-    else:
-        print(f"{sp.name} is the winner!")
 
 
 
     # access the class attributes
     #print("Blu is a {}".format(blu.__class__.species))
     #print("Woo is also a {}".format(woo.__class__.species))
-    #print(f"{rp.name} is a {woo.__class__.species}.")
+
+    #print(f"{rooneys_fish.name} is a {woo.__class__.species}.")
+
 
     # access the instance attributes
     #print("{} is {} years old".format( blu.name, blu.age))
     #print("{} is {} years old".format( woo.name, woo.age))
-    #print("{} is {} years old".format( rp.name, rp.age))
+
+    #print("{} is {} years old".format( rooneys_fish.name, rooneys_fish.age))
+
