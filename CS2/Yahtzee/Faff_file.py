@@ -7,6 +7,7 @@ class User_interactions:
         self.player_names = []
         self.testing = True
         self.dice_on_table = [1, 2, 3, 4, 5]
+        self.roll_count = 0
 
     def testing_or_playing(self):
         user_response = input('1 to play, anything else to test: ')
@@ -17,6 +18,11 @@ class User_interactions:
             print('Welcome to the game.')
             self.testing = False
 
+    def ask_player_what_to_keep(self):
+        if self.testing:
+            print('stuck here.')
+        else:
+            print('still stuck here.')
     def ask_player_count(self):
         if self.testing:
             player_count = 3
@@ -53,8 +59,10 @@ class User_interactions:
 
     def roll_new_five(self):
         import random
+        self.roll_count = 1
         print('New roll.')
         for die in range(0, len(self.dice_on_table)):
             self.dice_on_table[die] = random.randint(1,6)
-        print('here are the dice on the table.')
-        print(self.dice_on_table)
+        print('here are the dice on the table.\nDICE NUMBER')
+        print('\t1\t2\t3\t4\t5\nDICE VALUE')
+        print(f'\t{self.dice_on_table[0]}')
