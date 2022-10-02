@@ -32,8 +32,14 @@ class User_interactions:
         if self.testing:
             player_count = 3
         else:
-            player_count = input('hello, how many players would you like?')
+            while True:
+                player_count = input('hello, how many players would you like?')
+                if player_count.isnumeric():
+                    break
+                else:
+                    print('please try again and this time use a number.')
 
+        
         self.player_count = int(player_count)
         if 0 >= self.player_count:
             print('you don\'t want to play.')
