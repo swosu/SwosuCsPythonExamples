@@ -1,5 +1,6 @@
 import random
 
+
 # https://www.programiz.com/python-programming/object-oriented-programming
 class Beta_Fish:
 
@@ -46,12 +47,17 @@ if __name__ == '__main__':
 
 
 
+
     # access the class attributes
     #print("Blu is a {}".format(blu.__class__.species))
     #print("Woo is also a {}".format(woo.__class__.species))
+
     #print(f"{rooneys_fish.name} is a {woo.__class__.species}.")
+
 
     # access the instance attributes
     #print("{} is {} years old".format( blu.name, blu.age))
     #print("{} is {} years old".format( woo.name, woo.age))
+
     #print("{} is {} years old".format( rooneys_fish.name, rooneys_fish.age))
+
