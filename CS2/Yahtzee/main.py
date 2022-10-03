@@ -18,5 +18,6 @@ while True:
         print(f'ready player {player_number + 1}, aka {our_object.get_player_name(player_number)}')
 
         our_object.roll_new_five()
+        our_object.ask_player_what_to_keep()
     print('good round everyone!')
     break
