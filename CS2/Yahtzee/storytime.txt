@@ -1,1 +1,8 @@
+<<<<<<< HEAD
 Dalton Was here doing things and stuff yo
+=======
+a dog went to the park for a treat
+ryan went out to the pasture to check cows
+kendell went to the store.
+
+>>>>>>> origin/dev
