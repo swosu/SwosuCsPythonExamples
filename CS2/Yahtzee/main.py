@@ -7,6 +7,10 @@ import Faff_file
 
 our_object = Faff_file.User_interactions()
 
+<<<<<<< HEAD
+our_object.say_hello()
+#DAlton Was Here
+=======
 our_object.testing_or_playing()
 
 our_object.ask_player_count()
@@ -21,3 +25,4 @@ while True:
         our_object.ask_player_what_to_keep()
     print('good round everyone!')
     break
+>>>>>>> origin/dev
