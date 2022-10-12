@@ -4,10 +4,10 @@
 # https://docs.python.org/3/tutorial/classes.html
 # https://www.pythonpool.com/python-class-vs-module/
 import Faff_file
-
+import Dalton_file
 our_object = Faff_file.User_interactions()
 
-<<<<<<< HEAD
+
 our_object.say_hello()
 #DAlton Was Here
 =======
