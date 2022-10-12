@@ -5,6 +5,7 @@
 # https://www.pythonpool.com/python-class-vs-module/
 import Faff_file
 
+import kendell_file
 
 import jeremy_file
 
