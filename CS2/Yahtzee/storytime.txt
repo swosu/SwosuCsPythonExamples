@@ -1,13 +1,44 @@
+
+Dalton Was here doing things and stuff yo
+
+
+Chris likes to build rockets
+Chris likes to fly drones
+
+
 a dog went to the park for a treat
 ryan went out to the pasture to check cows
+<<<<<<< HEAD
 kendell went to the store.
 <<<<<<< HEAD
+=======
+kendell went to the store
+mario has a mystery
+trevor ate taquitos
+
+
+
+>>>>>>> dev
 Jarett copied what Ryan was typing.
+
+
+
+mario has a mystery
+
+Jessie likes fruit snacks
+
+
+Kendells own branch
 wyatt was here
 
+<<<<<<< HEAD
 still here
 
 =======
 wyatt wasn't here
 >>>>>>> dev
 
+=======
+Josh says hello
+Josh came to office hours
+>>>>>>> dev

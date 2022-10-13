@@ -9,6 +9,9 @@ class User_interactions:
         self.dice_on_table = [1, 2, 3, 4, 5]
         self.roll_count = 0
 
+    def say_hello(self):
+        print('hello from the faff file.')
+
     def testing_or_playing(self):
         user_response = input('1 to play, anything else to test: ')
         if '1' != user_response:
