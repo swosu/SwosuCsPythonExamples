@@ -21,6 +21,9 @@ class User_interactions:
             print('Welcome to the game.')
             self.testing = False
 
+    def set_testing_false(self):
+        self.testing = False
+
     def ask_player_what_to_keep(self):
         print('which dice do you want to keep?')
         print('enter the dice number or numbers to keep')
