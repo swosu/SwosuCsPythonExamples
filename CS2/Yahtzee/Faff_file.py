@@ -7,6 +7,10 @@ class User_interactions:
         self.player_names = []
         self.testing = True
         self.dice_on_table = [1, 2, 3, 4, 5]
+        self.roll_count = 0
+
+    def say_hello(self):
+        print('hello from the faff file.')
 
     def testing_or_playing(self):
         user_response = input('1 to play, anything else to test: ')
@@ -16,6 +20,16 @@ class User_interactions:
         else:
             print('Welcome to the game.')
             self.testing = False
+
+    def ask_player_what_to_keep(self):
+        print('which dice do you want to keep?')
+        print('enter the dice number or numbers to keep')
+        print('just press enter to reroll all dice.')
+        if self.testing:
+            print('This code needs to be completed still.')
+        else:
+            user_selection = input('which dice do you want to keep?')
+
 
     def ask_player_count(self):
         if self.testing:
@@ -53,8 +67,13 @@ class User_interactions:
 
     def roll_new_five(self):
         import random
+        self.roll_count = 1
         print('New roll.')
         for die in range(0, len(self.dice_on_table)):
             self.dice_on_table[die] = random.randint(1,6)
         print('here are the dice on the table.')
-        print(self.dice_on_table)
+        print('\nDICE NUMBER\t1\t2\t3\t4\t5')
+        print('DICE VALUE,', end = '')
+        for die in self.dice_on_table:
+            print(f'\t{die}', end = '')
+        print()
