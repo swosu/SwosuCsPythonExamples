@@ -23,7 +23,8 @@ class dice_class:
         if our_object.testing:
             print('This code needs to be completed still.')
         else:
-            user_selection = input('which dice do you want to keep?')
+            user_selection = input('enter which dice do you want to keep seperated by spaces?')
+            print(f'you selected to keep: {user_selection}.')
 
 if __name__ == '__main__':
 
