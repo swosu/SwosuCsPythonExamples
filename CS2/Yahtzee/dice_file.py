@@ -1,4 +1,4 @@
-class our_dice:
+class dice_class:
     def __init__(self):
         self.dice_on_table = [1, 2, 3, 4, 5]
         self.roll_count = 0
@@ -16,11 +16,21 @@ class our_dice:
             print(f'\t{die}', end = '')
         print()
 
-    def ask_player_what_to_keep(self):
+    def ask_player_what_to_keep(self, our_object):
         print('which dice do you want to keep?')
         print('enter the dice number or numbers to keep')
         print('just press enter to reroll all dice.')
-        if self.testing:
+        if our_object.testing:
             print('This code needs to be completed still.')
         else:
             user_selection = input('which dice do you want to keep?')
+
+if __name__ == '__main__':
+
+    import Faff_file
+    our_object = Faff_file.User_interactions()
+    our_object.set_testing_false()
+    dice_object = dice_class()
+
+    dice_object.roll_new_five()
+    dice_object.ask_player_what_to_keep(our_object)
