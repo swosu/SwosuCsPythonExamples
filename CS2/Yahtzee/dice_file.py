@@ -2,6 +2,7 @@ class dice_class:
     def __init__(self):
         self.dice_on_table = [1, 2, 3, 4, 5]
         self.roll_count = 0
+        self.dice_index_to_save = []
 
     def roll_new_five(self):
         import random
@@ -24,7 +25,20 @@ class dice_class:
             print('This code needs to be completed still.')
         else:
             user_selection = input('enter which dice do you want to keep seperated by spaces?')
-            print(f'you selected to keep: {user_selection}.')
+            user_selection.split()
+            self.dice_index_to_save = user_selection
+            print(f'you selected to keep: {self.dice_index_to_save}.')
+            save_and_continue = input('press 1 if correct, anything else to try again.')
+            if "1" == save_and_continue:
+
+                print('moving on.')
+                
+                self.roll_count += 1
+                print(f'you are on roll {self.roll_count}.')
+            else:
+                self.dice_index_to_save = []
+                self.ask_player_what_to_keep(our_object)
+            
 
 if __name__ == '__main__':
 
