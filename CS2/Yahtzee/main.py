@@ -3,8 +3,9 @@
 # https://docs.python.org/3/tutorial/modules.html
 # https://docs.python.org/3/tutorial/classes.html
 # https://www.pythonpool.com/python-class-vs-module/
-import Faff_file
 
+
+import kendell_file
 
 import jeremy_file
 
@@ -12,14 +13,17 @@ import kylar_file
 
 import Josh_file
 
-import file_jessie
+import jessie_file
+import Dalton_File
+import jarett_file
+import spencer_file
 
-import ryan_file
-
-import Dalton_file
+import Faff_file
+import dice_file
 
 
 our_object = Faff_file.User_interactions()
+dice_object = dice_file.dice_class()
 
 
 our_object.say_hello()
