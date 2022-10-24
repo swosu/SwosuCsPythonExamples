@@ -1,6 +1,5 @@
 class User_interactions:
 
-
     def __init__(self):
         self.data = []
         self.player_count = 0

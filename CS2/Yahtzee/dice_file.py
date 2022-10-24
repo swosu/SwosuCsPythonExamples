@@ -19,9 +19,7 @@ class dice_class:
         print()
 
     def roll_new_five(self):
-
         self.roll_count = 1
-        #print('New roll.')
         for die in range(0, len(self.dice_on_table)):
             self.dice_on_table[die] = random.randint(1,6)
 
@@ -35,6 +33,10 @@ class dice_class:
         print('just press enter to reroll all dice.')
         if our_object.testing:
             print('This code needs to be completed still.')
+            self.dice_index_to_save = '1 3 5'
+            self.update_saved_dice()
+            self.roll_count += 1
+            print(f'you are on roll {self.roll_count}.')
         else:
             user_selection = input('enter which dice do you want to keep seperated by spaces?')
             self.dice_index_to_save = user_selection
