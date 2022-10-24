@@ -1,6 +1,6 @@
 import random
 class dice_class:
-    
+
     def __init__(self):
         self.dice_on_table = [1, 2, 3, 4, 5]
         self.roll_count = 0
@@ -16,13 +16,13 @@ class dice_class:
         print()
 
     def roll_new_five(self):
-        
+
         self.roll_count = 1
-        print('New roll.')
+        #print('New roll.')
         for die in range(0, len(self.dice_on_table)):
             self.dice_on_table[die] = random.randint(1,6)
- 
-        
+
+
 
     def ask_player_what_to_keep(self, our_object):
         self.saved_dice = []
@@ -49,7 +49,7 @@ class dice_class:
             else:
                 self.dice_index_to_save = []
                 self.ask_player_what_to_keep(our_object)
-        
+
     def update_saved_dice(self):
         print(f'trying to save: {self.dice_index_to_save}.')
         for item in self.dice_index_to_save:
