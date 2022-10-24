@@ -9,6 +9,7 @@ class dice_class:
 
     def print_dice_on_table(self):
         print('here are the dice on the table.')
+        #print(self.dice_on_table)
         print('\nDICE NUMBER\t1\t2\t3\t4\t5')
         print('DICE VALUE,', end = '')
         for die in self.dice_on_table:
@@ -34,7 +35,6 @@ class dice_class:
             print('This code needs to be completed still.')
         else:
             user_selection = input('enter which dice do you want to keep seperated by spaces?')
-            user_selection.split()
             self.dice_index_to_save = user_selection
             self.update_saved_dice()
             print(f'you selected to keep: {self.dice_index_to_save}.')
@@ -43,7 +43,6 @@ class dice_class:
             if "1" == save_and_continue:
 
                 print('moving on.')
-                self.update_saved_dice()
                 self.roll_count += 1
                 print(f'you are on roll {self.roll_count}.')
             else:
@@ -52,9 +51,11 @@ class dice_class:
 
     def update_saved_dice(self):
         print(f'trying to save: {self.dice_index_to_save}.')
+        print(f'length of dice index to save is {len(self.dice_index_to_save)} ')
         for item in self.dice_index_to_save:
-            print(f'going to save dice index {item} with type: {(type(item))}.')
-            self.saved_dice.append(int(self.dice_on_table[int(item)-1]))
+            if item.isnumeric():
+                print(f'going to save dice index {item} with type: {(type(item))}.')
+                self.saved_dice.append(int(self.dice_on_table[int(item)-1]))
         print(f'saved dice are: {self.saved_dice}.')
 
     def roll_unsaved_dice(self):
@@ -62,11 +63,14 @@ class dice_class:
         number_of_dice_to_reroll = 5 - len(self.saved_dice)
         self.dice_on_table=[]
         for item in self.saved_dice:
+            print('loading saved dice.')
             self.dice_on_table.append(int(item))
             print(f'dice on the table: {self.dice_on_table}.')
         for index in range (0, number_of_dice_to_reroll):
+            print('rolling new dice.')
             self.dice_on_table.append(random.randint(1,6))
             print(f'dice on the table: {self.dice_on_table}.')
+        print('done rolling new dice for the table')
         self.print_dice_on_table()
 
 if __name__ == '__main__':
@@ -78,6 +82,8 @@ if __name__ == '__main__':
     dice_object = dice_class()
 
     dice_object.roll_new_five()
-    while 3 > dice_object.roll_count:
+    while 3 >= dice_object.roll_count:
         dice_object.ask_player_what_to_keep(our_object)
+        print('done asking what to save')
+        print('now we roll the ones not saved.')
         dice_object.roll_unsaved_dice()
