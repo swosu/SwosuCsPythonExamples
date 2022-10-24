@@ -40,11 +40,20 @@ our_object.ask_player_count()
 
 our_object.ask_player_names()
 
+    
+
+    
+
+
 while True:
     for player_number in range(0, our_object.get_player_count()):
         print(f'ready player {player_number + 1}, aka {our_object.get_player_name(player_number)}')
 
-        our_object.roll_new_five()
-        our_object.ask_player_what_to_keep()
+        dice_object.roll_new_five()
+        while 3 >= dice_object.roll_count:
+            dice_object.ask_player_what_to_keep(our_object)
+            print('done asking what to save')
+            print('now we roll the ones not saved.')
+            dice_object.roll_unsaved_dice()
     print('good round everyone!')
     break
