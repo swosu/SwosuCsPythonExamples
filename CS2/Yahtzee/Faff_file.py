@@ -80,3 +80,8 @@ class User_interactions:
         for die in self.dice_on_table:
             print(f'\t{die}', end = '')
         print()
+
+if __name__ == '__main__':
+    print('you are running Faff_file.py')
+else:
+    print('you have imported Faff_file')

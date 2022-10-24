@@ -1,4 +1,6 @@
 import random
+
+
 class dice_class:
 
     def __init__(self):
@@ -87,3 +89,6 @@ if __name__ == '__main__':
         print('done asking what to save')
         print('now we roll the ones not saved.')
         dice_object.roll_unsaved_dice()
+
+else:
+    print('you imported dice_file')
