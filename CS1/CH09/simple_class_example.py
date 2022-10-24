@@ -1,6 +1,6 @@
 class simple_class:
     def __init__(self):
-        self.data = [1, 2, 3, 4]
+        self.data = [1, 2, 3, 4, 5 ]
 
     def test_print_function(self, number_of_stuff):
         print(f'hello special inside of class {number_of_stuff}.')
