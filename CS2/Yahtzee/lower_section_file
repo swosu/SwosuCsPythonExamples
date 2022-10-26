@@ -1,4 +1,4 @@
-given_dice = [2,2,2,2,2]
+given_dice = [2,2,2,5,5]
 
 ones = [] 
 twoes = []
@@ -24,28 +24,26 @@ print(dice_count)
 
 class lower_section:
     def __init__(self,dice_count,given_dice):
-        self.dice = dice_count
-        self.dice_values = given_dice
+        self.dice_array = dice_count
+        self.dice_actual = given_dice
         self.score = 0
  
     def three_kind(self):
-        for d in self.dice:
-            if d >= 3:
-                for i in self.dice_values:
-                    self.score += i
-        return self.score
+        for d in self.dice_array:
+            if d == 3:
+                
     
     def four_kind(self):
-        for d in self.dice:
-            if d >= 3:
-                for i in self.dice_values:
+        for d in self.dice_array:
+            if d >= 4:
+                for i in self.dice_actual:
                     self.score += i
         return self.score
 
     def full_house(self):
-        for i in self.dice:
+        for i in self.dice_array:
             if i >= 3:
-                for i in self.dice:
+                for i in self.dice_array:
                     if i == 2:
                         self.score = 25
         return self.score
@@ -58,15 +56,16 @@ class lower_section:
         pass                    #define
 
     def yahtzee(self):
-        for i in self.dice:
+        for i in self.dice_array:
             if i == 5:
                 self.score = 50
         return self.score
 
     def Print(self):    #for testing method funcionality
-       print(self.dice)
+       print(self.dice_array)
 
 
 dice = lower_section(dice_count,given_dice)
-#dice.Print()
-print(dice.yahtzee())
+#dice_array.Print()
+print(dice.three_kind())
+print(dice.four_kind())
