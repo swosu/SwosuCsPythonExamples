@@ -16,8 +16,20 @@ class whats_left:
 
 example_input = [2,0,3,0,5,6]
 
-w1 = whats_left(example_input)
 
-w1.no_input_finder()
+if __name__ == '__main__':
+    w1 = whats_left(example_input)
+    w1.no_input_finder()
+else:
+    print('you have imported upper_pad_whats_left')   
+
+
+
+
+
+
+
+
+
 
 
