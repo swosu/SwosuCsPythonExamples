@@ -18,6 +18,7 @@ import ryan_file
 import Faff_file
 import dice_file
 import upperscore_scorepad
+import Scorepad_file
 our_object = Faff_file.User_interactions()
 dice_object = dice_file.dice_class()
 upper_scorecard_object = upperscore_scorepad.singles_possible_scores()
@@ -46,6 +47,8 @@ while True:
             upper_scorecard_object.calculate_scores()
             upper_scorecard_object.print_upper_scorecard_options()
             if 4 == dice_object.roll_count:
-                print('this turn is over.')
+                print('you are out of rolls..')
+                dice_object.print_dice_on_table()
+
     print('good round everyone!')
     break
