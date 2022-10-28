@@ -20,7 +20,7 @@ import dice_file
 import upperscore_scorepad
 our_object = Faff_file.User_interactions()
 dice_object = dice_file.dice_class()
-
+upper_scorecard_object = upperscore_scorepad.singles_possible_scores()
 our_object.say_hello()
 
 our_object.testing_or_playing()
