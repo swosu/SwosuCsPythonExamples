@@ -1,48 +1,54 @@
 #return all possible scores.
-given_dice = [3,3,3,3,3]
+given_dice = [2,2,2,2,2]
 
-ones = [] 
-twoes = []
-threes = []
-fours = []
-fives = []
-sixes = []
-for i in given_dice:
-    if i == 1:
-        ones.append(1)
-    if i == 2:
-        twoes.append(2)
-    if i == 3:
-        threes.append(3)
-    if i == 4:
-        fours.append(4)
-    if i == 5:
-        fives.append(5)
-    if i == 6:
-        sixes.append(6)
-dice_index = [len(ones),len(twoes),len(threes),len(fours),len(fives),len(sixes)]
-print(given_dice)
-print(dice_index)
 
 class lower_section:
-    def __init__(self,dice_index,given_dice): # score system needs to be updated: return independant scores for each method.
-        self.dice_array = dice_index
+    def __init__(self,given_dice): # score system needs to be updated: return independant scores for each method.
         self.dice_actual = given_dice
         self.score = 0
- 
-    def three_kind(self): 
+
+    def dice_count(self):
+        ones = [] 
+        twoes = []
+        threes = []
+        fours = []
+        fives = []
+        sixes = []
+        for i in given_dice:
+            if i == 1:
+                ones.append(1)
+            if i == 2:
+                twoes.append(2)
+            if i == 3:
+                threes.append(3)
+            if i == 4:
+                fours.append(4)
+            if i == 5:
+                fives.append(5)
+            if i == 6:
+                sixes.append(6)
+        
+        self.dice_array = [2,2,2,2,2]
+        print(self.dice_actual)
+        print(self.dice_array)
+
+    def three_kind(self):
+        score = 0 
         for d in self.dice_array:
             if d >= 3:
                 for i in self.dice_actual:
-                    self.score += i
+                    score += i
+                self.score = score
                 return self.score
     
-    def four_kind(self): 
+    def four_kind(self):
+        score = 0 
         for d in self.dice_array:
             if d >= 4:
                 for i in self.dice_actual:
-                    self.score += i
-                return self.score
+                    score += i
+        self.score == score
+        return self.score
         
 
     def full_house(self): 
@@ -64,14 +70,18 @@ class lower_section:
         for i in self.dice_array:
             if i == 5:
                 self.score = 50
-            return self.score
+        return self.score    
+
     
     def chance(self): 
         pass
 
-dice_array = lower_section(dice_index,given_dice)
-print(f'Three of a kind score: {dice_array.three_kind()}')
-print(f'Four of a kind score: {dice_array.four_kind()}')
-print(f'Full house score: {dice_array.full_house()}')
-print(f'Yahtzee score: {dice_array.yahtzee()}')
+    def get_possible_score(self):
+        print('Getting possible scores...')
+        print('Three of a kind: Four of a kind: Full House: Small Straight: Large Straight: Yahtzee:')
+        print(f'{lower_section.three_kind(given_dice)}')
 
+lower_section.three_kind(given_dice)
+
+if __name__ == 'main':
+    lower_section.get_possible_score(given_dice)
