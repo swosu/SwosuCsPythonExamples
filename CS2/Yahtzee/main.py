@@ -17,7 +17,7 @@ import ryan_file
 
 import Faff_file
 import dice_file
-
+import upperscore_scorepad
 our_object = Faff_file.User_interactions()
 dice_object = dice_file.dice_class()
 
@@ -34,6 +34,7 @@ while True:
         print(f'ready player {player_number + 1}, aka {our_object.get_player_name(player_number)}')
 
         dice_object.roll_new_five()
+        upper_scorecard_object.get_possible_scores(dice_object)
         while 3 >= dice_object.roll_count:
             dice_object.ask_player_what_to_keep(our_object)
             print('done asking what to save')
