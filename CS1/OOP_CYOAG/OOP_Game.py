@@ -6,6 +6,7 @@ class Player:
         self.__health = 100
         self.__damage = 10
         self.__name = ''
+        self.__chance = 0
 
     def establish_name(self, player_number):
         self.__name = input(f'what is your name? {player_number}? ')
@@ -17,7 +18,20 @@ class Player:
         self.__health = self.__health - damage
     
     def calculate__random_attack(self):
-        inflicted_damage = random.randint(0, self.__damage)
+        if 3 <= self.__chance:
+            inflicted_damage = random.randint(0, 5 * self.__damage)
+            print(f'{self.__name} yells, \"By the power of castle gray skull!!!\"')
+            self.__chance = 0
+        else:
+            inflicted_damage = random.randint(0, self.__damage)
+
+        if 3 >= inflicted_damage:
+            print(f'{self.__name}, you suck, damage was {inflicted_damage}.')
+        elif 8 < inflicted_damage :
+            print(f'{self.__name}, good hit, damage was {inflicted_damage}.')
+            self.__chance += 1
+        else:
+            print(f'{self.__name}, meh, damage was {inflicted_damage}.')
         return inflicted_damage
 
     def print_status(self):
