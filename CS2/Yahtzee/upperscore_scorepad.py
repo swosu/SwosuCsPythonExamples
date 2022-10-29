@@ -2,6 +2,7 @@ class singles_possible_scores:
     def __init__(self):
         self.dice_input = []
         self.score_vector = [0, 0, 0, 0, 0, 0]
+        self.score_label_vector = ['Ace', 'Duce', 'Tre', 'Quad', 'Fives', 'Sixes']
 
     def load_input_dice(self,incoming_dice):
         self.dice_input = incoming_dice
@@ -9,11 +10,15 @@ class singles_possible_scores:
 
     def print_upper_scorecard_options(self):
         print('here are your scores')
-        print('\nSCORE GROUP\tAce\tDuce\tTre\tQuad\t5s\tSixes')
-        print('SCORE VALUE,', end = '')
-        for score in self.score_vector:
+        print('\nSCORE LABEL:', end = '')
+        for label in self.score_label_vector:
             print(f'\t{score}', end = '')
         print()
+        print('SCORE VALUE:', end = '')
+        for score in self.score_vector:
+            print(f'\t{label}', end = '')
+        print()
+        print('SCORE INDEX:\t1\t2\t3\t4\t5\t6')
     
     def calculate_scores(self):
         #self.dice_input = [1, 2, 2, 5, 5]
