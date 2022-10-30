@@ -72,11 +72,10 @@ class lower_section:
     def get_possible_score(self):
         print('Getting possible scores...')
         print('Three of a kind: Four of a kind: Full House: Small Straight: Large Straight: Yahtzee:')
-        print(f'{lower_section.three_kind(given_dice)}')
 
-given_dice = [2,2,3,3,3]
-dice = lower_section(given_dice)
-dice.dice_count()
 
-#if __name__ == 'main':
-#    lower_section.get_possible_score(given_dice)
+if __name__ == '__main__':
+    given_dice = [2,2,3,3,3]
+    dice = lower_section(given_dice)
+    dice.dice_count()
+    dice.get_possible_score()
