@@ -19,6 +19,7 @@ class Scorepad_class:
         print(f'length of score label vector: {len(upper_scorecard_object.score_label_vector)}.')
         for item in upper_scorecard_object.score_label_vector:
             self.default_score_vector.append('none')
+        print
 
 
 
