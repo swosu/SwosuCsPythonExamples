@@ -12,11 +12,11 @@ class singles_possible_scores:
         print('here are your scores')
         print('\nSCORE LABEL:', end = '')
         for label in self.score_label_vector:
-            print(f'\t{score}', end = '')
+            print(f'\t{label}', end = '')
         print()
         print('SCORE VALUE:', end = '')
         for score in self.score_vector:
-            print(f'\t{label}', end = '')
+            print(f'\t{score}', end = '')
         print()
         print('SCORE INDEX:\t1\t2\t3\t4\t5\t6')
     
