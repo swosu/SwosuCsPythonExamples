@@ -1,7 +1,10 @@
 class Scorepad_class:
-    def __init__(self):
+    def __init__(self, our_object, upper_scorecard_object):
         self.default_score_vector = []
         self.data = []
+        self.score_card = [['none' for column_index in range(len(our_object.player_names))] for row_index in range(1 + len(upper_scorecard_object.score_label_vector))]
+        for column_index in range(0, len(our_object.player_names)):
+            self.score_card[column_index][0] = our_object.player_names[column_index]
     
     def ask_user_which_index_to_keep(self,upper_scorecard_object):
         while True:
@@ -14,29 +17,39 @@ class Scorepad_class:
             if '1' == user_selection:
                 print('got it.')
                 break
+    
     def make_clean_scorecard(self, our_object, upper_scorecard_object):
         print('making a clean score card')
+        print(f'number of names is: {len(our_object.player_names)}.')
         print(f'length of score label vector: {len(upper_scorecard_object.score_label_vector)}.')
-        for item in upper_scorecard_object.score_label_vector:
-            self.default_score_vector.append('none')
-        print
+        for column_index in range(len(our_object.player_names)):
+            print(f'column_inded is {column_index}.')
+            row_index = 0
+            self.score_card [row_index][column_index] = our_object.player_names[column_index]
+            row_index = 1
+            for item in upper_scorecard_object.score_label_vector:
+                self.default_score_vector.append('none')
+
 
 
 
 
 if __name__ == '__main__':
     #print('running scorepad to load a score')
-    scorecard_object = Scorepad_class()
+    
     import Faff_file
     import dice_file
     import upperscore_scorepad
+    import My_Score_File
     upper_scorecard_object = upperscore_scorepad.singles_possible_scores()
     our_object = Faff_file.User_interactions()
     dice_object = dice_file.dice_class()
 
     our_object.player_count = 2
     our_object.player_names = ['Brian', 'Stewie']
+    scorecard_object = Scorepad_class(our_object, upper_scorecard_object)
     scorecard_object.make_clean_scorecard(our_object, upper_scorecard_object)
+    
     print('what are the dice on the table?')
     
     
