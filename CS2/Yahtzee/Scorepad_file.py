@@ -2,6 +2,7 @@ class Scorepad_class:
     def __init__(self, our_object, upper_scorecard_object):
         self.default_score_vector = []
         self.data = []
+        print(f'how many players do we have? {len(our_object.player_names)}')
         self.score_card = [['none' for column_index in range(1 + len(our_object.player_names))] for row_index in range(1 + len(upper_scorecard_object.score_label_vector))]
         self.player_index = 0
     
@@ -11,6 +12,9 @@ class Scorepad_class:
             print('in testing mode.')
             while True:
                 keep_index = random.randint(1, (len(self.score_card) - 1))
+                print(f'keep index was: {keep_index}')
+                print(f'player index is: {self.player_index}.')
+                self.print_score_card()
                 if 'none' == self.score_card[keep_index][self.player_index + 1] :
                     self.score_card[keep_index][self.player_index + 1] = upper_scorecard_object.score_vector[(keep_index - 1)]
                     break

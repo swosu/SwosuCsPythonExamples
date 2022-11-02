@@ -22,6 +22,7 @@ import Scorepad_file
 our_object = Faff_file.User_interactions()
 dice_object = dice_file.dice_class()
 upper_scorecard_object = upperscore_scorepad.singles_possible_scores()
+
 our_object.say_hello()
 
 our_object.testing_or_playing()
@@ -29,9 +30,11 @@ our_object.testing_or_playing()
 our_object.ask_player_count()
 
 our_object.ask_player_names()
+scorecard_object = Scorepad_file.Scorepad_class(our_object, upper_scorecard_object)
 
-while True:
+for round_index in range (0, (len(scorecard_object.score_card) - 1)):
     for player_number in range(0, our_object.get_player_count()):
+        scorecard_object.player_index = player_number
         print(f'ready player {player_number + 1}, aka {our_object.get_player_name(player_number)}')
 
         dice_object.roll_new_five()
@@ -49,6 +52,8 @@ while True:
             if 4 == dice_object.roll_count:
                 print('you are out of rolls..')
                 dice_object.print_dice_on_table()
+        scorecard_object.ask_user_which_index_to_keep(upper_scorecard_object, our_object)
+        scorecard_object.print_score_card()
 
     print('good round everyone!')
-    break
+    #break
