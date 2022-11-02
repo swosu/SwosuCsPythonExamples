@@ -56,6 +56,7 @@ class User_interactions:
             self.player_names.append('susan')
             self.player_names.append('link')
         else:
+            print('scorecard printing looks nicer if you use names with fewer than 8 characters.')
             for item in range(0,self.player_count):
                 name = input(f'Player {item+1}, please enter your name: ')
                 self.player_names.append(name)

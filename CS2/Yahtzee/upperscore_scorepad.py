@@ -2,7 +2,7 @@ class singles_possible_scores:
     def __init__(self):
         self.dice_input = []
         self.score_vector = [0, 0, 0, 0, 0, 0]
-        self.score_label_vector = ['Ace', 'Duce', 'Tre', 'Quad', 'Fives', 'Sixes']
+        self.score_label_vector = ['Aces', 'Twos', 'Threes', 'Fours', 'Fives', 'Sixes']
 
     def load_input_dice(self,incoming_dice):
         self.dice_input = incoming_dice
