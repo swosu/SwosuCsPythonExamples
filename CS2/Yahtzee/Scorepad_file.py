@@ -2,9 +2,7 @@ class Scorepad_class:
     def __init__(self, our_object, upper_scorecard_object):
         self.default_score_vector = []
         self.data = []
-        self.score_card = [['none' for column_index in range(len(our_object.player_names))] for row_index in range(1 + len(upper_scorecard_object.score_label_vector))]
-        for column_index in range(0, len(our_object.player_names)):
-            self.score_card[column_index][0] = our_object.player_names[column_index]
+        self.score_card = [['none' for column_index in range(1 + len(our_object.player_names))] for row_index in range(1 + len(upper_scorecard_object.score_label_vector))]
     
     def ask_user_which_index_to_keep(self,upper_scorecard_object):
         while True:
@@ -17,22 +15,31 @@ class Scorepad_class:
             if '1' == user_selection:
                 print('got it.')
                 break
-    
-    def make_clean_scorecard(self, our_object, upper_scorecard_object):
-        print('making a clean score card')
-        print(f'number of names is: {len(our_object.player_names)}.')
-        print(f'length of score label vector: {len(upper_scorecard_object.score_label_vector)}.')
-        for column_index in range(len(our_object.player_names)):
-            print(f'column_inded is {column_index}.')
-            row_index = 0
-            self.score_card [row_index][column_index] = our_object.player_names[column_index]
-            row_index = 1
-            for item in upper_scorecard_object.score_label_vector:
-                self.default_score_vector.append('none')
+
+    def initilize_score_card(self, upper_scorecard_object):
+        print('going to put in names')
+        self.score_card[0][0] = 'name'
+        for column_index in range(0, len(our_object.player_names)):
+            self.score_card[0][column_index + 1] = our_object.player_names[column_index]
+        
+        print('adding score labels')
+        print(f'length {len(self.score_card)}.')
+        for row_index in range (0, (len(self.score_card) -1)):
+            print(f'row index: {row_index}.')
+            print(self.score_card)
+            self.score_card[row_index + 1][0] = upper_scorecard_object.score_label_vector[row_index]
 
 
 
 
+    def print_score_card(self):
+        print('printing score card.')
+        print(self.score_card)
+        #for column_index in range (0, len(self.score_card)):
+            #for row_index in range (0, len(self.score_card[0])):
+                #print(f'{column_index}, {row_index}', end = '')
+                #print(self.score_card[column_index][row_index])
+        
 
 if __name__ == '__main__':
     #print('running scorepad to load a score')
@@ -48,18 +55,19 @@ if __name__ == '__main__':
     our_object.player_count = 2
     our_object.player_names = ['Brian', 'Stewie']
     scorecard_object = Scorepad_class(our_object, upper_scorecard_object)
-    scorecard_object.make_clean_scorecard(our_object, upper_scorecard_object)
+    scorecard_object.initilize_score_card(upper_scorecard_object)
+    scorecard_object.print_score_card()
     
-    print('what are the dice on the table?')
+    #print('what are the dice on the table?')
     
     
-    dice_object.roll_new_five()
+    #dice_object.roll_new_five()
 
-    print('what is the score options?')
+    #print('what is the score options?')
     
-    upper_scorecard_object.load_input_dice(dice_object.dice_on_table)
-    upper_scorecard_object.calculate_scores()
-    upper_scorecard_object.print_upper_scorecard_options()
+    #upper_scorecard_object.load_input_dice(dice_object.dice_on_table)
+    #upper_scorecard_object.calculate_scores()
+    #upper_scorecard_object.print_upper_scorecard_options()
 
     
-    scorecard_object.ask_user_which_index_to_keep(upper_scorecard_object)
+    #scorecard_object.ask_user_which_index_to_keep(upper_scorecard_object)
