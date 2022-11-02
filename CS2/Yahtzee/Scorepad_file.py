@@ -16,8 +16,11 @@ class Scorepad_class:
             user_selection = input('press 1 if correct, else enter something else.')
             if '1' == user_selection:
                 print('got it.')
-                self.score_card[keep_index][self.player_index + 1] = upper_scorecard_object.score_vector[(keep_index - 1)]
-                break
+                if 'none' == self.score_card[keep_index][self.player_index + 1] :
+                    self.score_card[keep_index][self.player_index + 1] = upper_scorecard_object.score_vector[(keep_index - 1)]
+                    break
+                else:
+                    print('that score is not availible, please try again.')
 
     def initilize_score_card(self, upper_scorecard_object):
         #print('going to put in names')
@@ -48,7 +51,6 @@ if __name__ == '__main__':
     import Faff_file
     import dice_file
     import upperscore_scorepad
-    import My_Score_File
     upper_scorecard_object = upperscore_scorepad.singles_possible_scores()
     our_object = Faff_file.User_interactions()
     dice_object = dice_file.dice_class()
@@ -59,19 +61,19 @@ if __name__ == '__main__':
     scorecard_object.initilize_score_card(upper_scorecard_object)
     scorecard_object.print_score_card()
 
-    for player_index in range (0, len(our_object.player_names)):
-        scorecard_object.player_index = player_index
-        print(f'Player number {player_index + 1}, aka {our_object.player_names[player_index]}, you are up!')
+    for round_index in range(1, (len(scorecard_object.score_card) -1)):
+        for player_index in range (0, len(our_object.player_names)):
+            scorecard_object.player_index = player_index
+            print(f'Player number {player_index + 1}, aka {our_object.player_names[player_index]}, you are up!')
+        
+            #print('what are the dice on the table?')
+            dice_object.roll_new_five()
+            dice_object.print_dice_on_table()
 
-    
-        #print('what are the dice on the table?')
-        dice_object.roll_new_five()
-        dice_object.print_dice_on_table()
-
-        print('what are the score options?')
-    
-        upper_scorecard_object.load_input_dice(dice_object.dice_on_table)
-        upper_scorecard_object.calculate_scores()
-        #upper_scorecard_object.print_upper_scorecard_options()
-        scorecard_object.ask_user_which_index_to_keep(upper_scorecard_object)
-        scorecard_object.print_score_card()
+            print('what are the score options?')
+        
+            upper_scorecard_object.load_input_dice(dice_object.dice_on_table)
+            upper_scorecard_object.calculate_scores()
+            #upper_scorecard_object.print_upper_scorecard_options()
+            scorecard_object.ask_user_which_index_to_keep(upper_scorecard_object)
+            scorecard_object.print_score_card()
