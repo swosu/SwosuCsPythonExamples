@@ -5,22 +5,31 @@ class Scorepad_class:
         self.score_card = [['none' for column_index in range(1 + len(our_object.player_names))] for row_index in range(1 + len(upper_scorecard_object.score_label_vector))]
         self.player_index = 0
     
-    def ask_user_which_index_to_keep(self,upper_scorecard_object):
-        while True:
-            upper_scorecard_object.print_upper_scorecard_options()
-            print('please select only 1 score.')
-            keep_index = int(input('which score input would you like to keep?'))
-            print(f'you entered {keep_index}')
-            print(f'this is {upper_scorecard_object.score_vector[(keep_index - 1)]}')
-            #print(f'type of score vector is {type(upper_scorecard_object.score_vector)}')
-            user_selection = input('press 1 if correct, else enter something else.')
-            if '1' == user_selection:
-                print('got it.')
+    def ask_user_which_index_to_keep(self,upper_scorecard_object, our_object):
+        import random
+        if our_object.testing:
+            print('in testing mode.')
+            while True:
+                keep_index = random.randint(1, (len(self.score_card) - 1))
                 if 'none' == self.score_card[keep_index][self.player_index + 1] :
                     self.score_card[keep_index][self.player_index + 1] = upper_scorecard_object.score_vector[(keep_index - 1)]
                     break
-                else:
-                    print('that score is not availible, please try again.')
+        else:
+            while True:
+                upper_scorecard_object.print_upper_scorecard_options()
+                print('please select only 1 score.')
+                keep_index = int(input('which score input would you like to keep?'))
+                print(f'you entered {keep_index}')
+                print(f'this is {upper_scorecard_object.score_vector[(keep_index - 1)]}')
+                #print(f'type of score vector is {type(upper_scorecard_object.score_vector)}')
+                user_selection = input('press 1 if correct, else enter something else.')
+                if '1' == user_selection:
+                    print('got it.')
+                    if 'none' == self.score_card[keep_index][self.player_index + 1] :
+                        self.score_card[keep_index][self.player_index + 1] = upper_scorecard_object.score_vector[(keep_index - 1)]
+                        break
+                    else:
+                        print('that score is not availible, please try again.')
 
     def initilize_score_card(self, upper_scorecard_object):
         #print('going to put in names')
@@ -61,7 +70,9 @@ if __name__ == '__main__':
     scorecard_object.initilize_score_card(upper_scorecard_object)
     scorecard_object.print_score_card()
 
-    for round_index in range(1, (len(scorecard_object.score_card) -1)):
+    our_object.testing = True
+
+    for round_index in range(1, (len(scorecard_object.score_card))):
         for player_index in range (0, len(our_object.player_names)):
             scorecard_object.player_index = player_index
             print(f'Player number {player_index + 1}, aka {our_object.player_names[player_index]}, you are up!')
@@ -75,5 +86,7 @@ if __name__ == '__main__':
             upper_scorecard_object.load_input_dice(dice_object.dice_on_table)
             upper_scorecard_object.calculate_scores()
             #upper_scorecard_object.print_upper_scorecard_options()
-            scorecard_object.ask_user_which_index_to_keep(upper_scorecard_object)
+            scorecard_object.ask_user_which_index_to_keep(upper_scorecard_object, our_object)
             scorecard_object.print_score_card()
+
+    our_object.testing = True
