@@ -5,15 +5,15 @@
 # https://www.pythonpool.com/python-class-vs-module/
 
 
-import kendell_file
-import jeremy_file
-import kylar_file
-import Josh_file
-import jessie_file
-import Dalton_File
-import jarett_file
-import spencer_file
-import ryan_file
+#import kendell_file
+#import jeremy_file
+#import kylar_file
+#import Josh_file
+#import jessie_file
+#import Dalton_File
+#import jarett_file
+#import spencer_file
+#import ryan_file
 
 import Faff_file
 import dice_file
