@@ -3,7 +3,7 @@ class lower_section:
 
     def __init__(self,given_dice):
         self.dice_actual = given_dice
-        self.score = 0
+        self.scores = [0,0,0,0,0,0,0] #needs to be 7 values.
 
     def dice_count(self):
         ones = []
@@ -26,56 +26,34 @@ class lower_section:
             if die == 6:
                 sixes.append(6)
         self.dice_array = [len(ones),len(twoes),len(threes),len(fours),len(fives),len(sixes)]
-        print(f'Dice count {self.dice_array}')
 
-    def three_kind(self):
-        for a in self.dice_array:
-            if a >= 3:
-                self.score = 3
-            return self.score
-    
-    def four_kind(self):
-        score = 0 
-        for die in self.dice_array:
-            if die >= 4:
-                for i in self.dice_actual:
-                    score += i
-        self.score == score
-        return self.score
-        
-
-    def full_house(self): 
-        for i in self.dice_array:
+    def score_scanner(self):
+        print('Getting scores...')
+        for i in self.dice_array: #checking for three of a kind -working
             if i >= 3:
+                score = 0
+                for die in self.dice_actual:
+                    score  += die
+                self.scores[0] = score
+        for i in self.dice_array: #checking for four of a kind
+            if i >= 4:
+                score = 0
+                for die in self.dice_actual:
+                    score += die
+                self.scores[1] = score
+        for i in self.dice_array: #checking for Fullhouse
+            if i == 3:
                 for i in self.dice_array:
                     if i == 2:
-                        self.score = 25
-                return self.score
-    
-    def small_straight(self):
-        
-        pass                    #define
-    
-    def large_straight(self):
-        pass                    #define
-
-    def yahtzee(self):
-        for i in self.dice_array:
+                        self.scores[2] = 25 #add checks for large/small straight below
+        for i in self.dice_array: #checking for yahtzee
             if i == 5:
-                self.score = 50
-        return self.score    
-
-    
-    def chance(self): 
-        pass
-
-    def get_possible_score(self):
-        print('Getting possible scores...')
-        print('Three of a kind: Four of a kind: Full House: Small Straight: Large Straight: Yahtzee:')
-
+                self.scores[4] = 50
+        print(f'Score scanner output: {self.scores}') #testing for output
 
 if __name__ == '__main__':
-    given_dice = [2,2,3,3,3]
-    dice = lower_section(given_dice)
-    dice.dice_count()
-    dice.get_possible_score()
+    given_dice = [3,3,3,3,3]
+    score = lower_section(given_dice)
+    score.dice_count()
+    score.score_scanner()
+
