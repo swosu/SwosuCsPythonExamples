@@ -35,7 +35,7 @@ class Scorepad_class:
                     else:
                         print('that score is not availible, please try again.')
 
-    def initilize_score_card(self, upper_scorecard_object):
+    def initilize_score_card(self, our_object, upper_scorecard_object):
         #print('going to put in names')
         self.score_card[0][0] = ''
         for column_index in range(0, len(our_object.player_names)):
@@ -68,10 +68,10 @@ if __name__ == '__main__':
     our_object = Faff_file.User_interactions()
     dice_object = dice_file.dice_class()
 
-    our_object.player_count = 3
-    our_object.player_names = ['Brian', '1234567', 'Carol']
+    #our_object.player_count = 3
+    our_object.player_names = ['Brian', 'Link', 'Carol']
     scorecard_object = Scorepad_class(our_object, upper_scorecard_object)
-    scorecard_object.initilize_score_card(upper_scorecard_object)
+    scorecard_object.initilize_score_card(our_object, upper_scorecard_object)
     scorecard_object.print_score_card()
 
     our_object.testing = True
@@ -93,4 +93,3 @@ if __name__ == '__main__':
             scorecard_object.ask_user_which_index_to_keep(upper_scorecard_object, our_object)
             scorecard_object.print_score_card()
 
-    our_object.testing = True

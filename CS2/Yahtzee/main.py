@@ -31,8 +31,10 @@ our_object.ask_player_count()
 
 our_object.ask_player_names()
 scorecard_object = Scorepad_file.Scorepad_class(our_object, upper_scorecard_object)
+scorecard_object.initilize_score_card(our_object, upper_scorecard_object)
+scorecard_object.print_score_card()
 
-for round_index in range (0, (len(scorecard_object.score_card) - 6)):
+for round_index in range (0, (len(scorecard_object.score_card) - 1)):
     for player_number in range(0, our_object.get_player_count()):
         scorecard_object.player_index = player_number
         print(f'ready player {player_number + 1}, aka {our_object.get_player_name(player_number)}')
@@ -41,7 +43,7 @@ for round_index in range (0, (len(scorecard_object.score_card) - 6)):
         upper_scorecard_object.load_input_dice(dice_object.dice_on_table)
         upper_scorecard_object.calculate_scores()
         upper_scorecard_object.print_upper_scorecard_options()
-        while 1 >= dice_object.roll_count:
+        while 3 >= dice_object.roll_count:
             dice_object.ask_player_what_to_keep(our_object)
             print('done asking what to save')
             print('now we roll the ones not saved.')
