@@ -32,7 +32,7 @@ our_object.ask_player_count()
 our_object.ask_player_names()
 scorecard_object = Scorepad_file.Scorepad_class(our_object, upper_scorecard_object)
 
-for round_index in range (0, (len(scorecard_object.score_card) - 1)):
+for round_index in range (0, (len(scorecard_object.score_card) - 6)):
     for player_number in range(0, our_object.get_player_count()):
         scorecard_object.player_index = player_number
         print(f'ready player {player_number + 1}, aka {our_object.get_player_name(player_number)}')

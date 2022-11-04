@@ -68,7 +68,7 @@ if __name__ == '__main__':
     our_object = Faff_file.User_interactions()
     dice_object = dice_file.dice_class()
 
-    our_object.player_count = 2
+    our_object.player_count = 3
     our_object.player_names = ['Brian', '1234567', 'Carol']
     scorecard_object = Scorepad_class(our_object, upper_scorecard_object)
     scorecard_object.initilize_score_card(upper_scorecard_object)

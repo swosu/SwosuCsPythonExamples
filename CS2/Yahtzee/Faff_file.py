@@ -35,7 +35,7 @@ class User_interactions:
 
     def ask_player_count(self):
         if self.testing:
-            player_count = 3
+            player_count = 2
         else:
             player_count = input('hello, how many players would you like?')
 
@@ -51,10 +51,11 @@ class User_interactions:
         return self.player_count
 
     def ask_player_names(self):
+        # note: If there are 2 players, but 3 names, there should be an issue.
         if self.testing:
             self.player_names.append('bob')
             self.player_names.append('susan')
-            self.player_names.append('link')
+            #self.player_names.append('link')
         else:
             print('scorecard printing looks nicer if you use names with fewer than 8 characters.')
             for item in range(0,self.player_count):
