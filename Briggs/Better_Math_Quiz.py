@@ -2,12 +2,12 @@ print('we can make a guess the number game.')
 
 import random
 import time
-
 score = 0
 print('starting the clock.')
 start_time = time.time()
+questions = 10
 
-for round in range(0, 10):
+for round in range(0, questions):
 
     number_one = random.randint(0,10)
     number_two = random.randint(0,50)
@@ -33,9 +33,9 @@ print(f'Time was: {time.time() - start_time} seconds.')
 print(f'your score was: {score}.')
 if questions == score:
     print('that was a perfect score')
-elif 7 < score:
+elif (questions/2) < score:
     print('that was pretty good.')
-elif 3 < score:
+elif (questions/4) < score:
     print('maybe you need a snack.')
 else:
     print('maybe you should try a different computer...')
