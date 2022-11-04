@@ -16,11 +16,11 @@ while True:
     if user_guess.isnumeric():
         user_guess = int(user_guess)
         if user_guess < correct_number:
-            print('that was too low, guess again...')
+            print('that was too low')
         elif user_guess > correct_number:
-            print('too high, guess again...')
+            print('too high')
         elif user_guess == correct_number:
             print('that was correct!')
             break
     else:
-        print('that was not a good guess. Guess again.')
+        print('that was not a good guess.')
