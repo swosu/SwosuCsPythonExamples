@@ -21,12 +21,12 @@ for round in range(0, questions):
         if user_guess < correct_number:
             print('that was too low')
         elif user_guess > correct_number:
-            print('too high, guess again...')
+            print('too high')
         elif user_guess == correct_number:
             print('that was correct!')
             score = score + 1
     else:
-        print('that was not a good guess. Guess again.')
+        print('that was not a good guess.')
 
 print('stop the clock.')
 print(f'Time was: {time.time() - start_time} seconds.')
