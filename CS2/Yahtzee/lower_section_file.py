@@ -1,11 +1,14 @@
 #return all possible scores.
+import Faff_file
 class lower_section:
 
-    def __init__(self,given_dice):
-        self.dice_actual = given_dice
+    def __init__(self):
+        self.dice_actual = []
         self.scores = [0,0,0,0,0,0,0] #needs to be 7 values.
 
-    def dice_count(self):
+    def dice_count(self,given_dice): #creates matching dice index and sorts dice 
+        self.dice_actual = given_dice
+        self.dice_actual.sort()
         ones = []
         twoes = []
         threes = []
@@ -26,11 +29,11 @@ class lower_section:
             if die == 6:
                 sixes.append(6)
         self.dice_array = [len(ones),len(twoes),len(threes),len(fours),len(fives),len(sixes)]
-        #print(self.dice_array)
+        #print(f'Your dice value index looks like: {self.dice_array}')
 
     def score_scanner(self):
-        print('Getting scores...')
-        for i in self.dice_array: #checking for three of a kind -working
+        print(self.dice_actual)
+        for i in self.dice_array: #checking for three of a kind 
             if i >= 3:
                 score = 0
                 for die in self.dice_actual:
@@ -47,29 +50,35 @@ class lower_section:
                 for i in self.dice_array:
                     if i == 2:
                         self.scores[2] = 25 
-        score = 0
-        for i in self.dice_array:  # checks for small straight/large straight      
-            if i == 1:
-                score+= 1
-                if i != 1:
-                    score = 0
-                if score >= 4:
-                    self.scores[3] = 30
-                if score == 5:
-                    self.scores[4] = 40
+        count = 0
+        index = 1
+        for i in self.dice_actual: # checks for small straight()/large straight
+            if index != 5:
+                if (i + 1) == self.dice_actual[index]:
+                    index += 1
+                    count += 1
+                    if count >= 3:
+                        self.scores[3] = 30
+                    if count >= 4:
+                        self.scores[4] = 40  
         for i in self.dice_array: #checking for yahtzee
             if i == 5:
                 self.scores[5] = 50
         score = 0
         for i in self.dice_actual: #Chance
             score += i
-            self.scores[6] = score  
+            self.scores[6] = score 
         return self.scores
-
+    
+    def Test_Straights(self):
+        self.dice_count([3,5,4,1,2])
+        self.score_scanner()
+        print(self.scores)
+        if self.scores != [0, 0, 0, 30, 40, 0, 15]:
+            print('Straights test failed!')
+        else:
+            print('Straights test passed!')
+        
 if __name__ == '__main__':
-    given_dice = [2,3,4,5,6]
-    score = lower_section(given_dice)
-    score.dice_count()
-    score.score_scanner()
-    #print(score.score_scanner())
-
+    Possible_Scores = lower_section()
+    Possible_Scores.Test_Straights()
