@@ -19,6 +19,8 @@ import Faff_file
 import dice_file
 import upperscore_scorepad
 import Scorepad_file
+import lower_section_file
+
 our_object = Faff_file.User_interactions()
 dice_object = dice_file.dice_class()
 upper_scorecard_object = upperscore_scorepad.singles_possible_scores()
