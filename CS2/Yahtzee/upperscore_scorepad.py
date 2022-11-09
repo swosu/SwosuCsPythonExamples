@@ -2,11 +2,24 @@ class singles_possible_scores:
     def __init__(self):
         self.dice_input = []
         self.score_vector = [0, 0, 0, 0, 0, 0]
+        self.score_label_vector = ['Aces', 'Twos', 'Threes', 'Fours', 'Fives', 'Sixes']
 
     def load_input_dice(self,incoming_dice):
         self.dice_input = incoming_dice
         print(f'our incoming dice are: {self.dice_input}.')
 
+    def print_upper_scorecard_options(self):
+        print('here are your scores')
+        print('\nSCORE LABEL:', end = '')
+        for label in self.score_label_vector:
+            print(f'\t{label}', end = '')
+        print()
+        print('SCORE VALUE:', end = '')
+        for score in self.score_vector:
+            print(f'\t{score}', end = '')
+        print()
+        print('SCORE INDEX:\t1\t2\t3\t4\t5\t6')
+    
     def calculate_scores(self):
         #self.dice_input = [1, 2, 2, 5, 5]
         self.score_vector = [0, 0, 0, 0, 0, 0]
@@ -48,10 +61,10 @@ class singles_possible_scores:
                 self.score_vector[5] = count*6
                 
     def test_ones(self):
-        our_object.load_input_dice([0, 1, 1, 1, 1])
-        our_object.calculate_scores()
-        print(our_object.score_vector)
-        if[4, 0, 0, 0, 0, 0] == our_object.score_vector:
+        self.load_input_dice([2, 1, 1, 1, 1])
+        self.calculate_scores()
+        print(self.score_vector)
+        if[4, 2, 0, 0, 0, 0] == self.score_vector:
             print('ones test passed.')
         else:
             print('ones test failed.')
@@ -59,19 +72,19 @@ class singles_possible_scores:
 
 
     def test_twos(self):
-        our_object.load_input_dice([2, 1, 2, 2, 2])
-        our_object.calculate_scores()
-        print(our_object.score_vector)
-        if[0, 8, 0, 0, 0, 0] == our_object.score_vector:
+        self.load_input_dice([2, 1, 2, 2, 2])
+        self.calculate_scores()
+        print(self.score_vector)
+        if[1, 8, 0, 0, 0, 0] == self.score_vector:
             print('twos test passed.')
         else:
             print('twos test failed.')
 
     def test_threes(self):
-        our_object.load_input_dice([3, 3, 2, 3, 3])
-        our_object.calculate_scores()
-        print(our_object.score_vector)
-        if[0, 0, 12, 0, 0, 0] == our_object.score_vector:
+        self.load_input_dice([3, 3, 2, 3, 3])
+        self.calculate_scores()
+        print(self.score_vector)
+        if[0, 2, 12, 0, 0, 0] == self.score_vector:
             print('threes test passed.')
         else:
             print('threes test failed.')
@@ -81,4 +94,3 @@ if __name__ == '__main__':
     our_object.test_ones()
     our_object.test_twos()
     our_object.test_threes()
-
