@@ -30,6 +30,7 @@ noun = questions_for_madlib.question_5()
 food = questions_for_madlib.question_6()
 second_noun = questions_for_madlib.question_7()
 ing_verb = questions_for_madlib.question_8()
+full_credit = questions_for_madlib.question_9()
 
 
 print('My name is', person_in_room, ' and I am', number,\
@@ -44,3 +45,5 @@ print('\t2. Everyone would eat pepperoni', food, 'for dinner.')
 
 print('\t3. I would live in the statue of', second_noun,\
 ' and build a', ing_verb, ' pool at her feet.')
+
+print(f'\t4. For full credit: {full_credit[::-1]}, and they had {full_credit[::0]}')
