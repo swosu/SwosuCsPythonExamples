@@ -5,6 +5,18 @@
 # https://www.pythonpool.com/python-class-vs-module/
 
 
+<<<<<<< HEAD
+import kendell_file
+import jeremy_file
+import kylar_file
+import Josh_file
+import jessie_file
+import Dalton_File
+import jarett_file
+import spencer_file
+import ryan_file
+import trevor_file
+=======
 #import kendell_file
 #import jeremy_file
 #import kylar_file
@@ -15,10 +27,13 @@
 #import spencer_file
 #import ryan_file
 
+>>>>>>> c7de0f8bcb6d1284c130038bf273184f050ead7e
 import Faff_file
 import dice_file
 import upperscore_scorepad
 import Scorepad_file
+import lower_section_file
+
 our_object = Faff_file.User_interactions()
 dice_object = dice_file.dice_class()
 upper_scorecard_object = upperscore_scorepad.singles_possible_scores()

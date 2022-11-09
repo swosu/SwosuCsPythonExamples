@@ -94,4 +94,3 @@ if __name__ == '__main__':
     our_object.test_ones()
     our_object.test_twos()
     our_object.test_threes()
-
