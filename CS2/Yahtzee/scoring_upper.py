@@ -19,10 +19,6 @@ class whats_left:
 
 
 if __name__ == '__main__':
-    def __init__(self):
-        self.dice_input = []
-        self.score_vector = [0, 0, 0, 0, 0, 0]
-        self.score_label_vector = ['Aces', 'Twos', 'Threes', 'Fours', 'Fives', 'Sixes']
 
     import dice_file
     import upperscore_scorepad
