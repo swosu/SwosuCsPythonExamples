@@ -4,6 +4,9 @@ class whats_left:
         self.dice_input = dice_input
         self.counter = 0
         self.singles_array = []
+        self.score_vector = []
+
+
 
     def no_input_finder(self):
         for i in self.dice_input:
@@ -16,6 +19,11 @@ class whats_left:
 
 
 if __name__ == '__main__':
+    def __init__(self):
+        self.dice_input = []
+        self.score_vector = [0, 0, 0, 0, 0, 0]
+        self.score_label_vector = ['Aces', 'Twos', 'Threes', 'Fours', 'Fives', 'Sixes']
+
     import dice_file
     import upperscore_scorepad
     upper_scorecard_object = upperscore_scorepad.singles_possible_scores()
@@ -26,8 +34,8 @@ if __name__ == '__main__':
     upper_scorecard_object.print_upper_scorecard_options()
 
 
-    example_input = [2,0,3,0,5,6]
 
-    w1 = whats_left(example_input)
+
+    w1 = whats_left(upper_scorecard_object.score_vector)
 
     w1.no_input_finder()
