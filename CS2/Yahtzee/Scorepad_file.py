@@ -1,9 +1,10 @@
 class Scorepad_class:
-    def __init__(self, our_object, upper_scorecard_object):
+    def __init__(self, our_object, upper_scorecard_object,possible_scores):
         self.default_score_vector = []
         self.data = []
-        print(f'how many players do we have? {len(our_object.player_names)}')
-        self.score_card = [['none' for column_index in range(1 + len(our_object.player_names))] for row_index in range(1 + len(upper_scorecard_object.score_label_vector))]
+        #print(f'how many players do we have? {len(our_object.player_names)}')
+        self.score_card = [['none' for column_index in range(1 + len(our_object.player_names))] \
+            for row_index in range(1 + (len(possible_scores.score_label_vector) + len(upper_scorecard_object.score_label_vector))) ] #integrate to have possible_scores print with scorepad, look at upper_scorepad for refrence
         self.player_index = 0
     
     def ask_user_which_index_to_keep(self,upper_scorecard_object, our_object):

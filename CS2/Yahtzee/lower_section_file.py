@@ -7,6 +7,7 @@ class lower_section:
     def __init__(self):
         self.dice_actual = []
         self.scores = [0,0,0,0,0,0,0] #need 7 values.
+        self.score_label_vector = ['Three of a kind', 'Four of a kind', 'Full House', 'Small Straight', 'Large Straight', 'Yahtzee', 'Chance']
     
     def take_dice(self, given_dice):
          self.dice_actual = given_dice
