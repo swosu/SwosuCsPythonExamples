@@ -137,7 +137,7 @@ class lower_section:
 if __name__ == '__main__':
     possible_scores = lower_section()
     #possible_scores.test()
-    possible_scores.take_dice([2,2,2,3,3])
+    possible_scores.take_dice([4,4,4,4,4])
     possible_scores.dice_count()
     possible_scores.score_scanner()
     possible_scores.print_lower_scorecard_options()
