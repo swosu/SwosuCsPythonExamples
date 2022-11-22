@@ -94,4 +94,6 @@ if __name__ == '__main__':
     our_object.test_ones()
     our_object.test_twos()
     our_object.test_threes()
-
+    test_object = singles_possible_scores()
+    test_object.load_input_dice([1,2,2,3,4,])
+    test_object.print_upper_scorecard_options()
