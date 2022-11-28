@@ -9,6 +9,7 @@ class whats_left:
         self.player_index = player_index
 
     def possible_player_inputs(self):
+<<<<<<< HEAD
         
         for x in range (1, (len(self.scorepad_input))):
             if self.scorepad_input[x][self.player_index + 1] == "none":
@@ -39,6 +40,38 @@ our_object.say_hello()
 
 our_object.testing_or_playing()
 
+=======
+
+        for x in range (1, (len(self.scorepad_input))):
+            if self.scorepad_input[x][self.player_index + 1] == "none":
+             self.singles_array.append(self.scorepad_input[x][0])
+
+        print(f'Possible Singles for {self.scorepad_input[0][self.player_index + 1]}: {self.singles_array}')
+
+
+
+
+example_score =[['', 'Brian', 'Link', 'Carol'], ['Aces', 'none', 1, 'none'], ['Twos', 'none', 2, 'none'], ['Threes', 'none', 3, 'none'], ['Fours', 'none', 4, 'none'], ['Fives', 'none', 'none', 'none'], ['Sixes', 'none', 'none', 'none']]
+
+if __name__ == '__main__':
+    """
+    whats_left = whats_left()
+    whats_left.load_input(example_score, 1)
+    whats_left.possible_player_inputs()
+    """
+import Faff_file
+import dice_file
+import upperscore_scorepad
+import Scorepad_file
+our_object = Faff_file.User_interactions()
+dice_object = dice_file.dice_class()
+upper_scorecard_object = upperscore_scorepad.singles_possible_scores()
+
+our_object.say_hello()
+
+our_object.testing_or_playing()
+
+>>>>>>> trevor
 our_object.ask_player_count()
 
 our_object.ask_player_names()
@@ -70,4 +103,8 @@ for round_index in range (0, (len(scorecard_object.score_card) - 1)):
         scorecard_object.ask_user_which_index_to_keep(upper_scorecard_object, our_object)
         scorecard_object.print_score_card()
 
+<<<<<<< HEAD
     print('good round everyone!')
+=======
+    print('good round everyone!')
+>>>>>>> trevor
