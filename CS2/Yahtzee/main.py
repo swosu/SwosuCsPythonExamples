@@ -5,10 +5,11 @@
 # https://www.pythonpool.com/python-class-vs-module/
 
 
-<<<<<<< HEAD
-#<<<<<<< HEAD
-=======
->>>>>>> e1df5d48acafee6a1437dc5da88dae69bd71936b
+
+
+
+
+
 #import kendell_file
 #import jeremy_file
 #import kylar_file
@@ -19,10 +20,12 @@
 #import spencer_file
 #import ryan_file
 #import trevor_file
-<<<<<<< HEAD
-#=======
-=======
->>>>>>> e1df5d48acafee6a1437dc5da88dae69bd71936b
+
+
+
+
+
+
 #import kendell_file
 #import jeremy_file
 #import kylar_file
@@ -31,12 +34,7 @@
 #import Dalton_File
 #import jarett_file
 #import spencer_file
-#import ryan_file
 
-<<<<<<< HEAD
-#>>>>>>> c7de0f8bcb6d1284c130038bf273184f050ead7e
-=======
->>>>>>> e1df5d48acafee6a1437dc5da88dae69bd71936b
 import Faff_file
 import dice_file
 import upperscore_scorepad
