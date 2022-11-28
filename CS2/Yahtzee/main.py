@@ -37,6 +37,7 @@ import lower_section_file
 our_object = Faff_file.User_interactions()
 dice_object = dice_file.dice_class()
 upper_scorecard_object = upperscore_scorepad.singles_possible_scores()
+lower_section_scores = lower_section_file.lower_section()
 
 our_object.say_hello()
 
@@ -45,8 +46,8 @@ our_object.testing_or_playing()
 our_object.ask_player_count()
 
 our_object.ask_player_names()
-scorecard_object = Scorepad_file.Scorepad_class(our_object, upper_scorecard_object)
-scorecard_object.initilize_score_card(our_object, upper_scorecard_object)
+scorecard_object = Scorepad_file.Scorepad_class(our_object, upper_scorecard_object,lower_section_scores)
+scorecard_object.initilize_score_card(our_object, upper_scorecard_object,lower_section_scores)
 scorecard_object.print_score_card()
 
 for round_index in range (0, (len(scorecard_object.score_card) - 1)):
@@ -58,6 +59,9 @@ for round_index in range (0, (len(scorecard_object.score_card) - 1)):
         upper_scorecard_object.load_input_dice(dice_object.dice_on_table)
         upper_scorecard_object.calculate_scores()
         upper_scorecard_object.print_upper_scorecard_options()
+        lower_section_scores.take_dice(dice_object.dice_on_table)
+        lower_section_scores.dice_count()
+        lower_section_scores.score_scanner()
         while 3 >= dice_object.roll_count:
             dice_object.ask_player_what_to_keep(our_object)
             print('done asking what to save')
