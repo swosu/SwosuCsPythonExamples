@@ -2,11 +2,24 @@ class singles_possible_scores:
     def __init__(self):
         self.dice_input = []
         self.score_vector = [0, 0, 0, 0, 0, 0]
+        self.score_label_vector = ['Aces', 'Twos', 'Threes', 'Fours', 'Fives', 'Sixes']
 
     def load_input_dice(self,incoming_dice):
         self.dice_input = incoming_dice
         print(f'our incoming dice are: {self.dice_input}.')
 
+    def print_upper_scorecard_options(self):
+        print('here are your scores')
+        print('\nSCORE LABEL:', end = '')
+        for label in self.score_label_vector:
+            print(f'\t{label}', end = '')
+        print()
+        print('SCORE VALUE:', end = '')
+        for score in self.score_vector:
+            print(f'\t{score}', end = '')
+        print()
+        print('SCORE INDEX:\t1\t2\t3\t4\t5\t6')
+    
     def calculate_scores(self):
         #self.dice_input = [1, 2, 2, 5, 5]
         self.score_vector = [0, 0, 0, 0, 0, 0]
@@ -81,4 +94,6 @@ if __name__ == '__main__':
     our_object.test_ones()
     our_object.test_twos()
     our_object.test_threes()
-
+    test_object = singles_possible_scores()
+    test_object.load_input_dice([1,2,2,3,4,])
+    test_object.print_upper_scorecard_options()

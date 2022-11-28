@@ -60,7 +60,7 @@ import time
 
 recursive_data = Data_tracker()
 
-number_of_terms = 50
+number_of_terms = int(input('how many terms would you like?'))
 
 recursive_data.start_time = time.time()
 
@@ -91,11 +91,13 @@ count = 0
 
 # check if the number of terms is valid
 if number_of_terms <= 0:
-   print("Please enter a positive integer")
+    iterative_data.start_time = time.time()
+    print("Please enter a positive integer")
 # if there is only one term, return n1
 elif number_of_terms == 1:
-   print("Fibonacci sequence upto",number_of_terms,":")
-   print(n1)
+    iterative_data.start_time = time.time()
+    print("Fibonacci sequence upto",number_of_terms,":")
+    print(n1)
 # generate fibonacci sequence
 else:
    print("Fibonacci sequence:")
