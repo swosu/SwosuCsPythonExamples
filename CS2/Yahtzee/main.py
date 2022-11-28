@@ -1,10 +1,14 @@
-# we are going to make some of our own modules.
+ # we are going to make some of our own modules.
 # here are two good sites to skim
 # https://docs.python.org/3/tutorial/modules.html
 # https://docs.python.org/3/tutorial/classes.html
 # https://www.pythonpool.com/python-class-vs-module/
 
 
+
+
+
+#<<<<<<< HEAD
 #import kendell_file
 #import jeremy_file
 #import kylar_file
@@ -15,6 +19,11 @@
 #import spencer_file
 #import ryan_file
 #import trevor_file
+
+
+
+
+#=======
 #import kendell_file
 #import jeremy_file
 #import kylar_file
@@ -23,8 +32,8 @@
 #import Dalton_File
 #import jarett_file
 #import spencer_file
-#import ryan_file
 
+#>>>>>>> c7de0f8bcb6d1284c130038bf273184f050ead7e
 import Faff_file
 import dice_file
 import upperscore_scorepad
