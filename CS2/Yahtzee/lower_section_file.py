@@ -7,9 +7,22 @@ class lower_section:
     def __init__(self):
         self.dice_actual = []
         self.scores = [0,0,0,0,0,0,0] #need 7 values.
+        self.score_label_vector = ['Three of a kind:\t', 'Four of a kind:\t', 'Full House:\t', 'Small Straight:\t', 'Large Straight:\t', 'Yahtzee:\t', 'Chance:']
     
     def take_dice(self, given_dice):
          self.dice_actual = given_dice
+    
+    def print_lower_scorecard_options(self):
+        print('here are your scores')
+        print('\nSCORE LABEL:', end = '')
+        for label in self.score_label_vector:
+            print(f'\t{label}', end = '')
+        print()
+        print(f'SCORE VALUE:\t{self.scores[0]}\t\t\t\t', end = '')
+        for score in self.scores[1:7]:
+            print(f'{score}\t\t\t', end = '')
+        print()
+        print('SCORE INDEX:\t1\t\t\t\t2\t\t\t3\t\t\t4\t\t\t5\t\t\t6\t\t\t7')
 
     def dice_count(self): #creates matching dice index and sorts dice 
         self.dice_actual.sort()
@@ -123,8 +136,9 @@ class lower_section:
         
 if __name__ == '__main__':
     possible_scores = lower_section()
-    possible_scores.take_dice([4,4,4,5,5])
+    #possible_scores.test()
+    possible_scores.take_dice([4,4,4,4,4])
     possible_scores.dice_count()
     possible_scores.score_scanner()
-    print(possible_scores.scores)
-    possible_scores.test()
+    possible_scores.print_lower_scorecard_options()
+    
