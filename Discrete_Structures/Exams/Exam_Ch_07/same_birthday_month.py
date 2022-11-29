@@ -11,12 +11,12 @@ if __name__ == "__main__":
     print('hello')
     print(f'test my birthday {get_birthday()}.')
 
-    number_of_trials = 3
+    number_of_trials = 100000
     number_of_people = 7
     # 7 people should have a 50% chance of having two people born in the same month.
     had_a_match_count = 0
-    for trial_index in (0, number_of_trials):
-        print(f'on trial {trial_index}')
+    for trial_index in range(0, number_of_trials):
+        #print(f'on trial {trial_index+1}')
         our_birthdays = []
         have_a_match = False
         for new_person_index in range(0, number_of_people):
