@@ -15,9 +15,10 @@ dice_object = dice_file.dice_class()
 upper_scorecard_object = upperscore_scorepad.singles_possible_scores()
 lower_section_scores = lower_section_file.lower_section()
 
-our_object.say_hello()
+#our_object.say_hello()
 
-our_object.testing_or_playing()
+#our_object.testing_or_playing()
+our_object.testing = True
 
 our_object.ask_player_count()
 
