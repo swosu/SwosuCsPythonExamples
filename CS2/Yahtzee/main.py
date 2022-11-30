@@ -25,6 +25,7 @@ our_object.ask_player_count()
 our_object.ask_player_names()
 scorecard_object = Scorepad_file.Scorepad_class(our_object, upper_scorecard_object,lower_section_scores)
 scorecard_object.initilize_score_card(our_object, upper_scorecard_object,lower_section_scores)
+#print('\n\n printing scorecard.\n\n')
 scorecard_object.print_score_card()
 
 for round_index in range (0, (len(scorecard_object.score_card) - 1)):
