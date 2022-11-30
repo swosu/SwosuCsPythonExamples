@@ -58,7 +58,7 @@ class Scorepad_class:
 
         #print('adding score labels for lower scorecard')
         #print(f'length {len(self.score_card)}.')
-        for row_index in range (len(upper_scorecard_object.score_label_vector) +1,\
+        for row_index in range (len(upper_scorecard_object.score_label_vector) ,\
              (len(self.score_card) - 1 )):
             #print(f'row index: {row_index}.')
             #print(self.score_card)
@@ -68,13 +68,23 @@ class Scorepad_class:
                 lower_section_scores.score_label_vector[row_index- len(upper_scorecard_object.score_label_vector)]
 
     def print_score_card(self):
+        from prettytable import PrettyTable
+        t = PrettyTable(['Ya', 'htz','ee'])
+        
         print('Here are the current scores.')
+        
         #print(self.score_card)
         for row_index in range (0, len(self.score_card)):
+            our_additional_row = []
             for column_index in range (0, len(self.score_card[0])):
+                our_additional_row.append(self.score_card[row_index][column_index])
                 #print(f'({row_index}, {column_index}), ', end = '')
                 print(f'\t{self.score_card[row_index][column_index]}', end = '')
+
             print()
+            t.add_row(our_additional_row)
+        print('Here are the other current scores.')
+        print(t)
         
 
 if __name__ == '__main__':
