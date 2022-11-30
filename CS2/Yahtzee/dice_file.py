@@ -93,4 +93,5 @@ if __name__ == '__main__':
         dice_object.roll_unsaved_dice()
 
 else:
-    print('you imported dice_file')
+    #print('you imported dice_file')
+    print("",end = '')

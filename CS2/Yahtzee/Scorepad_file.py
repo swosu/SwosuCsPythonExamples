@@ -46,13 +46,26 @@ class Scorepad_class:
         for column_index in range(0, len(our_object.player_names)):
             self.score_card[0][column_index + 1] = our_object.player_names[column_index]
         
-        #print('adding score labels')
+        #print('adding score labels for upper scorecard')
         #print(f'length {len(self.score_card)}.')
-        for row_index in range (0, (len(self.score_card) -1)):
+        for row_index in range (0, (len(upper_scorecard_object.score_label_vector) )):
             #print(f'row index: {row_index}.')
             #print(self.score_card)
-            self.score_card[row_index + 1][0] = upper_scorecard_object.score_label_vector[row_index]
-            self.score_card[row_index + 1][1] = lower_section_scores.score_label_vector[row_index]
+            self.score_card[row_index + 1][0] = \
+                upper_scorecard_object.score_label_vector[row_index]
+            #self.score_card[row_index + 1][1] = \
+            #    lower_section_scores.score_label_vector[row_index]
+
+        #print('adding score labels for lower scorecard')
+        #print(f'length {len(self.score_card)}.')
+        for row_index in range (len(upper_scorecard_object.score_label_vector) +1,\
+             (len(self.score_card) - 1 )):
+            #print(f'row index: {row_index}.')
+            #print(self.score_card)
+            #self.score_card[row_index + 1][0] = \
+            #    upper_scorecard_object.score_label_vector[row_index]
+            self.score_card[row_index + 1][0] = \
+                lower_section_scores.score_label_vector[row_index- len(upper_scorecard_object.score_label_vector)]
 
     def print_score_card(self):
         print('Here are the current scores.')

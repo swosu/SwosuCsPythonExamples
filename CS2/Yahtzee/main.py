@@ -4,37 +4,6 @@
 # https://docs.python.org/3/tutorial/classes.html
 # https://www.pythonpool.com/python-class-vs-module/
 
-
-
-
-
-
-
-#import kendell_file
-#import jeremy_file
-#import kylar_file
-#import Josh_file
-#import jessie_file
-#import Dalton_File
-#import jarett_file
-#import spencer_file
-#import ryan_file
-#import trevor_file
-
-
-
-
-
-
-#import kendell_file
-#import jeremy_file
-#import kylar_file
-#import Josh_file
-#import jessie_file
-#import Dalton_File
-#import jarett_file
-#import spencer_file
-
 import Faff_file
 import dice_file
 import upperscore_scorepad
@@ -46,15 +15,17 @@ dice_object = dice_file.dice_class()
 upper_scorecard_object = upperscore_scorepad.singles_possible_scores()
 lower_section_scores = lower_section_file.lower_section()
 
-our_object.say_hello()
+#our_object.say_hello()
 
-our_object.testing_or_playing()
+#our_object.testing_or_playing()
+our_object.testing = True
 
 our_object.ask_player_count()
 
 our_object.ask_player_names()
 scorecard_object = Scorepad_file.Scorepad_class(our_object, upper_scorecard_object,lower_section_scores)
 scorecard_object.initilize_score_card(our_object, upper_scorecard_object,lower_section_scores)
+#print('\n\n printing scorecard.\n\n')
 scorecard_object.print_score_card()
 
 for round_index in range (0, (len(scorecard_object.score_card) - 1)):
