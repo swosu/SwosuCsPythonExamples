@@ -15,7 +15,7 @@ class Scorepad_class:
                 keep_index = random.randint(1, (len(self.score_card) - 1))
                 print(f'keep index was: {keep_index}')
                 print(f'player index is: {self.player_index}.')
-                self.print_score_card()
+                #self.print_score_card()
                 if 'none' == self.score_card[keep_index][self.player_index + 1] :
                     self.score_card[keep_index][self.player_index + 1] = upper_scorecard_object.score_vector[(keep_index - 1)]
                     self.score_card[keep_index][self.player_index + 1] = lower_section_scores.scores[(keep_index - 1)]
@@ -68,23 +68,28 @@ class Scorepad_class:
                 lower_section_scores.score_label_vector[row_index- len(upper_scorecard_object.score_label_vector)]
 
     def print_score_card(self):
-        from prettytable import PrettyTable
-        t = PrettyTable(['Ya', 'htz','ee'])
+        #from prettytable import PrettyTable
+        #t = PrettyTable(['Ya', 'htz','ee'])
         
         print('Here are the current scores.')
         
         #print(self.score_card)
         for row_index in range (0, len(self.score_card)):
-            our_additional_row = []
+            #our_additional_row = []
             for column_index in range (0, len(self.score_card[0])):
-                our_additional_row.append(self.score_card[row_index][column_index])
+                #our_additional_row.append(self.score_card[row_index][column_index])
                 #print(f'({row_index}, {column_index}), ', end = '')
-                print(f'\t{self.score_card[row_index][column_index]}', end = '')
+                #good print(f'\t{self.score_card[row_index][column_index]}', end = '')
+                #print('{0:{width}}'.format(self.score_card[row_index][column_index], {width=16}), end = '')
+                if 0 == column_index:
+                    print(f'{self.score_card[row_index][column_index]:.<20}', end = '')
+                else:
+                    print(f'{self.score_card[row_index][column_index]:.>7}', end = '')
 
             print()
-            t.add_row(our_additional_row)
-        print('Here are the other current scores.')
-        print(t)
+            #t.add_row(our_additional_row)
+        #print('Here are the other current scores.')
+        #print(t)
         
 
 if __name__ == '__main__':
@@ -103,7 +108,7 @@ if __name__ == '__main__':
     our_object.player_names = ['Brian', 'Link', 'Carol']
     scorecard_object = Scorepad_class(our_object, upper_scorecard_object,lower_section_scores)
     scorecard_object.initilize_score_card(our_object, upper_scorecard_object,lower_section_scores)
-    scorecard_object.print_score_card()
+    #scorecard_object.print_score_card()
 
     our_object.testing = True
 
@@ -124,5 +129,5 @@ if __name__ == '__main__':
             lower_section_scores.score_scanner()
             #upper_scorecard_object.print_upper_scorecard_options()
             scorecard_object.ask_user_which_index_to_keep(upper_scorecard_object,lower_section_scores, our_object)
-            scorecard_object.print_score_card()
+            #scorecard_object.print_score_card()
 
