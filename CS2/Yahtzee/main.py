@@ -4,6 +4,12 @@
 # https://docs.python.org/3/tutorial/classes.html
 # https://www.pythonpool.com/python-class-vs-module/
 
+
+# to get this code to run, you will need to run something like:
+#python -m pip install --upgrade pip
+#pip install PrettyTable
+
+
 import Faff_file
 import dice_file
 import upperscore_scorepad
