@@ -40,7 +40,7 @@ class Scorepad_class:
                     else:
                         print('that score is not availible, please try again.')
 
-    def initilize_score_card(self, our_object, upper_scorecard_object,lower_section_scores):
+    def initilize_score_card(self, our_object, all_scores):
         #print('going to put in names')
         self.score_card[0][0] = ''
         for column_index in range(0, len(our_object.player_names)):
@@ -48,24 +48,24 @@ class Scorepad_class:
         
         #print('adding score labels for upper scorecard')
         #print(f'length {len(self.score_card)}.')
-        for row_index in range (0, (len(upper_scorecard_object.score_label_vector) )):
+        for row_index in range (0, (len(all_scores.score_label_vector) )):
             #print(f'row index: {row_index}.')
             #print(self.score_card)
             self.score_card[row_index + 1][0] = \
-                upper_scorecard_object.score_label_vector[row_index]
+                all_scores.score_label_vector[row_index]
             #self.score_card[row_index + 1][1] = \
             #    lower_section_scores.score_label_vector[row_index]
 
         #print('adding score labels for lower scorecard')
         #print(f'length {len(self.score_card)}.')
-        for row_index in range (len(upper_scorecard_object.score_label_vector) ,\
-             (len(self.score_card) - 1 )):
+        #for row_index in range (len(upper_scorecard_object.score_label_vector) ,\
+            #(len(self.score_card) - 1 )):
             #print(f'row index: {row_index}.')
             #print(self.score_card)
             #self.score_card[row_index + 1][0] = \
             #    upper_scorecard_object.score_label_vector[row_index]
-            self.score_card[row_index + 1][0] = \
-                lower_section_scores.score_label_vector[row_index- len(upper_scorecard_object.score_label_vector)]
+            #self.score_card[row_index + 1][0] = \
+            #    lower_section_scores.score_label_vector[row_index- len(upper_scorecard_object.score_label_vector)]
 
     def print_score_card(self):
         #from prettytable import PrettyTable
