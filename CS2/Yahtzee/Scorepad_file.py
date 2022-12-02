@@ -17,8 +17,10 @@ class Scorepad_class:
                 print(f'player index is: {self.player_index}.')
                 #self.print_score_card()
                 if 'none' == self.score_card[keep_index][self.player_index + 1] :
-                    self.score_card[keep_index][self.player_index + 1] = upper_scorecard_object.score_vector[(keep_index - 1)]
-                    self.score_card[keep_index][self.player_index + 1] = lower_section_scores.scores[(keep_index - 1)]
+                    self.score_card[keep_index][self.player_index + 1] = \
+                        all_scores.score_vector[(keep_index - 1)]
+                    #self.score_card[keep_index][self.player_index + 1] = \
+                    #    lower_section_scores.scores[(keep_index - 1)]
                     break
         else:
             while True:
