@@ -15,7 +15,7 @@ class Scorepad_class:
                 keep_index = random.randint(1, (len(self.score_card) - 1))
                 print(f'keep index was: {keep_index}')
                 print(f'player index is: {self.player_index}.')
-                self.print_score_card()
+                #self.print_score_card()
                 if 'none' == self.score_card[keep_index][self.player_index + 1] :
                     self.score_card[keep_index][self.player_index + 1] = upper_scorecard_object.score_vector[(keep_index - 1)]
                     self.score_card[keep_index][self.player_index + 1] = lower_section_scores.scores[(keep_index - 1)]
@@ -108,7 +108,7 @@ if __name__ == '__main__':
     our_object.player_names = ['Brian', 'Link', 'Carol']
     scorecard_object = Scorepad_class(our_object, upper_scorecard_object,lower_section_scores)
     scorecard_object.initilize_score_card(our_object, upper_scorecard_object,lower_section_scores)
-    scorecard_object.print_score_card()
+    #scorecard_object.print_score_card()
 
     our_object.testing = True
 
@@ -129,5 +129,5 @@ if __name__ == '__main__':
             lower_section_scores.score_scanner()
             #upper_scorecard_object.print_upper_scorecard_options()
             scorecard_object.ask_user_which_index_to_keep(upper_scorecard_object,lower_section_scores, our_object)
-            scorecard_object.print_score_card()
+            #scorecard_object.print_score_card()
 
