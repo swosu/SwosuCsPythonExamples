@@ -4,7 +4,7 @@ class Scorepad_class:
         self.data = []
         #print(f'how many players do we have? {len(our_object.player_names)}')
         self.score_card = [['none' for column_index in range(1 + len(our_object.player_names))] \
-            for row_index in range(1 + (len(all_scores.score_label_vector) + len(upper_scorecard_object.score_label_vector))) ] #integrate to have lower_section_scores print with scorepad, look at upper_scorepad for refrence
+            for row_index in range(1 + (len(all_scores.score_label_vector) )) ] #integrate to have lower_section_scores print with scorepad, look at upper_scorepad for refrence
         self.player_index = 0
     
     def ask_user_which_index_to_keep(self,all_scores, our_object):
