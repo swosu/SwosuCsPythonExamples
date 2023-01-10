@@ -1,6 +1,5 @@
 class User_interactions:
 
-
     def __init__(self):
         self.data = []
         self.player_count = 0
@@ -8,6 +7,9 @@ class User_interactions:
         self.testing = True
         self.dice_on_table = [1, 2, 3, 4, 5]
         self.roll_count = 0
+
+    def say_hello(self):
+        print('hello from the faff file.')
 
     def testing_or_playing(self):
         user_response = input('1 to play, anything else to test: ')
@@ -18,14 +20,22 @@ class User_interactions:
             print('Welcome to the game.')
             self.testing = False
 
+    def set_testing_false(self):
+        self.testing = False
+
     def ask_player_what_to_keep(self):
+        print('which dice do you want to keep?')
+        print('enter the dice number or numbers to keep')
+        print('just press enter to reroll all dice.')
         if self.testing:
-            print('stuck here.')
+            print('This code needs to be completed still.')
         else:
-            print('still stuck here.')
+            user_selection = input('which dice do you want to keep?')
+
+
     def ask_player_count(self):
         if self.testing:
-            player_count = 3
+            player_count = 2
         else:
             player_count = input('hello, how many players would you like?')
 
@@ -41,11 +51,13 @@ class User_interactions:
         return self.player_count
 
     def ask_player_names(self):
+        # note: If there are 2 players, but 3 names, there should be an issue.
         if self.testing:
             self.player_names.append('bob')
             self.player_names.append('susan')
-            self.player_names.append('link')
+            #self.player_names.append('link')
         else:
+            print('scorecard printing looks nicer if you use names with fewer than 8 characters.')
             for item in range(0,self.player_count):
                 name = input(f'Player {item+1}, please enter your name: ')
                 self.player_names.append(name)
@@ -63,6 +75,15 @@ class User_interactions:
         print('New roll.')
         for die in range(0, len(self.dice_on_table)):
             self.dice_on_table[die] = random.randint(1,6)
-        print('here are the dice on the table.\nDICE NUMBER')
-        print('\t1\t2\t3\t4\t5\nDICE VALUE')
-        print(f'\t{self.dice_on_table[0]}')
+        print('here are the dice on the table.')
+        print('\nDICE NUMBER\t1\t2\t3\t4\t5')
+        print('DICE VALUE,', end = '')
+        for die in self.dice_on_table:
+            print(f'\t{die}', end = '')
+        print()
+
+if __name__ == '__main__':
+    print('you are running Faff_file.py')
+else:
+    #print('you have imported Faff_file')
+    print("",end = '')
