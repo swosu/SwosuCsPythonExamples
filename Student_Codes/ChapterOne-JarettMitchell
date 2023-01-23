@@ -1,0 +1,33 @@
+def bitwise_operations(str1, str2):
+    # Convert the strings to integers
+    num1 = int(str1, 2)
+    num2 = int(str2, 2)
+    
+    # Perform bitwise AND
+    and_result = num1 & num2
+    
+    # Perform bitwise OR
+    or_result = num1 | num2
+    
+    # Perform bitwise XOR
+    xor_result = num1 ^ num2
+    
+    # Convert the results back to bit strings
+    and_result = bin(and_result)[2:].zfill(len(str1))
+    or_result = bin(or_result)[2:].zfill(len(str1))
+    xor_result = bin(xor_result)[2:].zfill(len(str1))
+    
+    return and_result, or_result, xor_result
+
+# Example usage
+str1 = "10011100"
+str2 = "00110100"
+and_result, or_result, xor_result = bitwise_operations(str1, str2)
+print("Bitwise AND:", and_result)
+print("Bitwise OR:", or_result)
+print("Bitwise XOR:", xor_result)
+
+#Sources https://realpython.com/python-bitwise-operators/#bitwise-and
+#https://www.tutorialspoint.com/python/bitwise_operators_example.htm
+#https://www.geeksforgeeks.org/python-convert-string-to-binary/
+#https://chat.openai.com/chat - Generated code
