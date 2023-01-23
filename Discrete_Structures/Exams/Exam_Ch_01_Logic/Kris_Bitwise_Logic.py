@@ -43,6 +43,23 @@ def find_bitwise_and(first_array, second_array):
             print(second_array[index], end = ', ')
             print()
 
+            if(first_array[index] == second_array[index]):
+                print('we had a match!')
+                if('1' == first_array[index]):
+                    print('and it was a 1!')
+                    bitwise_and.append('1')
+                else:
+                    bitwise_and.append('0')
+            else:
+                bitwise_and.append('0')
+
+    else:
+        print('fix zero padding...')
+    
+    return bitwise_and
+
+            
+
 if __name__ == '__main__':
     print('first number')
     user_input_1 = get_user_input()
@@ -61,4 +78,5 @@ if __name__ == '__main__':
     print(second_array)
 
     bitwise_and_result = find_bitwise_and(first_array, second_array)
+    print(f'bitwise_and results {bitwise_and_result}')
 
