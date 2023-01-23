@@ -1,29 +1,5 @@
 #https://www.geeksforgeeks.org/python-decimal-to-binary-list-conversion/
 
-# Python3 code to demonstrate 
-# decimal to binary number conversion
-# using format() + list comprehension
-  
-# initializing number 
-test_num = 8
-  
-# printing original number
-print ("The original number is : " + str(test_num))
-  
-# using format() + list comprehension
-# decimal to binary number conversion 
-res = [int(i) for i in list('{0:0b}'.format(test_num))]
-  
-# printing result 
-print ("The converted binary list is : " +  str(res))
-
-num_2 = 12
-print ("The original second number is : " + str(test_num))
-
-res_2 = [int(i) for i in list('{0:0b}'.format(num_2))]
-
-print ("The second converted binary list is : " +  str(res_2))
-
 def get_user_input ():
     user_input = int(input('what is a number? '))
     return user_input
