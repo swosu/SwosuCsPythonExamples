@@ -31,3 +31,6 @@ gallos_per_trip = trip_length / car_miles_per_gallon
 print(f'a trip {trip_length} miles long in a car that gets\n'\
 f'{car_miles_per_gallon:.2f} mpg will use {gallos_per_trip:.2f} gallons of fuel.')
 
+gallos_per_trip = trip_length / car_miles_per_gallon
+print(f'a trip {trip_length} miles long in a car that gets\n'\
+f'{car_miles_per_gallon:.2f} mpg will use {gallos_per_trip:.2f} gallons of fuel.')
