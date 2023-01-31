@@ -1,10 +1,9 @@
-
+def greet_user():
+    print('Hello user, welcome to the cashier\'s algorithm.')
 
 
 if __name__ == '__main__':
-    print('hello')
-
-    # greet user
+    greet_user()
 
     # get a total to pay
 
