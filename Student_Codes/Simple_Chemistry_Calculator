@@ -1,0 +1,27 @@
+#SIMPLE CHEMISTRY CALCULATOR by Breyden Doane
+              
+HLorOP = input("calculation or half-life? ")
+
+if HLorOP == "half-life":
+    caffeine_mg = float(input("Caffeine Amount: "))
+    six_hours=caffeine_mg/2
+    twelve_hours=six_hours/2
+    twenty_four_hours=twelve_hours/4
+    print("After 6 hours in the system:{:.2f}mg ". format(caffeine_mg/2.0))
+    print("After 12 hours in the system:{:.2f}mg ". format(six_hours/2.0))
+    print("After 24 hours in the system:{:.2f}mg ". format(twelve_hours/4.0))
+
+if HLorOP == "calculation":
+    num1 = float(input("Enter first number: "))
+    op = input("Enter Operator of: +, -, *, or /: ")
+    num2 = float(input("Enter second number: "))
+    if op == "+":
+        print(num1 + num2)
+    elif op == "-":
+        print(num1 - num2)
+    elif op == "*":
+        print(num1 * num2)
+    elif op == "/":
+        print(num1 / num2)
+    else:
+        print("Invalid operator.") 
