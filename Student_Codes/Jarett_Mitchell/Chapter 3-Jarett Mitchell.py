@@ -1,45 +1,37 @@
 #take an amount of cash, return the change options.
-amount_due =  float(7.25)
-amount_given = float(10.00)
-cash = amount_given - amount_due
-print(f"Amount due: ${amount_due}\nAmount recieved: ${amount_given}\nChange due: ${cash}")
+amount_due =  float(input("Enter amount due: "))
+amount_given = float(input("Enter amount recieved: "))
+cash = round(amount_given - amount_due,2)
 
-#listed denominations 
-dollars = 0
-quarters = 0
-dimes = 0
-nickels = 0
-pennies = 0
+#ai assited code, I defined the dictionary, the ai created the for loop and the if statement.
+def change(amount_due):
+    # Denominations of coins and bills
+    denominations = [
+        ("Hundred(s)", 100),
+        ("Fifty(s)", 50),
+        ("Twenty(s)", 20),
+        ("Ten(s)", 10),
+        ("Five(s)", 5),
+        ("One(s)", 1),
+        ("Quarter(s)", 0.25),
+        ("Dime(s)", 0.1),
+        ("Nickel(s)", 0.05),
+        ("Penny(s)", 0.01)
+    ]
+    change = {}
 
-#check divisibility for coins and ones
-while cash > 0:
-    if cash >= 1:
-        dollars += 1
-        cash -= 1
-        #print('passed more than 1 check')
-    elif cash < 1:
-        if cash % 0.25 == 0:
-            #print('.25 passed')
-            quarters += 1
-            cash -= 0.25
-        elif cash % 0.10 == 0:
-            #print('.10 passed')
-            quarters += 1
-            cash -= 0.25
-        elif cash % 0.05 == 0:
-            #print('0.05 passed')
-            nickels += 1
-            cash -= 0.05
-        else:
-            pennies += 1
-            cash -= 0.01
-    #print(cash) #checking pass throughs 
-
-print(f'Dollar(s): {dollars}')
-print(f'Quarter(s): {quarters}')
-print(f'Dime(s): {dimes}')
-print(f'Nickel(s): {nickels}')
-print(f'Pennie(s): {pennies}')
-
+    for denom_name, denom_value in denominations:
+        if amount_due >= denom_value:
+            count = int(amount_due / denom_value)
+            amount_due -= count * denom_value
+            amount_due = round(amount_due, 2) # rounding to 2 decimal places
+            change[denom_name] = count
+    
+    return change
+if __name__ == '__main__':
+    print(f"\nChange owed: {cash}\nGive customer: {change(cash)}")
+  
 #Sources: https://www.toppr.com/guides/python-guide/examples/python-examples/functions/number-divisible/python-program-find-numbers-divisible-another-number/
 #https://www.youtube.com/watch?v=9-Cpi3hGjrY
+#https://www.geeksforgeeks.org/greedy-algorithm-to-find-minimum-number-of-coins/
+#https://chat.openai.com/chat
