@@ -3,7 +3,7 @@ import tkinter as tk
 root = tk.Tk()
 root.title("Cashier Tool")
 
-root.geometry("600x400") 
+root.geometry("800x400") 
 root.configure(bg="#134074")
 
 #def amount_due():
@@ -31,16 +31,16 @@ def change():
     cash = amountDue - amountGiven
     changeDue.config(text = (f'${cash:.2f}'))
     denominations = [
-        ("Hundred(s)", 100),
-        ("Fifty(s)", 50),
-        ("Twenty(s)", 20),
-        ("Ten(s)", 10),
-        ("Five(s)", 5),
-        ("One(s)", 1),
-        ("Quarter(s)", 0.25),
-        ("Dime(s)", 0.1),
-        ("Nickel(s)", 0.05),
-        ("Penny(s)", 0.01)
+        ('Hundred(s)', 100),
+        ('Fifty(s)', 50),
+        ('Twenty(s)', 20),
+        ('Ten(s)', 10),
+        ('Five(s)', 5),
+        ('One(s)', 1),
+        ('Quarter(s)', 0.25),
+        ('Dime(s)', 0.1),
+        ('Nickel(s)', 0.05),
+        ('Penny(s)', 0.01)
     ]
     change = {}
 
@@ -67,7 +67,7 @@ changeDue = tk.Label(root, font = "Ariel, 11", height = 1, width = 15)
 changeDue.pack(padx = 15 , pady = 0 , anchor = 'w')
 changeDueDisplay.config(bg = "#8DA9C4")
 
-retLabel = tk.Label(root, text = '', width = 100, height = 2)
+retLabel = tk.Label(root, text = '', width = 110, height = 2)
 retLabel.place(relx = 0.5 , rely = 0.8 , anchor ='s')
 retLabel.config(bg = "#8DA9C4")
 
