@@ -35,3 +35,5 @@ if __name__ == '__main__':
 #https://www.youtube.com/watch?v=9-Cpi3hGjrY
 #https://www.geeksforgeeks.org/greedy-algorithm-to-find-minimum-number-of-coins/
 #https://chat.openai.com/chat
+
+#There is a GUI example using Tkinter in the same folder.
