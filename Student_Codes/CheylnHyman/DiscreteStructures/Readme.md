@@ -22,7 +22,3 @@
     divided into chunks and assigned to separate processes. The average time taken to find the primes is calculated over 
     a specified number of tests and the results include the number of primes found, number of CPU cores, number of processes, 
     average time, and total elapsed time.
-
-
-
-
