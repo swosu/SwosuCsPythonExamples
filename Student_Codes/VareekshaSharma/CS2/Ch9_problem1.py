@@ -34,20 +34,27 @@ class GVDie:
    # set the random number generator seed for testing
    def set_seed(self, seed):
        self.rand.seed(seed)
-   
-   # allows dice to be compared if necessary
-   def compare_to(self, other):
-       return self.my_value - d.my_value
        
 
 def roll_total(die, total):
     # Type your code here
+    # if total == 1:
+    #     return 1
+    # else: 
+    #     return    # how can i make this recursive?
+    val = 0
+    total_rolls = 0
+    while val < total:
+        die.roll()
+        val += die.my_value
+        total_rolls += 1
+    return total_rolls #dont understand why this works. need further explanation.
 
 if __name__ == "__main__":
     die = GVDie()   # Create a GVDie object
     die.set_seed(15)   # Set the GVDie object with seed value 15
           
-    total = int(input())
+    total = int(input("enter a number: "))
     rolls = roll_total(die, total) # Should return the number of rolls to reach total.
     print(f'Number of rolls to reach at least {total}: {rolls}')
 
