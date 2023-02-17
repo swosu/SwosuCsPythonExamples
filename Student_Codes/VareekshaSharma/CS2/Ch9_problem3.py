@@ -28,23 +28,24 @@ import random
 
 class Numbers:
     def __init__(self):
-        self.nums = []
+        self.numslist = []
     
     def get_nums(self):
-        return self.nums
+        return self.numslist
         
-    def set_nums(self, nums):
-        self.nums = []
-        self.nums = nums[:]
+    def set_nums(self, numslist):
+        self.numslist = []
+        self.numslist = numslist[:]
         
     def find_max(self):
         # Type your code here
+        return max(self.numslist)
         
     def fill_randomly(self, seed, size):
-        self.nums = []
+        self.numslist = []
         random.seed(seed)
         for index in range(size):
-            self.nums.append(random.randint(0, 1000))
+            self.numslist.append(random.randint(0, 1000))
     
 if __name__ == "__main__":
     my_numbers = Numbers()
