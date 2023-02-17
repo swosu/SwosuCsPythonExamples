@@ -45,7 +45,7 @@ class Numbers:
         self.numslist = []
         random.seed(seed)
         for index in range(size):
-            self.numslist.append(random.randint(0, 1000))
+            self.numslist.append(random.randint(0, 10000))
     
 if __name__ == "__main__":
     my_numbers = Numbers()
