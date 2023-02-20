@@ -73,7 +73,7 @@ def recursive_factorial(x, operation_counter):
         return (x * recursive_factorial(x-1, operation_counter))
 
 
-num = 6
+num = 200
 recursive_operation_data = Operation_Counter('recursive factorial')
 recursive_operation_data.set_start_time()
 print("The recursive factorial of", num, "is", recursive_factorial(num, recursive_operation_data))
