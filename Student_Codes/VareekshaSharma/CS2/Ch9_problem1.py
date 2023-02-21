@@ -37,18 +37,24 @@ class GVDie:
        
 
 def roll_total(die, total):
-    # Type your code here
-    # if total == 1:
-    #     return 1
-    # else: 
-    #     return    # how can i make this recursive?
+    #Type your code here
+    '''if total == 1:
+        return 1
+    else:
+        val = 0
+        while val < total:
+            die.roll()
+            val += die.my_value
+            total += 1
+        return total
+        #how can i make this recursive?'''
     val = 0
     total_rolls = 0
     while val < total:
         die.roll()
         val += die.my_value
         total_rolls += 1
-    return total_rolls #dont understand why this works. need further explanation.
+    return total_rolls
 
 if __name__ == "__main__":
     die = GVDie()   # Create a GVDie object
