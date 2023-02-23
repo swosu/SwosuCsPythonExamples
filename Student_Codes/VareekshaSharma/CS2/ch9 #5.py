@@ -23,7 +23,7 @@ if __name__ == "__main__":
     triangle2 = Triangle()
 
     # TODO: Read and set base and height for triangle1 (use set_base() and set_height())
-      
+    
     # TODO: Read and set base and height for triangle2 (use set_base() and set_height())
     
       
