@@ -40,5 +40,7 @@ if __name__ == "__main__":
     #       and output smaller triangle's info (use print_info())
     if triangle1.get_area() < triangle2.get_area():
         print(triangle1.get_area(),'\n', triangle1.print_info())
+    elif triangle1.get_area() == triangle2.get_area():
+        print("The two triangles have the same area.")
     else:
         print(triangle2.get_area(),'\n', triangle2.print_info())
