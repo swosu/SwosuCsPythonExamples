@@ -188,9 +188,7 @@ class Player:
     #defining a function to check the dice a player kept and then returning the score based on the dice
     def dice_to_kept_score(self):
         global correct_dice, kind
-        correct_dice = False
-
-        
+        correct_dice = False    
 
         if 'full_house' in self.possible_scores:
             for die in self.kept_dice:
