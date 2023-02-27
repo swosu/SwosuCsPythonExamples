@@ -22,13 +22,13 @@ if __name__ == "__main__":
     triangle1 = Triangle()
     triangle2 = Triangle()
 
-    # TODO: Read and set base and height for triangle1 (use set_base() and set_height())
+    # TODO: Read and set base and height for triangle1
     triangle1_base = int(input('Enter the base length of triangle 1: '))
     triangle1_height = int(input('Enter the height of triangle 1: '))
     triangle1.set_base(triangle1_base)
     triangle1.set_height(triangle1_height)
 
-    # TODO: Read and set base and height for triangle2 (use set_base() and set_height())
+    # TODO: Read and set base and height for triangle2
     triangle2_base = int(input('Enter the base length of triangle 2: '))
     triangle2_height = int(input('Enter the height of triangle 2: '))
     triangle2.set_base(triangle2_base)
@@ -36,8 +36,8 @@ if __name__ == "__main__":
       
     print('Triangle with smaller area:')  
     
-    # TODO: Determine smaller triangle (use get_area())
-    #       and output smaller triangle's info (use print_info())
+    # TODO: Determine smaller triangle
+    #       and output smaller triangle's info
     if triangle1.get_area() < triangle2.get_area():
         print(triangle1.get_area(),'\n', triangle1.print_info())
     elif triangle1.get_area() == triangle2.get_area():
