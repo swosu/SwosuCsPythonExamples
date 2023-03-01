@@ -42,7 +42,7 @@ try:
     div_num = int(input("Enter the number you would like to divide by: "))
     result = num // div_num
     print(result)
-except ZeroDivisionError as excpt:
-    print("Zero Division Exception:", excpt)
-except ValueError as excpt:
-    print("Input Exception:", excpt, "try again later")
+except ZeroDivisionError as err:
+    print("Zero Division Exception:", err)
+except ValueError as err:
+    print("Input Exception:", err, "try again later")
