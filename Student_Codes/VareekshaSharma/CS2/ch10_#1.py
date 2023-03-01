@@ -24,35 +24,33 @@ Stu 34
 Starter Code'''
 
 # Split input into 2 parts: name and age
-parts = input().split()
+parts = input("enter the name and age: ").split()
 name = parts[0]
 while name != '-1':
     # FIXME: The following line will throw ValueError exception.
     #        Insert try/except blocks to catch the exception.
-    # try:
-    #     age = int(parts[1]) + 1
-    #     print('{} {}'.format(name, age))
-    #     parts = input().split()
-    #     name = parts[0]
-    #     if age == 'Beth':
-    #         age = 0
-            
-    # except ValueError as excpt:
-    #     age = 0
-    #     print('{} {}'.format(name, age))
-    #     parts = input().split()
-    #     name = parts[0]
-    # age = int(parts[1]) + 1
-    # print(f'{name} {age}')
-    
-    # # Get next line
-    # parts = input().split()
-    # name = parts[0]
     try:
         age = int(parts[1]) + 1
+        print(f'{name} {age}')
+        parts = input("enter the name and age: ").split()
+        name = parts[0]
+            
     except ValueError:
         age = 0
-    finally:
-        print('{} {}'.format(name, age))
-        parts = input().split()
+        print(f'{name} {age}')
+        parts = input("enter the name and age: ").split()
         name = parts[0]
+    age = int(parts[1]) + 1
+    print(f'{name} {age}')
+    
+    # Get next line
+    parts = input("enter the name and age: ").split()
+    name = parts[0]
+    # try:
+    #     age = int(parts[1]) + 1
+    # except ValueError:
+    #     age = 0
+    # finally:
+    #     print('{} {}'.format(name, age))
+    #     parts = input().split()
+    #     name = parts[0]
