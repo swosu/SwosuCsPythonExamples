@@ -32,7 +32,15 @@ Exception: Negative step count entered.
 Starter Code'''
 
 # Define your method here
+def steps_to_mi(steps):
+    if steps < 0:
+        raise ValueError("Negative value entered. Try again later.")
+    return float(steps / 2000)
 
 if __name__ == '__main__':
-    # Type your code here.
-    
+    steps = int(input("Enter how many steps you walked: "))
+    try:
+        miles = steps_to_mi(steps)
+        print(f'{miles:.2f}')
+    except ValueError as err:
+        print(err)
