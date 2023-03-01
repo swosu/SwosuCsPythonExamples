@@ -66,7 +66,7 @@ def print_miles_driven(miles_driven):
     print(f'you said you would drive {miles_driven:.2f} miles.')
     
     
-def driving_cost(miles_per_gallon, dollars_per_gallon, miles_driven):
+def calculate_driving_cost(miles_per_gallon, dollars_per_gallon, miles_driven):
     gallons_used = miles_driven / miles_per_gallon 
     driving_cost = gallons_used * dollars_per_gallon
     return driving_cost
@@ -83,17 +83,13 @@ if __name__ == '__main__':
     dollars_per_gallon = get_dollars_per_gallon_from_user()
     print_dollars_per_gallon(dollars_per_gallon)
     
-    miles_driven = get_miles_driven()
-    print_miles_driven(miles_driven)
     
-    driving_cost = driving_cost(miles_per_gallon, dollars_per_gallon, miles_driven)
-    print('you driving costs were', end ='')
-    print(f' ${driving_cost:.2f}')
+    #miles_driven = get_miles_driven()
+    #print_miles_driven(miles_driven)
     
+    for miles_driven in [10, 50, 400]:
+        driving_cost = calculate_driving_cost(miles_per_gallon, dollars_per_gallon, miles_driven)
+        print('you driving costs were', end ='')
+        print(f' ${driving_cost:.2f}')
     
-    
-    
-    
-    
-    
-    #hello
+   
