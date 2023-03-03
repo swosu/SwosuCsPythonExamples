@@ -32,20 +32,20 @@ while name != '-1':
     try:
         age = int(parts[1]) + 1
         print(f'{name} {age}')
-        parts = input("enter the name and age: ").split()
-        name = parts[0]
+        # parts = input("enter the name and age: ").split()
+        # name = parts[0]
             
     except ValueError:
         age = 0
         print(f'{name} {age}')
-        parts = input("enter the name and age: ").split()
-        name = parts[0]
-    age = int(parts[1]) + 1
-    print(f'{name} {age}')
+        # parts = input("enter the name and age: ").split()
+        # name = parts[0]
     
     # Get next line
+    parts = []
     parts = input("enter the name and age: ").split()
     name = parts[0]
+
     # try:
     #     age = int(parts[1]) + 1
     # except ValueError:
