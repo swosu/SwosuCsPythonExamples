@@ -21,7 +21,7 @@ def check_for_12():
 
 
 if __name__ == "__main__":
-    people = 10
+    people = int(input("How many people are in the room? "))
     # for 6, its 77%; for 7 its 88%; for 8 its 95%; for 10 its 99%
     rooms_to_check = 200000
     check_for_12()
