@@ -31,12 +31,9 @@ if __name__ == "__main__":
 
     for room in range(rooms_to_check):
         ppls_bmonth = gen_bmonth(people)
-        # ppls_bmonth.sort()
-        # print(ppls_bmonth)
         ppls_bmonth_wo_repeats = set(ppls_bmonth)
 
-        if len(ppls_bmonth) == \
-            len(ppls_bmonth_wo_repeats):
+        if len(ppls_bmonth) == len(ppls_bmonth_wo_repeats):
             no_repeats += 1
         else:
             repeats += 1

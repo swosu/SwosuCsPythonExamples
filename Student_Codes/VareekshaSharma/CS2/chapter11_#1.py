@@ -25,21 +25,13 @@ the output is
 
 0 1 5 2 4 retries=1
 
-
 Starter Code"""
 
 import random
+from ch11function import *
 
-def unique_random_ints(how_many, max_num):
-    #Return a list of how_many unique randomly generated numbers from
-    #0 to max_num (inclusive) using seed to initialize the random module
+seed = random.seed()
+how_many = int(input("how many numbers would you like to see? "))
+max_num = int(input("max numbers: "))
 
-    # Type your code here. #
-
-
-if __name__ == '__main__':
-    seed = int(input())
-    how_many = int(input())
-    max_num = int(input())
-
-    # Type your code here. #
+unique_random_ints(how_many, max_num)
