@@ -43,6 +43,19 @@ referred to. input1.txt is available to download so that the contents
 of the file can be seen. In the tests, the first word input always 
 comes alphabetically before the second word input.
 
+Contents of input1.txt
+
+aspiration
+classified
+federation
+graduation
+millennium
+philosophy
+quadratics
+transcript
+wilderness
+zoologists
+
 
 Starter Code'''
 
