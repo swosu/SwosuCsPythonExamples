@@ -62,3 +62,15 @@ Voyageurs2006_photo.jpg
 WrangellStElias1987_photo.jpg'''
 
 # Type your code here.
+
+input_file = input("Enter the name of the input file: ")
+
+# Read the list of photo file names from the input file
+with open(input_file) as f:
+    file_names = f.read().splitlines()
+
+# Modify the file names and output the results
+for file_name in file_names:
+    info_file_name = file_name.replace("_photo.jpg", "_info.txt")
+    print(info_file_name)
+
