@@ -65,3 +65,38 @@ Law & Order
 Murder, She Wrote'''
 
 # Type your code here
+
+import os
+
+cwd = os.getcwd()  # Get the current working directory (cwd)
+files = os.listdir(cwd)  # Get all the files in that directory
+print("Files in %r: %s" % (cwd, files))
+
+filename = input("Enter the name of the input file: ")
+
+# Create an empty dictionary to store the data
+data = {}
+
+# Read the input file into the dictionary
+with open(filename, 'r') as file:
+    for line in file:
+        line = line.strip().split()
+        seasons = int(line[0])
+        title = ' '.join(line[1:])
+        if seasons in data:
+            data[seasons].append(title)
+        else:
+            data[seasons] = [title]
+
+# Sort the dictionary by key (greatest to least) and output the results to a file
+with open("output_keys.txt", 'w') as file:
+    for key in sorted(data.keys(), reverse=True):
+        titles = ';'.join(data[key])
+        file.write(f"{key}: {titles}\n")
+
+# Sort the dictionary by values (in reverse alphabetical order) and output the results to a file
+with open("output_titles.txt", 'w') as file:
+    for key, values in sorted(data.items(), key=lambda x: x[1], reverse=True):
+        for title in sorted(values, reverse=True):
+            file.write(f"{key}: {title}\n")
+

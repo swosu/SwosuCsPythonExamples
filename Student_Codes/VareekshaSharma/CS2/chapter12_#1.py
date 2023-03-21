@@ -60,3 +60,17 @@ zoologists
 Starter Code'''
 
 # Type your code here. 
+
+import os
+
+filename = input("Enter the name of the input file: ")
+lower_bound = input("Enter the lower bound: ")
+upper_bound = input("Enter the upper bound: ")
+
+with open(filename, 'r') as file:
+    strings = file.readlines()
+
+for string in strings:
+    string = string.strip()
+    if lower_bound <= string <= upper_bound:
+        print(string)
