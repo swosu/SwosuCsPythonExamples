@@ -150,11 +150,14 @@ shows = {}
 with open(input_file) as f:
     lines = f.readlines()
     for line in lines:
-        num_seasons, title = line.strip().split(maxsplit=1), line.strip().split(maxsplit=1)
-        num_seasons = int(num_seasons)
-        if num_seasons not in shows:
-            shows[num_seasons] = []
-        shows[num_seasons].append(title)
+        title = line.strip().split(maxsplit=1)
+        seasons = line.strip().split(maxsplit=1)
+        print(seasons)
+        '''
+        seasons = [eval(i) for i in seasons]
+        if seasons not in shows:
+            shows[seasons] = []
+        shows[seasons].append(title)
 
 # Sort the dictionary by key (greatest to least)
 sorted_shows_by_key = dict(sorted(shows.items(), reverse=True))
@@ -162,7 +165,7 @@ sorted_shows_by_key = dict(sorted(shows.items(), reverse=True))
 # Output the sorted dictionary to a file
 with open("output_keys.txt", "w") as f:
     for num_seasons, titles in sorted_shows_by_key.items():
-        f.write(f"{num_seasons}: ")
+        f.write(f"{seasons}: ")
         f.write("; ".join(titles))
         f.write("\n")
 
@@ -171,9 +174,8 @@ sorted_shows_by_title = dict(sorted(shows.items(), key=lambda x: x[1][0], revers
 
 # Output the sorted dictionary to a file
 with open("output_titles.txt", "w") as f:
-    for num_seasons, titles in sorted_shows_by_title.items():
-        f.write(f"{num_seasons}: ")
+    for seasons, titles in sorted_shows_by_title.items():
+        f.write(f"{seasons}: ")
         f.write("; ".join(titles))
-        f.write("\n")
-
+        f.write("\n")'''
 
