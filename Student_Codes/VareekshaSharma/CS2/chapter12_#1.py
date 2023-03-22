@@ -73,4 +73,6 @@ with open(filename, 'r') as file:
 for string in strings:
     string = string.strip()
     if lower_bound <= string <= upper_bound:
-        print(string)
+        print(f'{string} - in range')
+    else:
+        print(f'{string} - not in range')

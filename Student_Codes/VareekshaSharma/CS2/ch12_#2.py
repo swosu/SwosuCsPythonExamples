@@ -150,7 +150,7 @@ shows = {}
 with open(input_file) as f:
     lines = f.readlines()
     for line in lines:
-        num_seasons, title = line.strip().split(maxsplit=2)
+        num_seasons, title = line.strip().split(maxsplit=1), line.strip().split(maxsplit=1)
         num_seasons = int(num_seasons)
         if num_seasons not in shows:
             shows[num_seasons] = []
