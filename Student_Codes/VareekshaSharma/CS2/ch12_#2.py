@@ -66,116 +66,27 @@ Murder, She Wrote'''
 
 # Type your code here
 
-import os
-
-cwd = os.getcwd()  # Get the current working directory (cwd)
-files = os.listdir(cwd)  # Get all the files in that directory
-print("Files in %r: %s" % (cwd, files))
-
-'''filename = input("Enter the name of the input file: ")
-
-# Create an empty dictionary to store the data
-data = {}
-
-# Read the input file into the dictionary
-with open(filename, 'r') as file:
-    for line in file:
-        line = line.strip().split()
-        seasons = (line[0])
-        title = ' '.join(line[1:])
-        if seasons in data:
-            data[seasons].append(title)
-        else:
-            data[seasons] = [title]
-
-# Sort the dictionary by key (greatest to least) and output the results to a file
-with open("output_keys.txt", 'w') as file:
-    for key in sorted(data.keys(), reverse=True):
-        titles = ';'.join(data[key])
-        file.write(f"{key}: {titles}\n")
-
-# Sort the dictionary by values (in reverse alphabetical order) and output the results to a file
-with open("output_titles.txt", 'w') as file:
-    for key, values in sorted(data.items(), key=lambda x: x[1], reverse=True):
-        for title in sorted(values, reverse=True):
-            file.write(f"{key}: {title}\n")
-
-filename = input("Enter the name of the input file: ")
-
-# Create an empty dictionary to store the data
-data = {}
-
-# Read the input file
-with open(filename, 'r') as file:
-    lines = file.readlines()
-
-# Parse the lines of the input file and add them to the dictionary
-for line in lines:
-    # Split the line into a number of seasons and a TV show
-    num_seasons, tv_show = line.strip().split(' ')
-
-    # Convert the number of seasons to an integer
-    num_seasons = int(num_seasons)
-
-    # If the number of seasons is not already in the dictionary, add it with an empty list
-    if num_seasons not in data:
-        data[num_seasons] = []
-
-    # Add the TV show to the list of shows for the corresponding number of seasons
-    data[num_seasons].append(tv_show)
-
-# Sort the dictionary by key (greatest to least)
-sorted_data_by_key = dict(sorted(data.items(), reverse=True))
-
-# Output the results to a file named output_keys.txt
-with open('output_keys.txt', 'w') as file:
-    for num_seasons, tv_shows in sorted_data_by_key.items():
-        # Join the list of TV shows with a semicolon and write to the output file
-        file.write(f'{num_seasons}: {": ".join(tv_shows)}\n')
-
-# Sort the dictionary by values (in reverse alphabetical order)
-sorted_data_by_value = dict(sorted(data.items(), key=lambda x: x[1], reverse=True))
-
-# Output the results to a file named output_titles.txt
-with open('output_titles.txt', 'w') as file:
-    for num_seasons, tv_shows in sorted_data_by_value.items():
-        # Join the list of TV shows with a semicolon and write to the output file
-        file.write(f'{num_seasons}: {": ".join(tv_shows)}\n')
-'''
-
 input_file = input("Enter the name of the input file: ")
 
-# Read the input file and build the dictionary
-shows = {}
-with open(input_file) as f:
-    lines = f.readlines()
-    for line in lines:
-        title = line.strip().split(maxsplit=1)
-        seasons = line.strip().split(maxsplit=1)
-        print(seasons)
-        '''
-        seasons = [eval(i) for i in seasons]
-        if seasons not in shows:
-            shows[seasons] = []
-        shows[seasons].append(title)
+# Read input file and create dictionary
+data = {}
+with open(input_file, 'r') as file:
+    lines = file.readlines()
+    for i in range(0, len(lines), 2):
+        num_seasons = int(lines[i].strip())
+        tv_show = lines[i+1].strip()
+        if num_seasons in data:
+            data[num_seasons].append(tv_show)
+        else:
+            data[num_seasons] = [tv_show]
 
-# Sort the dictionary by key (greatest to least)
-sorted_shows_by_key = dict(sorted(shows.items(), reverse=True))
+# Sort dictionary by key and write to output_keys.txt
+with open('output_keys.txt', 'w') as file:
+    for key in sorted(data.keys(), reverse=True):
+        tv_shows = "; ".join(data[key])
+        file.write(str(key) + ": " + tv_shows + "\n")
 
-# Output the sorted dictionary to a file
-with open("output_keys.txt", "w") as f:
-    for num_seasons, titles in sorted_shows_by_key.items():
-        f.write(f"{seasons}: ")
-        f.write("; ".join(titles))
-        f.write("\n")
-
-# Sort the dictionary by values (in reverse alphabetical order)
-sorted_shows_by_title = dict(sorted(shows.items(), key=lambda x: x[1][0], reverse=True))
-
-# Output the sorted dictionary to a file
-with open("output_titles.txt", "w") as f:
-    for seasons, titles in sorted_shows_by_title.items():
-        f.write(f"{seasons}: ")
-        f.write("; ".join(titles))
-        f.write("\n")'''
-
+# Sort dictionary by value and write to output_titles.txt
+with open('output_titles.txt', 'w') as file:
+    for tv_show in sorted(data.values(), key=lambda x: x[0], reverse=True):
+        file.write(tv_show[0] + "\n")

@@ -1,11 +1,5 @@
-Will: & Grace
-The: Simpsons
-Murder,: She Wrote
-Law: & Order
-Gunsmoke: 
-Dallas: 
-30: 
-20: ;
-14: 
-12: 
-10: 
+30: The Simpsons
+20: Gunsmoke; Law & Order
+14: Dallas
+12: Murder, She Wrote
+10: Will & Grace
