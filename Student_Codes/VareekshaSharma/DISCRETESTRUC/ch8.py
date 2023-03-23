@@ -21,7 +21,7 @@ def is_prime(number):
     return True
 
 def fibonacci_primes(limit):
-    """Return a list of prime numbers in the Fibonacci sequence up to limit."""
+    """Return list of prime numbers in the Fibonacci sequence up to limit."""
     fibonacci_sequence = [0, 1]
     fibonacci_primes_list = []
     for count in range(2, limit):
@@ -29,19 +29,23 @@ def fibonacci_primes(limit):
         if fibonacci_number > limit:
             break
         fibonacci_sequence.append(fibonacci_number)
-        if is_prime(fibonacci_number):
-            fibonacci_primes_list.append(fibonacci_number)
-    return fibonacci_primes_list
+        # if is_prime(fibonacci_number):
+            # fibonacci_primes_list.append(fibonacci_number)
+    return fibonacci_sequence
 
 def sieve_of_eratosthenes(limit):
-    """Return a list of prime numbers up to limit using segmented sieve of Eratosthenes algorithm."""
+    """Return list of prime numbers up to limit using segmented sieve of Eratosthenes algorithm."""
     segment_size = int(math.sqrt(limit)) + 1
     primes = [True] * segment_size
     primes[0] = primes[1] = False
-    for number in range(3, int(math.sqrt(segment_size)) + 1, 2):
+    # print(primes)
+
+    for number in range(3, int(segment_size), 2):
         if primes[number]:
             for multiple in range(number**2, segment_size, number):
                 primes[multiple] = False
+    print(primes)
+    print("after for loop")
 
     results = [2]
     for low in range(segment_size, limit + 1, segment_size):
@@ -63,13 +67,16 @@ def sieve_of_eratosthenes(limit):
 if __name__ == '__main__':
     start_time = time.time()
 
-    fibonacci_primes_list = fibonacci_primes(10000)
-    filtered_fibonacci_primes_list = [prime for prime in fibonacci_primes_list if prime < 10000]
-    sieve_of_eratosthenes_list = sieve_of_eratosthenes(10000)
+    #fibonacci_primes_list = fibonacci_primes(10000)
+    #filtered_fibonacci_primes_list = [prime for prime in fibonacci_primes_list if prime < 10000]
+    sieve_of_eratosthenes_list = sieve_of_eratosthenes(100)
 
     end_time = time.time()
 
-    print(f"Prime numbers in Fibonacci sequence up to 10000 are: {filtered_fibonacci_primes_list}")
+    # prime_fib_intersect = list(set(fibonacci_primes_list) & set(sieve_of_eratosthenes_list))
+
+    # print(f"Prime numbers in Fibonacci sequence up to 10000 are: {filtered_fibonacci_primes_list}")
     print(f"Prime numbers less than 10000 using Sieve of Eratosthenes algorithm are: {sieve_of_eratosthenes_list}")
+    # print(prime_fib_intersect)
     print(f"Time taken: {end_time - start_time:.5f} seconds")
 
