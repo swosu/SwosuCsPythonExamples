@@ -16,7 +16,7 @@ def fib(amountReturn):
     primes = SieveOfEratosthenes(100000)
     #print(f"primes{primes}")
     fibList = [0,1]
-    primeFiblist = [0,1]
+    primeFiblist = []
     for i in range(amountReturn):
         num = fibList[-2]
         numTwo = fibList[-1]
