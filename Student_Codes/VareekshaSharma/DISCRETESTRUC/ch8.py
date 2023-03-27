@@ -35,19 +35,29 @@ def fibonacci_primes(limit):
 
 def sieve_of_eratosthenes(limit):
     """Return list of prime numbers up to limit using segmented sieve of Eratosthenes algorithm."""
-    segment_size = int(math.sqrt(limit)) + 1
+    segment_size = int(limit) + 1
     primes = [True] * segment_size
     primes[0] = primes[1] = False
-    # print(primes)
+    print(primes)
 
-    for number in range(3, int(segment_size), 2):
+    for number in range(1, int(segment_size), 1):
+        print(f'number before if: {number}')
         if primes[number]:
-            for multiple in range(number**2, segment_size, number):
+            print(f'number is {number} which is true in primes list')
+            for multiple in range(number, segment_size, number):
+                print(f'mults are {multiple}')
                 primes[multiple] = False
+                primes[number] = True
     print(primes)
     print("after for loop")
 
-    results = [2]
+    results = []
+
+    for number in range(1, int(segment_size), 1):
+        if primes[number]:
+            results.append(number)
+    print(results)
+
     for low in range(segment_size, limit + 1, segment_size):
         high = min(low + segment_size, limit + 1)
         segment_primes = [True] * segment_size
