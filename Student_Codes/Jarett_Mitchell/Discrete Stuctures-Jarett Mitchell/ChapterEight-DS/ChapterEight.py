@@ -1,5 +1,3 @@
-import time
-
 def SieveOfEratosthenes(num):
     prime = [True for i in range(num+1)]
     p = 2
@@ -15,17 +13,20 @@ def SieveOfEratosthenes(num):
     return primes
 
 def fib(amountReturn):
-    primeList = SieveOfEratosthenes(100000)
+    primes = SieveOfEratosthenes(100000)
+    #print(f"primes{primes}")
     fibList = [0,1]
-    primeFiblist = []
+    primeFiblist = [0,1]
     for i in range(amountReturn):
         num = fibList[-2]
         numTwo = fibList[-1]
         nextNum = num + numTwo
+        if nextNum in primes:
+            primeFiblist.append(nextNum)
         fibList.append(nextNum)
-    for f in fibList:
-        if f in primeList:
-            primeFiblist.append(f)
+    #print(f"fibList{fibList}")
     return primeFiblist
 
-print(fib(10000))
+#check if numbers in prime list and fib list are actually matching
+print(f'Prime numbers in the Fibonacci sequence up to 100 thousand, {fib(10000)}')
+
