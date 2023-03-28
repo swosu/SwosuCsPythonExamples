@@ -52,25 +52,31 @@ class Book:
 
 class Encyclopedia(Book):
     # TODO: Define constructor with attributes:
-    #       title, author, publisher, publication_date, edition, num_volumes
-
+    #       title, author, publisher, publication_date, edition, num_volumes (is it not pages??)
+    def __init__(self, title, author, publisher, publication_date, edition, num_pages):
+        super().__init__(title, author, publisher, publication_date)
+        self.edition = edition
+        self.num_pages = num_pages
     
-    # TODO: Define a print_info() method that overrides the print_info()
-    #       in the Book class
+    # TODO: Define a print_info() method that overrides the print_info() in the Book class
+    def print_info(self):
+        super().print_info()
+        print(f'   Edition: {self.edition}')
+        print(f'   Page numbers: {self.num_pages}')
 
 
 if __name__ == "__main__":
-    title = input()
-    author = input()
-    publisher = input()
-    publication_date = input()
+    title = input("Enter the name of the book: ")
+    author = input("Enter the book author: ")
+    publisher = input("Enter the publisher: ")
+    publication_date = input("Enter when the book was published: ")
     
-    e_title = input()
-    e_author = input()
-    e_publisher = input()
-    e_publication_date = input()
-    edition = input()
-    num_pages = int(input())
+    e_title = input("Enter the encyclopidea title: ")
+    e_author = input("Enter the author: ")
+    e_publisher = input("Enter the publisher name: ")
+    e_publication_date = input("Enter the publication date: ")
+    edition = input("Enter the edition: ")
+    num_pages = int(input("Enter the number of pages: "))
     
     my_book = Book(title, author, publisher, publication_date)
     my_book.print_info()
