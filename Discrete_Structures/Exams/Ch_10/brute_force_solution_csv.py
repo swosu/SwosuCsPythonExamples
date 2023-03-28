@@ -64,6 +64,14 @@ print('possible_path_list: ')
 for path in possible_path_list:
     print(path)
 
+print('now we can calculate the distance for each path')
+total_distance_list = []
+total_distance = 0
+
+
+
+    
+
 
 #for i in range(4):
 #    for j in range(4):
