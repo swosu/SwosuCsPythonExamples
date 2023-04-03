@@ -15,6 +15,8 @@ class Pet():
         if self.breed == "cat":
             print(f"You're cat may be {self.age}, but they still have 9 lives!!!")
 
-pet1 = Pet(pet_name= input("what is your pet's name???"), pet_age= input("What is your pet's age???"), pet_breed= input("What is your pet's breed???"))
+pet1 = Pet(pet_name= input("what is your pet's name???"), 
+           pet_age= input("What is your pet's age???"), 
+           pet_breed= input("What is your pet's breed???"))
 
 
