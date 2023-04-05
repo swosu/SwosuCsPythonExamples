@@ -5,6 +5,9 @@ def num_enemies():
     enemies = random.randint(0,20)
     print(enemies)
 
+def exit_screen():
+    print("hello player, this is the exit screen. You chose to end the game. \nOr, you met an untimely and rather unfortunate death. \nGood bye, hope you enjoyed playing. :)")
+
 def welcome_screen():
     print("Welcome to Phion")
     time.sleep(2)
@@ -22,6 +25,7 @@ def welcome_screen():
         print('let us begin')
     elif answer == "No":
         print("okay, maybe some other time")
+        exit_screen()
 
 def game_start():
     global planet_quest
@@ -34,14 +38,22 @@ def game_start():
         print('We ask that you begin making your way towards the mess-hall then.')
     elif planet_quest == "no":
         print('Maybe next time.')
+        exit_screen()
 
 def look_outside():
     print("You approach the mass of bodies clustered towards the ship's thick windows. \nFrom there, you can see the slight hue and slope of a blueish atmoshphere. \nUnder that, you can see a large green ocean, bordered with a faint outline of \nsandy brown, which you assume to be a desert. Suddenly, the ship's alarms \nblare throughout the corridors, causing people to fly into a panic. \nYou look back out of the window and find the the planet seems to be \ngetting closer at an alarmingly fast rate.")
-    player_choice = input("What do you do? \nfind a drop-pod / stay in place / panic with everyone else \n: ")
+    player_choice = input("What do you do? \nfind a drop-pod / stay in place \n: ")
     if player_choice == "find a drop-pod":
-        print("You run out of the observasion deck, swerving your way through the halls and people. You find the large room with the drop-pods, each of which contains a survival kit, space-suit, and a sprouting plant.")
+        print("You run out of the observasion deck, swerving your way through the halls and people. You find the large room with the drop-pods, each of which contains a survival kit, space-suit, and a sprouting plant. Except, there was only one drop-pod left as the re")
+        drop_pod()
     elif player_choice == "stay in place":
         print("You remain rooted to the spot, unsure of what to do. Eventually, with the amount of people running out of the observation deck, you are pushed to the ground, where you meet your untimely demise.")
+
+def mess_hall():
+    print("boo")
+
+def drop_pod():
+    print("You strap yourself into the seat, and take a deep breath. the pod faces so the \nseat and window allow you to look around the pod-room. As you set the co-ordinates to the area the transport \nship was supposed to land, you look up to see a group of people run into the room. ")
 
 if __name__ == "__main__":
     welcome_screen()

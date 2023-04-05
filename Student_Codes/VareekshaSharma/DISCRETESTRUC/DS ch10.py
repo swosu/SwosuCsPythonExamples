@@ -55,6 +55,10 @@ def knight_tour(board_size):
         else:
             break
         # print("breaking statement")
+    for row in range(board_size):
+        for col in range(board_size):
+            if visited[row][col] == 0:
+                board[row][col] = -1
     print(board)
     for sublist in board:
         print(sublist)
