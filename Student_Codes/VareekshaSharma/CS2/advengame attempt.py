@@ -41,10 +41,10 @@ def game_start():
         exit_screen()
 
 def look_outside():
-    print("You approach the mass of bodies clustered towards the ship's thick windows. \nFrom there, you can see the slight hue and slope of a blueish atmoshphere. \nUnder that, you can see a large green ocean, bordered with a faint outline of \nsandy brown, which you assume to be a desert. Suddenly, the ship's alarms \nblare throughout the corridors, causing people to fly into a panic. \nYou look back out of the window and find the the planet seems to be \ngetting closer at an alarmingly fast rate.")
+    print("You approach the mass of bodies clustered towards the ship's thick windows. \nFrom there, you can see the slight hue and slope of a blueish atmosphere. \nUnder that, you can see a large green ocean, bordered with a faint outline of \nsandy brown, which you assume to be a desert. Suddenly, the ship's alarms \nblare throughout the corridors, causing people to fly into a panic. \nYou look back out of the window and find the the planet seems to be \ngetting closer at an alarmingly fast rate.")
     player_choice = input("What do you do? \nfind a drop-pod / stay in place \n: ")
     if player_choice == "find a drop-pod":
-        print("You run out of the observasion deck, swerving your way through the halls and people. You find the large room with the drop-pods, each of which contains a survival kit, space-suit, and a sprouting plant. Except, there was only one drop-pod left as the re")
+        print("You run out of the observation deck, swerving your way through the halls and people. You find the large room with the drop-pods, each of which contains a survival kit, space-suit, and a sprouting plant. Except, there was only one drop-pod left as the re")
         drop_pod()
     elif player_choice == "stay in place":
         print("You remain rooted to the spot, unsure of what to do. Eventually, with the amount of people running out of the observation deck, you are pushed to the ground, where you meet your untimely demise.")
