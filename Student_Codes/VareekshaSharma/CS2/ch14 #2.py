@@ -4,7 +4,10 @@ Clone
 Edit lab
 
 Note
-Write a program that lists all ways people can line up for a photo (all permutations of a list of strings). The program will read a list of one word names, then use a recursive function to create and output all possible orderings of those names separated by a comma, one ordering per line.
+Write a program that lists all ways people can line up for a photo (all permutations 
+of a list of strings). The program will read a list of one word names, then use a 
+recursive function to create and output all possible orderings of those names 
+separated by a comma, one ordering per line.
 
 When the input is:
 

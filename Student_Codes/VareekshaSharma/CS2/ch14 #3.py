@@ -4,7 +4,11 @@ Clone
 Edit lab
 
 Note
-Write a recursive function called print_list() that outputs the integer value of each node in a linked list. Function print_list() has one parameter, the head node of a list. The main program reads the size of the linked list, followed by the values in the list. Assume the linked list has at least 1 node.
+Write a recursive function called print_list() that outputs the 
+integer value of each node in a linked list. Function print_list() 
+has one parameter, the head node of a list. The main program reads 
+the size of the linked list, followed by the values in the list. 
+Assume the linked list has at least 1 node.
 
 Ex: If the input of the program is:
 
@@ -17,7 +21,10 @@ Ex: If the input of the program is:
 the output of the print_list() function is:
 
 1, 2, 3, 4, 5,
-Hint: Output the value of the current node, then call the print_list() function repeatedly until the end of the list is reached. Refer to the Node class to explore any available instance methods that can be used for implementing the print_list() function.
+Hint: Output the value of the current node, then call the print_list() 
+function repeatedly until the end of the list is reached. Refer to the 
+Node class to explore any available instance methods that can be used 
+for implementing the print_list() function.
 
 
 Starter Code'''
