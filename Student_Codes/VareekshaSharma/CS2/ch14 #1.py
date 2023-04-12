@@ -17,7 +17,16 @@ Note: Use recursion and DO NOT use any loops.
 Starter Code'''
 
 # TODO: Write recursive fibonacci() function
+def fibonacci(start_num):
+    if start_num < 0:
+        return -1
+    elif start_num == 0:
+        return 0
+    elif start_num == 1:
+        return 1
+    else:
+        return fibonacci(start_num-1) + fibonacci(start_num-2)
 
 if __name__ == "__main__":
-    start_num = int(input())
+    start_num = int(input("Enter the value you would like to see: "))
     print(f'fibonacci({start_num}) is {fibonacci(start_num)}')

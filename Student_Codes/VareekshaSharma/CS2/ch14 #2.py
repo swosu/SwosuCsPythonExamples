@@ -26,8 +26,15 @@ Starter Code'''
 
 def print_all_permutations(permList, nameList):
     # TODO: Implement method to create and output all permutations of the list of names.
+    if len(permList) == 0:
+        print(", ".join(permList))
+    else:
+        for name in range(len(nameList)):
+            newPermList = permList + [nameList[name]]
+            newNameList = nameList[:name] + nameList[name + 1:]
+            print_all_permutations(newPermList, newNameList)
 
 if __name__ == "__main__": 
-    nameList = input().split(' ')
+    nameList = input("enter a list of names: ").split(' ')
     permList = []
     print_all_permutations(permList, nameList)
