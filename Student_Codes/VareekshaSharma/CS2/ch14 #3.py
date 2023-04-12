@@ -46,11 +46,15 @@ class Node:
         print(self.data_val, end=", ")
 
 # TODO: Write recursive print_list() function here.
+def print_list(node):
+    while node is not None:
+        print(node.data_val, end=", ")
+        node = node.next_node
 
         
 if __name__ == "__main__":
-    size = int(input())
-    value = int(input())
+    size = int(input("ENter size of the list: "))
+    value = int(input("Enter the values in the list (press enter to continue with list): "))
     head_node = Node(value) # Make head node as the first node
     last_node = head_node
     
@@ -60,5 +64,5 @@ if __name__ == "__main__":
         new_node = Node(value)
         last_node.insert_after(new_node)
         last_node = new_node
-    
+
     print_list(head_node)
