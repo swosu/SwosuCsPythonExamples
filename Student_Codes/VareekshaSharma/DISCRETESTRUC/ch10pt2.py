@@ -40,14 +40,13 @@ best_path = current_path
 current_distance = calculate_distance(current_path)
 best_distance = current_distance
 
-# Iterate until the temperature has cooled to 1
+# Iterate
 while initial_temperature > 1:
-    # Create a new path by swapping two random cities
+    # Create a new path by swapping cities
     new_path = current_path.copy()
     city_a, city_b = random.sample(range(num_cities), 2)
     new_path[city_a], new_path[city_b] = new_path[city_b], new_path[city_a]
     
-    # Calculate the new distance
     new_distance = calculate_distance(new_path)
     
     # If the new distance is better, accept the new path
