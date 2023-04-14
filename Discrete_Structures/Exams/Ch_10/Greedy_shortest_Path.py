@@ -1,63 +1,60 @@
-import pandas as pd
+class Greedy_Shortest_Path():
+    import pandas as pd
+    import numpy as np
+    import itertools
+    import time
+    import sys
+    import os
+    import math
+    import random
 
-def greedy_shortest_path(starting_city, df):
+    def __init__(self):
+        self.city_count = 0
+        self.df = pd.DataFrame()
+        self.file_name = ''
+        self.start_time = 0
+        self.end_time = 0
+        self.time_limit = 0
+        self.path = []
+        self.path_cost = 0
+        self.best_path = []
+        self.best_path_cost = 0
+        self.best_path_found = False
 
-    # create a list of cities to visit
-    current_path = [starting_city]
+    def run_guess_and_check(self, time_limit):
+        self.start_time = time.time()
+        while self.end_time - self.start_time < time_limit:
+            self.end_time = time.time()
+            self.guess_and_check()
+            if self.best_path_found:
+                break
 
-    # create a list of cities to visit
-    cities_to_visit = list(range(1, 1 + city_count))
-    cities_to_visit.remove(starting_city)
-    print(f'cities to visit are {cities_to_visit}')
-
-    current_city = starting_city
-
-    # loop through the cities to visit
-    while len(cities_to_visit) > 0:
-        # find the distance to each of the cities to visit from the starting city
-        
-        # grab the row of distances from the current city
-        distances = df.loc[df['City'] == current_city]
-        print(f'distances are {distances}')
-
-
-        # add the closest city to the current path
-        #current_path.append(closest_city)
-
-        # remove the closest city from the cities to visit
-        #cities_to_visit.remove(closest_city)
-
-    # add the starting city to the end of the current path
-    #current_path.append(starting_city)
-
-    # print the current path
-    #print(f'current path after greedy is {current_path}')
-
-
-if __name__ == '__main__':
-    print('hello world')
-
-    city_count = 6
-
-    # Load the data
-    file_name = str(city_count) + '.csv'
-    print(f'file name is {file_name}.')
-    file = open(file_name, 'r')
-
-
+    def guess_and_check(self):
+        # build a random path
+        self.build_random_path()
+        # calculate the cost of the path
+        self.calculate_path_cost()
+        # check to see if the path is better than the best path
+        self.check_best_path()
     
-    # save the data into a data structure
-    df = pd.read_csv(file)
+    def build_random_path(self):
+        self.path = []
+        for i in range(self.city_count):
+            self.path.append(i)
+        random.shuffle(self.path)
+        self.path.append(self.path[0])
+    
+    def calculate_path_cost(self):
+        self.path_cost = 0
+        for i in range(self.city_count):
+            self.path_cost += self.df.iloc[self.path[i], self.path[i+1]]
 
-    # print the data file without row numbers
-    print(df.to_string(index=False))
-
-    # loop through starting at all the cities for the greedy algorithm
-    for starting_city in range(1, 1 + city_count):
-        print(f'Starting city is {starting_city}')
-
-        # create a list of cities to visit
-        current_path = greedy_shortest_path(starting_city, df)
-
-
-    print('So long and thanks for all the fish')
+    def check_best_path(self):
+        if self.best_path_found:
+            if self.path_cost < self.best_path_cost:
+                self.best_path = self.path
+                self.best_path_cost = self.path_cost
+        else:
+            self.best_path = self.path
+            self.best_path_cost = self.path_cost
+            self.best_path_found = True
