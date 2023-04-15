@@ -1,0 +1,122 @@
+import pygame
+import sys
+import os
+
+worldx = 960
+worldy = 720
+fps = 40
+ani = 4
+world = pygame.display.set_mode([worldx, worldy])
+
+BLUE = (25, 25, 200)
+BLACK = (23, 23, 23)
+WHITE = (254, 254, 254)
+ALPHA = (0, 255, 0)
+
+WINDOW_WIDTH = 800
+WINDOW_HEIGHT = 600
+# Load the background image
+background_image = pygame.image.load('C:\\Users\\pixel\\Git\\SwosuCsPythonExamples\\Student_Codes\\Jarett_Mitchell\\Discrete Stuctures-Jarett Mitchell\\ChapterThirteen-DS\\Testbackground.jpg').convert()
+
+# Scale the background image to the size of the game window
+background_image = pygame.transform.scale(background_image, (WINDOW_WIDTH, WINDOW_HEIGHT))
+
+class Player(pygame.sprite.Sprite):
+    def __init__(self, name, health, attack, defense, speed):
+        self.name = name
+        self.health = health
+        self.attack = attack
+        self.defense = defense
+        self.speed = speed
+        
+        pygame.sprite.Sprite.__init__(self)
+        self.movex = 0
+        self.movey = 0
+        self.frame = 0
+        
+        def control (self, x, y):
+            self.movex += x
+            self.movey += y
+            
+        def update(self):
+            self.rect.x = self.rect.x + self.movex
+            self.rectr.y = self.rect.y + self.movey
+                    # moving left
+            if self.movex < 0:
+                self.frame += 1
+                if self.frame > 3*ani:
+                    self.frame = 0
+                self.image = self.images[self.frame//ani]
+
+            # moving right
+            if self.movex > 0:
+                self.frame += 1
+                if self.frame > 3*ani:
+                    self.frame = 0
+                self.image = self.images[self.frame//ani]
+                    
+        
+    def takeDamage(self, damage):
+        print(self.name + " took " + str(damage) + " damage!")
+        
+    def attack(self, target):
+        print(self.name + " attacked " + target.name + "!")
+        
+    
+class enemy():
+    def __init__(self, name, health, attack, defense, speed):
+        self.name = name
+        self.health = health
+        self.attack = attack
+        self.defense = defense
+        self.speed = speed
+        
+    def takeDamage(self, damage):
+        print(self.name + " took " + str(damage) + " damage!")
+        
+    def attack(self, target):
+        print(self.name + " attacked " + target.name + "!")
+        
+
+nameOne = input("Enter your name: ")
+playerOne = Player(nameOne, 100, 10, 10, 10)
+
+# Main game loop
+running = True
+while running:
+    # Handle events
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # Update the display
+    pygame.display.update()
+
+while main:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit(); sys.exit()
+            main = False
+
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_LEFT or event.key == ord('a'):
+                print('left')
+            if event.key == pygame.K_RIGHT or event.key == ord('d'):
+                print('right')
+            if event.key == pygame.K_UP or event.key == ord('w'):
+                print('jump')
+
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_LEFT or event.key == ord('a'):
+                print('left stop')
+            if event.key == pygame.K_RIGHT or event.key == ord('d'):
+                print('right stop')
+            if event.key == ord('q'):
+                pygame.quit()
+                sys.exit()
+                main = False    
+   
+
+# Quit Pygame
+pygame.quit()
+
