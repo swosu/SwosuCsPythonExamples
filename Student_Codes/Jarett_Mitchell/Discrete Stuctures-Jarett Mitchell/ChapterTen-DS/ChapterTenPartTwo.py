@@ -2,7 +2,7 @@ import pandas as pd
 import time
 
 # read in the distance matrix from the CSV file
-data = pd.read_csv('C:\\Users\\pixel\\git\\SwosuCsPythonExamples\\Discrete_Structures\\Exams\\Ch_10\\500.csv', header=None)
+data = pd.read_csv("...csv file path here...", header=None) #insert csv file path here
 
 # define a function to find the nearest neighbor of a given city
 def nearest_neighbor(city, visited):
@@ -37,3 +37,5 @@ end_time = time.time()
 print("Shortest path:", path)
 print("Total distance:", total_distance)
 print("Runtime:", end_time - start_time, "seconds")
+ 
+#code was never finished, but it was a good start
