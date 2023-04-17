@@ -7,6 +7,8 @@ class Cashier_algorithm:
         self.user_payment = 0.0
         self.total_change = 0.0
         self.change_remaining = 0.0
+        self.denominations = [100, 50, 20, 10, 5, 2, 1, 0.50, 0.25, 0.10, 0.05, 0.01]
+        self.denomination_totals = []
 
     def greet_user(self):
         print('Hello, and welcome to the cashier\'s algorithm.')
@@ -36,6 +38,9 @@ class Cashier_algorithm:
         self.total_change = round( ( self.user_payment - self.purchase_total ) , 2)
         print(f'After you paid ${self.user_payment} for {self.item_purchased} that cost ${self.purchase_total}, \
             your change due is ${self.total_change}. ')
+    
+    def calculate_denomination_totals(self):
+
 
 
 
@@ -47,5 +52,6 @@ if __name__ == "__main__":
     teller.ask_user_purchase_total()
     teller.ask_user_how_much_cash_they_handed_over()
     teller.display_total_change()    
+    teller.calculate_denomination_totals()
 
     

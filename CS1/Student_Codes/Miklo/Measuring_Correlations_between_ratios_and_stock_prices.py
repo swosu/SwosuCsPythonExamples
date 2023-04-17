@@ -11,6 +11,9 @@ end_date = '2020-12-31'
 yf.pdr_override()
 pep = pdr.get_data_yahoo("PEP", start=start_date, end=end_date)
 
+print(pep.head())
+print(pep.tail())
+
 # Calculate the 12-month moving average for the price to earnings ratio
 pep['PEMA12'] = pep['Close'].rolling(window=252).mean() / pep['Earnings'].rolling(window=252).mean()
 
