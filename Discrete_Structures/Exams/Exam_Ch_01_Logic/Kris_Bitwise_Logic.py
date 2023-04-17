@@ -15,14 +15,14 @@ def find_bitwise_and(first_array, second_array):
     bitwise_and = []
     if len(first_array) == len(second_array):
         for index in range(0, len(first_array)):
-            print(first_array[index], end = ', ')
-            print(second_array[index], end = ', ')
-            print()
+            #print(first_array[index], end = ', ')
+            #print(second_array[index], end = ', ')
+            #print()
 
             if(first_array[index] == second_array[index]):
-                print('we had a match!')
+                #print('we had a match!')
                 if('1' == first_array[index]):
-                    print('and it was a 1!')
+                    #print('and it was a 1!')
                     bitwise_and.append('1')
                 else:
                     bitwise_and.append('0')
