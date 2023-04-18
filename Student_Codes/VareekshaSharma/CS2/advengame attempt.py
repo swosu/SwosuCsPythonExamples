@@ -50,7 +50,7 @@ def look_outside():
         print("You remain rooted to the spot, unsure of what to do. Eventually, with the amount of people running out of the observation deck, you are pushed to the ground, where you meet your untimely demise.")
 
 def mess_hall():
-    print("boo")
+    print("You navigate through the halls with expertise and walk into the mess hall. \nHere, you can see rows of metal picnic tables bolted to the floor. On the other side of the dining room, ")
 
 def drop_pod():
     print("You strap yourself into the seat, and take a deep breath. the pod faces so the \nseat and window allow you to look around the pod-room. As you set the co-ordinates to the area the transport \nship was supposed to land, you look up to see a group of people run into the room. ")
