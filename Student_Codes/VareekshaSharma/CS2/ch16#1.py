@@ -56,20 +56,34 @@ def swap(nums, n, m):
 def insertion_sort(numbers):
     """Sort the list numbers using insertion sort"""
     # TODO: Count comparisons and swaps. Output the array at the end of each iteration.
+    global swaps
+    global comparisons
+
     for i in range(1, len(numbers)):
         j = i
         # Insert numbers[i] into sorted part
         # stopping once numbers[i] is in correct position
-        while j > 0 and numbers[j] < numbers[j - 1]:
-            swap(numbers, j, j - 1)
-            j -= 1
+        while j > 0:
+            comparisons += 1
+            if numbers[j] < numbers[j - 1]:
+                swap(numbers, j, j - 1)
+                swaps += 1
+                j -= 1
+            else:
+                break
+        print_nums(numbers)
+        print()
 
 if __name__ == '__main__':
+    global swaps
+    global comparisons
+    swaps = 0
+    comparisons = 0
     # Step 1: Read numbers into a list
     numbers = read_nums()
 
     # Step 2: Output the numbers list
-    print_nums(numbers);
+    print_nums(numbers)
     print(end='\n\n')
 
     # Step 3: Sort the numbers list
@@ -77,3 +91,4 @@ if __name__ == '__main__':
     print()
     
     # Step 4: TODO: Output the number of comparisons and swaps performed
+    print(f"comparisons: {comparisons} \nswaps: {swaps}")
