@@ -41,10 +41,29 @@ index: 1, recursions: 2, comparisons: 3
 Starter Code'''
 
 # TODO: Declare global variables here.
-
+comparisons = 0
+recursions = 0
 
 def binary_search(nums, target, lower, upper):
     # Type your code here.
+    global comparisons
+    global recursions
+    recursions += 1
+
+    if lower > upper:
+        return -1
+    
+    index = (lower + upper) // 2
+
+    if nums[index] == target:
+        return index
+    
+    comparisons += 1
+
+    if nums[index] < target:
+        return binary_search(nums, target, index + 1, upper)
+    elif nums[index] > target:
+        return binary_search(nums, target, index - 1, upper)
 
 
 if __name__ == '__main__':
