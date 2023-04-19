@@ -31,9 +31,11 @@ comparisons: 8
 
 Starter Code'''
 
+comparisons = 0
+
 # Read integers into a list and return the list.
 def read_nums():
-    nums = input().split()
+    nums = input("enter list of ints: ").split()
     return [int(num) for num in nums]
 
 # Output the content of a list, separated by spaces.
@@ -43,6 +45,7 @@ def print_nums(numbers):
     print()
 
 def merge(numbers, i, j, k):
+    global comparisons
     merged_size = k - i + 1               
     merged_numbers = []                   
     for l in range(merged_size):
@@ -54,6 +57,7 @@ def merge(numbers, i, j, k):
     right_pos = j + 1                     
 
     while left_pos <= j and right_pos <= k:
+        comparisons += 1
         if numbers[left_pos] < numbers[right_pos]:
             merged_numbers[merge_pos] = numbers[left_pos]
             left_pos = left_pos + 1
@@ -95,10 +99,11 @@ if __name__ == '__main__':
     numbers = read_nums()
 
     print ('unsorted:', end=' ')
-    print_nums(numbers)
-    print()
+    print_nums(f'{numbers} \n')
 
     merge_sort(numbers, 0, len(numbers) - 1)
 
     print ('\nsorted:', end=' ')
     print_nums(numbers)
+
+    print(f'comparisons: {comparisons}')
