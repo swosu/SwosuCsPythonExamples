@@ -63,7 +63,7 @@ def binary_search(nums, target, lower, upper):
     if nums[index] < target:
         return binary_search(nums, target, index + 1, upper)
     elif nums[index] > target:
-        return binary_search(nums, target, index - 1, upper)
+        return binary_search(nums, target, lower, index - 1)
 
 
 if __name__ == '__main__':
