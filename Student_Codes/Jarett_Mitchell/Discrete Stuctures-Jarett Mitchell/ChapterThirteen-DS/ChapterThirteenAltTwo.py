@@ -5,8 +5,11 @@ class Inventory:
     def __init__(self,moneyReceived=0):
         self.state = 'idle'
         self.moneyReceived = moneyReceived
+        self.change = 0
+        self.selection = ''
         self.items = {'Candy Bar': 1.00, 'Soda': 1.50, 'Chips': 2.00}
         
+    #take money recieved and add it to the total amount of money recieved 
     def receivingMoney(self, amount):
         print(self.state)
         if self.state == 'idle':
@@ -15,28 +18,35 @@ class Inventory:
             self.moneyReceived += amount
             print(f"{self.moneyReceived:.2f}")
         else:
-            print("state change error")
-   #what is the difference between the two functions below?      
-    def selection(self):
-        if self.state == "recieving money":
-            self.state = "dispensing"
-        elif self.state == "dispensing":
-            self.moneyReceived = 0
-        else:
-            print("state change error")
-            
-    def dispensor(self):
-        if self.state == "item selected":
-            self.state = "dispensing"
-        else:
-            print("state change error")
+            raise Exception('Invalid state')
+        return self.moneyReceived
     
+    #take money recieved and subtract it from the price of the item selected   
+    def selectItem(self, item):
+        if self.state == "receiving money":
+            self.state = "selection made"
+            if self.moneyReceived >= self.items[item]:
+                self.change = self.moneyReceived - self.items[item]
+            else:
+                raise Exception('Not enough money received')
+        else:
+            raise Exception('Invalid state')
+      
+    #dispense item      
+    def dispensor(self):
+        if self.state == "selection made":
+            self.state = "dispensing"
+        else:
+            raise Exception('Invalid state')
+    
+    #dispense change
     def changeDispensor(self):
         if self.state == "dispensing":
             self.state = "change dispening"
+            print(f"{self.moneyReceived:.2f}")
             self.moneyRecieved = 0 
         else:
-            print("state change error")
+            raise Exception('Invalid state')
 
 root = tk.Tk()
 root.title("Vending Machine")
@@ -74,20 +84,30 @@ buttonFivedollars = tk.Button(frame, text="$5", fg="black", command=lambda: oper
 buttonFivedollars.pack(side=tk.LEFT)
 
 #on button click, selection takes amount of item clicked and subtracts it from moneyRecieved then returns the change
-buttonCandybar = tk.Button(frame, text = "Candy Bar", command=lambda: operation.selection(operation.items.get("Candy Bar")))
-buttonCandybar.pack(side='left', padx=20, pady=10)
+buttonCandybar = tk.Button(frame, text = "Candy Bar", command=lambda: operation.selectItem('Candy Bar'))
+buttonCandybar.pack(side='left', padx=10, pady=10)
 
-buttonSoda = tk.Button(frame, text = "Soda")
-buttonSoda.pack(side='left', padx=3, pady=10)
+buttonSoda = tk.Button(frame, text = "Soda", command=lambda: operation.selectItem('Soda'))
+buttonSoda.pack(side='left', padx=10, pady=10)
 
-#label to display the amount of money received, updates when a button is clicked
-textMoneyReceived = tk.Label(root, textvariable=moneyReceivedVar, height=1, width=10)
-textMoneyRecieved.pack()
-textMoneyRecieved.configure(bg = "#8DA9C4")
+buttonChips = tk.Button(frame, text = "Chips", command=lambda: operation.selectItem('Chips'))
+buttonChips.pack(side='left', padx=10, pady=10)
 
+#write a label to display the amount of money received that updates when a button is clicked
+labelMoneyReceived = tk.Label(root, text= operation.moneyReceived)
+labelMoneyReceived.pack()
 
+labelChange = tk.Label(root, text= operation.change)
+labelChange.pack()
 
+# Define a function that updates the label text
+def updateLabel():
+    labelMoneyReceived.config(text=f"Money received: ${operation.moneyReceived:.2f}")
+    labelChange.config(text=f"Change: ${operation.change:.2f}")
+    root.after(1, updateLabel)  # Schedule this function to run again in 1 second 
 
+# Schedule the first update of the label text
+root.after(1, updateLabel)
 
-root.mainloop()
+root.mainloop() 
 
