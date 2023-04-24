@@ -77,10 +77,12 @@ class App:
     def on_loop(self):
         pass
 
+    # draw the image to the screen
     def on_render(self):
-        self._display_surf.fill((0,0,0))
-        self._display_surf.bill(self._image_surf,(self.player.x,self.player.y))
+        self._display_surf.blit(self._image_surf,(self.player.x,self.player.y))
+        pygame.display.flip()
 
+        
     def on_cleanup(self):
         pygame.quit()
 
@@ -90,7 +92,7 @@ class App:
 
         while( self._running ):
             pygame.event.pump()
-            keys = pygame.key.get_presed()
+            keys = pygame.key.get_pressed()
 
             if (keys[K_RIGHT]):
                 self.player.moveRight()
