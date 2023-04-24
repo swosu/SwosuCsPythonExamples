@@ -1,5 +1,9 @@
 import pygame
 
+from pygame.locals import *
+
+pygame.init()
+
 class Player:
     x = 10
     y = 10 
@@ -19,6 +23,8 @@ class Player:
 
 pygame.event.pump()
 keys = pygame.key.get_pressed()
+
+
 
 if (keys[K_RIGHT]):
     print ("Right arrow pressed.")
