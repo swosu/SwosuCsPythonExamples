@@ -60,14 +60,16 @@ class App:
         self._image_surf = None
         self.player = Player()
 
+    # set up pygame on init
     def on_init(self):
         pygame.init()
-        self._display_surf = pygame.display.set.mode((self.windowWidth,self.winowHeight), pygame.HWSURFACE)
+        self._display_surf = pygame.display.set_mode((self.windowWidth,self.windowHeight), pygame.HWSURFACE)
 
         pygame.display.set_caption('Pygame pythonspot.com example')
-        self._rinning = True 
-        self._image_surf = pygame.image.load("pygame.png").convert()
 
+        self._running = True
+        self._image_surf = pygame.image.load("pygame.png").convert()
+    
     def on_event(self, event):
         if event.type == QUIT:
             self._running = False 
