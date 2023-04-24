@@ -50,7 +50,6 @@ class Player:
         self.y = self.y + self.speed
 
 class App:
-
     windowWidth = 800
     windowHeight = 600
     player = 0
@@ -112,5 +111,5 @@ class App:
 
 if __name__ == "__main__":
     theApp = App()
-    theApp.on_excute()
+    theApp.on_execute()
 
