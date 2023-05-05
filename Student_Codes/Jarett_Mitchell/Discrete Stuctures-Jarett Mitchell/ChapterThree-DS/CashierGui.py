@@ -4,20 +4,20 @@ root = tk.Tk()
 root.title("Cashier Tool")
 
 root.geometry("800x400") 
-root.configure(bg="#134074")
+root.configure(bg="#2E294E")
 
 #Created labels and buttons for the GUI
 labelOne = tk.Label(root,text= "Enter dollar amount due:", font = "Ariel, 11")
-labelOne.pack(padx= 20,pady= 10, anchor= 'nw')
-labelOne.configure(bg = "#8DA9C4")
+labelOne.pack(padx= 20,pady= 5, anchor= 'nw')
+labelOne.configure(bg = "#757575")
 
 inputTxtRec = tk.Text(root,height = 1, width = 11)
 inputTxtRec.pack(padx=20,pady =20, anchor='w')
 inputTxtRec.config(bg = "#EEF4ED")
 
-labelTwo = tk.Label(root,text= "Enter dollar amount given:", font = "Ariel, 11")
-labelTwo.pack(padx= 20,pady= 10, anchor= 'nw')
-labelTwo.configure(bg = "#8DA9C4")
+labelTwo = tk.Label(root,text= "Enter dollar amount given by customer:", font = "Ariel, 11")
+labelTwo.pack(padx= 20,pady= .3, anchor= 'nw')
+labelTwo.configure(bg = "#757575")
 
 inputTxtDue = tk.Text(root,height = 1, width = 11)
 inputTxtDue.pack(padx= 20,pady= 20, anchor= 'nw')
@@ -66,12 +66,12 @@ changeDueDisplay.config(bg = "#EEF4ED")
 
 changeDue = tk.Label(root, font = "Ariel, 11", height = 1, width = 15)
 changeDue.pack(padx = 15 , pady = 0 , anchor = 'w')
-changeDueDisplay.config(bg = "#8DA9C4")
+changeDueDisplay.config(bg = "#757575")
 
 #label to display the change due and denominations
 retLabel = tk.Label(root, text = '', width = 110, height = 2)
 retLabel.place(relx = 0.5 , rely = 0.8 , anchor ='s')
-retLabel.config(bg = "#8DA9C4")
+retLabel.config(bg = "#FBFFFE")
 
 root.mainloop()
 
