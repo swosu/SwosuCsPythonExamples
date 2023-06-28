@@ -1,0 +1,5 @@
+name = input("Choose a name\n")
+transportation = input("Choose a mode of transportation\n")
+place = input("Choose a place\n")
+thing = input("Choose a thing\n")
+print(name, "got in a", transportation, "to go to", place, "and find a(n)", thing, ".")

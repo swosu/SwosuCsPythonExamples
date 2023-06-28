@@ -1,4 +1,4 @@
-
+print('I like purple socks. Mason.')
 def question_1 ():
     person_in_room = \
     input('please enter the name of a person in the room: ')
@@ -31,10 +31,17 @@ def question_6 ():
 
 def question_7 ():
     second_noun = \
-    input('please enter a different noun: ')
+    input(\
+    'please enter a different noun: '\
+    )
     return second_noun
 
 def question_8 ():
     ing_verb = \
     input('please enter a verb enging in "ING": ')
     return ing_verb
+
+def question_9():
+    full_credit = \
+    input('for full credit, enter a string and a number')
+    return full_credit
