@@ -79,9 +79,32 @@ if __name__ == "__main__":
         exit()
 
     if word_is_in_dict(word) == False:
-        print("Invalid input")
+        print("Invalid input, this word is not in the dictionary")
         exit()
     else:
         print_points(word)
+
+
+    # find the top five words in the dictionary with the highest points
+    # and print them out
+    # with their point values
+    # and the total points for all five words
+
+    from operator import itemgetter
+    
+    # open the file
+    with open("words.txt", "r") as f:
+        # pull out every word and calculate its value
+        word_list = []
+        for line in f:
+            word = line.strip()
+            total = 0
+            for letter in word:
+                total += tile_dict[letter.upper()]
+            word_list.append((word, total))
+
+    # sort the list by the second item in the tuple
+    word_list.sort(key=itemgetter(1), reverse=True)
+    
 
     
