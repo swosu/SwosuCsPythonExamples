@@ -1,0 +1,22 @@
+def sequence(n):
+    
+     a = 2
+     b = 5
+     c=0
+     print("The first ten numbers of the sequence are the following: ")
+     print(a)
+     print(b)
+    
+     while c<n:
+        c = b + 3
+        if(c<=30 and c>0):
+            a = b
+            b = c
+            print(b)
+     return
+ 
+        
+            
+            
+n = 100
+sequence(n)
