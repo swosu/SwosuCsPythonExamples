@@ -1,0 +1,27 @@
+def make_change(amount, coins):
+    change = []
+    total = 0
+
+    # Sort the coin denominations in descending order
+    coins.sort(reverse=True)
+
+    for coin in coins:
+        while total + coin <= amount:
+            change.append(coin)
+            total += coin
+
+    if total == amount:
+        return change
+    else:
+        return None
+
+# Example usage:
+amount_due = 63  # The total amount due
+available_coins = [25, 10, 5, 1]  # Coin denominations in descending order
+
+change = make_change(amount_due, available_coins)
+
+if change is not None:
+    print(f"Change for ${amount_due}: {change}")
+else:
+    print("Unable to make exact change.")
