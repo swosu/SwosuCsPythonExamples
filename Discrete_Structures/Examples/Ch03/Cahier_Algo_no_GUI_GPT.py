@@ -40,15 +40,12 @@ def calculate_change(total, payment):
         else:
             print(f"{count} {denom_name}")
 
-    print(f"Change due: ${change:.2f}")
-    print(f"Total after change: ${total + change:.2f}")
-
 # Generate random total and payment values
 total_value = round(random.uniform(0.01, 100), 2)
 payment_value = round(random.uniform(total_value + 0.01, total_value + 100), 2)
 
-print(f"Total Amount: ${total_value:.2f}")
-print(f"Payment Amount: ${payment_value:.2f}")
+print(f"Total Amount: ${total_value}")
+print(f"Payment Amount: ${payment_value}")
 
 # Calculate and print change denominations
 calculate_change(total_value, payment_value)
