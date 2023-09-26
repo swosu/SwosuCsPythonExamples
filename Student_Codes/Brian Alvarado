@@ -1,0 +1,9 @@
+def gdc(a,b): 
+    if b==0:
+        return a
+    else: 
+        return gdc(b,a%b)
+
+num1 = int(input("Your first number"))
+num2 = int(input("Your second number"))
+print("Greatest Common Divisor is",gdc(num1,num2))
