@@ -1,0 +1,35 @@
+ Iterative Solution:
+def factorial_iterative(n):
+    result = 1
+    steps = 0  # Counter for steps
+    
+    for i in range(1, n + 1):
+        result *= i
+        steps += 1
+    
+    return result, steps
+
+n = 5
+result, steps = factorial_iterative(n)
+print(f"Factorial of {n} is {result}")
+print(f"Steps taken (iterative): {steps}")
+
+Recursive Solution:
+def factorial_recursive(n):
+    if n == 0:
+        return 1, 1
+    else:
+        result, steps = factorial_recursive(n - 1)
+        result *= n
+        steps += 1
+        return result, steps
+
+n = 5
+result, steps = factorial_recursive(n)
+print(f"Factorial of {n} is {result}")
+print(f"Steps taken (recursive): {steps}")
+
+Factorial of 5 is 120
+Steps taken (iterative): 5
+Factorial of 5 is 120
+Steps taken (recursive): 5
