@@ -25,15 +25,29 @@ print("There are", number_of_permutations, "different ways to fill the", total_n
 # use permutations to find all the different ways to fill the slots
 from itertools import permutations
 
+# working from a website: 
+# https://www.w3resource.com/python-exercises/string/python-data-type-string-exercise-52.php
+
+from itertools import product
+
+def all_repeats(chioces, total_number_of_items):
+    results = []
+    for individual_option in product(choices, repeat=total_number_of_items):
+        results.append(individual_option)
+    return results
+
+# print the option number and all options
+option_number = 1
+for option in all_repeats(choices, total_number_of_items):
+    print(option_number, option)
+    option_number += 1
+
+
 # create a list to store all the different ways to fill the slots
 all_permutations = []
 
-# use permutations to find all the different ways to fill the slots
-for permutation in permutations(choices, total_number_of_items):
-    all_permutations.append(permutation)
+# use itertools to find all the different ways to fill the slots allowing repetition
 
-# print all the different ways to fill the slots
-for permutation in all_permutations:
-    print(permutation)
+
     
 
