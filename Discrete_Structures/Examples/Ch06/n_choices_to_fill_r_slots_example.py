@@ -37,17 +37,31 @@ def all_repeats(chioces, total_number_of_items):
     return results
 
 # print the option number and all options
+print('if order matters, here is the full list.')
 option_number = 1
-for option in all_repeats(choices, total_number_of_items):
+list_of_all_options_with_repeats = all_repeats(choices, total_number_of_items)
+for option in list_of_all_options_with_repeats:
     print(option_number, option)
     option_number += 1
 
+# repeat the process if order does not matter
+print('if order does not matter, here is the full list.')
 
-# create a list to store all the different ways to fill the slots
-all_permutations = []
+# go through the list of all options with repeats and sort each option alphabetically
+list_of_all_options_without_repeats = []
+for option in list_of_all_options_with_repeats:
+    option = sorted(option)
+    list_of_all_options_without_repeats.append(option)
 
-# use itertools to find all the different ways to fill the slots allowing repetition
+# remove duplicates
+list_of_all_options_without_repeats = list(set(tuple(x) for x in list_of_all_options_without_repeats))
 
+# print the option number and all options
+option_number = 1
+for option in list_of_all_options_without_repeats:
+    print(option_number, option)
+    option_number += 1
+    
 
     
 
