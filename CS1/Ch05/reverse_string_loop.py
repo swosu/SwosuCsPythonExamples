@@ -10,7 +10,7 @@ while True:
         break
     # reverse the string
     reverse_string = ''
-    for our_string_position in range(len(user_input)-1, -1, -1):
+    for our_string_position in range(len(user_input)-1, 0, -1):
         reverse_string += user_input[our_string_position]
     else: 
         print('done with the for loop')
