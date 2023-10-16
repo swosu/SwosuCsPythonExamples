@@ -37,7 +37,7 @@ def seive_of_eratosthenes(upper_limit_for_primes):
 if __name__ == "__main__":
     print('hello')
     csv_file_name = 'primes.csv'
-    list_of_upper_limits = [10, 100, 1000, 10000]
+    list_of_upper_limits = [10, 100, 1000, 10000, 100000, 1000000, 10000000]
 
     for our_number in list_of_upper_limits:
         upper_limit_for_primes = our_number
