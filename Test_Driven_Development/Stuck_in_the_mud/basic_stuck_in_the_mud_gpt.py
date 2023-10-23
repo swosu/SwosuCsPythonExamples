@@ -15,7 +15,7 @@ class Player:
         self.score += points
 
 class StuckInTheMudGame:
-    def __init__(self, player1, player2, winning_score=100):
+    def __init__(self, players, inning_score=100):
         self.player1 = Player(player1)
         self.player2 = Player(player2)
         self.winning_score = winning_score
@@ -49,11 +49,6 @@ class StuckInTheMudGame:
 
 if __name__ == "__main__":
     # make an array of player objects based on the Player class
-    players
-
-
-
-
     players = []
     while True:
         player_name = input("Enter a player's name (or enter -1 to start the game): ")

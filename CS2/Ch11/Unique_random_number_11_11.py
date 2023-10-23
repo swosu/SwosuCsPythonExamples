@@ -10,7 +10,8 @@ def unique_random_ints(how_many, max_num):
     nums = list()
 
     while len(nums) < how_many:
-        next_rand = random.randint(0, max_num)
+        next_rand = random.randint(0, 2
+        )
         if next_rand not in nums:
             nums.append(next_rand)
         else:
