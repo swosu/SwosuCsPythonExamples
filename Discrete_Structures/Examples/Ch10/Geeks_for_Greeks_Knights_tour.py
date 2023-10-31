@@ -1,7 +1,7 @@
 # Python3 program to solve Knight Tour problem using Backtracking 
 
 # Chessboard Size 
-n = 8
+n = 5
 
 
 def isSafe(x, y, board): 
@@ -25,7 +25,7 @@ def printSolution(n, board):
 
 
 def solveKT(n):
-	print('inside solveKT funciton call') 
+	#print('inside solveKT funciton call') 
 	''' 
 		This function solves the Knight Tour problem using 
 		Backtracking. This function mainly uses solveKTUtil() 
@@ -38,7 +38,7 @@ def solveKT(n):
 
 	# Initialization of Board matrix 
 	board = [[-1 for i in range(n)]for i in range(n)] 
-	print('board has been initialized')
+	#print('board has been initialized')
 
 	# move_x and move_y define next move of Knight. 
 	# move_x is for next value of x coordinate 
@@ -47,13 +47,16 @@ def solveKT(n):
 	move_y = [1, 2, 2, 1, -1, -2, -2, -1] 
 
 	# Since the Knight is initially at the first block 
+	curr_x = 0
+	curr_y = 0
 	board[0][0] = 0
 
 	# Step counter for knight's position 
 	pos = 1
 
 	# Checking if solution exists or not 
-	if(not solveKTUtil(n, board, 0, 0, move_x, move_y, pos)): 
+
+	if(not solveKTUtil(n, board, curr_x, curr_y, move_x, move_y, pos)): 
 		print("Solution does not exist") 
 	else: 
 		printSolution(n, board) 
@@ -76,7 +79,7 @@ def solveKTUtil(n, board, curr_x, curr_y, move_x, move_y, pos):
 		if(isSafe(new_x, new_y, board)): 
 			board[new_x][new_y] = pos 
 			if(solveKTUtil(n, board, new_x, new_y, move_x, move_y, pos+1)): 
-				print('recursive call to solveKTUtil function, position found is: ', pos)
+				#print('recursive call to solveKTUtil function, position found is: ', pos)
 				return True
 
 			# Backtracking 

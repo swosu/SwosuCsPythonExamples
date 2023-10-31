@@ -30,6 +30,8 @@ def knight_tour(board_size):
 
             if is_valid_move(board, next_x, next_y, move_number, board_size):
                 board[next_x][next_y] = move_number + 1
+                print('our current move number is: ', move_number )
+                print_board(board)
                 if solve_knight_tour(next_x, next_y, move_number + 1):
                     return True
 
