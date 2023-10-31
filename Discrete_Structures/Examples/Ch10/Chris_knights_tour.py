@@ -24,7 +24,7 @@ def knight_tour(board_size):
         if move_number == board_size * board_size - 1:
             return True
 
-        for i in range(8):
+        for i in range(len(move_x)):
             next_x = x + move_x[i]
             next_y = y + move_y[i]
 
