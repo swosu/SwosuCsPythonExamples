@@ -1,0 +1,9 @@
+def multiples_of_5(n):
+    if n == 5:
+        return True
+    elif n < 5 or n % 5 != 0:
+        return False
+    else:
+        return multiples_of_5(n - 5)
+result = multiples_of_5(int(input("enter a number:")))
+print(result)

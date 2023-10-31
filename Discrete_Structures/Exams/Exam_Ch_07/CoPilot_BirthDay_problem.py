@@ -1,6 +1,8 @@
 import random
+from datetime import datetime
 
 def generate_birthdays(number_of_people):
+    random.seed(datetime.now().timestamp())
 
     birthdays = []
 
@@ -27,7 +29,8 @@ def check_for_366_in_birthdays ():
                 break
 
 if __name__ == '__main__':
-    number_of_rooms_to_check = 5000
+    starting_time = datetime.now()
+    number_of_rooms_to_check = 20000
     #check_for_366_in_birthdays ()
     list_of_people_in_room = []
     odds_of_two_people_with_same_birthday = []
@@ -67,7 +70,8 @@ if __name__ == '__main__':
         list_of_people_in_room.append(people_in_room)
         odds_of_two_people_with_same_birthday.append(odds_of_two_people_with_same_birthday_as_percentage)
 
-
+    ending_time = datetime.now()
+    print(f'elapsed time: {ending_time - starting_time}')
     # plot the results
     #import matplotlib.pyplot as plt
     #plt.plot(list_of_people_in_room, odds_of_two_people_with_same_birthday)

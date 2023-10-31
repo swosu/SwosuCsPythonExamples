@@ -1,0 +1,12 @@
+import math
+
+# Get user input for the number of different kinds of cookies
+num_cookie_types = int(input("Enter the number of different kinds of cookies: "))
+
+# Get user input for the number of cookies to choose
+num_cookies_to_choose = int(input("Enter the number of cookies to choose: "))
+
+# Calculate the number of different ways to choose the cookies
+num_ways = math.comb(num_cookie_types + num_cookies_to_choose - 1, num_cookies_to_choose)
+
+print(f"There are {num_ways} different ways to choose {num_cookies_to_choose} cookies from {num_cookie_types} different kinds (allowing for duplicates).")

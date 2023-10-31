@@ -1,0 +1,45 @@
+import matplotlib.pyplot as plt
+import math
+
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+    return True
+
+def count_primes_less_than_n(n):
+    count = 0
+    for num in range(2, n):
+        if is_prime(num):
+            count += 1
+    return count
+
+# Values for which we want to count primes and make a log plot
+values = [10, 100, 1000, 10000, 100000, 1000000]
+
+prime_counts = []
+for val in values:
+    prime_counts.append(count_primes_less_than_n(val))
+
+# Make a log plot
+plt.figure(figsize=(10, 6))
+plt.semilogx(values, prime_counts, marker='o', linestyle='-', color='b')
+plt.title('Number of Primes less than N (Logarithmic Scale)')
+plt.xlabel('N')
+plt.ylabel('Number of Primes')
+plt.grid(True)
+
+# Show the plot
+plt.show()
+
+# Predicting the number of primes less than 10 million
+predicted_count = count_primes_less_than_n(10000000)
+print(f"Predicted number of primes less than 10 million: {predicted_count}")

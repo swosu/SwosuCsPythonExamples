@@ -1,0 +1,21 @@
+import math
+
+def birthday_probability(n):
+    # Calculate the probability that no two people share the same birthday
+    prob_no_shared_birthday = 1.0
+    for i in range(n):
+        prob_no_shared_birthday *= (365 - i) / 365
+
+    # Calculate the complementary probability that at least two people share a birthday
+    prob_shared_birthday = 1 - prob_no_shared_birthday
+
+    return prob_shared_birthday
+
+# Define the desired probabilities
+desired_probabilities = [0.7, 0.8, 0.9, 0.95, 0.99]
+
+for prob in desired_probabilities:
+    n = 2
+    while birthday_probability(n) < prob:
+        n += 1
+    print(f"To achieve a probability of at least {prob*100}%, you need {n} people.")
