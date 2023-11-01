@@ -19,11 +19,16 @@ class Car:
 
 
 if __name__ == "__main__":    
+    my_car = Car() # Create an instance of the Car class (make an object based on Car class)
+    # print off my_car's attributes before we change them
+    print('before we change attributes, default values were: ')
+    my_car.print_info()
+    print('getting user inputs...' )
+    
     user_input_model_year = int(input('what year was the vehicle made? ')) 
     user_input_purchase_price = int(input('how much did you pay for the vehicle? '))
     user_input_current_year = int(input('what is the current year?'))
     
-    my_car = Car() # Create an instance of the Car class (make an object based on Car class)
     my_car.model_year = user_input_model_year
     my_car.purchase_price = user_input_purchase_price
     my_car.calc_current_value(user_input_current_year)
