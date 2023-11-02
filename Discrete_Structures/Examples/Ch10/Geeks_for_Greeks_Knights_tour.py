@@ -1,7 +1,7 @@
 # Python3 program to solve Knight Tour problem using Backtracking 
 
 # Chessboard Size 
-n = 5
+n = 8
 
 
 def isSafe(x, y, board): 
