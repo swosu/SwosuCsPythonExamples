@@ -1,34 +1,41 @@
 import random
+import csv
 
-def generate_distance_table(n):
+def generate_directed_distance_table(n):
     distance_table = [[0] * n for _ in range(n)]
 
     for i in range(n):
-        for j in range(i + 1, n):
-            # Generating random distances between 1 and 10*n
-            distance = random.randint(1, 10 * n)
-            
-            # Assigning the same distance for both directions since it's an undirected graph
-            distance_table[i][j] = distance
-            distance_table[j][i] = distance
+        for j in range(n):
+            if i != j:
+                distance = random.randint(1, 10 * n)
+                distance_table[i][j] = distance
 
     return distance_table
 
+def write_distance_table_to_csv(distance_table, filename):
+    with open(filename, 'w', newline='') as csvfile:
+        csv_writer = csv.writer(csvfile)
+        for row in distance_table:
+            csv_writer.writerow(row)
+
 def print_distance_table(distance_table):
     n = len(distance_table)
-    
-    # Printing the distance table
     for i in range(n):
         for j in range(n):
             print(f"{distance_table[i][j]:4}", end=" ")
         print()
 
 if __name__ == "__main__":
-
-    # Example: Generate a distance table for 5 cities
     n_cities = 5
-    distance_table = generate_distance_table(n_cities)
+    directed_distance_table = generate_directed_distance_table(n_cities)
 
-    # Print the generated distance table
-    print("Distance Table:")
-    print_distance_table(distance_table)
+    print("Directed Distance Table:")
+    print_distance_table(directed_distance_table)
+
+    # Specify the filename for the CSV file
+    csv_filename = "distance_table.csv"
+
+    # Write the distance table to a CSV file
+    write_distance_table_to_csv(directed_distance_table, csv_filename)
+
+    print(f"\nDistance table written to {csv_filename}")
