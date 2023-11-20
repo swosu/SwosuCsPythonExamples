@@ -1,3 +1,5 @@
+print('hello, world')
+
 # Ask user how many cities they want to have
 city_count = input('how many cities do you want to have? ')
 
