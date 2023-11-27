@@ -14,6 +14,7 @@ if __name__ == "__main__":
     run_time = ui.ask_how_long_to_run()
     distance_table = []
     # initilize distance table
+    rows, cols = (city_count, city_count)
     distance_table = [[0 for i in range(cols)] for j in range(rows)]
     distance_table = dth.load_distance_table(city_count, distance_table)
     print('distance table right after the load call in main: ')
