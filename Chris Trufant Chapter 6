@@ -1,0 +1,11 @@
+import math
+
+# Define the number of different types of cookies and the number to choose
+n_types_of_cookies = 4
+n_to_choose = 6
+
+# Calculate the number of combinations using the math.comb function
+combinations = math.comb(n_types_of_cookies, n_to_choose)
+
+# Print the result
+print(f"There are {combinations} different ways to choose {n_to_choose} cookies from {n_types_of_cookies} types.")

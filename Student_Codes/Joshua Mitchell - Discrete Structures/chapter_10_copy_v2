@@ -1,0 +1,64 @@
+import csv
+import random
+import time
+import multiprocessing
+
+def read_distance_matrix_from_csv(file_path):
+    distance_matrix = []
+    with open(file_path, 'r') as csv_file:
+        csv_reader = csv.reader(csv_file)
+        for row in csv_reader:
+            row = [int(cell) for cell in row]
+            distance_matrix.append(row)
+    return distance_matrix
+
+def nearest_neighbor_tsp_partial(distance_matrix, start_city, unvisited_cities):
+    path = [start_city]
+    unvisited_cities.remove(start_city)
+
+    while unvisited_cities:
+        current_city = path[-1]
+        nearest_city = min(unvisited_cities, key=lambda city: distance_matrix[current_city][city])
+        path.append(nearest_city)
+        unvisited_cities.remove(nearest_city)
+
+    # Return to the starting city to complete the circuit
+    path.append(start_city)
+    return path
+
+def nearest_neighbor_tsp_parallel(distance_matrix):
+    num_cities = len(distance_matrix)
+    num_processes = multiprocessing.cpu_count()
+
+    with multiprocessing.Pool(processes=num_processes) as pool:
+        results = pool.starmap(nearest_neighbor_tsp_partial, [(distance_matrix, city, list(range(num_cities))) for city in range(num_cities)])
+
+    # Find the best path among the results
+    best_path = min(results, key=lambda path: calculate_total_distance(distance_matrix, path))
+    return best_path
+
+def calculate_total_distance(distance_matrix, path):
+    total_distance = 0
+    for i in range(len(path) - 1):
+        total_distance += distance_matrix[path[i]][path[i + 1]]
+    return total_distance
+
+if __name__ == "__main__":
+    # Use "500.csv" as the file name
+    csv_file_path = '500.csv'
+
+    # Read the distance matrix from the CSV file
+    distance_matrix = read_distance_matrix_from_csv(csv_file_path)
+
+    start_time = time.time()
+
+    # Solve TSP using parallelized Nearest Neighbor algorithm
+    tsp_path = nearest_neighbor_tsp_parallel(distance_matrix)
+
+    end_time = time.time()
+    execution_time = end_time - start_time
+
+    # Print the TSP path and execution time
+    print(f"Optimal TSP Path: {tsp_path}")
+    print(f"Total Distance: {calculate_total_distance(distance_matrix, tsp_path)}")
+    print(f"Execution Time: {execution_time:.2f} seconds")

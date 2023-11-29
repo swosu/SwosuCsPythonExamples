@@ -24,7 +24,7 @@ def is_a_prime_number_basic(number_to_check):
 # primes less than 10
 # 2, 3, 5, 7
 lower_limit = 2
-list_of_upper_limits = [10, 100, 1000, 10000]
+list_of_upper_limits = [10, 100, 1000, 10000, 100000, 1000000]
 print('less than x, num of primes')
 for item in list_of_upper_limits:
     #upper_limit = int(input('what is the upper limit?'))
