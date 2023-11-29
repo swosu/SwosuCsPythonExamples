@@ -1,0 +1,48 @@
+import time
+#create finite state machine for a stop light
+
+#state machine
+class StopLight:
+    def __init__(self):
+        self.state = "red"
+        self.time = 0
+
+    def changeState(self):
+        if self.state == "red":
+            self.state = "green"
+            self.time = time.time()
+        elif self.state == "green":
+            self.state = "yellow"
+            self.time = time.time()
+        elif self.state == "yellow":
+            self.state = "red"
+            self.time = time.time()
+
+    def getState(self):
+        return self.state
+
+    def getTime(self):
+        return self.time
+    
+    def getSeconds(self):
+        return time.time() - self.time
+    
+
+#main
+def main():
+    light = StopLight()
+    while True:
+        if light.getState() == "red":
+            if light.getSeconds() > 5:
+                light.changeState()
+        elif light.getState() == "green":
+            if light.getSeconds() > 10:
+                light.changeState()
+        elif light.getState() == "yellow":
+            if light.getSeconds() > 2:
+                light.changeState()
+        print(light.getState())
+        time.sleep(1)
+
+main()
+

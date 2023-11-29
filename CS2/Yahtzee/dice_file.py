@@ -58,7 +58,7 @@ class dice_class:
         print(f'length of dice index to save is {len(self.dice_index_to_save)} ')
         for item in self.dice_index_to_save:
             if item.isnumeric():
-                print(f'going to save dice index {item} with type: {(type(item))}.')
+                #print(f'going to save dice index {item} with type: {(type(item))}.')
                 self.saved_dice.append(int(self.dice_on_table[int(item)-1]))
         print(f'saved dice are: {self.saved_dice}.')
 
@@ -67,13 +67,13 @@ class dice_class:
         number_of_dice_to_reroll = 5 - len(self.saved_dice)
         self.dice_on_table=[]
         for item in self.saved_dice:
-            print('loading saved dice.')
+            #print('loading saved dice.')
             self.dice_on_table.append(int(item))
-            print(f'dice on the table: {self.dice_on_table}.')
+            #print(f'dice on the table: {self.dice_on_table}.')
         for index in range (0, number_of_dice_to_reroll):
-            print('rolling new dice.')
+            #print('rolling new dice.')
             self.dice_on_table.append(random.randint(1,6))
-            print(f'dice on the table: {self.dice_on_table}.')
+            #print(f'dice on the table: {self.dice_on_table}.')
         print('done rolling new dice for the table')
         self.print_dice_on_table()
 
@@ -93,4 +93,5 @@ if __name__ == '__main__':
         dice_object.roll_unsaved_dice()
 
 else:
-    print('you imported dice_file')
+    #print('you imported dice_file')
+    print("",end = '')

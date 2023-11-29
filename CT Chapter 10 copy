@@ -1,0 +1,51 @@
+import random
+import math
+import time
+
+# Define the number of cities
+num_cities = 500
+
+# Generate random city coordinates
+random.seed(42)
+cities = [(random.uniform(0, 1000), random.uniform(0, 1000)) for _ in range(num_cities)]
+
+# Function to calculate the Euclidean distance between two cities
+def distance(city1, city2):
+    x1, y1 = city1
+    x2, y2 = city2
+    return math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2)
+
+# Nearest neighbor TSP algorithm
+def nearest_neighbor_tsp(cities):
+    num_cities = len(cities)
+    unvisited_cities = set(range(num_cities))
+    tour = []
+    current_city = random.choice(list(unvisited_cities))
+    unvisited_cities.remove(current_city)
+    tour.append(current_city)
+
+    while unvisited_cities:
+        nearest_city = min(unvisited_cities, key=lambda city: distance(cities[current_city], cities[city]))
+        current_city = nearest_city
+        unvisited_cities.remove(current_city)
+        tour.append(current_city)
+
+    return tour
+
+# Calculate the total tour distance
+def tour_distance(cities, tour):
+    total_distance = 0
+    for i in range(len(tour) - 1):
+        total_distance += distance(cities[tour[i]], cities[tour[i + 1]])
+    total_distance += distance(cities[tour[-1]], cities[tour[0]])
+    return total_distance
+
+# Main function
+if __name__ == '__main__':
+    start_time = time.time()
+    tour = nearest_neighbor_tsp(cities)
+    elapsed_time = time.time() - start_time
+    tour_length = tour_distance(cities, tour)
+
+    print(f"Shortest TSP tour length: {tour_length}")
+    print(f"Elapsed time: {elapsed_time} seconds")
