@@ -1,28 +1,53 @@
-import user_interactions as ui
-import distance_table_handler as dth
-
-import spp_guess_and_check as gc
-
-
-
+import random
+import time
 
 if __name__ == "__main__":
 
+    # set random seed to clock time
+    random.seed(time.time())
+
     # priliminary user interactions
-    city_count = ui.ask_how_many_cities()
-    ui.respond_to_user_city_count(city_count)
-    run_time = ui.ask_how_long_to_run()
+    city_count = 6
+    run_time = 2
     distance_table = []
     # initilize distance table
     rows, cols = (city_count, city_count)
     distance_table = [[0 for i in range(cols)] for j in range(rows)]
-    distance_table = dth.load_distance_table(city_count, distance_table)
-    print('distance table right after the load call in main: ')
-    print(distance_table)
-    ui.respond_to_user_run_time(run_time)
 
-    # run guess and check
-    gc.run_guess_and_check(city_count, run_time, distance_table)
+    # fill distance table with random numbers that range from 1 to 10 * city_count
+    for i in range(city_count):
+        for j in range(city_count):
+            if i == j:
+                distance_table[i][j] = 0
+            else:
+                distance_table[i][j] = random.randint(1, 10 * city_count)
 
+    # print distance table and pad the numbers so they are all the same length and columns line up correctly
+    print("Distance Table:")
+    for i in range(city_count):
+        for j in range(city_count):
+            print(str(distance_table[i][j]).ljust(3), end=" ")
+        print() 
+
+    # start a timer
+    start_time = time.time()
+
+    while (time.time() - start_time) < run_time:
+        # make a list of all possible cities to visit
+        cities_to_visit = []
+        for i in range(city_count):
+            cities_to_visit.append(i)
+
+        # print the list of cities to visit
+        print("Cities to visit: ", end="")
+        for i in range(city_count):
+            print(str(cities_to_visit[i]).ljust(3), end=" ")
+        print()
+
+
+
+    
+
+    
     
 
