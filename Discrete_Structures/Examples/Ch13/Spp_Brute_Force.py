@@ -1,5 +1,3 @@
-print('hello, world')
-
 # Ask user how many cities they want to have
 city_count = input('how many cities do you want to have? ')
 
@@ -96,5 +94,11 @@ for path in all_paths:
 # print all the paths
 for path in all_paths:
     print(path)
+
+# loop through all the paths and calculate the total distance of each one
+# print these resluts to a results csv file that indicates the city count in the file name.
+# the results csv file should have the following columns:
+# path, total distance
+
 
 
