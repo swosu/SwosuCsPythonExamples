@@ -2,6 +2,8 @@ import random
 from Character_class_file import Character
 from enemy_class_file import Enemy
 
+# Jeremy was messing around with this code.
+
 # Companion Class
 class Companion:
     def __init__(self, name, type, health, attack, with_player=False):
