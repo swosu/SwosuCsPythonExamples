@@ -2,7 +2,7 @@ import random
 from Character_class_file import Character
 from enemy_class_file import Enemy
 
-# Jeremy did great things for this code today.
+# Noah did great things for this code today.
 
 # Companion Class
 class Companion:
