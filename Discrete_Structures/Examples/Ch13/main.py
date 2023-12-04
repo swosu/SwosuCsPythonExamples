@@ -67,7 +67,6 @@ def check_for_better_path(distance_table, path, total_distance, best_distance, b
         print("New Best Path: ", end="")
         for i in range(city_count):
             print(str(best_path[i]).ljust(3), end=" ")
-        print()
         print("New Best Distance: " + str(best_distance))
     #else:
         #print("No New Best Path")
@@ -115,7 +114,7 @@ def run_guess_and_check_algorithm(distance_table, run_time):
             best_distance, best_path = check_for_better_path(distance_table, path, total_distance, best_distance, best_path)
 
     # after time has passed, print the best path and best distance
-    print('after {0} seconds, the best path is {1} with a distance of {2}'.format(run_time, best_path, best_distance))
+    print('GNC after {0} seconds, the best path is {1} with a distance of {2}'.format(run_time, best_path, best_distance))
 
 def run_brute_force_algorithm(distance_table, run_time):
     import itertools
@@ -137,26 +136,26 @@ def run_brute_force_algorithm(distance_table, run_time):
     # add 1 to the city number for every city in path
     for path_index in path:
         path[path_index] += 1
-    print('path after incrament by one is: ', path)
+    #print('path after incrament by one is: ', path)
     list_of_possible_path_tuples = list(itertools.permutations(path))
     
 
 
     # print off our list of all possible paths
-    print('list of all possible paths')
-    for path in list_of_possible_path_tuples:
-        print('path has the type:', type(path))
-        print(path)
+    #print('list of all possible paths')
+    #for path in list_of_possible_path_tuples:
+        #print('path has the type:', type(path))
+        #print(path)
 
     list_of_path_lists = []
     for path in list_of_possible_path_tuples:
         list_of_path_lists.append(list(path))
 
     # print off our list of all possible paths
-    print('list of all possible paths')
-    for path in list_of_path_lists:
-        print('path has the type:', type(path))
-        print(path)
+    #print('list of all possible paths')
+    #for path in list_of_path_lists:
+        #print('path has the type:', type(path))
+        #print(path)
 
     # reduce the city index for each city in each list in the list of path lists
     for path in list_of_path_lists:
@@ -164,10 +163,10 @@ def run_brute_force_algorithm(distance_table, run_time):
             path[path_index] -= 1
 
     # print off our list of all possible paths
-    print('list of all possible paths')
-    for path in list_of_path_lists:
-        print('path has the type:', type(path))
-        print(path)
+    #print('list of all possible paths')
+    #for path in list_of_path_lists:
+        #print('path has the type:', type(path))
+        #print(path)
 
     # remove any path that does not start at city 0
 
@@ -182,21 +181,60 @@ def run_brute_force_algorithm(distance_table, run_time):
 
     for path in edited_list_of_path_lists:
         total_distance = find_total_distance(distance_table, path)
-        print('path: ', path, end=" ")
-        print(',  total distance: ', total_distance)
+        #print('path: ', path, end=" ")
+        #print(',  total distance: ', total_distance)
 
-        if total_distance < best_distance:
-            best_path = path
-            best_distance = total_distance
-            print("New Best Path: ", end="")
-            for i in range(city_count):
-                print(str(best_path[i]).ljust(3), end=" ")
-            print(", New Best Distance: " + str(best_distance))
+        best_distance, best_path = check_for_better_path(distance_table, path, total_distance, best_distance, best_path)
 
     stop_time = time.time()
+    run_time = stop_time - start_time
     # after time has passed, print the best path and best distance
     print('for brute force, after {0} seconds, the best path is {1} with a distance of {2}'.format(run_time, best_path, best_distance))
     #return [best_path, best_distance]
+
+def run_greedy_algorithm(distance_table, city_count):
+    # start a timer
+    start_time = time.time()
+
+    # make a path that visits all the cities exactly once. Example: [0, 2, 1, 3, 4, 5]
+    path = []
+    for i in range(city_count):
+        path.append(i)
+        
+    total_distance = find_total_distance(distance_table, path)
+    best_distance = total_distance
+    best_path = path
+
+    # loop through all cities as the starting city and use the greedy algorithm to find the path
+    for starting_city in range(city_count):
+        current_path = []
+        print('starting city is: ', starting_city)
+        current_path.append(starting_city)
+
+        # make a list of all possible cities to visit
+        cities_to_visit = []
+        for i in range(city_count):
+            cities_to_visit.append(i)
+        
+        # remove the starting city from the list of cities to visit
+        cities_to_visit.remove(starting_city)
+
+        
+        closest_city = cities_to_visit[0]
+        closest_city_distance = distance_table[starting_city][closest_city]
+        for city_to_check in cities_to_visit:
+            print('city to check is: ', city_to_check)
+            distance_from_starting_city_to_city_to_check = distance_table[starting_city][city_to_check]
+            print('distance from starting city to city to check is: ', distance_from_starting_city_to_city_to_check)
+            if distance_from_starting_city_to_city_to_check < closest_city_distance:
+                closest_city = city_to_check
+                closest_city_distance = distance_from_starting_city_to_city_to_check
+                print('closest city is: ', closest_city)
+                print('closest city distance is: ', closest_city_distance)
+        current_path.append(closest_city)
+
+        print('current path is: ', current_path)
+        
 
 if __name__ == "__main__":
 
