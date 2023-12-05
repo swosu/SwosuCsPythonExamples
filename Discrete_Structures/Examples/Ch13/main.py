@@ -193,7 +193,7 @@ def run_brute_force_algorithm(distance_table, run_time):
     #return [best_path, best_distance]
 
 def run_greedy_algorithm(distance_table, city_count):
-    print('starting greedy algorithm')
+    #print('starting greedy algorithm')
     # start a timer
     start_time = time.time()
 
@@ -201,34 +201,40 @@ def run_greedy_algorithm(distance_table, city_count):
     list_of_all_cities = []
     for numeric_index in range(city_count):
         list_of_all_cities.append(numeric_index)
+    print('start of greedy algo, list of all cities is: ', list_of_all_cities)
 
         
     total_distance = find_total_distance(distance_table, list_of_all_cities)
     best_distance = total_distance
     best_path = list_of_all_cities
+    #print('at the start of the algorithm, we tested path {0} with a distance of {1}'.format(best_path, best_distance))
 
     # loop through all cities as the starting city and use the greedy algorithm to find the path
     for starting_city in range(city_count):
+        #print('starting to build our paths.')
+        #print('our starting city is: ', starting_city)
 
         # make a list of all possible cities to visit
         cities_to_visit = list_of_all_cities.copy()
+        #print('after copying list of all cities, the cities to visit are: ', cities_to_visit)
             
         current_path = []
-        print('starting city is: ', starting_city)
         current_path.append(starting_city)
 
-        print('after adding starting city, the current path is: ', current_path)
-
+        #print('after adding starting city, the current path is: ', current_path)
 
         # remove the starting city from the list of cities to visit
         cities_to_visit.remove(starting_city)
         print('after removing starting city, the cities to visit are: ', cities_to_visit)
-
-        for next_city in range(city_count - 1):
-            print('next city is: ', cities_to_visit[next_city])
-            # find the closest city to the current city
+        
+        for path_addition_index in range(1, city_count - 1):
+            print('path addition index is: ', path_addition_index)
+            from_city = current_path[path_addition_index - 1]
+            # to start the comparison, look at the next city in the list of cities to visit
             closest_city = cities_to_visit[0]
-            closest_city_distance = distance_table[starting_city][closest_city]
+            closest_city_distance = distance_table[from_city][closest_city]
+            print('as a place holder before working the greedy algorithm to find the next closest city, the from city is {}, the closest city is {}, and the distance is: {}'.format(from_city, closest_city, closest_city_distance))
+            
             for city_to_check in cities_to_visit:
                 print('city to check is: ', city_to_check)
                 distance_from_starting_city_to_city_to_check = distance_table[starting_city][city_to_check]
@@ -238,10 +244,9 @@ def run_greedy_algorithm(distance_table, city_count):
                     closest_city_distance = distance_from_starting_city_to_city_to_check
                     print('closest city is: ', closest_city)
                     print('closest city distance is: ', closest_city_distance)
-        current_path.append(closest_city)
-
-        print('current path is: ', current_path)
-        
+            current_path.append(closest_city)
+            print('current path after checking all cities for the next closest city to {}, which was city {}, is: {}'.format(from_city, closest_city, current_path))
+        print('after greedy algorithm for starting city {}, the current path is: {}, and has a distance of {}'.format(starting_city, current_path, find_total_distance(distance_table, current_path)))
 
 if __name__ == "__main__":
 
@@ -254,11 +259,11 @@ if __name__ == "__main__":
     run_time = 0.01
     distance_table = generate_distance_table(city_count)
 
-    print_distance_table(distance_table)
+    #print_distance_table(distance_table)
     
-    run_guess_and_check_algorithm(distance_table, run_time)
+    #run_guess_and_check_algorithm(distance_table, run_time)
 
-    run_brute_force_algorithm(distance_table, run_time)
+    #run_brute_force_algorithm(distance_table, run_time)
 
     run_greedy_algorithm(distance_table, city_count)
 
