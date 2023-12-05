@@ -197,32 +197,35 @@ def run_greedy_algorithm(distance_table, city_count):
     start_time = time.time()
 
     # make a path that visits all the cities exactly once. Example: [0, 2, 1, 3, 4, 5]
-    path = []
-    for i in range(city_count):
-        path.append(i)
+    list_of_all_cities = []
+    for numeric_index in range(city_count):
+        list_of_all_cities.append(numeric_index)
         
-    total_distance = find_total_distance(distance_table, path)
+    total_distance = find_total_distance(distance_table, list_of_all_cities)
     best_distance = total_distance
-    best_path = path
+    best_path = list_of_all_cities
 
     # loop through all cities as the starting city and use the greedy algorithm to find the path
     for starting_city in range(city_count):
+
+        # make a list of all possible cities to visit
+        cities_to_visit = list_of_all_cities.copy()
+            
         current_path = []
         print('starting city is: ', starting_city)
         current_path.append(starting_city)
+        print('after adding starting city, the current path is: ', current_path)
 
-        # make a list of all possible cities to visit
-        cities_to_visit = []
-        for i in range(city_count):
-            cities_to_visit.append(i)
-        
         # remove the starting city from the list of cities to visit
         cities_to_visit.remove(starting_city)
+        print('after removing starting city, the cities to visit are: ', cities_to_visit)
 
-        
-        closest_city = cities_to_visit[0]
-        closest_city_distance = distance_table[starting_city][closest_city]
         for city_to_check in cities_to_visit:
+            from_city = current_path[-1]
+            print('inside the for loop for city to check, the from city is: ', from_city)
+            closest_city = cities_to_visit[0]
+            closest_city_distance = distance_table[from_city][closest_city]
+
             print('city to check is: ', city_to_check)
             distance_from_starting_city_to_city_to_check = distance_table[starting_city][city_to_check]
             print('distance from starting city to city to check is: ', distance_from_starting_city_to_city_to_check)
@@ -252,6 +255,8 @@ if __name__ == "__main__":
     run_guess_and_check_algorithm(distance_table, run_time)
 
     run_brute_force_algorithm(distance_table, run_time)
+
+    run_greedy_algorithm(distance_table, city_count)
 
 
 
