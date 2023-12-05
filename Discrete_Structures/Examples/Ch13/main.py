@@ -193,10 +193,11 @@ def run_brute_force_algorithm(distance_table, run_time):
     #return [best_path, best_distance]
 
 def run_greedy_algorithm(distance_table, city_count):
+    print('starting greedy algorithm')
     # start a timer
     start_time = time.time()
-
-    # make a path that visits all the cities exactly once. Example: [0, 2, 1, 3, 4, 5]
+        
+    # make a tosser path that visits all the cities exactly once. Example: [0, 2, 1, 3, 4, 5]
     path = []
     for i in range(city_count):
         path.append(i)
@@ -210,6 +211,8 @@ def run_greedy_algorithm(distance_table, city_count):
         current_path = []
         print('starting city is: ', starting_city)
         current_path.append(starting_city)
+        print('after adding starting city, current path is: ', current_path)
+
 
         # make a list of all possible cities to visit
         cities_to_visit = []
@@ -219,18 +222,20 @@ def run_greedy_algorithm(distance_table, city_count):
         # remove the starting city from the list of cities to visit
         cities_to_visit.remove(starting_city)
 
-        
-        closest_city = cities_to_visit[0]
-        closest_city_distance = distance_table[starting_city][closest_city]
-        for city_to_check in cities_to_visit:
-            print('city to check is: ', city_to_check)
-            distance_from_starting_city_to_city_to_check = distance_table[starting_city][city_to_check]
-            print('distance from starting city to city to check is: ', distance_from_starting_city_to_city_to_check)
-            if distance_from_starting_city_to_city_to_check < closest_city_distance:
-                closest_city = city_to_check
-                closest_city_distance = distance_from_starting_city_to_city_to_check
-                print('closest city is: ', closest_city)
-                print('closest city distance is: ', closest_city_distance)
+        for next_city in range(city_count - 1):
+            print('next city is: ', cities_to_visit[next_city])
+            # find the closest city to the current city
+            closest_city = cities_to_visit[0]
+            closest_city_distance = distance_table[starting_city][closest_city]
+            for city_to_check in cities_to_visit:
+                print('city to check is: ', city_to_check)
+                distance_from_starting_city_to_city_to_check = distance_table[starting_city][city_to_check]
+                print('distance from {0} to {1} is: {2}'.format(starting_city, city_to_check, distance_from_starting_city_to_city_to_check))
+                if distance_from_starting_city_to_city_to_check < closest_city_distance:
+                    closest_city = city_to_check
+                    closest_city_distance = distance_from_starting_city_to_city_to_check
+                    print('closest city is: ', closest_city)
+                    print('closest city distance is: ', closest_city_distance)
         current_path.append(closest_city)
 
         print('current path is: ', current_path)
@@ -252,6 +257,8 @@ if __name__ == "__main__":
     run_guess_and_check_algorithm(distance_table, run_time)
 
     run_brute_force_algorithm(distance_table, run_time)
+
+    run_greedy_algorithm(distance_table, city_count)
 
 
 
