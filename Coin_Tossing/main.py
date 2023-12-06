@@ -1,5 +1,3 @@
-
-
 import random
 import time
 
@@ -25,7 +23,6 @@ def test_if_coin_tossing_is_fair():
             heads = True
             head_count += 1
 
-    
     print('out of {} tosses, there were {} heads and {} tails'.format(number_of_tosses, head_count, tail_count))
     print('The probability of heads was {}%'.format(head_count / number_of_tosses * 100))
     print('The probability of tails was {}%'.format(tail_count / number_of_tosses * 100))
@@ -41,15 +38,20 @@ if __name__ == '__main__':
 
     # lets flip 2 coins at a time and keep track of how many sets have 2 of the same kind in a row.
 
-    number_of_sets = 1000000
+    number_of_sets = 5
     number_of_coins = 2
-    number_of_same_kind = 0
+    number_of_same_kind = 2
+    
+
     for set_index in range(number_of_sets):
-        coin_1 = coin_toss()
-        coin_2 = coin_toss()
-        if coin_1 == coin_2:
+        coin_toss_results = []
+        for position_index in range(number_of_coins):
+            coin_toss_results.append(coin_toss())
+        print('for that set, we got {}'.format(coin_toss_results))
+        heads_up = coin_toss_results.count('heads')
+        tails_up = coin_toss_results.count('tails')
+        if heads_up == number_of_coins or tails_up == number_of_coins:
             number_of_same_kind += 1
-        #print('set {} was {} and {}'.format(set_index, coin_1, coin_2))
 
     print('out of {} sets, {} had the same kind of coin'.format(number_of_sets, number_of_same_kind))
     print('The probability of getting the same kind of coin was {}%'.format(number_of_same_kind / number_of_sets * 100))
