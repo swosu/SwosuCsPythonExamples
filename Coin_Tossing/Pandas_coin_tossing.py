@@ -5,13 +5,16 @@ import random
 import time
 import csv
 
+# make a CSV file to keep track of our batch results
+# append to the bottom of the file if it exsits, otherwise create it
+summary_of_batch_results_csv = open('summary_of_batch_results.csv', 'a')
 
 
 # main body of code
 
 # set up a coin toss batch CSV file to write our batch results to
-# append to the bottom of the file if it exsits, otherwise create it
-coin_toss_batch_csv = open('coin_toss_batch_results.csv', 'a')
+# write over the file if it exsits, otherwise create it
+coin_toss_batch_csv = open('coin_toss_batch_results.csv', 'w')
 
 # write the header row to the CSV file
 # for each row:
@@ -25,10 +28,12 @@ csv.writer(coin_toss_batch_csv).writerow(['BatchNumber', 'TotalBatches', 'FlipsP
 #random.seed(time.time()) # Seed the random number generator with the current system time (to ensure randomness
 random.seed(1) # Seed the random number generator with a fixed number (to ensure reproducibility)
 
-total_number_of_batches = 10  # Replace with the desired number of batches
-total_flips = 2  # Replace with the desired number of coin flips
+total_number_of_batches = 100  # Replace with the desired number of batches
+total_flips = 100  # Replace with the desired number of coin flips
 
 consecutive_match_count_goal = 2
+# start timer
+start_time = time.time()
 
 for batch_number in range(1, total_number_of_batches + 1):
 
@@ -46,24 +51,24 @@ for batch_number in range(1, total_number_of_batches + 1):
         else:
             consecutive_match_count = 1
 
-        print('for that round, our results to add to the data frame are flip_number: ', flip_number, 'outcome: ', outcome, 'consecutive_match_count: ', consecutive_match_count)
+        #print('for that round, our results to add to the data frame are flip_number: ', flip_number, 'outcome: ', outcome, 'consecutive_match_count: ', consecutive_match_count)
         # Append the results to the DataFrame
         single_batch_df = single_batch_df.append({'FlipNumber': flip_number, 'Outcome': outcome, 'ConsecutiveMatchCount': consecutive_match_count}, ignore_index=True)
 
     # Print the DataFrame
-    print('for batch number: ', batch_number, 'our results are: ')
-    print(single_batch_df)
+    #print('for batch number: ', batch_number, 'our results are: ')
+    #print(single_batch_df)
 
     # Print the number of matches
-    print('Max number of matches: ', single_batch_df['ConsecutiveMatchCount'].max())
+    #print('Max number of matches: ', single_batch_df['ConsecutiveMatchCount'].max())
 
     # check if our max consecutive match count is greater than or equal to our goal
     this_batch_max_consecutive_match_count = single_batch_df['ConsecutiveMatchCount'].max()
     if this_batch_max_consecutive_match_count >= consecutive_match_count_goal:
-        print('We have a winner!')
+        #print('We have a winner!')
         sufficient_consecutive_matches = True
     else:
-        print('No winner this time.')
+        #print('No winner this time.')
         sufficient_consecutive_matches = False
 
     # Write to the CSV file
@@ -82,6 +87,14 @@ coin_toss_batch_csv.close()
 coin_toss_batch_results_df = pd.read_csv('coin_toss_batch_results.csv')
 
 # Print the DataFrame
-print('our batch results are: ')
-print(coin_toss_batch_results_df)
+#print('our batch results are: ')
+#print(coin_toss_batch_results_df)
 
+# for that set of batches, how many winners did we have?
+total_winning_batches = coin_toss_batch_results_df['Winner'].sum()
+print('for {} batches, we had {} winners'.format(total_number_of_batches, total_winning_batches))
+print('flipping a coin {} times per batch, we had a {}% success rate when we were looking for {} consecutive matches'.format(total_flips, (total_winning_batches / total_number_of_batches) * 100, consecutive_match_count_goal))
+
+# stop timer
+end_time = time.time()
+print('the total seconds to run this simulation was: ', end_time - start_time)
