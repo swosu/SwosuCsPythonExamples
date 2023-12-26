@@ -72,9 +72,29 @@ class Dice_class():
 
     def second_roll(self):
 
+        # increment the roll number
+        self.roll_number += 1
+
+        # clear the dice on the table list
+        self.dice_on_the_table = []
+
         # how many keepers did we have?
         number_of_keepers = len(self.keepers)
         print("number of keepers: ", number_of_keepers)
 
         # how many dice do we need to roll?
         number_of_dice_to_roll = 5 - number_of_keepers
+
+        # load the keepers into the dice_on_the_table list
+        for keeper in self.keepers:
+            self.dice_on_the_table.append(keeper)
+
+        # roll the remaining dice
+        for dice_index in range(number_of_dice_to_roll):
+            self.dice_on_the_table.append(self.roll_single_die())
+
+        # sort the list in ascending order
+        self.print_dice_on_the_table()
+        self.dice_on_the_table.sort()
+        print(" after sorting: ")
+        self.print_dice_on_the_table()
