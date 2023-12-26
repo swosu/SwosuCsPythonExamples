@@ -106,4 +106,9 @@ for round_number in range(1,14,1):
     for player_object in sorted_player_object_list:
         print('player name: ', player_object.name)
         # each player gets to roll 3 times
+
+        # first roll
+        print('first roll')
+        my_dice.first_roll()
+        my_dice.print_dice_on_the_table()
         

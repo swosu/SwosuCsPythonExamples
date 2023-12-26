@@ -11,7 +11,7 @@ import time
 
 class Dice_class():
     def __init__(self):
-        self.dice_on_the_table = [0, 0, 0, 0, 0, 0]
+        self.dice_on_the_table = [0, 0, 0, 0, 0]
         self.keepers = []
         self.roll_number = 0
         self.single_die = 0
@@ -22,6 +22,8 @@ class Dice_class():
     
     def first_roll(self):
         self.roll_number = 1
-        for dice_index in range(6):
+        for dice_index in range(len(self.dice_on_the_table)):
             self.dice_on_the_table[dice_index] = self.roll_single_die()
-        return self.dice_on_the_table
+        
+    def print_dice_on_the_table(self):
+        print("Dice on the table: ", self.dice_on_the_table)
