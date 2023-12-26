@@ -114,4 +114,6 @@ for round_number in range(1,14,1):
 
         # ask the user which dice they would like to keep
         my_dice.keep_dice()
+
+        my_dice.second_roll()
         

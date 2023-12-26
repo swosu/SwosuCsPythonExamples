@@ -11,7 +11,10 @@ import time
 
 class Dice_class():
     def __init__(self):
-        self.dice_on_the_table = [0, 0, 0, 0, 0]
+        self.number_of_dice = 5
+        self.dice_on_the_table = []
+        for dice_index in range(self.number_of_dice):
+            self.dice_on_the_table.append(0)
         self.keepers = []
         self.roll_number = 0
         self.single_die = 0
@@ -24,8 +27,11 @@ class Dice_class():
         self.roll_number = 1
         for dice_index in range(len(self.dice_on_the_table)):
             self.dice_on_the_table[dice_index] = self.roll_single_die()
-            # sort the list in ascending order
-            self.dice_on_the_table.sort()
+        # sort the list in ascending order
+        self.print_dice_on_the_table()
+        self.dice_on_the_table.sort()
+        print(" after sorting: ")
+        self.print_dice_on_the_table()
         
     def print_dice_on_the_table(self):
         print("Dice on the table: ", self.dice_on_the_table)
@@ -40,12 +46,13 @@ class Dice_class():
 
         # get input from the user
         user_input = input("Enter the letters for the dice you would like to keep, seperated by a space: ")
-        print("You entered: ", user_input)
+        
         user_input = user_input.upper()
         user_tokens = user_input.split()
 
         # add the dice to the keepers list
-        for letter in user_input:
+        for letter in user_tokens:
+            print('keeping: ', letter, ' which is ', self.dice_on_the_table[ord(letter) - 65])  
             self.keepers.append(self.dice_on_the_table[ord(letter) - 65])
 
         # print the keepers list
@@ -62,3 +69,12 @@ class Dice_class():
             return
         else:
             self.keep_dice()
+
+    def second_roll(self):
+
+        # how many keepers did we have?
+        number_of_keepers = len(self.keepers)
+        print("number of keepers: ", number_of_keepers)
+
+        # how many dice do we need to roll?
+        number_of_dice_to_roll = 5 - number_of_keepers
