@@ -98,5 +98,12 @@ for player_object in sorted_player_object_list:
 
 # create the scorecard for each player
 
+# go through each round
 for round_number in range(1,14,1):
     print('round number: ', round_number)
+
+    # each player gets a turn
+    for player_object in sorted_player_object_list:
+        print('player name: ', player_object.name)
+        # each player gets to roll 3 times
+        
