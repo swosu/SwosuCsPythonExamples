@@ -1,9 +1,10 @@
-### This is the Yahtzee project. We are going to break it into multiple pieces. ###
+'''
+This is the Yahtzee project. We are going to break it into multiple pieces. 
+Hopefully this all follows the standard rules of Yahtzee.
+'''
 
-# import statements
-import random
-import time
 from Yahtzee_player import Yahtzee_player
+from Dice_file import Dice_class
 
 # function definitions
 
@@ -18,17 +19,14 @@ def get_player_names(player_names):
 
     return player_names
 
-
 # beginning of code
 
 print('hello')
 
-# set random seed
-random.seed(5)
+# create the dice object
+my_dice = Dice_class()
 
-# set random seed based on the clock
-# random.seed(time.time())
-
+# get player names
 player_names = []
 
 while True:
@@ -49,7 +47,10 @@ while True:
 player_object_list = []
 
 for player_name in player_names:
-    my_initial_roll = random.randint(1, 6)
+
+    # refactor this to use the dice class
+    # my_initial_roll = random.randint(1, 6)
+    my_initial_roll = my_dice.roll_single_die()
     #print('player name: ', player_name, 'initial roll: ', my_initial_roll)
     player_object_list.append(Yahtzee_player(player_name, my_initial_roll))
 
@@ -85,3 +86,17 @@ for player_object in sorted_player_object_list:
     print(player_object.name)
 
 
+# now we are ready to play the game. 
+# we will play 13 rounds.
+# each player will get to go in each round.
+# each player will get to roll 3 times.
+# after each roll, they can choose which dice to keep.
+# after the third roll, they must choose a category to score.
+# after all players have gone, the round is over.
+# after 13 rounds, the game is over.
+# the player with the highest score wins.
+
+# create the scorecard for each player
+
+for round_number in range(1,14,1):
+    print('round number: ', round_number)

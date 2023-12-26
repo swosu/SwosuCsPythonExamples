@@ -1,4 +1,13 @@
+# import statements
 import random
+
+# set random seed
+random.seed(5)
+
+import time
+
+# set random seed based on the clock
+# random.seed(time.time())
 
 class Dice_class():
     def __init__(self):
