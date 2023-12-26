@@ -111,4 +111,7 @@ for round_number in range(1,14,1):
         print('first roll')
         my_dice.first_roll()
         my_dice.print_dice_on_the_table()
+
+        # ask the user which dice they would like to keep
+        my_dice.keep_dice()
         

@@ -24,6 +24,41 @@ class Dice_class():
         self.roll_number = 1
         for dice_index in range(len(self.dice_on_the_table)):
             self.dice_on_the_table[dice_index] = self.roll_single_die()
+            # sort the list in ascending order
+            self.dice_on_the_table.sort()
         
     def print_dice_on_the_table(self):
         print("Dice on the table: ", self.dice_on_the_table)
+
+    def keep_dice(self):
+        self.keepers = []
+        print("time to pick what to keep")
+
+        # print the dice on the table next to the letters A, B, C, D, E
+        for dice_index in range(len(self.dice_on_the_table)):
+            print(chr(dice_index + 65), ": ", self.dice_on_the_table[dice_index])
+
+        # get input from the user
+        user_input = input("Enter the letters for the dice you would like to keep, seperated by a space: ")
+        print("You entered: ", user_input)
+        user_input = user_input.upper()
+        user_tokens = user_input.split()
+
+        # add the dice to the keepers list
+        for letter in user_input:
+            self.keepers.append(self.dice_on_the_table[ord(letter) - 65])
+
+        # print the keepers list
+        print("Keepers: ", self.keepers)
+
+        # remove the keepers from the dice_on_the_table list
+        for keeper in self.keepers:
+            self.dice_on_the_table.remove(keeper)
+
+        print(" so you want to keep these: ", self.keepers)
+        print(' and re-roll these: ', self.dice_on_the_table)
+        user_input = input('enter y if this is correct, or any other key to reselect keepers')
+        if user_input == 'y':
+            return
+        else:
+            self.keep_dice()
