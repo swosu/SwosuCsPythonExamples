@@ -121,4 +121,8 @@ for round_number in range(1,14,1):
 
         # ask the user which dice they would like to keep
         my_dice.keep_dice()
+
+        # third roll
+        print('third roll')
+        my_dice.third_roll()
         
