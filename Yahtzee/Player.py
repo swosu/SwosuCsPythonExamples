@@ -20,3 +20,4 @@ if __name__ == '__main__':
     print('first roll')
     test_dice.first_roll()
     test_dice.print_dice_on_the_table()
+    test_player.upper_scorecard.get_possible_scores_for_unfilled_categories(test_dice.dice_on_the_table)
