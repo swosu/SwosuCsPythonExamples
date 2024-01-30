@@ -1,5 +1,5 @@
 """trying out sieve of eratosthenes and finding primes less than 10000
-and use the fibbonacci sequece as well
+and use the fibbonacci sequence as well
 
 
 """
@@ -20,7 +20,7 @@ def is_prime(number):
             return False
     return True
 
-def fibonacci_primes(limit):
+# def fibonacci_primes(limit):
     """Return list of prime numbers in the Fibonacci sequence up to limit."""
     fibonacci_sequence = [0, 1]
     fibonacci_primes_list = []
@@ -86,7 +86,7 @@ if __name__ == '__main__':
     # prime_fib_intersect = list(set(fibonacci_primes_list) & set(sieve_of_eratosthenes_list))
 
     # print(f"Prime numbers in Fibonacci sequence up to 10000 are: {filtered_fibonacci_primes_list}")
-    print(f"Prime numbers less than 10000 using Sieve of Eratosthenes algorithm are: {sieve_of_eratosthenes_list}")
+    print(f"Prime numbers less than 100 using Sieve of Eratosthenes algorithm are: {sieve_of_eratosthenes_list}")
     # print(prime_fib_intersect)
     print(f"Time taken: {end_time - start_time:.5f} seconds")
 
