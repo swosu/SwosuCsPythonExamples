@@ -15,9 +15,32 @@ def rollDice(diceNum):
 def displayDice(dice):
     print(f'current dice:{dice}')
 
-def diceToKeep():
+def diceToKeep(dice):
+    displayDice(dice)
     keepInput = input("enter the index of the dice to keep: ")
     keepIndex = [int(inp) - 1 for inp in keepInput]
-    return keepIndex
+    diceKept = [dice[index] for index in keepIndex]
+    return diceKept
 
+def yahtzee():
+    rulesDisplay()
+
+    score = 0
+    numRounds = 13
+
+    for numRound in range(1, numRounds+1):
+        print(f'Round number {numRound}')
+
+        dice = rollDice(5)
+        for rollNum in range(1, 4):
+            keepDice = diceToKeep(dice)
+            if rollNum < 3:
+                reroll = [die for index, die in enumerate(dice) if index not in keepDice]
+                newDice = rollDice(len(reroll))
+                for value, index in enumerate(keepDice):
+                    dice[index] = newDice[value]
+            else:
+                print("Final roll.")
+        
+        print(f'Final Dice: {dice}')
 
