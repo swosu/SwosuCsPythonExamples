@@ -39,6 +39,8 @@ def yahtzee():
                 newDice = rollDice(len(reroll))
                 for value, index in enumerate(keepDice):
                     dice[index] = newDice[value]
+                    #getting a little confused here on what i was doing lol
+                    
             else:
                 print("Final roll.")
         
