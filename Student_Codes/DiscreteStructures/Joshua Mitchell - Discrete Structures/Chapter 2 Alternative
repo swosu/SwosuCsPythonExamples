@@ -1,0 +1,87 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+// Function to generate the first five terms of the Fibonacci sequence
+void generateFibonacci(int sequence[5]) {
+    sequence[0] = 0;
+    sequence[1] = 1;
+    for (int i = 2; i < 5; i++) {
+        sequence[i] = sequence[i - 1] + sequence[i - 2];
+    }
+}
+
+// Function to generate the first five square numbers
+void generateSquareNumbers(int sequence[5]) {
+    for (int i = 0; i < 5; i++) {
+        sequence[i] = i * i;
+    }
+}
+
+// Function to generate the first five powers of 2
+void generatePowersOf2(int sequence[5]) {
+    for (int i = 0; i < 5; i++) {
+        sequence[i] = pow(2, i);
+    }
+}
+
+// Function to generate the first five prime numbers
+void generatePrimeNumbers(int sequence[5]) {
+    sequence[0] = 2;
+    sequence[1] = 3;
+    sequence[2] = 5;
+    sequence[3] = 7;
+    sequence[4] = 11;
+}
+
+int main() {
+    int choice, answer, guess;
+    int sequence[5];
+
+    cout << "Choose a sequence to guess the sixth term:" << endl;
+    cout << "1. Fibonacci Sequence" << endl;
+    cout << "2. Square Numbers" << endl;
+    cout << "3. Powers of 2" << endl;
+    cout << "4. Prime Numbers" << endl;
+    cin >> choice;
+
+    switch (choice) {
+        case 1:
+            generateFibonacci(sequence);
+            answer = sequence[4] + sequence[3]; // Set answer to the sixth term in the Fibonacci sequence
+            break;
+        case 2:
+            generateSquareNumbers(sequence);
+            answer = 25; // Set answer to the sixth term in the square numbers sequence
+            break;
+        case 3:
+            generatePowersOf2(sequence);
+            answer = 32; // Set answer to the sixth term in the powers of 2 sequence
+            break;
+        case 4:
+            generatePrimeNumbers(sequence);
+            answer = 13; // Set answer to the sixth term in the prime numbers sequence
+            break;
+        default:
+            cout << "Invalid choice. Please select a valid option (1-4)." << endl;
+            return 1; // Exit with an error code
+    }
+
+    cout << "Here are the first five terms of the sequence:" << endl;
+    for (int i = 0; i < 5; i++) {
+        cout << sequence[i] << " ";
+    }
+    cout << endl;
+
+    cout << "Now, guess the sixth term in the sequence: ";
+    cin >> guess;
+
+    if (guess == answer) {
+        cout << "Congratulations! You guessed correctly." << endl;
+    } else {
+        cout << "Sorry, your guess is incorrect. The correct answer is " << answer << "." << endl;
+    }
+
+    return 0;
+}

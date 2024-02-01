@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scrabble Game</title>
+    <style>
+        /* Add your CSS styling here for the board and tiles */
+        .board {
+            display: grid;
+            grid-template-columns: repeat(15, 40px);
+            gap: 2px;
+            margin-top: 20px;
+        }
+        .cell {
+            width: 40px;
+            height: 40px;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .player-photo {
+            max-width: 100px;
+            max-height: 100px;
+            border-radius: 50%;
+            margin: 10px;
+        }
+        /* Add more styling for the tiles and board as needed */
+    </style>
+</head>
+<body>
+    <h1>Scrabble Game</h1>
+    <div>
+        <h2>Player 1</h2>
+        <input type="file" id="player1PhotoInput" accept="image/*" onchange="handlePlayerPhoto('player1Photo', 'player1PhotoInput')">
+        <img id="player1Photo" class="player-photo" src="default-player-photo.png" alt="Player 1 Photo">
+        <label for="player1Word">Enter a word for Player 1:</label>
+        <input type="text" id="player1Word" placeholder="Enter your word">
+        <button id="calculatePlayer1Score">Calculate Score</button>
+        <p id="player1Score"></p>
+    </div>
+    <div>
+        <h2>Player 2</h2>
+        <input type="file" id="player2PhotoInput" accept="image/*" onchange="handlePlayerPhoto('player2Photo', 'player2PhotoInput')">
+        <img id="player2Photo" class="player-photo" src="default-player-photo.png" alt="Player 2 Photo">
+        <label for="player2Word">Enter a word for Player 2:</label>
+        <input type="text" id="player2Word" placeholder="Enter your word">
+        <button id="calculatePlayer2Score">Calculate Score</button>
+        <p id="player2Score"></p>
+    </div>
+
+    <div>
+        <h2>Scrabble Board</h2>
+        <div class="board">
+            <!-- Create the Scrabble board cells here -->
+            <!-- Use <div class="cell"> for each cell -->
+        </div>
+    </div>
+
+    <script>
+        function calculateScrabbleScore(word) {
+            // Scrabble score calculation logic (same as before)
+        }
+
+        document.getElementById('calculatePlayer1Score').addEventListener('click', () => {
+            const word = document.getElementById('player1Word').value;
+            const score = calculateScrabbleScore(word);
+            document.getElementById('player1Score').textContent = `Player 1 Score: ${score}`;
+        });
+
+        document.getElementById('calculatePlayer2Score').addEventListener('click', () => {
+            const word = document.getElementById('player2Word').value;
+            const score = calculateScrabbleScore(word);
+            document.getElementById('player2Score').textContent = `Player 2 Score: ${score}`;
+        });
+
+        function handlePlayerPhoto(photoId, inputId) {
+            const photoElement = document.getElementById(photoId);
+            const inputElement = document.getElementById(inputId);
+            const file = inputElement.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    photoElement.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                photoElement.src = 'default-player-photo.png'; // Default photo
+            }
+        }
+    </script>
+</body>
+</html>

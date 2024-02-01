@@ -1,0 +1,97 @@
+import tkinter as tk
+from tkinter import simpledialog, messagebox, ttk
+
+# Calculate exact change
+def exact_change(user_total):
+    if user_total <= 0:
+        return (0, 0, 0, 0)
+
+    num_quarters = user_total // 25
+    user_total %= 25
+
+    num_dimes = user_total // 10
+    user_total %= 10
+
+    num_nickels = user_total // 5
+    user_total %= 5
+
+    num_pennies = user_total
+
+    return (num_pennies, num_nickels, num_dimes, num_quarters)
+
+# Check if all numbers in a list are multiples of 10
+def is_list_mult10(my_list):
+    return all(x % 10 == 0 for x in my_list)
+
+# Get user-entered values and upper threshold
+def get_user_values():
+    try:
+        size = int(simpledialog.askstring("User Input", "Enter the size of the list:"))
+        if size is not None and size > 0:
+            user_values = [int(simpledialog.askstring("User Input", f"Enter number {i + 1}:")) for i in range(size)]
+            upper_threshold = int(simpledialog.askstring("User Input", "Enter an upper threshold:"))
+            return user_values, upper_threshold
+    except (ValueError, TypeError):
+        pass
+    return [], 0
+
+# Filter numbers less than or equal to a threshold
+def ints_less_than_or_equal_to_threshold(user_values, upper_threshold):
+    return [value for value in user_values if value <= upper_threshold]
+
+# Functions to do the stuff on the window
+def perform_exact_change():
+    input_val = simpledialog.askinteger("Exact Change", "Enter a total value:")
+    if input_val is not None:
+        num_pennies, num_nickels, num_dimes, num_quarters = exact_change(input_val)
+
+        if input_val <= 0:
+            messagebox.showinfo("Exact Change", "No change", icon=messagebox.INFO)
+        else:
+            result_str = ""
+            if num_quarters > 0:
+                result_str += f"{num_quarters} {'quarter' if num_quarters == 1 else 'quarters'}\n"
+            if num_dimes > 0:
+                result_str += f"{num_dimes} {'dime' if num_dimes == 1 else 'dimes'}\n"
+            if num_nickels > 0:
+                result_str += f"{num_nickels} {'nickel' if num_nickels == 1 else 'nickels'}\n"
+            if num_pennies > 0:
+                result_str += f"{num_pennies} {'penny' if num_pennies == 1 else 'pennies'}\n"
+
+            messagebox.showinfo("Exact Change", result_str.strip(), icon=messagebox.INFO)
+
+def perform_mult10_check():
+    size = simpledialog.askinteger("Multiples of 10", "Enter the size of the list:")
+    if size is not None:
+        my_list = [int(simpledialog.askstring("Multiples of 10", f"Enter number {i + 1}:")) for i in range(size)]
+        result = is_list_mult10(my_list)
+
+        if result:
+            messagebox.showinfo("Multiples of 10", "All multiples of 10", icon=messagebox.INFO)
+        else:
+            messagebox.showinfo("Multiples of 10", "Mixed values", icon=messagebox.WARNING)
+
+def perform_threshold_check():
+    user_values, upper_threshold = get_user_values()
+    res_values = ints_less_than_or_equal_to_threshold(user_values, upper_threshold)
+
+    result_str = "\n".join(map(str, res_values))
+    messagebox.showinfo("Values Less Than or Equal to Threshold", result_str, icon=messagebox.INFO)
+
+if __name__ == '__main__':
+    root = tk.Tk()
+    root.title("Chapter 6 Program")
+
+    style = ttk.Style()
+    style.theme_use("clam")
+
+    while True:
+        # Display menu using grid layout
+        title_label = ttk.Label(root, text="Menu", style="Title.TLabel")
+        title_label.grid(row=0, column=0, pady=10)
+
+        ttk.Button(root, text="Calculate Exact Change", command=perform_exact_change).grid(row=1, column=0, pady=10)
+        ttk.Button(root, text="Check Multiples of 10", command=perform_mult10_check).grid(row=2, column=0, pady=10)
+        ttk.Button(root, text="Values Less Than or Equal to Threshold", command=perform_threshold_check).grid(row=3, column=0, pady=10)
+
+        root.mainloop()

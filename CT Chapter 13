@@ -1,0 +1,56 @@
+class TrafficLight:
+    def __init__(self):
+        self.state = 'Green'
+        self.pedestrian_button_pressed = False
+
+    def transition(self):
+        if self.pedestrian_button_pressed:
+            self.state = 'Red (Pedestrian)'
+        else:
+            if self.state == 'Green':
+                self.state = 'Yellow'
+            elif self.state == 'Yellow':
+                self.state = 'Red'
+            else:
+                self.state = 'Green'
+
+    def press_pedestrian_button(self):
+        self.pedestrian_button_pressed = True
+
+    def release_pedestrian_button(self):
+        self.pedestrian_button_pressed = False
+
+    def get_current_state(self):
+        return self.state
+
+
+# Example usage of the TrafficLight class:
+
+traffic_light = TrafficLight()
+
+# Initial state is 'Green'
+print("Current State:", traffic_light.get_current_state())
+
+# Transition to 'Yellow'
+traffic_light.transition()
+print("Current State:", traffic_light.get_current_state())
+
+# Transition to 'Red'
+traffic_light.transition()
+print("Current State:", traffic_light.get_current_state())
+
+# Press the pedestrian button
+traffic_light.press_pedestrian_button()
+print("Current State:", traffic_light.get_current_state())
+
+# Transition to 'Red (Pedestrian)'
+traffic_light.transition()
+print("Current State:", traffic_light.get_current_state())
+
+# Release the pedestrian button
+traffic_light.release_pedestrian_button()
+print("Current State:", traffic_light.get_current_state())
+
+# Transition back to 'Green'
+traffic_light.transition()
+print("Current State:", traffic_light.get_current_state())
