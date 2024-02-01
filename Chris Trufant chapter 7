@@ -1,0 +1,25 @@
+import random
+
+def birthday_simulation(num_simulations, num_people):
+    count_success = [0] * num_simulations
+
+    for i in range(num_simulations):
+        birthdays = [random.randint(1, 365) for _ in range(num_people)]
+        if len(birthdays) != len(set(birthdays)):
+            count_success[i] = 1
+
+    return sum(count_success) / num_simulations
+
+def find_number_of_people(target_prob):
+    num_people = 1
+    while True:
+        probability = birthday_simulation(10000, num_people)
+        if probability >= target_prob:
+            return num_people
+        num_people += 1
+
+target_probabilities = [0.7, 0.8, 0.9, 0.95, 0.99]
+
+for target_prob in target_probabilities:
+    num_people_needed = find_number_of_people(target_prob)
+    print(f"To achieve a {target_prob * 100}% probability, you need at least {num_people_needed} people.")

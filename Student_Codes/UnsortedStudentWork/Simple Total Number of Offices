@@ -1,0 +1,6 @@
+number_of_floors = int(input("Enter number of floors in the building:"))
+
+offices_on_floor = int(input("Enter number of offices on each floor:"))
+
+Total_Number_of_Offices = number_of_floors * offices_on_floor
+print("There are", Total_Number_of_Offices, "offices in the building.")

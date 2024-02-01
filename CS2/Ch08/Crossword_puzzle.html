@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crossword Puzzle</title>
+    <style>
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #crossword-container {
+            width: 500px;
+            margin: 0 auto;
+        }
+
+        .crossword-row {
+            display: flex;
+        }
+
+        .crossword-cell {
+            width: 30px;
+            height: 30px;
+            border: 1px solid black;
+            text-align: center;
+            line-height: 30px;
+        }
+
+
+        .crossword-cell.active {
+            background-color: #ccc;
+        }
+
+        .crossword-cell.active.correct {
+            background-color: green;
+        }
+
+        .crossword-cell.active.incorrect {
+            background-color: red;
+        }
+
+        .crossword-clues {
+            width: 500px;
+            margin: 0 auto;
+        }
+
+        .crossword-clue {
+            margin-bottom: 10px;
+        }
+
+        .crossword-clue label {
+            display: inline-block;
+            width: 100px;
+        }
+
+        .crossword-clue input {
+            width: 300px;
+        }
+
+        .crossword-clue.correct label {
+            color: green;
+        }
+
+        .crossword-clue.incorrect label {
+            color: red;
+        }
+
+        .crossword-clue.correct input {
+            border-color: green;
+        }
+
+        .crossword-clue.incorrect input {
+            border-color: red;
+        }
+
+        .crossword-clue.correct input:focus {
+            border-color: green;
+            box-shadow: 0 0 5px green;
+        }
+
+        .crossword-clue.incorrect input:focus {
+            border-color: red;
+            box-shadow: 0 0 5px red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Crossword Puzzle</h1>
+    <div id="crossword-container">
+        <!-- Create your crossword grid here -->
+        <!-- Make 11 rows-->
+        <!-- Make 15 columns-->
+
+
+        <div class="crossword-cell"><input type="text" maxlength="1"></div>
+        
+        <div class="crossword-cell"><input type="text" maxlength="1"></div>
+        <div class="crossword-cell"><input type="text" maxlength="1"></div>
+        <div class="crossword-cell"><input type="text" maxlength="1"></div>
+        <div class="crossword-cell"><input type="text" maxlength="1"></div>
+        <div class="crossword-cell"><input type="text" maxlength="1"></div>
+        <div class="crossword-cell"><input type="text" maxlength="1"></div>
+        <div class="crossword-cell"><input type="text" maxlength="1"></div>
+        <div class="crossword-cell"><input type="text" maxlength="1"></div>
+        <div class="crossword-cell"><input type="text" maxlength="1"></div>
+        <div class="crossword-cell"><input type="text" maxlength="1"></div>
+        
+    </div>
+    <script>
+        // Define your crossword grid and clues here using JavaScript
+        const crosswordGrid = [
+            ["#", "#", "#", "C", "R", "O", "S", "S", "W", "O", "R", "D", "#", "#", "#"],
+            ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "E", "#", "#", "#", "#"],
+            ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "L", "#", "#", "#", "#"],
+            ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "E", "#", "#", "#", "#"],
+            ["C", "L", "U", "E", "1", "#", "#", "#", "#", "#", "L", "#", "#", "#", "#"],
+            ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "O", "#", "#", "#", "#"],
+            ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "W", "#", "#", "#", "#"],
+            ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "S", "#", "#", "#", "#"],
+            ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "S", "#", "#", "#", "#"],
+            ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "T", "#", "#", "#", "#"],
+            ["#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#", "#"],
+        ];
+
+        const crosswordClues = {
+            "1": "This is the first clue",
+            "2": "This is the second clue",
+            // Add more clues here
+        };
+
+        // Add your JavaScript code to generate the crossword grid and handle user interactions
+
+    </script>
+</body>
+</html>

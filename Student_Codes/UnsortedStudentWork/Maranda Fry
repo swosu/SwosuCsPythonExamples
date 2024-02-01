@@ -1,0 +1,16 @@
+Chapter 5
+Problem 5.4 #29
+Devise a recursive algorithm to find the nth term of the sequence defined by a0 = 1, a1 = 2, and an = an−1 · an−2, for n = 2, 3, 4,....
+
+
+def find_term(n):
+    if n == 0:
+        return 1
+    elif n == 1:
+        return 2
+    else:
+        return find_term(n-1) * find_term(n-2)
+
+print(find_term(2))
+print(find_term(3))
+print(find_term(4))

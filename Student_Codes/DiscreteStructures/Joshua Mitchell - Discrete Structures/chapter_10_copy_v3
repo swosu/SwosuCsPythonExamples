@@ -1,0 +1,74 @@
+import csv
+import time
+import random
+import numpy as np
+from scipy.spatial import distance
+import itertools
+
+def read_distance_matrix_from_csv(file_path):
+    distance_matrix = []
+    with open(file_path, 'r') as csv_file:
+        csv_reader = csv.reader(csv_file)
+        for row in csv_reader:
+            row = [int(cell) for cell in row]
+            distance_matrix.append(row)
+    return np.array(distance_matrix)
+
+def lin_kernighan_tsp(distance_matrix):
+    num_cities = len(distance_matrix)
+    best_tour = None
+    best_length = float('inf')
+
+    for start_city in range(num_cities):
+        current_tour = list(range(start_city, num_cities)) + list(range(start_city))
+        current_length = calculate_total_distance(distance_matrix, current_tour)
+
+        while True:
+            improvements = 0
+            for i, j in itertools.combinations(range(1, num_cities - 2), 2):
+                new_tour = two_opt_swap(current_tour, i, j)
+                new_length = calculate_total_distance(distance_matrix, new_tour)
+
+                if new_length < current_length:
+                    current_tour = new_tour
+                    current_length = new_length
+                    improvements += 1
+
+            if improvements == 0:
+                break
+
+        if current_length < best_length:
+            best_tour = current_tour
+            best_length = current_length
+
+    return best_tour
+
+def calculate_total_distance(distance_matrix, tour):
+    total_distance = 0
+    for i in range(len(tour) - 1):
+        total_distance += distance_matrix[tour[i]][tour[i + 1]]
+    return total_distance
+
+def two_opt_swap(tour, i, j):
+    new_tour = tour[:i] + tour[i:j+1][::-1] + tour[j+1:]
+    return new_tour
+
+if __name__ == "__main__":
+    # Use "500.csv" as the file name
+    csv_file_path = '500.csv'
+
+    # Read the distance matrix from the CSV file
+    distance_matrix = read_distance_matrix_from_csv(csv_file_path)
+
+    start_time = time.time()
+
+    # Solve TSP using the Lin-Kernighan algorithm
+    tsp_path = lin_kernighan_tsp(distance_matrix)
+
+    end_time = time.time()
+    execution_time = end_time - start_time
+
+    # Print the TSP path and execution time
+    print(f"Optimal TSP Path: {tsp_path}")
+    print(f"Total Distance: {calculate_total_distance(distance_matrix, tsp_path)}")
+    print(f"Execution Time: {execution_time:.2f} seconds")
