@@ -33,7 +33,6 @@ def calcThreeofaKind(dice):
         if decendingDice[die] == decendingDice[die + 1] == decendingDice[die + 2]:
             return sum(decendingDice[die:die + 3])
     return 0
-        
 
 def yahtzee():
     rulesDisplay()
