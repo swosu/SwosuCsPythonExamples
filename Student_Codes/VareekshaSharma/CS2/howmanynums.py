@@ -1,0 +1,1 @@
+how_many_q = input("how many numbers would you like to see? ")
