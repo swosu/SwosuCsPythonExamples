@@ -2,12 +2,59 @@ import time
 import random
 import matplotlib.pyplot as plt
 
-def bubble_sort(arr):
+class Data_Tracking_For_Sorting_Algorithms:
+    def __init__(self):
+        self.data = None
+        self.comparisons = 0
+        self.swaps = 0
+        self.start_time = time.time()
+        self.end_time = None
+        self.time_taken = None
+        self.sorting_algorithm_name = None
+
+    def track_comparisons(self):
+        self.comparisons += 1
+
+    def track_swaps(self):
+        self.swaps += 1
+
+    def start_timer(self):
+        self.start_time = time.time()
+
+    def end_timer(self):
+        self.end_time = time.time()
+        self.time_taken = self.end_time - self.start_time
+
+    def get_swap_count(self):
+        return self.swaps
+    
+    def get_comparison_count(self):
+        return self.comparisons
+    
+    def get_time_taken(self):
+        return self.time_taken
+    
+    def get_data(self):
+        return self.data
+    
+    def get_sorting_algorithm_name(self):
+        return self.sorting_algorithm_name
+    
+    def reset_data(self, new_data):
+        self.data = new_data
+        self.comparisons = 0
+        self.swaps = 0
+        self.start_time = time.time()
+        self.end_time = None
+        self.time_taken = None
+
+def bubble_sort(arr, data_object):
     print('starting bubble sort algorithm')
     # make a copy of the array passed in
+    orig_arr = []
     orig_arr = arr.copy()
     n = len(arr)
-    print('our array starts as:', arr)
+    print('our array starts as:', orig_arr)
     for i in range(n):
         for j in range(0, n-i-1):
             if arr[j] > arr[j+1]:
@@ -24,14 +71,14 @@ def bubble_sort(arr):
     
     
 
-def merge_sort(arr):
+def merge_sort(arr, data_object):
     if len(arr) > 1:
         mid = len(arr) // 2
         left_half = arr[:mid]
         right_half = arr[mid:]
 
-        merge_sort(left_half)
-        merge_sort(right_half)
+        merge_sort(left_half, data_object)
+        merge_sort(right_half, data_object)
 
         i = j = k = 0
 
@@ -59,7 +106,10 @@ def generate_random_array(size):
 
 def measure_sorting_time(sort_function, data):
     start_time = time.time()
-    sort_function(data.copy())
+    # create an object to store our data that is based on the Data_Tracking_For_Sorting_Algorithms class
+    data_object = Data_Tracking_For_Sorting_Algorithms()
+    data_object.get_sorting_algorithm_name = sort_function.__name__
+    sort_function(data.copy(), data_object)
     end_time = time.time()
     return end_time - start_time
 
@@ -104,4 +154,4 @@ if __name__ == "__main__":
     experiment_results = run_experiment(array_sizes)
     
     print_results(experiment_results)
-    plot_results(experiment_results)
+    #plot_results(experiment_results)
