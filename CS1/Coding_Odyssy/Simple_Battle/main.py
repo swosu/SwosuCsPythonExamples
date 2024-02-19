@@ -11,7 +11,7 @@ class Player:
         self.attack = 10
         self.defense = 5
         self.coins = 5
-        self.inventory = []
+        self.inventory = {}
         self.__level = 1
         self.__exp = 0
         self.__math_exp = 0
@@ -45,7 +45,34 @@ class Player:
         print('Coins: ', self.coins)
         print('Inventory: ', self.inventory)
 
+class Store:
+    def __init__(self, player):
+        self.items = {
+            'sword': 10,
+            'shield': 5,
+            'potion': 5,
+            'meal': 3
+        }
+        self.player = player
 
+    def show_items(self):
+        print('Welcome to the store. Here are the items available for purchase:')
+        for item, cost in self.items.items():
+            print(f'{item}: {cost} coins')
+
+    def buy_item(self, item):
+        # do they have enough coins?
+        if self.player.coins < self.items[item]:
+            print('You do not have enough coins to buy this item.')
+            print('You need to go to work and earn some coins.')
+        elif item in self.player.inventory:
+            print('You already have this item.')
+        elif item in self.items:
+            self.player.coins -= self.items[item]
+            self.player.inventory[item] = 1
+            print('You have purchased a ', item)
+        else:
+            print('That item is not available for purchase.')
 class Math_Quiz:
     def __init__(self, player):
         self.data = []
@@ -107,5 +134,10 @@ if __name__ == '__main__':
 
     player.print_all_data()
 
+    print('now that you have a couple of coins you can go to the store and buy some items.')
+    store = Store(player)
+    store.show_items()
+    store.buy_item('meal')
+    player.print_all_data()
     
 
