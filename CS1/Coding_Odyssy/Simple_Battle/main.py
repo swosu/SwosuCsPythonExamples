@@ -15,6 +15,7 @@ class Player:
         self.__level = 1
         self.__exp = 0
         self.__math_exp = 0
+        self.__max_hp = 100 + (100 * (self.__level - 1))
 
     def get_name(self):
         return self.name
@@ -139,5 +140,10 @@ if __name__ == '__main__':
     store.show_items()
     store.buy_item('meal')
     player.print_all_data()
+
+    print('now that you have purchased a meal, you can go home to rest')
+
+    home  = Home(player)
+    home.rest()
     
 
