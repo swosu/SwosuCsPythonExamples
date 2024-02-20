@@ -1,11 +1,13 @@
-# Ask the user for their name
-name = input("What is your name? ")
+import time
 
-# Greet the user by name
-print(f"Hello, {name}!")
+def flash_text(text):
+    
+    for i in range(5):
+        print("\033[1;31m" + text + "\033[0m", end="\r")
+        time.sleep(0.5)
+        print(" " * len(text), end="\r")
+        time.sleep(0.5)
 
-# Display a fancy welcome message
-print("\033[1;31;40mWelcome to Python!\033[0m")
-
-# Prompt the user to press any button to quit
-input("Press any button to quit...")
+name = input("Enter your name: ")
+print("Hello, " + name + "! Welcome!")
+flash_text(name )
