@@ -46,6 +46,19 @@ class Player:
         print('Coins: ', self.coins)
         print('Inventory: ', self.inventory)
 
+class Home:
+    def __init__(self, player):
+        self.player = player
+
+    def rest(self):
+        if self.player.inventory['meal'] > 0:
+            self.player.inventory['meal'] -= 1
+            self.player.hp = self.player.__max_hp
+            print('You have eaten a meal and are fully rested.')
+        else:
+            print('You do not have a meal to eat. You should go to the store and buy one.')
+            self.player.coins += 1
+            
 class Store:
     def __init__(self, player):
         self.items = {
