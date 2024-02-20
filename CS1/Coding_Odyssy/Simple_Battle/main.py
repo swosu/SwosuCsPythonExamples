@@ -10,7 +10,7 @@ class Player:
         self.hp = 100
         self.attack = 10
         self.defense = 5
-        self.coins = 5
+        self.coins = 20
         self.inventory = {}
         self.__level = 1
         self.__exp = 0
@@ -80,14 +80,30 @@ class Store:
         }
         self.player = player
 
+    def print_shop_menu(self):
+        for item, cost in self.items.items():
+            print(f'{item}: {cost} coins')
+
+    def print_options(self):
+        option_list = ['1: Print shop menu', '2. Check your inventory',
+        '3. Equip an item', '4. Unequip an item', '5. Exit shop']
+        print('Please enter the numeral for the option of your choice.')
+        # print shop option list
+
+
+
     def show_items(self):
         print('you feel your pockets, and quckly add up your stash')
         print('you have ', self.player.get_coin_count(), ' coins in your pocket.')
         print('The shop keeper greets you with a warm smile.')
         print('\"Welcome to the store. Here are the items available for purchase:\"')
 
-        for item, cost in self.items.items():
-            print(f'{item}: {cost} coins')
+        while True:
+            self.print_shop_menu()
+            self.print_options()
+
+
+        
 
     def buy_item(self, item):
         # do they have enough coins?
