@@ -24,7 +24,7 @@ starter code:
 
 ''' Type your code here. '''
 """
-print('hello')
+
 import math
 
 # get a value for x,y, and z. Tell the user to enter a number with a decimal point.
