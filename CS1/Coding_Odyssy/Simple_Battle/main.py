@@ -83,12 +83,16 @@ class Store:
     def print_shop_menu(self):
         print('Shop Menu:')
         # put an item number, item name, and cost on each line
+        for i, item in enumerate(self.items):
+            print(f'{i+1}: {item} - {self.items[item]} coins')
         
     def print_options(self):
         option_list = ['1: Print shop menu', '2. Check your inventory',
         '3. Equip an item', '4. Unequip an item', '5. Exit shop']
         print('Please enter the numeral for the option of your choice.')
         # print shop option list
+        for option in option_list:
+            print(option)
 
 
 
@@ -97,7 +101,6 @@ class Store:
         print('you have ', self.player.get_coin_count(), ' coins in your pocket.')
         print('The shop keeper greets you with a warm smile.')
         print('\"Welcome to the store. Here are the items available for purchase:\"')
-
         while True:
             self.print_shop_menu()
             self.print_options()
@@ -153,27 +156,25 @@ class Math_Quiz:
 
 if __name__ == '__main__':
     
-    
-    
-    #print('Well met, traveler! Welcome to a simple adventure.')
-    #print('Let us begin...')
-    #print('How should we address you?')
-    #name = input('Enter your name and please press enter: ')
+    print('Well met, traveler! Welcome to a simple adventure.')
+    print('Let us begin...')
+    print('How should we address you?')
+    name = input('Enter your name and please press enter: ')
 
-    name = 'Player1'
+    #name = 'Player1'
         
 
     # Create a player object
     player = Player(name)
 
-    """
+    
     print(f'Welcome, {player.get_name()}! Let us begin our journey.')
     print('because this is for school, we are going to have a way to use your brain.')
     print('you can go to work and earn money.')
     print('you get money when you get a correct answer')
     print('it costs one coin to play the math quiz')
     print('a correct answer will give you 5 coins')
-    """
+    
     
     math_quiz = Math_Quiz(player)
     math_quiz.ask_question()
