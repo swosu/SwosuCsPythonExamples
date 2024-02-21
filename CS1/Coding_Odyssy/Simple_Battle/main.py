@@ -81,9 +81,9 @@ class Store:
         self.player = player
 
     def print_shop_menu(self):
-        for item, cost in self.items.items():
-            print(f'{item}: {cost} coins')
-
+        print('Shop Menu:')
+        # put an item number, item name, and cost on each line
+        
     def print_options(self):
         option_list = ['1: Print shop menu', '2. Check your inventory',
         '3. Equip an item', '4. Unequip an item', '5. Exit shop']
@@ -101,6 +101,7 @@ class Store:
         while True:
             self.print_shop_menu()
             self.print_options()
+            user_selection = input('Enter the numeral for the option of your choice: ')
 
 
         
