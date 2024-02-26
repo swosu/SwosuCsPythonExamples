@@ -10,7 +10,7 @@ class Player:
         self.hp = 100
         self.attack = 10
         self.defense = 5
-        self.coins = 5
+        self.coins = 20
         self.inventory = {}
         self.__level = 1
         self.__exp = 0
@@ -31,6 +31,9 @@ class Player:
         else:
             self.coins -= charge
 
+    def get_coin_count(self):
+        return self.coins
+
     def give_math_experience(self, exp):
         self.__math_exp += exp
         if self.__math_exp >= 100:
@@ -39,10 +42,18 @@ class Player:
             print('Congratulations! You have leveled up.')
             print('You are now level: ', self.__level)
 
+    def reset_hp_to_max(self):
+        self.hp = self.__max_hp
+    
+    def spend_meal_at_home(self):
+        self.inventory['meal'] -= 1
+
     def print_all_data(self):
         print('Name: ', self.name)
         print('Level: ', self.__level)
         print('Experience: ', self.__exp)
+        print('Math Experience: ', self.__math_exp)
+        print('Health Points: ', self.hp, '/', self.__max_hp)
         print('Coins: ', self.coins)
         print('Inventory: ', self.inventory)
 
@@ -52,8 +63,8 @@ class Home:
 
     def rest(self):
         if self.player.inventory['meal'] > 0:
-            self.player.inventory['meal'] -= 1
-            self.player.hp = self.player.__max_hp
+            self.player.spend_meal_at_home()
+            self.player.reset_hp_to_max()
             print('You have eaten a meal and are fully rested.')
         else:
             print('You do not have a meal to eat. You should go to the store and buy one.')
@@ -69,10 +80,34 @@ class Store:
         }
         self.player = player
 
+    def print_shop_menu(self):
+        print('Shop Menu:')
+        # put an item number, item name, and cost on each line
+        for i, item in enumerate(self.items):
+            print(f'{i+1}: {item} - {self.items[item]} coins')
+        
+    def print_options(self):
+        option_list = ['1: Print shop menu', '2. Check your inventory',
+        '3. Equip an item', '4. Unequip an item', '5. Exit shop']
+        print('Please enter the numeral for the option of your choice.')
+        # print shop option list
+        for option in option_list:
+            print(option)
+
+
+
     def show_items(self):
-        print('Welcome to the store. Here are the items available for purchase:')
-        for item, cost in self.items.items():
-            print(f'{item}: {cost} coins')
+        print('you feel your pockets, and quckly add up your stash')
+        print('you have ', self.player.get_coin_count(), ' coins in your pocket.')
+        print('The shop keeper greets you with a warm smile.')
+        print('\"Welcome to the store. Here are the items available for purchase:\"')
+        while True:
+            self.print_shop_menu()
+            self.print_options()
+            user_selection = input('Enter the numeral for the option of your choice: ')
+
+
+        
 
     def buy_item(self, item):
         # do they have enough coins?
@@ -87,6 +122,7 @@ class Store:
             print('You have purchased a ', item)
         else:
             print('That item is not available for purchase.')
+
 class Math_Quiz:
     def __init__(self, player):
         self.data = []
@@ -120,30 +156,27 @@ class Math_Quiz:
 
 if __name__ == '__main__':
     
-    
-    
-    #print('Well met, traveler! Welcome to a simple adventure.')
-    #print('Let us begin...')
-    #print('How should we address you?')
-    #name = input('Enter your name and please press enter: ')
+    print('Well met, traveler! Welcome to a simple adventure.')
+    print('Let us begin...')
+    print('How should we address you?')
+    name = input('Enter your name and please press enter: ')
 
-    name = 'Player1'
+    #name = 'Player1'
         
 
     # Create a player object
     player = Player(name)
 
-    """
+    
     print(f'Welcome, {player.get_name()}! Let us begin our journey.')
     print('because this is for school, we are going to have a way to use your brain.')
     print('you can go to work and earn money.')
     print('you get money when you get a correct answer')
     print('it costs one coin to play the math quiz')
     print('a correct answer will give you 5 coins')
-    """
+    
     
     math_quiz = Math_Quiz(player)
-
     math_quiz.ask_question()
 
     player.print_all_data()
@@ -158,5 +191,16 @@ if __name__ == '__main__':
 
     home  = Home(player)
     home.rest()
+    player.print_all_data()
+
+    print('we need a few more coins to purcase a sword, shield, two potions, and a meal.')
+    print('This is 23 coins')
+
+    while 23 >= player.get_coin_count():
+        math_quiz.ask_question()
+
+    print('okay, back to the store once more...')
+    store.show_items()
+
     
 
