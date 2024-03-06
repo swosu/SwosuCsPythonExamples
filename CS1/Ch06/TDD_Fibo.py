@@ -1,6 +1,6 @@
 import time
 
-def fibo(number):
+def fibonacci(number):
     if not isinstance(number, int):
         return "Invalid input!"
     elif 0 == number:
@@ -14,28 +14,34 @@ def fibo(number):
         return fibs[-1]
     else:
         return -1
-
-if __name__ == '__main__':
+    
+def run_tests():
     print('start testing...')
     # start a timer
     start = time.time()
-    assert fibo(-7) == -1
-    assert fibo(0) == 0
-    assert fibo(1) == 1
-    assert fibo(2) == 1
-    assert fibo(3) == 2
-    assert fibo(4) == 3
-    assert fibo(5) == 5
-    assert fibo(6) == 8
-    assert fibo(7) == 13
-    assert fibo(8) == 21
-    assert fibo(9) == 34
-    assert fibo(10) == 55
-    assert fibo(20) == 6765 
-    assert fibo(30) == 832040
-    assert fibo(40) == 102334155
-    assert fibo('Robert') == "Invalid input!"
+    assert fibonacci(-7) == -1
+    assert fibonacci(0) == 0
+    assert fibonacci(1) == 1
+    assert fibonacci(2) == 1
+    assert fibonacci(3) == 2
+    assert fibonacci(4) == 3
+    assert fibonacci(5) == 5
+    assert fibonacci(6) == 8
+    assert fibonacci(7) == 13
+    assert fibonacci(8) == 21
+    assert fibonacci(9) == 34
+    assert fibonacci(10) == 55
+    assert fibonacci(20) == 6765 
+    assert fibonacci(30) == 832040
+    assert fibonacci(40) == 102334155
+    assert fibonacci('Robert') == "Invalid input!"
     # stop the timer
     end = time.time()
     print('tests completed successfully!')
     print('time elapsed: ', end - start, 'seconds')
+
+
+if __name__ == '__main__':
+    #run_tests()
+    start_num = int(input())
+    print(f'fibonacci({start_num}) is {fibonacci(start_num)}')
