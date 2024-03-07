@@ -1,31 +1,20 @@
 """
-Write a program that takes in a line of text as input, 
-and outputs that line of text in reverse. 
-The program repeats, 
-ending when the user enters "Done", "done", or "d" for the line of text.
-"""
-message_1 = 'Please enter a line of text and press enter.'
-message_2 = 'Please enter "Done", "done", or "d" to end the program.'
-list_of_user_text = []
-while True:
-    print(message_1, '\n', message_2)
-    line_of_text = input('\n: ')
-    print('you entered: ', line_of_text)
-    if line_of_text == 'Done' or line_of_text == 'done' or line_of_text == 'd':
-        print('So this is how it ends...')
-        break
-    else:
-        list_of_user_text.append(line_of_text)
-        print('our list of text now contains: ', list_of_user_text)
+5.14 LAB: Convert to reverse binary
+Write a program that takes in a positive integer as input, 
+and outputs a string of 1's and 0's representing the integer in reverse binary. 
+For an integer x, the algorithm is:
 
-print('now we reverse the text and print it off.')
+As long as x is greater than 0
+   Output x modulo 2 (remainder is either 0 or 1)
+   Assign x with x divided by 2
+Note: The above algorithm outputs the 0's and 1's in reverse order.
 
-"""
-for item in list_of_user_text:
-    print(item[::-1])
-    print('')
+Ex: If the input is:
+
+6
+the output is:
+
+011
+6 in binary is 110; the algorithm outputs the bits in reverse.
 """
 
-for index in range(len(list_of_user_text)):
-    print(list_of_user_text[index][::-1])
-    print('')
