@@ -10,7 +10,7 @@ from itertools import combinations_with_replacement
 #cookie_types = ["chocolate chip", "peanut butter", "sugar", "fig newton"]
 cookie_types = []
 
-nubmber_of_cookie_types = 21
+nubmber_of_cookie_types = 4
 for index in range(nubmber_of_cookie_types):
     cookie_types.append(str(index + 1))
 
@@ -20,7 +20,7 @@ print("Types of cookies available:", cookie_types)
 
 
 # Define the number of cookies to pick
-num_cookies_to_pick = 4
+num_cookies_to_pick = 6
 
 # Use itertools to generate all combinations with replacement
 cookie_combinations = list(combinations_with_replacement(cookie_types, num_cookies_to_pick))
