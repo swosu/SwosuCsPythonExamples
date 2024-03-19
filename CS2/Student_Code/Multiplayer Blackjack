@@ -1,0 +1,209 @@
+const readline = require('readline');
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
+const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
+
+function calculateHandValue(hand) {
+    let sum = 0;
+    let hasAce = false;
+    for (let card of hand) {
+        if (card.value === 'A') {
+            hasAce = true;
+        }
+        sum += getValue(card.value);
+    }
+    if (hasAce && sum + 10 <= 21) {
+        sum += 10;
+    }
+    return sum;
+}
+
+class Player {
+    constructor(name, currency) {
+        this.name = name;
+        this.currency = currency;
+        this.hand = [];
+    }
+
+    deductBetAmount(bet) {
+        this.currency -= bet;
+    }
+
+    addWinnings(winnings) {
+        this.currency += winnings;
+    }
+
+    displayCurrency() {
+        console.log(`${this.name}'s current balance: ${this.currency}`);
+    }
+
+    getHandString() {
+        return this.hand.map(card => `${card.value} of ${card.suit}`).join(', ');
+    }
+}
+
+function createDeck() {
+    let deck = [];
+    for (let suitIdx = 0; suitIdx < suits.length; suitIdx++) {
+        for (let valueIdx = 0; valueIdx < values.length; valueIdx++) {
+            let card = {
+                suit: suits[suitIdx],
+                value: values[valueIdx]
+            };
+            deck.push(card);
+        }
+    }
+    return deck;
+}
+
+function getRandomCard(deck) {
+    const randomIndex = Math.floor(Math.random() * deck.length);
+    return deck.splice(randomIndex, 1)[0];
+}
+
+async function getPlayerInput(question) {
+    return new Promise(resolve => {
+        rl.question(question, answer => {
+            resolve(answer.toLowerCase());
+        });
+    });
+}
+
+async function getBetAmount(playerName, playerCurrency) {
+    return new Promise(resolve => {
+        rl.question(`${playerName}, you have ${playerCurrency} currency. How much do you want to bet? `, answer => {
+            const bet = parseInt(answer);
+            if (!isNaN(bet) && bet > 0 && bet <= playerCurrency) {
+                resolve(bet);
+            } else {
+                console.log("Invalid bet amount. Please enter a valid number within your currency balance.");
+                resolve(getBetAmount(playerName, playerCurrency));
+            }
+        });
+    });
+}
+
+async function getPlayers() {
+    let numPlayers = parseInt(await getPlayerInput("Enter the number of players: "));
+    let players = [];
+    for (let i = 1; i <= numPlayers; i++) {
+        let playerName = await getPlayerInput(`Enter player ${i}'s name: `);
+        players.push(new Player(playerName, 50)); // Assuming each player starts with 50 currency
+    }
+    return players;
+}
+
+function getValue(cardValue) {
+    if (['J', 'Q', 'K'].includes(cardValue)) {
+        return 10;
+    } else if (cardValue === 'A') {
+        return 1;
+    } else {
+        return parseInt(cardValue);
+    }
+}
+
+async function playerTurn(player, deck) {
+    let playerScore = calculateHandValue(player.hand);
+    while (playerScore < 21) {
+        let response = await getPlayerInput(`${player.name}, do you want to hit or stand? (h/s) `);
+        if (response === 'h') {
+            let newCard = getRandomCard(deck);
+            player.hand.push(newCard);
+            console.log(`${player.name} hits:`, newCard.value, "of", newCard.suit);
+            console.log(`${player.name}'s Hand:`, player.getHandString());
+            playerScore = calculateHandValue(player.hand);
+        } else if (response === 's') {
+            console.log(`${player.name} stands.`);
+            break;
+        } else {
+            console.log("Invalid input. Please enter 'h' to hit or 's' to stand.");
+        }
+    }
+}
+
+async function dealerTurn(dealer, deck) {
+    let dealerScore = calculateHandValue(dealer.hand);
+    console.log("Dealer's Hand:", dealer.getHandString());
+    while (dealerScore < 17) {
+        let newCard = getRandomCard(deck);
+        dealer.hand.push(newCard);
+        console.log("Dealer hits:", newCard.value, "of", newCard.suit);
+        console.log("Dealer's Hand:", dealer.getHandString());
+        dealerScore = calculateHandValue(dealer.hand);
+    }
+    console.log("Dealer stands.");
+}
+
+async function determineWinners(players, dealer) {
+    let dealerScore = calculateHandValue(dealer.hand);
+    console.log("Dealer's Hand:", dealer.getHandString());
+    console.log("Dealer's Score:", dealerScore);
+
+    for (let player of players) {
+        let playerScore = calculateHandValue(player.hand);
+        console.log(`${player.name}'s Hand:`, player.getHandString());
+        console.log(`${player.name}'s Score:`, playerScore);
+
+        if (playerScore > 21) {
+            console.log(`${player.name} busts! Dealer wins.`);
+        } else if (dealerScore > 21 || playerScore > dealerScore) {
+            console.log(`${player.name} wins!`);
+            player.addWinnings(player.currency * 2); // Player wins double their bet
+        } else if (playerScore < dealerScore) {
+            console.log(`Dealer wins against ${player.name}.`);
+        } else {
+            console.log(`${player.name} ties with the dealer.`);
+            player.addWinnings(player.currency); // Player gets back their bet
+        }
+        player.displayCurrency();
+    }
+}
+
+async function askForAnotherRound() {
+    return new Promise(resolve => {
+        rl.question("Do you want to play another round? (y/n) ", answer => {
+            resolve(answer.toLowerCase() === 'y');
+        });
+    });
+}
+
+async function startGame() {
+    let players = await getPlayers();
+    let deck = createDeck();
+
+    let playAnotherRound = true;
+
+    while (playAnotherRound) {
+        for (let player of players) {
+            let playerBet = await getBetAmount(player.name, player.currency);
+            player.deductBetAmount(playerBet);
+            player.hand.push(getRandomCard(deck), getRandomCard(deck));
+            console.log(`${player.name}'s Hand:`, player.getHandString());
+        }
+
+        let dealer = new Player("Dealer", 0);
+        dealer.hand.push(getRandomCard(deck), getRandomCard(deck));
+        console.log("Dealer's Hand:", dealer.hand[0].value + " of " + dealer.hand[0].suit, "and one hidden card");
+
+        for (let player of players) {
+            await playerTurn(player, deck);
+        }
+
+        await dealerTurn(dealer, deck);
+
+        await determineWinners(players, dealer);
+
+        playAnotherRound = await askForAnotherRound();
+    }
+
+    console.log("Thanks for playing!");
+    rl.close();
+}
+
+startGame();
