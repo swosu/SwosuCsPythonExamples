@@ -1,0 +1,120 @@
+import tkinter as tk
+from tkinter import messagebox
+from tkinter import ttk
+import random
+
+class MainApp(tk.Tk):
+    def __init__(self):
+        super().__init__()
+
+        self.title('Program Selector')
+
+        self.label = ttk.Label(self, text='Select a program to run:')
+        self.label.grid(row=0, column=0, columnspan=3)
+
+        self.roll_sum_button = ttk.Button(self, text='Roll Sum', command=self.roll_sum)
+        self.roll_sum_button.grid(row=1, column=0)
+
+        self.random_values_button = ttk.Button(self, text='Random Values', command=self.random_values)
+        self.random_values_button.grid(row=1, column=1)
+
+        self.roll_total_button = ttk.Button(self, text='Roll Total', command=self.roll_total)
+        self.roll_total_button.grid(row=1, column=2)
+
+    def roll_sum(self):
+        self.roll_sum_window = RollSumWindow(self)
+
+    def random_values(self):
+        self.random_values_window = RandomValuesWindow(self)
+
+    def roll_total(self):
+        self.roll_total_window = RollTotalWindow(self)
+
+class RollSumWindow(tk.Toplevel):
+    def __init__(self, master):
+        super().__init__(master)
+
+        self.title('Roll Sum')
+
+        self.label = ttk.Label(self, text='Enter a desired sum:')
+        self.label.grid(row=0, column=0)
+
+        self.entry = ttk.Entry(self)
+        self.entry.grid(row=0, column=1)
+
+        self.button = ttk.Button(self, text='Submit', command=self.roll_sum)
+        self.button.grid(row=1, column=0, columnspan=2)
+
+    def roll_sum(self):
+        try:
+            desired_sum = int(self.entry.get())
+            rolls = []
+            total = 0
+            num_rolls = 0
+            while total < desired_sum:
+                roll = random.randint(1, 6)
+                rolls.append(roll)
+                total += roll
+                num_rolls += 1
+            messagebox.showinfo('Roll Sum', f'Rolls: {rolls}\nTotal: {total}\nNumber of Rolls: {num_rolls}')
+        except ValueError:
+            messagebox.showerror('Error', 'Please enter a valid number.')
+
+class RandomValuesWindow(tk.Toplevel):
+    def __init__(self, master):
+        super().__init__(master)
+
+        self.title('Random Values')
+
+        self.label1 = ttk.Label(self, text='Enter a minimum value:')
+        self.label1.grid(row=0, column=0)
+
+        self.entry1 = ttk.Entry(self)
+        self.entry1.grid(row=0, column=1)
+
+        self.label2 = ttk.Label(self, text='Enter a maximum value:')
+        self.label2.grid(row=1, column=0)
+
+        self.entry2 = ttk.Entry(self)
+        self.entry2.grid(row=1, column=1)
+
+        self.button = ttk.Button(self, text='Submit', command=self.random_values)
+        self.button.grid(row=2, column=0, columnspan=2)
+
+    def random_values(self):
+        try:
+            min_value = int(self.entry1.get())
+            max_value = int(self.entry2.get())
+            random_values = [random.randint(min_value, max_value) for _ in range(3)]
+            messagebox.showinfo('Random Values', f'Random Values: {random_values}')
+        except ValueError:
+            messagebox.showerror('Error', 'Please enter valid numbers.')
+
+class RollTotalWindow(tk.Toplevel):
+    def __init__(self, master):
+        super().__init__(master)
+
+        self.title('Roll Total')
+
+        self.label = ttk.Label(self, text='Enter a desired number of rolls:')
+        self.label.grid(row=0, column=0)
+
+        self.entry = ttk.Entry(self)
+        self.entry.grid(row=0, column=1)
+
+        self.button = ttk.Button(self, text='Submit', command=self.roll_total)
+        self.button.grid(row=1, column=0, columnspan=2)
+
+    def roll_total(self):
+        try:
+            num_rolls = int(self.entry.get())
+            rolls = [random.randint(1, 6) for _ in range(num_rolls)]
+            total = sum(rolls)
+            messagebox.showinfo('Roll Total', f'Rolls: {rolls}\nTotal: {total}')
+        except ValueError:
+            messagebox.showerror('Error', 'Please enter a valid number.')
+
+if __name__ == '__main__':
+    app = MainApp()
+    app.mainloop()
+

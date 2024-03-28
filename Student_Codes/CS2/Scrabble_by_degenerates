@@ -1,0 +1,115 @@
+import pygame
+import random
+
+pygame.init()
+
+# Constants
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
+TILE_SIZE = 40
+TILE_RACK_HEIGHT = 50
+TILE_RACK_SIZE = 7
+TILE_RACK_TILE_SIZE = 40
+TILE_RACK_MARGIN = 5
+LETTER_SCORES = {
+    'A': 1, 'B': 3, 'C': 3, 'D': 2, 'E': 1, 'F': 4, 'G': 2, 'H': 4, 'I': 1, 'J': 8,
+    'K': 5, 'L': 1, 'M': 3, 'N': 1, 'O': 1, 'P': 3, 'Q': 10, 'R': 1, 'S': 1, 'T': 1,
+    'U': 1, 'V': 4, 'W': 4, 'X': 8, 'Y': 4, 'Z': 10
+}
+FONT = pygame.font.Font(None, 30)
+
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption("Scrabble")
+
+scrabble_board = [['' for _ in range(15)] for _ in range(15)]
+player_rack = [random.choice(list(LETTER_SCORES.keys())) for _ in range(TILE_RACK_SIZE)]
+dragging = False
+dragging_tile = None
+dragging_position = None
+dragging_offset = None
+
+def draw_board():
+    screen.fill((255, 255, 255))
+    for i in range(15):
+        for j in range(15):
+            pygame.draw.rect(screen, (200, 200, 200), (i * TILE_SIZE, j * TILE_SIZE + TILE_RACK_HEIGHT, TILE_SIZE, TILE_SIZE), 1)
+
+    for i in range(15):
+        for j in range(15):
+            letter = scrabble_board[i][j]
+            if letter:
+                font_surface = FONT.render(letter, True, (0, 0, 0))
+                screen.blit(font_surface, (j * TILE_SIZE + 5, i * TILE_SIZE + 5 + TILE_RACK_HEIGHT))
+
+def draw_tile_rack(rack):
+    for i, letter in enumerate(rack):
+        if letter:
+            font_surface = FONT.render(letter, True, (0, 0, 0))
+            screen.blit(font_surface, ((i * TILE_RACK_TILE_SIZE) + TILE_RACK_MARGIN, TILE_RACK_MARGIN))
+
+def place_tile(row, col, letter):
+    if scrabble_board[row][col] == '':
+        scrabble_board[row][col] = letter
+
+def generate_new_letters():
+    return [random.choice(list(LETTER_SCORES.keys())) for _ in range(TILE_RACK_SIZE)]
+
+running = True
+while running:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            mouse_x, mouse_y = event.pos
+            if 0 <= mouse_y < TILE_RACK_HEIGHT:
+                col = mouse_x // TILE_RACK_TILE_SIZE
+                if 0 <= col < TILE_RACK_SIZE and player_rack[col] != '':
+                    dragging = True
+                    dragging_tile = player_rack[col]
+                    dragging_position = None
+                    dragging_offset = (mouse_x - col * TILE_RACK_TILE_SIZE, 0)
+                    player_rack[col] = ''
+            else:
+                row = (mouse_y - TILE_RACK_HEIGHT) // TILE_SIZE
+                col = mouse_x // TILE_SIZE
+                if 0 <= row < 15 and 0 <= col < 15 and scrabble_board[row][col] != '':
+                    dragging = True
+                    dragging_tile = scrabble_board[row][col]
+                    dragging_position = (row, col)
+                    dragging_offset = (mouse_x - col * TILE_SIZE, mouse_y - row * TILE_SIZE - TILE_RACK_HEIGHT)
+                    scrabble_board[row][col] = ''
+        elif event.type == pygame.MOUSEBUTTONUP:
+            if dragging:
+                dragging = False
+                mouse_x, mouse_y = event.pos
+                if 0 <= mouse_y < TILE_RACK_HEIGHT:
+                    col = mouse_x // TILE_RACK_TILE_SIZE
+                    if 0 <= col < TILE_RACK_SIZE:
+                        player_rack[col] = dragging_tile
+                    else:
+                        player_rack[dragging_position[1]] = dragging_tile
+                else:
+                    row = (mouse_y - TILE_RACK_HEIGHT) // TILE_SIZE
+                    col = mouse_x // TILE_SIZE
+                    if 0 <= row < 15 and 0 <= col < 15:
+                        place_tile(row, col, dragging_tile)
+                    else:
+                        if dragging_position is not None:
+                            row, col = dragging_position
+                            scrabble_board[row][col] = dragging_tile
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:  # Check for space key to end turn
+            player_rack = generate_new_letters()
+
+    draw_board()
+    draw_tile_rack(player_rack)
+    if dragging:
+        mouse_x, mouse_y = pygame.mouse.get_pos()
+        if dragging_tile:
+            if dragging_position is None:
+                screen.blit(FONT.render(dragging_tile, True, (0, 0, 0)), (mouse_x - dragging_offset[0], mouse_y - dragging_offset[1]))
+            else:
+                screen.blit(FONT.render(dragging_tile, True, (0, 0, 0)), (mouse_x - dragging_offset[0], mouse_y - dragging_offset[1] - TILE_RACK_HEIGHT))
+
+    pygame.display.flip()
+
+pygame.quit()

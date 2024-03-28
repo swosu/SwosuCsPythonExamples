@@ -1,0 +1,15 @@
+C:\Users\tanma\source\repos\Maps\Maps\bin\Debug\net8.0\Maps.exe
+C:\Users\tanma\source\repos\Maps\Maps\bin\Debug\net8.0\Maps.deps.json
+C:\Users\tanma\source\repos\Maps\Maps\bin\Debug\net8.0\Maps.runtimeconfig.json
+C:\Users\tanma\source\repos\Maps\Maps\bin\Debug\net8.0\Maps.dll
+C:\Users\tanma\source\repos\Maps\Maps\bin\Debug\net8.0\Maps.pdb
+C:\Users\tanma\source\repos\Maps\Maps\obj\Debug\net8.0\Maps.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\tanma\source\repos\Maps\Maps\obj\Debug\net8.0\Maps.AssemblyInfoInputs.cache
+C:\Users\tanma\source\repos\Maps\Maps\obj\Debug\net8.0\Maps.AssemblyInfo.cs
+C:\Users\tanma\source\repos\Maps\Maps\obj\Debug\net8.0\Maps.csproj.CoreCompileInputs.cache
+C:\Users\tanma\source\repos\Maps\Maps\obj\Debug\net8.0\Maps.sourcelink.json
+C:\Users\tanma\source\repos\Maps\Maps\obj\Debug\net8.0\Maps.dll
+C:\Users\tanma\source\repos\Maps\Maps\obj\Debug\net8.0\refint\Maps.dll
+C:\Users\tanma\source\repos\Maps\Maps\obj\Debug\net8.0\Maps.pdb
+C:\Users\tanma\source\repos\Maps\Maps\obj\Debug\net8.0\Maps.genruntimeconfig.cache
+C:\Users\tanma\source\repos\Maps\Maps\obj\Debug\net8.0\ref\Maps.dll
