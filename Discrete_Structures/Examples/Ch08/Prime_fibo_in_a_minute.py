@@ -26,18 +26,20 @@ if __name__ == '__main__':
 
     start = time.time()
     n = 2
+    list_of_fibo_numbers = []
     list_of_prime_fibonacci = []
 
-    run_time = 60
+    run_time = 5
     time_difference = 0
     while(time_difference < run_time):
         test_number = fibonacci_iterative(n)
-        # if the test_number is prime, add it to the list. Use isprime from the math library
-        if check_if_number_is_prime(test_number):
-            list_of_prime_fibonacci.append(test_number)
+        list_of_fibo_numbers.append(test_number)
         n += 1
         time_difference = time.time() - start
-        print(f'n is {n}, test_number_was {test_number}, time_difference is {time_difference}')
-
+        #print(f'n is {n}, test_number_was {test_number}, time_difference is {time_difference}')
+    print(f"we found {len(list_of_fibo_numbers)} fibonacci numbers in {run_time} seconds.")
     print(f'after {run_time} seconds, we had {len(list_of_prime_fibonacci)} prime fibonacci numbers.')
-    print(f'The prime fibonacci numbers were: {list_of_prime_fibonacci}')
+    print(f'The prime fibonacci numbers were: {list_of_prime_fibonacci}'
+          
+    # build a sieve of eratosthenes to check if the largest fibo is prime
+    sieve = [True] * (list_of_fibo_numbers[-1] + 1)
