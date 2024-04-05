@@ -1,0 +1,113 @@
+def petInfo():
+    class Pet:
+        def __init__(self):
+            self.name = ""
+            self.breed = ""
+            self.age = 0
+
+        def print_info(self):
+            print("Pet Information:")
+            print(f'   Name: { self.name }')
+            print(f'   Breed: { self.breed }')
+            print(f'   Age: { self.age }')
+
+    my_pets = []
+
+    while True:
+        pet = Pet()
+        pet.name = input("Enter the pet's name (or 'done' to exit): ")
+        if pet.name == 'done':
+            break
+        pet.breed = input("Enter the pet's breed: ")
+        pet.age = int(input("Enter the pet's age: "))
+        my_pets.append(pet)
+
+    for pet in my_pets:
+        pet.print_info()
+        print()
+
+
+def bookInfo():
+    class Book:
+        def __init__(self):
+            self.title = ""
+            self.author = ""
+            self.publisher = ""
+            self.year = 0
+
+        def print_info(self):
+            print("Book Information:")
+            print(f'   Title: { self.title }')
+            print(f'   Author: { self.author }')
+            print(f'   Publisher: { self.publisher }')
+            print(f'   Year: { self.year }')
+
+    my_books = []
+
+    while True:
+        book = Book()
+        book.title = input("Enter the book's title (or 'done' to exit): ")
+        if book.title == 'done':
+            break
+        book.author = input("Enter the book's author: ")
+        book.publisher = input("Enter the book's publisher: ")
+        book.year = int(input("Enter the book's year: "))
+        my_books.append(book)
+
+    for book in my_books:
+        book.print_info()
+        print()
+
+
+def plantInfo():
+    class Plant:
+        def __init__(self):
+            self.name = ""
+            self.species = ""
+            self.toxic = False
+
+        def print_info(self):
+            print("Plant Information:")
+            print(f'   Name: { self.name }')
+            print(f'   Species: { self.species }')
+            print(f'   Toxic for Pets: { self.toxic }')
+
+    my_plants = []
+
+    while True:
+        plant = Plant()
+        plant.name = input("Enter the plant's name (or 'done' to exit): ")
+        if plant.name == 'done':
+            break
+        plant.species = input("Enter the plant's species: ")
+        plant.toxic = input("Is the plant toxic for pets? (yes/no): ").lower() == 'yes'
+        my_plants.append(plant)
+
+
+    for plant in my_plants:
+        plant.print_info()
+        print()
+
+
+def main():
+    while True:
+        print("Select a Database:")
+        print("1. Pet Database")
+        print("2. Book Database")
+        print("3. Plant Database")
+        print("4. Exit")
+        option = int(input("Enter the option: "))
+
+        if option == 1:
+            petInfo()
+        elif option == 2:
+            bookInfo()
+        elif option == 3:
+            plantInfo()
+        elif option == 4:
+            break
+        else:
+            print("Invalid option. Please try again.")
+
+if __name__ == "__main__":
+    main()
