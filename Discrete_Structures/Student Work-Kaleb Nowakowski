@@ -1,0 +1,25 @@
+def bitwise_operations(bit_string1, bit_string2):
+  
+    if len(bit_string1) != len(bit_string2):
+        raise ValueError("Bit strings must be of the same length")
+    
+    int1 = int(bit_string1, 2)
+    int2 = int(bit_string2, 2)
+    
+    bitwise_and = int1 & int2
+    bitwise_or = int1 | int2
+    bitwise_xor = int1 ^ int2
+    
+    n = len(bit_string1)
+    bitwise_and_str = format(bitwise_and, f'0{n}b')
+    bitwise_or_str = format(bitwise_or, f'0{n}b')
+    bitwise_xor_str = format(bitwise_xor, f'0{n}b')
+    
+    return bitwise_and_str, bitwise_or_str, bitwise_xor_str
+
+bit_string1 = "1010110"
+bit_string2 = "1001010"
+and_result, or_result, xor_result = bitwise_operations(bit_string1, bit_string2)
+print(f"Bitwise AND: {and_result}")
+print(f"Bitwise OR: {or_result}")
+print(f"Bitwise XOR: {xor_result}")
