@@ -26,6 +26,8 @@ int main(int nNumberofArgs, char* pszArgs[]){
     float sum;
     int Max;
     int Min;
+    
+    srand(time(NULL));
 
     while(!validInput){
         cout << "Please input the # of Pizza Parties that you wish to test against (Higher # = more accurate): ";
@@ -48,17 +50,20 @@ int main(int nNumberofArgs, char* pszArgs[]){
         checkInput();
     }
         validInput = false;
-
-
-    int attendees[parties + 1];
-    srand(time(NULL));
+    
+    //Dynamically allocates memory for an amount of integers equal to parties + 1.
+    int* attendees;
+    attendees = new int[parties + 1];
 
     for (int x = 1; x < parties + 1; x++){
-        attendees[x] = (rand() % (Max - Min + 1)) + Min;
-        sum += attendees[x];
-        cout << "# of Attendees for Party " << x << ": " << attendees[x] << "\n";
+        *(attendees + x) = (rand() % (Max - Min + 1) + Min);
+        sum += *(attendees + x);
+        cout << "# of Attendees for Party " << x << ": " << *(attendees + x) << "\n";
     }
-
+    
+    //Deletes the memory allocated to attendees, and sets the pointer position to null.
+    delete[] attendees;
+    attendees = nullptr;
     cout << "The average # of attendees for your next party is: " << sum/parties << "\n";
 
     //The following code halts the .exe file so that the user can read the output.
