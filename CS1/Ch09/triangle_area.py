@@ -23,20 +23,29 @@ Height: 4.00
 Area: 6.00
 
 
-
-Starter Code:
 '''
 class Which_triangle_is_smaller:
 
-    def compare_triangles(triangle1, triangle2):
-        print('we are going to compare')
+    def __init__(self, triangle1, triangle2):
+        self.one = triangle1
+        self.two = triangle2
+        self.one_is_smaller = False
 
-        if triangle1.get_area() < triangle2.get_area():
+    def print_results(self):
+        if self.one_is_smaller:
             print('Triangle1 is smaller')
-            triangle1.print_info()
+            self.one.print_info()
         else:
             print('Triangle2 is smaller')
-            triangle2.print_info()
+            self.two.print_info()
+
+
+
+    def compare_triangles(self):
+        print('we are going to compare triangles')
+
+        if self.one.get_area() < self.two.get_area():
+            self.one_is_smaller = True
 
 class Triangle:
     def __init__(self):
@@ -64,20 +73,30 @@ class Triangle:
 if __name__ == "__main__":
     triangle1 = Triangle()
     triangle2 = Triangle()
+    triangle3 = Triangle()
 
     # TODO: Read and set base and height for triangle1 (use set_base() and set_height())
-    triangle1.set_base(30.0)
+    triangle1.set_base(3.0)
     triangle1.set_height(4.0)
 
     # TODO: Read and set base and height for triangle2 (use set_base() and set_height())
     triangle2.set_base(4.0)
     triangle2.set_height(5.0)
 
+    triangle3.set_base(1.0)
+    triangle3.set_height(0)
+
     triangle1.print_info()
     triangle2.print_info()
 
     print('Triangle with smaller area:')
-    Which_triangle_is_smaller.compare_triangles(triangle1, triangle2)
+    comparison_1 = Which_triangle_is_smaller(triangle1, triangle2)
+    comparison_1.compare_triangles()
+    comparison_1.print_results()
+
+    comparison_2 = Which_triangle_is_smaller(triangle1, triangle3)
+    comparison_2.compare_triangles()
+    comparison_2.print_results()
 
     # TODO: Determine smaller triangle (use get_area())
     triangle1.get_area()
