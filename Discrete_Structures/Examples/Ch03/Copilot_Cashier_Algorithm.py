@@ -52,16 +52,32 @@ def tell_customer_what_their_change_is(change_due_to_customer):
     #tell customer what the dollars and cents they are due back is
     print(f"Your change is: $ {change_due_to_customer:.2f}")
 
-def gather_change(change_due_to_customer):
-    #I want to make a list of possible denominations for currency in the USA
-    currency_list = [0.05, 0.01]
-
-    #implement a greedy algorithm to return the change
+def gather_change_greedy(change_due_to_customer, currency_list):
+    
     list_of_currency_to_return = []
     for currency in currency_list:
         while change_due_to_customer >= currency:
             list_of_currency_to_return.append(currency)
             change_due_to_customer -= currency
+
+    check_total = 0
+    for currency in list_of_currency_to_return:
+        check_total += currency
+
+    if check_total != change_due_to_customer:
+        list_of_currency_to_return.append(0.01)
+    return list_of_currency_to_return
+
+def gather_change_guess_and_check(change_due_to_customer, currency_list):
+    list_of_currency_to_return = []
+    remaining_change = change_due_to_customer
+    while remaining_change > 0.01:
+        #pick a random currency
+        currency = random.choice(currency_list)
+        if currency <= remaining_change:
+            list_of_currency_to_return.append(currency)
+            remaining_change -= currency
+            #print(f"we fit in a {currency} and we have {remaining_change} left")
     return list_of_currency_to_return
 
 def count_change_back_to_customer(customer_total, list_of_currency_to_return):
@@ -84,7 +100,18 @@ if __name__ == '__main__':
 
     tell_customer_what_their_change_is(change_due_to_customer)
 
-    list_of_currency_to_return = gather_change(change_due_to_customer)
+    currency_list = [100, 50, 20, 10, 5, 2, 1, .5, .25, .10, 0.05, 0.01]
 
-    
-    count_change_back_to_customer(customer_total, list_of_currency_to_return)
+    list_of_currency_to_return_greedy = gather_change_greedy(change_due_to_customer, currency_list)
+
+    print('do this again for the greedy method')
+    count_change_back_to_customer(customer_total, list_of_currency_to_return_greedy)
+
+    list_of_currency_to_return_guess_and_check = gather_change_guess_and_check(change_due_to_customer, currency_list)
+
+    print('do this again for the guess and check method')
+    count_change_back_to_customer(customer_total, list_of_currency_to_return_guess_and_check)
+
+    print(f"Greedy method returned {len(list_of_currency_to_return_greedy)} items")
+    print(f"Guess and check method returned {len(list_of_currency_to_return_guess_and_check)} items")
+
