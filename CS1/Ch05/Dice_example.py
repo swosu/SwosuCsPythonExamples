@@ -2,11 +2,14 @@
 # and count the number of times either a total of 6 or 7 are rolled
 
 import random
+import time
 
+start_time = time.time()
 # set random seed to 15
-random.seed(15)
+#random.seed(15)
+random.seed(time.time())
 
-total_rolls = 100000000
+total_rolls = 10_000_000
 winning_total = 0
 
 for roll_index in range(total_rolls):
@@ -22,4 +25,5 @@ for roll_index in range(total_rolls):
 
 #calculate odds of rolling a 6 or 7
 odds = float(winning_total) / float(total_rolls)
-print(f"Odds of rolling a 6 or 7: {odds}")
+stop_time = time.time()
+print(f"Odds of rolling a 6 or 7: {odds} for {total_rolls} rolls and took {stop_time - start_time} seconds")
