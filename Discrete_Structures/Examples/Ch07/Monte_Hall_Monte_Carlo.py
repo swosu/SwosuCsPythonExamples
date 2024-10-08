@@ -8,7 +8,8 @@ def monty_hall(simulations):
         "Stay and win": 0,
         "Stay and lose": 0,
         "Change and win": 0,
-        "Change and lose": 0
+        "Change and lose": 0,
+        "Switch Count": 0
     }
     
     for _ in range(simulations):
@@ -17,16 +18,23 @@ def monty_hall(simulations):
         player_choice = random.choice(doors)  # Player randomly picks one door
         
         # Monty opens a losing door that's not the player's choice
-        remaining_doors = [door for door in doors if door != player_choice and door != prize_door]
+        remaining_doors = []
+        for door_to_open in doors:
+            if door_to_open != player_choice and door_to_open != prize_door:
+                remaining_doors.append(door_to_open)
         monty_opens = random.choice(remaining_doors)
         
         # Remaining door to switch to
-        switch_choice = [door for door in doors if door != player_choice and door != monty_opens][0]
+        switch_choice = None
+        for switch_option in doors:
+            if switch_option != player_choice and switch_option != monty_opens:
+                switch_choice = switch_option
+        
 
         # decide to switch or not
         if random.choice([True, False]):  # Randomly decide whether to switch
             player_choice = switch_choice
-            
+            outcomes["Switch Count"] += 1
             # Determine outcomes for changing
             if player_choice == prize_door:
                 outcomes["Change and win"] += 1
@@ -43,7 +51,10 @@ def monty_hall(simulations):
                 outcomes["Stay and lose"] += 1
         
         
-    
+        if verbose_print_statements:
+            print(f"Prize door: {prize_door}, Player choice: {player_choice}, Monty opens: {monty_opens}, Switch choice: {switch_choice}, Switch count: {outcomes['Switch Count']}")
+            print(f'Stay and win, \t Stay and lose, \t Change and win, \t Change and lose, \t Switch Count')
+            print(f"{outcomes['Stay and win']}, \t\t {outcomes['Stay and lose']}, \t\t\t {outcomes['Change and win']}, \t\t\t {outcomes['Change and lose']}\t\t\t {outcomes['Switch Count']}")
     return outcomes
 
 # Number of simulation trials
