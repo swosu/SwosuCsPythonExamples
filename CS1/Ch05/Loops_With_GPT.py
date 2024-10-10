@@ -3,20 +3,19 @@ print('hello')
 sum = 0
 if 3 > sum:
     print(f"keep going!! {sum}")
-    
-sum = sum + 1
-if 3 > sum:
-    print(f"keep going!! {sum}")
-    
-sum = sum + 1
-if 3 > sum:
-    print(f"keep going!! {sum}")
-    
-sum = sum + 1
-if 3 > sum:
-    print(f"keep going!! {sum}")
+    sum = sum + 1
 
-sum = sum + 1
+if 3 > sum:
+    print(f"keep going!! {sum}")
+    sum = sum + 1
+
+if 3 > sum:
+    print(f"keep going!! {sum}")
+    sum = sum + 1
+
+if 3 > sum:
+    print(f"keep going!! {sum}")
+    sum = sum + 1
 
 
 while_sum = 0
