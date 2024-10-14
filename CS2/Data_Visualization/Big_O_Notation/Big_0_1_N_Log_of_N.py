@@ -37,3 +37,5 @@ plt.yticks(fontsize=12)
 # Display the plot
 plt.grid(True, which="both", ls="--")  # Use grid lines for better readability
 plt.show()
+
+print("Done.")
