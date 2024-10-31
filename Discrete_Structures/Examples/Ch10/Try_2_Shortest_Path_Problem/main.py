@@ -1,7 +1,5 @@
 import random
-
 import os
-
 
 class Shortest_Path_Problem():
     def __init__(self):
@@ -65,6 +63,23 @@ class Shortest_Path_Problem():
     def print_distance_table(self):
         for row in self.distance_table:
             print(row)
+
+
+# create a new class called guess and check algorithm that allows us to use what is in the Shortest_Path_Problem class 
+# to solve the shortest path problem
+class Guess_And_Check_Algorithm(Shortest_Path_Problem):
+    def __init__(self):
+        super().__init__()
+        self.best_path = []
+        self.best_distance = -1
+
+    def solve_shortest_path_problem(self):
+        self.best_distance = self.max_distance_between_cities * self.city_count
+        self.best_path = []
+        self.guess_and_check(0, [0], 0)
+        print("Best Path: ", self.best_path)
+        print("Best Distance: ", self.best_distance)
+
 
 
 if __name__ == "__main__":
