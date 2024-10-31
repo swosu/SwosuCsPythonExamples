@@ -61,20 +61,26 @@ class Shortest_Path_Problem():
 
 
     def print_distance_table(self):
-        for row in self.distance_table:
-            print(row)
+        print('printing distance table')
+        for row_index in range(self.city_count):
+            for col_index in range(self.city_count):
+                print(self.distance_table[row_index][col_index], end=" ")
+            print()
 
     def calculate_distance(self, path):
         distance = 0
         for i in range(len(path) - 1):
             from_city = path[i] - 1
+
             to_city = path[i + 1] - 1
+            print('from', from_city, 'to', to_city)
+            self.print_distance_table()
             distance += self.distance_table[from_city][to_city]
         # add the distance from the last city back to the first city
         from_city = path[len(path) - 1] - 1
         to_city = path[0] - 1
-        distance += self.distance_table[from_city][to_city]
-        return distance
+        current_leg_distance = self.distance_table[from_city][to_city]
+        print('from', from_city, 'to', to_city, 'is', current_leg_distance)
 
 
 # create a new class called guess and check algorithm that allows us to use what is in the Shortest_Path_Problem class 
