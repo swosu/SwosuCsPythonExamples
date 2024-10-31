@@ -2,13 +2,14 @@ import random
 import os
 import csv
 
-def print_map(map):
+def print_map(spp):
+
     # print off the map in such a way that the top row is marked to and shows the city we are
     # traveling to and the left column is marked from and shows the city we are traveling from
     # the rest of the map should show the distance between the two cities
 
     # i want the cities to start counting at 1, not zero.
-
+    map = spp.map
     #print the top row
     print("to", end="\t")
     for i in range(len(map)):
@@ -38,12 +39,13 @@ def build_map(city_count):
             map[rows][cols] = random.randint(1, distance_range_between_cities)
     return map
     
-def get_distance(path, map):
+def get_distance(spp):
     # calculate the distance of the path given the map
     # note that the cities I am giving have an offset of one from the map that I built. 
     # Cities come from dice. 
     # The map is zero indexed.
-
+    path = spp.path
+    map = spp.map
     print(f'the path is {path} and has the data type of {type(path)}')
 
     distance = 0
@@ -61,12 +63,13 @@ def get_distance(path, map):
     # close the hamilton path and get us back home.
     last_city_index = -1
     first_city_index = 0
-    distance += map[path[last_city_index] - 1][path[first_city_index] - 1]
+    distance += int(map[path[last_city_index] - 1][path[first_city_index] - 1])
     return distance
 
 
     
-def check_if_map_exists(city_count):
+def check_if_map_exists(spp):
+    city_count = spp.city_count
     print('looking if the map is saved.')
     file_name = f"distance_table_city_count_{city_count}.csv"
     if os.path.exists(file_name):
