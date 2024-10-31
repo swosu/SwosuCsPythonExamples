@@ -1,5 +1,7 @@
 import random
 
+import os
+
 
 class Shortest_Path_Problem():
     def __init__(self):
@@ -16,19 +18,13 @@ class Shortest_Path_Problem():
     def check_for_file(self):
         # look for the file
         print('checking for file')
-        try:
-            print('the file does exist')
-            file = open(self.distance_table_file_name, "r")
-            self.distance_table = file.readlines()
-            for i in range(len(self.distance_table)):
-                self.distance_table[i] = self.distance_table[i].strip().split(",")
-                for j in range(len(self.distance_table[i])):
-                    self.distance_table[i][j] = int(self.distance_table[i][j])
-            file.close()
-            self.print_distance_table
-        except FileNotFoundError:
-            print("File not found")
+        if os.path.isfile(self.distance_table_file_name):
+            print('file exists')
+            self.read_distance_table()
+        else:
+            print('file does not exist')
             self.create_distance_table()
+
 
     def create_distance_table(self):
         # create the distance table first
