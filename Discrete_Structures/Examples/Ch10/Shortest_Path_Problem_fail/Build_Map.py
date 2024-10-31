@@ -44,7 +44,7 @@ def calculate_path_distance(spp):
     # note that the cities I am giving have an offset of one from the map that I built. 
     # Cities come from dice. 
     # The map is zero indexed.
-    path = spp.path
+    path = spp.test_path
     map = spp.map
     #print(f'the path is {path} and has the data type of {type(path)}')
 
