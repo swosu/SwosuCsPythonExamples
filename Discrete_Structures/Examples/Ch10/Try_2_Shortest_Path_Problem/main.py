@@ -25,6 +25,16 @@ class Shortest_Path_Problem():
             print('file does not exist')
             self.create_distance_table()
 
+    def read_distance_table(self):
+        # read the distance table from the file
+        file = open(self.distance_table_file_name, "r")
+        for line in file:
+            row = line.split(",")
+            row = [int(x) for x in row]
+            self.distance_table.append(row)
+        file.close()
+        self.print_distance_table()
+
 
     def create_distance_table(self):
         # create the distance table first
