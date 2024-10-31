@@ -39,22 +39,22 @@ def build_map(city_count):
             map[rows][cols] = random.randint(1, distance_range_between_cities)
     return map
     
-def get_distance(spp):
+def calculate_path_distance(spp):
     # calculate the distance of the path given the map
     # note that the cities I am giving have an offset of one from the map that I built. 
     # Cities come from dice. 
     # The map is zero indexed.
     path = spp.path
     map = spp.map
-    print(f'the path is {path} and has the data type of {type(path)}')
+    #print(f'the path is {path} and has the data type of {type(path)}')
 
     distance = 0
-    print(f'our first from city should be: {path[0]}')
-    print(f'our first to city should be: {path[1]}')
+    #print(f'our first from city should be: {path[0]}')
+    #print(f'our first to city should be: {path[1]}')
     for from_city_index in range(len(path) - 1):
         to_city_index = from_city_index + 1
-        print(f"from_city_index: {from_city_index}, to_city_index: {to_city_index}")
-        print(f'our map data at that point')
+        #print(f"from_city_index: {from_city_index}, to_city_index: {to_city_index}")
+        #print(f'our map data at that point')
         next_step = map[path[from_city_index] - 1][path[to_city_index] - 1]
         #print("from", path[from_city_index], "to", path[to_city_index], "has a step distance", next_step)
         distance += int(next_step)
