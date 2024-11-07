@@ -1,0 +1,107 @@
+import tkinter as tk
+from tkinter import simpledialog, messagebox
+
+def range_words():
+    file_name = simpledialog.askstring("Input", "Enter the name of the input file:")
+    lower_bound = simpledialog.askstring("Input", "Enter the lower bound:")
+    upper_bound = simpledialog.askstring("Input", "Enter the upper bound:")
+    
+    try:
+        with open(f"C:\\Users\\moish\\OneDrive\\Documents\\Python Codes\\Codes\\Ch12\\{file_name}", 'r') as file:
+            lines = file.readlines()
+        
+        for word in lines:
+            word = word.strip()
+            if lower_bound <= word <= upper_bound:
+                print(f"{word} - in range")
+            else:
+                print(f"{word} - not in range")
+    except FileNotFoundError:
+        messagebox.showerror("Error", "File not found!")
+
+def sort_tv_shows():
+    file_name = simpledialog.askstring("Input", "Enter the name of the input file:")
+    
+    try:
+        with open(f"C:\\Users\\moish\\OneDrive\\Documents\\Python Codes\\Codes\\Ch12\\{file_name}", 'r') as file:
+            lines = file.readlines()
+        
+        shows_dict = {}
+
+        i = 0
+        while i < len(lines):
+            num_seasons = int(lines[i].strip())
+            show_name = lines[i + 1].strip()
+
+            if num_seasons in shows_dict:
+                shows_dict[num_seasons].append(show_name)
+            else:
+                shows_dict[num_seasons] = [show_name]
+
+            i += 2
+
+        sorted_by_key = dict(sorted(shows_dict.items(), reverse=True))
+
+        with open('output_keys.txt', 'w') as file:
+            for key, value in sorted_by_key.items():
+                file.write(f"{key}: {'; '.join(value)}\n")
+
+        sorted_by_value = {}
+        for key, value in sorted_by_key.items():
+            sorted_by_value[key] = sorted(value, reverse=True)
+
+        with open('output_titles.txt', 'w') as file:
+            for key, value in sorted_by_value.items():
+                for show in value:
+                    file.write(f"{show}\n")
+
+        messagebox.showinfo("Success", "Output files 'output_keys.txt' and 'output_titles.txt' have been created.")
+    except FileNotFoundError:
+        messagebox.showerror("Error", "File not found!")
+
+def filename_changer():
+    file_name = simpledialog.askstring("Input", "Enter the name of the input file:")
+    
+    try:
+        with open(f"C:\\Users\\moish\\OneDrive\\Documents\\Python Codes\\Codes\\Ch12\\{file_name}", 'r') as file:
+            lines = file.readlines()
+        
+        modified_file_names = []
+        for line in lines:
+            modified_name = line.strip().replace("_photo.jpg", "_info.txt")
+            modified_file_names.append(modified_name)
+
+        for name in modified_file_names:
+            print(name)
+    except FileNotFoundError:
+        messagebox.showerror("Error", "File not found!")
+
+def main():
+    root = tk.Tk()
+    root.title("Fun Program")
+    root.geometry("400x300")  # Set initial window size
+
+    # Define custom colors and fonts
+    background_color = "#f0f0f0"
+    button_color = "#007bff"
+    button_font = ("Arial", 12, "bold")
+
+    root.configure(bg=background_color)
+
+    btn_range_words = tk.Button(root, text="Range of Words", command=range_words, bg=button_color, fg="white", font=button_font)
+    btn_range_words.pack(pady=20)
+
+    btn_sort_tv_shows = tk.Button(root, text="Sort TV Shows", command=sort_tv_shows, bg=button_color, fg="white", font=button_font)
+    btn_sort_tv_shows.pack(pady=20)
+
+    btn_filename_changer = tk.Button(root, text="File Name Change", command=filename_changer, bg=button_color, fg="white", font=button_font)
+    btn_filename_changer.pack(pady=20)
+
+    btn_exit = tk.Button(root, text="Exit", command=root.quit, bg=button_color, fg="white", font=button_font)
+    btn_exit.pack(pady=20)
+
+    root.mainloop()
+
+if __name__ == "__main__":
+    main()
+

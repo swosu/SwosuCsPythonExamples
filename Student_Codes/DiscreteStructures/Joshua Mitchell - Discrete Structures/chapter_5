@@ -1,0 +1,37 @@
+
+# recursive function
+
+def fibonacci_recursive(n):
+    if n <= 0:
+        return 0, 1
+    elif n == 1:
+        return 1, 1
+
+    fib1, steps1 = fibonacci_recursive(n - 1)
+    fib2, steps2 = fibonacci_recursive(n - 2)
+    
+    return fib1 + fib2, steps1 + steps2 + 1  # +1 for the current function call
+
+# iterative function
+
+def fibonacci_iterative(n):
+    if n <= 0:
+        return 0
+    elif n == 1:
+        return 1
+
+    fib = [0, 1]
+    for i in range(2, n + 1):
+        fib.append(fib[i - 1] + fib[i - 2])
+    
+    return fib[n], len(fib) - 2  # return the fibonacci number and steps
+
+n = int(input("Enter a number:"))
+
+iterative_result, iterative_steps = fibonacci_iterative(n)
+recursive_result, recursive_steps = fibonacci_recursive(n)
+
+print(f"The {n}-th Fibonacci number is {iterative_result} (Iterative)")
+print(f"Number of steps taken: {iterative_steps}")
+print(f"The {n}-th Fibonacci number is {recursive_result} (Recursive)")
+print(f"Number of steps taken: {recursive_steps}")

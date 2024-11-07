@@ -1,0 +1,12 @@
+import math
+
+while True:
+    n = int(input("How many different types of cookies? "))
+    r = int(input("How many ways can it be chosen? "))
+
+    ways = math.comb(n+r-1, r)
+    print(ways)
+
+    choice = input("Do you want to try again? (y/n) ")
+    if choice.lower() != "y":
+        break

@@ -1,0 +1,38 @@
+class JuiceVendingMachine:
+    def __init__(self):
+        self.state = "Idle"
+
+    def select_juice(self):
+        if self.state == "Idle":
+            print("Juice selected.")
+            self.state = "Selecting Juice"
+        else:
+            print("Invalid operation in the current state.")
+
+    def confirm_selection(self):
+        if self.state == "Selecting Juice":
+            print("Selection confirmed.")
+            self.state = "Payment"
+        else:
+            print("Invalid operation in the current state.")
+
+    def make_payment(self):
+        if self.state == "Payment":
+            print("Payment successful.")
+            self.state = "Dispensing Juice"
+        else:
+            print("Invalid operation in the current state.")
+
+    def dispense_juice(self):
+        if self.state == "Dispensing Juice":
+            print("Juice dispensed. Thank you!")
+            self.state = "Idle"
+        else:
+            print("Invalid operation in the current state.")
+
+# Example of using the JuiceVendingMachine class
+juice_machine = JuiceVendingMachine()
+juice_machine.select_juice()
+juice_machine.confirm_selection()
+juice_machine.make_payment()
+juice_machine.dispense_juice()

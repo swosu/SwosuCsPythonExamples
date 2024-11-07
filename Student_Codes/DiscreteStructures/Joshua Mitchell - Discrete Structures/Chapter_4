@@ -1,0 +1,31 @@
+# Function to check if number is prime
+def is_prime(n):
+    if n <= 1:
+        return False
+    if n <= 3:
+        return True
+    if n % 2 == 0 or n % 3 == 0:
+        return False
+
+    i = 5
+    while i * i <= n:
+        if n % i == 0 or n % (i + 2) == 0:
+            return False
+        i += 6
+
+    return True
+
+# Function to count the number of primes up to the user input
+def count_primes_up_to(limit):
+    count = 0
+    for number in range(2, limit):
+        if is_prime(number):
+            count += 1
+    return count
+
+# Get the limit from user input
+limit = int(input("Enter a number to find the number of primes less than it: "))
+
+# Calculate the number of primes less than the user-specified limit
+predicted_primes = count_primes_up_to(limit)
+print(f"Predicted number of primes less than {limit}: {predicted_primes}")
