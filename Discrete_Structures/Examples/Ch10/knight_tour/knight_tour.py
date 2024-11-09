@@ -1,8 +1,6 @@
-print('hello')
 # Python3 program to solve Knight Tour problem using Backtracking
+import time
 
-# Chessboard Size
-n = 3
 
 
 def isSafe(x, y, board):
@@ -54,8 +52,10 @@ def solveKT(n):
     # Checking if solution exists or not
     if(not solveKTUtil(n, board, 0, 0, move_x, move_y, pos)):
         print("Solution does not exist")
+        return False
     else:
         printSolution(n, board)
+    return True
 
 
 def solveKTUtil(n, board, curr_x, curr_y, move_x, move_y, pos):
@@ -84,8 +84,20 @@ def solveKTUtil(n, board, curr_x, curr_y, move_x, move_y, pos):
 
 # Driver Code
 if __name__ == "__main__":
+
+    print("Welcome to the Knight's Tour Problem Solver")
+    print("size,\ttime\t, solution found")
+
+    for board_size in range(1, 8):
+        start_time = time.time()
+        print(f'Board Size: {board_size}')
+        n = board_size
+        solution_possible = solveKT(n)
+        stop_time = time.time()
+        print('\n')
+        total_time = stop_time - start_time
+
+        print()
     
-    # Function Call
-    solveKT(n)
 
 # This code is contributed by AAKASH PAL
