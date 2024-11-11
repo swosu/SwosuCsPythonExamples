@@ -1,11 +1,15 @@
 def fibo (number):
     if number < 0:
+        print(f'we have hit the first base case and can return 0 because our number is negative')
         return 0
     elif number == 0:
+        print(f'we have hit the first base case and can return 0 because our number is 0')
         return 0
     elif number == 1:
+        print(f'we have hit the second base case and can return 1 because our number is 1')
         return 1
     else:
+        print(f'to find fibo({number}), we need to find fibo({number-1}) + fibo({number-2})')
         return fibo(number - 1) + fibo(number - 2)
     
 def run_tests():

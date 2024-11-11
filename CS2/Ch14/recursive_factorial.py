@@ -1,5 +1,3 @@
-print('hello')
-
 def factorial(n):
     print(f'we got passed in an n of {n}')
     if n == 0:
@@ -22,7 +20,8 @@ def run_tests():
     assert factorial(7) == 5040
     print('all tests pass')
 if __name__ == '__main__':
+    run_tests()
     print(factorial(5))
 
-    #run_tests()
+    
 
