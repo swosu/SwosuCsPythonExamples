@@ -1,0 +1,3 @@
+[submodule "CS1/Student_Codes/Justin_Wiederkehr/Chapter-9/Ch9-UnitTesting/googletest"]
+	path = CS1/Student_Codes/Justin_Wiederkehr/Chapter-9/Ch9-UnitTesting/googletest
+	url = https://github.com/google/googletest.git
