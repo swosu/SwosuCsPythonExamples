@@ -10,6 +10,26 @@ TEST(functions, d2)
     dice.rollDice();
     GTEST_ASSERT_LE(dice.x, 2);
     GTEST_ASSERT_GE(dice.x, 1);
+
+
+
+}
+
+TEST(functions, d2Fair)
+{
+    randomNum dice;
+    int heads = 0;
+    int tails = 0;
+    dice.chooseADice("d2");
+
+    for (int i = 0; i < 1000; i++) {
+        dice.rollDice();
+        if (dice.x == 1) {heads++; } 
+        else if (dice.x == 2) {tails++; }
+        else {GTEST_FAIL();}
+    }
+    GTEST_ASSERT_GE(heads, 450);
+    GTEST_ASSERT_GE(tails, 450);
 }
 
 TEST(functions, d4)

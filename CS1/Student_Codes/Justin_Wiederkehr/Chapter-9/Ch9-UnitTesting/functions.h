@@ -12,7 +12,7 @@ class randomNum {
         int min;
         int max;
         int x;
-        void chooseADice(std::string choice){
+        void chooseADice(string choice){
             if (choice == "d2") {
                 this->min = 1;
                 this->max = 2;
