@@ -15,7 +15,7 @@ Kade - Is your refrigerator running? (yes?..) well then you better go catch it!
 
 Noah is cool
 
-Reece
+Reece - Why was there a bug in the computer?It was looking for a byte to eat.
 
 Ryder- A slice of apple pie costs $2.50 in Jamaica, $3.75 in Bermuda, and $3 in the Bahamas. Those are the pie-rates of the Caribbean.
 
