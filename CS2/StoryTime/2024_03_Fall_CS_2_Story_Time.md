@@ -13,7 +13,7 @@ Garren
 
 Kade
 
-Noah
+Noah is very cool 
 
 Reece
 
