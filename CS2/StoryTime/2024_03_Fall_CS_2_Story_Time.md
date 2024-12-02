@@ -19,4 +19,4 @@ Reece
 
 Ryder- A slice of apple pie costs $2.50 in Jamaica, $3.75 in Bermuda, and $3 in the Bahamas. Those are the pie-rates of the Caribbean.
 
-Amit
+Amit-Why don't skeleton fight's each other? because they don't have guts 
