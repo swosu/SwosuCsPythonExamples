@@ -7,7 +7,7 @@ Andrew
 
 Cameron - What's Forrest Gump's password? 1forrest1
 
-Ethan
+Ethan- What is a sea monster's favorite snack, ships and dip.
 
 Garren
 
