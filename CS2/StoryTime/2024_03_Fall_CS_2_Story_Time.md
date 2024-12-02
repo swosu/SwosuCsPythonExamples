@@ -11,7 +11,7 @@ Ethan- What is a sea monster's favorite snack, ships and dip.
 
 Garren
 
-Kade
+Kade - Is your refrigerator running? (yes?..) well then you better go catch it!
 
 Noah is cool
 
