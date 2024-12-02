@@ -2,21 +2,8 @@ Did you hear about the lady who backed into a fan?
 
 It was a disaster
 
+Is your refrigerator running?
 
-Andrew
+(yes?..)
 
-Cameron - What's Forrest Gump's password? 1forrest1
-
-Ethan
-
-Garren
-
-Kade
-
-Noah
-
-Reece
-
-Ryder
-
-Amit
+Well then you better go catch it
