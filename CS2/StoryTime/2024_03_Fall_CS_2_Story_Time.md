@@ -9,7 +9,7 @@ Cameron - What's Forrest Gump's password? 1forrest1
 
 Ethan- What is a sea monster's favorite snack, ships and dip.
 
-Garren
+Garren - How much do Santa's reindeer cost? Nothing! They're on the house.
 
 Kade - Is your refrigerator running? (yes?..) well then you better go catch it!
 
