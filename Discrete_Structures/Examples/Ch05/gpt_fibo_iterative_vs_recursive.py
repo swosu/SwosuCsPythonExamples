@@ -19,7 +19,7 @@ class OperationTracker:
 
 class FibonacciResult:
     def __init__(self, n, time_iterative, tracker_iterative, time_recursive, tracker_recursive):
-        self.n = n
+        self.fibo_number = n
         self.time_iterative = time_iterative
         self.tracker_iterative = tracker_iterative
         self.time_recursive = time_recursive
@@ -67,18 +67,19 @@ class FibonacciCalculator:
         return FibonacciResult(fibo_number, elapsed_time_iterative, tracker_iterative, elapsed_time_recursive, tracker_recursive)
 
 def main():
-    filename = "fibonacci_comparison.csv"
+    filename = r"C:\Users\evertj\git\SwosuCsPythonExamples\Discrete_Structures\Examples\Ch05\fibonacci_comparison.csv"
     calculator = FibonacciCalculator()
     
-    with open(filename, mode='w', newline='') as file:
+    with open(filename, mode='a', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(["N", "Iterative Time (s)", "Iterative Function Calls", "Iterative Additions", "Iterative Subtractions", "Iterative Memory Assignments", "Recursive Time (s)", "Recursive Function Calls", "Recursive Additions", "Recursive Subtractions", "Recursive Memory Assignments"])
+        if file.tell() == 0:
+            writer.writerow(["Fibo Num", "Iterative Time (s)", "Iterative Function Calls", "Iterative Additions", "Iterative Subtractions", "Iterative Memory Assignments", "Recursive Time (s)", "Recursive Function Calls", "Recursive Additions", "Recursive Subtractions", "Recursive Memory Assignments"])
         
-        for n in range(1, 5):
-            print(f"Calculating for n = {n}")
-            result = calculator.measure_time_and_operations(n)
+        for fibo_number in range(1, 5):
+            print(f"Calculating for n = {fibo_number}")
+            result = calculator.measure_time_and_operations(fibo_number)
             writer.writerow([
-                result.n,
+                result.fibo_number,
                 result.time_iterative, result.tracker_iterative['function_calls'], result.tracker_iterative['additions'], result.tracker_iterative['subtractions'], result.tracker_iterative['memory_assignments'],
                 result.time_recursive, result.tracker_recursive['function_calls'], result.tracker_recursive['additions'], result.tracker_recursive['subtractions'], result.tracker_recursive['memory_assignments']
             ])
