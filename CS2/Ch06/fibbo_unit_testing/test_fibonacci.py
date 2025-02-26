@@ -11,7 +11,7 @@ class TestFibonacci(unittest.TestCase):
 
     def test_recursive_cases(self):
         # Check some common Fibonacci numbers
-        self.assertEqual(fibonacci(2), 1)
+        self.assertEqual(fibonacci(2), 1, f"Expected fibonacci(2) to be 1, but got {fibonacci(2)}")
         self.assertEqual(fibonacci(3), 2)
         self.assertEqual(fibonacci(4), 3)
         self.assertEqual(fibonacci(5), 5)
