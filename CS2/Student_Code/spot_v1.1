@@ -1,0 +1,331 @@
+from dotenv import load_dotenv
+import logging
+import json
+import os
+import base64
+import time
+import webbrowser
+from requests import get, post, put
+import customtkinter as ctk
+import tkinter as tk
+import threading
+
+# Logging setup
+logging.basicConfig(filename='app.log', level=logging.ERROR)
+
+# Load environment variables
+load_dotenv()
+
+# Constants
+RECENTS_FILE = 'recents.json'
+TOKEN_CACHE = None
+TOKEN_EXPIRY = 0
+
+# Global state
+unique_items = set()
+
+# Load credentials
+CLIENT_ID = os.getenv("CLIENT_ID")
+CLIENT_SECRET = os.getenv("CLIENT_SECRET")
+
+
+# Helper functions
+def log_error(exception):
+    logging.error(exception, exc_info=True)
+
+
+def load_data(filename):
+    try:
+        with open(filename, 'r') as file:
+            return json.load(file)
+    except FileNotFoundError:
+        return []
+
+
+def save_data(data, filename):
+    with open(filename, 'w') as file:
+        json.dump(data, file)
+
+
+# Spotify API Interaction
+class SpotifyAPI:
+    def __init__(self, client_id, client_secret):
+        self.client_id = client_id
+        self.client_secret = client_secret
+        self.token_cache = None
+        self.token_expiry = 0
+
+    def get_token(self):
+        if self.token_cache and self.token_expiry > time.time():
+            return self.token_cache
+
+        if not self.client_id or not self.client_secret:
+            raise ValueError("Missing CLIENT_ID or CLIENT_SECRET in environment variables")
+
+        auth_string = f"{self.client_id}:{self.client_secret}"
+        auth_bytes = auth_string.encode("utf-8")
+        auth_base64 = base64.b64encode(auth_bytes).decode("utf-8")
+
+        url = "https://accounts.spotify.com/api/token"
+        headers = {
+            "Authorization": f"Basic {auth_base64}",
+            "Content-Type": "application/x-www-form-urlencoded"
+        }
+        data = {"grant_type": "client_credentials"}
+
+        try:
+            response = post(url, headers=headers, data=data)
+            response.raise_for_status()
+            token_data = response.json()
+            self.token_cache = token_data["access_token"]
+            self.token_expiry = time.time() + token_data["expires_in"]
+            return self.token_cache
+        except Exception as e:
+            log_error(f"Error fetching token: {e}")
+            return None
+
+    def get_auth_header(self):
+        token = self.get_token()
+        if token:
+            return {"Authorization": f"Bearer {token}"}
+        return {}
+
+    def search_spotify(self, query):
+        unique_items.clear()
+
+        url = "https://api.spotify.com/v1/search"
+        headers = self.get_auth_header()
+        query_params = {"q": query, "type": "track,album,artist,playlist", "limit": 10}
+
+        try:
+            response = get(url, headers=headers, params=query_params)
+            response.raise_for_status()
+            return response.json()
+        except Exception as e:
+            log_error(f"Error searching on Spotify: {e}")
+            return None
+
+
+# GUI and Application Logic
+class SpotifyApp:
+    def __init__(self, api):
+        self.api = api
+        self.root = None
+        self.canvas = None
+        self.scrollbar = None
+        self.results_frame = None
+        self.all_items = []
+        self.selected_index = -1
+        self.query_entry = None
+        self.window_open = False
+        self.create_gui()
+
+    def create_gui(self):
+        # Set Spotify-like color scheme
+        ctk.set_appearance_mode("dark")
+        ctk.set_default_color_theme("green")  # Setting to a green theme to match Spotify's brand colors
+
+        self.root = ctk.CTk()
+        self.root.title("Spot")
+        self.root.geometry("600x400")
+
+        self.root.protocol("WM_DELETE_WINDOW", self.close_window)
+
+        label = ctk.CTkLabel(self.root, text="Enter your search query:", font=("Arial", 14), text_color="white")
+        label.pack(pady=20)
+
+        self.query_entry = ctk.CTkEntry(self.root, font=("Arial", 14), fg_color="#1DB954", text_color="black")
+        self.query_entry.pack(padx=20, pady=10)
+
+        search_button = ctk.CTkButton(self.root, text="Search", command=self.update_results)
+        search_button.pack(pady=20)
+
+        # Create a canvas and a frame inside it to display the search results
+        self.canvas = tk.Canvas(self.root, bg="#2F2F2F")  # Background color to match dark theme
+        self.canvas.pack(side="left", fill="both", expand=True)
+
+        self.scrollbar = tk.Scrollbar(self.root, orient="vertical", command=self.canvas.yview)
+        self.scrollbar.pack(side="right", fill="y")
+
+        self.canvas.configure(yscrollcommand=self.scrollbar.set)
+
+        self.results_frame = tk.Frame(self.canvas, bg="#2F2F2F")  # Background color to match dark theme
+        self.canvas.create_window((0, 0), window=self.results_frame, anchor="nw")
+
+        self.results_frame.bind("<Configure>", self.on_frame_configure)
+
+        # Bind mouse wheel to the scroll handling method
+        self.root.bind_all("<MouseWheel>", self.handle_mouse_wheel)
+
+        # Comment out keyboard navigation bindings
+        # self.root.bind("<Return>", self.handle_enter_key)  # Bind Enter key
+        # self.root.bind("<Down>", self.handle_down_key)    # Bind Down arrow key
+        # self.root.bind("<Up>", self.handle_up_key)        # Bind Up arrow key
+
+        self.root.withdraw()
+
+    def on_frame_configure(self, event):
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+
+    def close_window(self):
+        self.root.withdraw()
+        self.window_open = False
+
+    def reopen_window(self):
+        if not self.window_open:
+            self.root.deiconify()
+            self.window_open = True
+
+    def update_results(self, event=None):
+        query = self.query_entry.get()
+        results = self.api.search_spotify(query)
+
+        # Clear previous results
+        for widget in self.results_frame.winfo_children():
+            widget.destroy()
+
+        # Create a frame to center the results
+        center_frame = tk.Frame(self.results_frame, bg="#2F2F2F")
+        center_frame.pack(pady=10, padx=80, expand=True)
+
+        if results:
+            items = results.get("tracks", {}).get("items", [])
+            playlists = results.get("playlists", {}).get("items", [])
+
+            if not items and not playlists:
+                no_results_label = ctk.CTkLabel(center_frame, text="No results found.", font=("Arial", 12), text_color="white", bg="#2F2F2F")
+                no_results_label.grid(row=0, column=0, pady=10)
+                return
+
+            self.all_items.clear()
+            self.all_items.extend(items + playlists)
+
+            self.all_items.sort(key=lambda item: self.custom_sort_key(item, query))
+
+            self.selected_index = -1  # Reset selected index
+
+            for index, item in enumerate(self.all_items):
+                if item.get("type") == "playlist":
+                    item_text = f"{item['name']} - {item['owner']['display_name']} (Playlist)"
+                else:
+                    artists = ', '.join(artist['name'] for artist in item.get('artists', []))
+                    item_text = f"{item['name']} - {artists}"
+
+                # Create a clickable label for each result
+                result_label = ctk.CTkButton(center_frame, text=item_text, font=("Arial", 12), command=lambda i=index: self.play_item_in_spotify(self.all_items[i]), fg_color="#1DB954", text_color="white")
+                result_label.grid(row=index, column=0, pady=5, padx=20, sticky="ew")  # Use grid for layout
+
+        # Update the canvas scroll region
+        self.canvas.configure(scrollregion=self.canvas.bbox("all"))
+
+        # Ensure the highlighted result is visible
+        if self.selected_index != -1:
+            self.update_highlighted_result()
+
+    def update_highlighted_result(self):
+        for widget in self.results_frame.winfo_children():
+            if isinstance(widget, ctk.CTkButton):
+                widget.configure(fg_color="#1DB954")
+
+        if 0 <= self.selected_index < len(self.all_items):
+            widget = self.results_frame.winfo_children()[self.selected_index]
+            if isinstance(widget, ctk.CTkButton):
+                widget.configure(fg_color="black")  # Highlight color
+
+                self.ensure_visible(widget)
+            
+            else: 
+                self.selected_index = -1
+
+    def ensure_visible(self, widget):
+        # Get the widget's Y coordinate
+        widget_y = widget.winfo_y()
+        widget_height = widget.winfo_height()
+
+        # Get the current visible region of the canvas
+        canvas_height = self.canvas.winfo_height()
+        canvas_top = self.canvas.yview()[0] * self.canvas.bbox("all")[3]
+        canvas_bottom = canvas_top + canvas_height
+
+        # Check if widget is outside the visible region
+        if widget_y < canvas_top or widget_y + widget_height > canvas_bottom:
+            # Scroll to make the widget visible
+            self.canvas.yview_moveto((widget_y + widget_height / 2) / self.canvas.bbox("all")[3])
+
+    def handle_mouse_wheel(self, event):
+        # Increase the scroll amount to make it more noticeable
+        scroll_amount = -3 if event.delta > 0 else 3
+        self.canvas.yview_scroll(scroll_amount, "units")
+
+    # def handle_enter_key(self, event):
+    #     if self.selected_index != -1 and 0 <= self.selected_index < len(self.all_items):
+    #         self.play_item_in_spotify(self.all_items[self.selected_index])
+    #     else:
+    #         self.update_results()
+
+    # def handle_down_key(self, event):
+    #     if self.all_items:
+    #         if self.selected_index < len(self.all_items) - 1:
+    #             self.selected_index += 1
+    #             self.update_highlighted_result()
+    #         elif self.selected_index == -1:  # Initial case when no result is selected
+    #             self.selected_index = 0
+    #             self.update_highlighted_result()
+
+    # def handle_up_key(self, event):
+    #     if self.all_items:
+    #         if self.selected_index > 0:
+    #             self.selected_index -= 1
+    #             self.update_highlighted_result()
+
+    def play_item_in_spotify(self, item):
+        if "type" in item and "uri" in item:
+            item_type = item["type"]
+            item_uri = item["uri"]
+
+            if item_type in {"track", "playlist"}:
+                open_spotify_uri(item_uri)
+            else:
+                print("Cannot open this item type. Please select a track or playlist.")
+
+    def custom_sort_key(self, item, query):
+        artist_names = '|'.join(artist['name'].lower() for artist in item.get('artists', []))
+        item_name_lower = item['name'].lower()
+        query_lower = query.lower()
+
+        if artist_names == query_lower:
+            return (0, item_name_lower)
+
+        if item_name_lower == query_lower:
+            return (1, item_name_lower)
+
+        if item.get('type') == 'playlist':
+            return (2, item_name_lower, artist_names)
+
+        key = f"{item_name_lower}|{artist_names}"
+        if key in unique_items:
+            return (3, item_name_lower)
+
+        unique_items.add(key)
+        relevance = sum(query_part.lower() in item_name_lower for query_part in query_lower.split())
+
+        return (4, -relevance, item_name_lower)
+
+    
+# Utility functions
+def open_spotify_uri(uri):
+    try:
+        webbrowser.open(f"spotify:{uri}")
+    except Exception as e:
+        log_error(f"Error opening Spotify: {e}")
+
+
+if __name__ == "__main__":
+    api = SpotifyAPI(CLIENT_ID, CLIENT_SECRET)
+    app = SpotifyApp(api)
+
+    import keyboard
+    toggle_shortcut = "ctrl+shift+\\"
+    keyboard.add_hotkey(toggle_shortcut, app.reopen_window)
+
+    app.root.mainloop()

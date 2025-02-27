@@ -1,3 +1,6 @@
+#shaewashere
+
+
 def ask_user_cost_per_gallon():
     print('how much does a gallon of gas cost?')
     cost_per_gallon = float(input(' enter your answer in dollars and cents and then press enter: '))

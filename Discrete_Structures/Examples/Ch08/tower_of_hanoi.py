@@ -24,6 +24,6 @@ def TowerOfHanoi(n, from_rod, to_rod, aux_rod, step_counter):
 N = int(input('how many discs would you like?'))
 step_counter = Step_counter()
 # A, C, B are the name of rods 
-TowerOfHanoi(N, 'A', 'C', 'B', step_counter) 
+TowerOfHanoi(N, 'A', 'B', 'C', step_counter) 
   
 # Contributed By Harshit Agrawal 

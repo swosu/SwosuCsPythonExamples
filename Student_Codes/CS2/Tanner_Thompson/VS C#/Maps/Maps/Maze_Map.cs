@@ -107,6 +107,7 @@ class MazeGenerator
             new int[] { 2, 0 }   
         };
 
+
         
         for (int i = 0; i < directions.Count; i++)
         {
@@ -132,6 +133,8 @@ class MazeGenerator
                 
                 DepthFirstSearch(nx, ny);
             }
+
+            
         }
     }
 

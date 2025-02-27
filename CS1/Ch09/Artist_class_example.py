@@ -25,11 +25,11 @@ class Artwork:
         print(f'Title: {self.title}, {self.year_created}')
 
 if __name__ == "__main__":
-    user_artist_name = input()
-    user_birth_year = int(input())
-    user_death_year = int(input())
-    user_title = input()
-    user_year_created = int(input())
+    user_artist_name = input("Enter the artist's name: ")
+    user_birth_year = int(input("Enter the artist's birth year: "))
+    user_death_year = int(input("Enter the artist's death year: "))
+    user_title = input("Enter the title of the artwork: ")
+    user_year_created = int(input("Enter the year the artwork was created: "))
 
     user_artist = Artist(user_artist_name, user_birth_year, user_death_year)
 
