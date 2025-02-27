@@ -12,8 +12,8 @@ def fibonacci_iterative(number):
     previous_value, current_value = 0, 1
     for index in range(number - 1):
         step_count += 1
-        previous_value, current_value = current_value, previous_value + current_value
-    return current_value, step_count
+        previous_value, current_value = current_value, previous_value + current_value #this line as well
+    return current_value, step_count #work on objectifying it
 
 def fibonacci_recursive(number, step_count=0):
     if number <= 0:
