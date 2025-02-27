@@ -76,8 +76,9 @@ class FindXandY:
 
 if __name__ == "__main__":
     seeds = [5, 14, 24, 42]
-    range_magnitudes = [1000, 10000, 20000, 30000, 50000, 100000]
-    results_file = "results.csv"
+    range_magnitudes = [10, 100, 200, 300, 500, 1000]
+    results_file = os.path.join(os.path.dirname(__file__), "results.csv")
+
     
     if os.path.exists(results_file):
         with open(results_file, "r") as f:
