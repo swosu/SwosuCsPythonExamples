@@ -3,6 +3,7 @@ import multiprocessing
 import time
 import csv
 import psutil
+import os
 from itertools import product
 
 class FindXandY:
@@ -40,13 +41,14 @@ class FindXandY:
         
         while True:
             x_values = range(-self.search_magnitude, self.search_magnitude)
-            y_range = range(-self.search_magnitude, self.search_magnitude)
+            y_values = list(range(-self.search_magnitude, self.search_magnitude))
             
-            processes = [multiprocessing.Process(target=self.search_worker, args=(x, y_range, found, result_queue))
-                         for x in x_values]
-            
-            for p in processes:
+            processes = []
+            for x in x_values:
+                p = multiprocessing.Process(target=self.search_worker, args=(x, y_values, found, result_queue))
+                processes.append(p)
                 p.start()
+            
             for p in processes:
                 p.join()
             
@@ -74,22 +76,34 @@ class FindXandY:
 
 if __name__ == "__main__":
     seeds = [5, 14, 24, 42]
-    range_magnitudes = [10, 100, 200, 300, 500, 1000]
-    results = []
+    range_magnitudes = [1000, 10000, 20000, 30000, 50000, 100000]
+    results_file = "results.csv"
     
-    for seed in seeds:
-        for magnitude in range_magnitudes:
-            parallel_solver = FindXandY(seed, magnitude)
-            x_p, y_p, time_p, cpu_p = parallel_solver.find_x_and_y_parallel()
-            
-            sequential_solver = FindXandY(seed, magnitude)
-            x_s, y_s, time_s, cpu_s = sequential_solver.find_x_and_y_sequential()
-            
-            results.append([seed, magnitude, x_p, y_p, time_p, cpu_p, x_s, y_s, time_s, cpu_s])
+    if os.path.exists(results_file):
+        with open(results_file, "r") as f:
+            existing_results = set(tuple(row[:2]) for row in csv.reader(f))
+    else:
+        existing_results = set()
     
-    with open("results.csv", "w", newline="") as f:
+    with open(results_file, "a", newline="") as f:
         writer = csv.writer(f)
-        writer.writerow(["Seed", "Range Magnitude", "X_parallel", "Y_parallel", "Time_parallel", "CPU_parallel", "X_sequential", "Y_sequential", "Time_sequential", "CPU_sequential"])
-        writer.writerows(results)
+        if not existing_results:
+            writer.writerow(["Seed", "Range Magnitude", "X_parallel", "Y_parallel", "Time_parallel", "CPU_parallel", "X_sequential", "Y_sequential", "Time_sequential", "CPU_sequential"])
+        
+        for seed in seeds:
+            for magnitude in range_magnitudes:
+                if (str(seed), str(magnitude)) in existing_results:
+                    print(f"Skipping Seed={seed}, Magnitude={magnitude} (Already Computed)")
+                    continue
+                
+                print(f"Running Seed={seed}, Magnitude={magnitude}")
+                parallel_solver = FindXandY(seed, magnitude)
+                x_p, y_p, time_p, cpu_p = parallel_solver.find_x_and_y_parallel()
+                
+                sequential_solver = FindXandY(seed, magnitude)
+                x_s, y_s, time_s, cpu_s = sequential_solver.find_x_and_y_sequential()
+                
+                writer.writerow([seed, magnitude, x_p, y_p, time_p, cpu_p, x_s, y_s, time_s, cpu_s])
+                f.flush()
     
     print("Results saved to results.csv")
