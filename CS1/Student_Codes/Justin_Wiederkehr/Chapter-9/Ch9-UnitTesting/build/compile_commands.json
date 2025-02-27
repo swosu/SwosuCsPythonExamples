@@ -1,0 +1,32 @@
+[
+{
+  "directory": "C:/CppProjects/Chapter Projects/Chapter-9/Ch9-UnitTesting/build",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/testSuite.dir/includes_CXX.rsp -g -o CMakeFiles\\testSuite.dir\\testSuite.cpp.obj -c \"C:\\CppProjects\\Chapter Projects\\Chapter-9\\Ch9-UnitTesting\\testSuite.cpp\"",
+  "file": "C:/CppProjects/Chapter Projects/Chapter-9/Ch9-UnitTesting/testSuite.cpp",
+  "output": "CMakeFiles/testSuite.dir/testSuite.cpp.obj"
+},
+{
+  "directory": "C:/CppProjects/Chapter Projects/Chapter-9/Ch9-UnitTesting/build/googletest/googlemock",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/gmock.dir/includes_CXX.rsp -g -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=0 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles\\gmock.dir\\src\\gmock-all.cc.obj -c \"C:\\CppProjects\\Chapter Projects\\Chapter-9\\Ch9-UnitTesting\\googletest\\googlemock\\src\\gmock-all.cc\"",
+  "file": "C:/CppProjects/Chapter Projects/Chapter-9/Ch9-UnitTesting/googletest/googlemock/src/gmock-all.cc",
+  "output": "googletest/googlemock/CMakeFiles/gmock.dir/src/gmock-all.cc.obj"
+},
+{
+  "directory": "C:/CppProjects/Chapter Projects/Chapter-9/Ch9-UnitTesting/build/googletest/googlemock",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/gmock_main.dir/includes_CXX.rsp -g -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=0 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles\\gmock_main.dir\\src\\gmock_main.cc.obj -c \"C:\\CppProjects\\Chapter Projects\\Chapter-9\\Ch9-UnitTesting\\googletest\\googlemock\\src\\gmock_main.cc\"",
+  "file": "C:/CppProjects/Chapter Projects/Chapter-9/Ch9-UnitTesting/googletest/googlemock/src/gmock_main.cc",
+  "output": "googletest/googlemock/CMakeFiles/gmock_main.dir/src/gmock_main.cc.obj"
+},
+{
+  "directory": "C:/CppProjects/Chapter Projects/Chapter-9/Ch9-UnitTesting/build/googletest/googletest",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/gtest.dir/includes_CXX.rsp -g -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=0 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles\\gtest.dir\\src\\gtest-all.cc.obj -c \"C:\\CppProjects\\Chapter Projects\\Chapter-9\\Ch9-UnitTesting\\googletest\\googletest\\src\\gtest-all.cc\"",
+  "file": "C:/CppProjects/Chapter Projects/Chapter-9/Ch9-UnitTesting/googletest/googletest/src/gtest-all.cc",
+  "output": "googletest/googletest/CMakeFiles/gtest.dir/src/gtest-all.cc.obj"
+},
+{
+  "directory": "C:/CppProjects/Chapter Projects/Chapter-9/Ch9-UnitTesting/build/googletest/googletest",
+  "command": "C:\\msys64\\ucrt64\\bin\\g++.exe  @CMakeFiles/gtest_main.dir/includes_CXX.rsp -g -Wall -Wshadow -Wundef -Wno-error=dangling-else -DGTEST_HAS_PTHREAD=0 -fexceptions -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -o CMakeFiles\\gtest_main.dir\\src\\gtest_main.cc.obj -c \"C:\\CppProjects\\Chapter Projects\\Chapter-9\\Ch9-UnitTesting\\googletest\\googletest\\src\\gtest_main.cc\"",
+  "file": "C:/CppProjects/Chapter Projects/Chapter-9/Ch9-UnitTesting/googletest/googletest/src/gtest_main.cc",
+  "output": "googletest/googletest/CMakeFiles/gtest_main.dir/src/gtest_main.cc.obj"
+}
+]
