@@ -1,10 +1,9 @@
 import random
-
-import matplotlib.pyplot as plt
+import time
 
 class Find_x_and_y():
     def __init__(self):
-        random.seed(42)
+
         self.range_magnitude = 10000
         self.x = random.randint(-1 * self.range_magnitude, self.range_magnitude)
         self.y = random.randint(-1 * self.range_magnitude, self.range_magnitude)
@@ -42,8 +41,12 @@ class Find_x_and_y():
 
 if __name__ == "__main__":
     print("hello")
-
+    random.seed(42)
     our_object = Find_x_and_y()
     our_object.print_question()
+    start_time = time.time()
     our_object.find_x_and_y()
+    elapsed_time = time.time() - start_time
+    
+
 
