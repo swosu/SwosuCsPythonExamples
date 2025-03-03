@@ -11,6 +11,15 @@ def main():
     #print off the keys from the dictioanry
     print(our_words.our_dictionary.keys())
 
+    # change the name of the person from John to Steve
+    our_words.our_dictionary["name"] = "Steve"
+    print(our_words.our_dictionary["name"])
+
+    # now delete our local copy of our_words and reimport and run it again
+    del our_words
+    import Dictionary_file as our_other_words
+    print(our_other_words.our_dictionary["name"])
+
 
     print("Simple Calculator")
     print("Options: add, subtract, multiply, divide")
