@@ -2,14 +2,15 @@
 
 import math_functions as mth_fun
 
-import Dictionary_file as our_words
 
-def main():
+
+
+def main(our_words):
 
     print("Testing Dictionary")
     # get the definition of a word
     #print off the keys from the dictioanry
-    print(our_words.our_dictionary.keys())
+    
 
     # change the name of the person from John to Steve
     our_words.our_dictionary["name"] = "Steve"
@@ -19,6 +20,8 @@ def main():
     del our_words
     import Dictionary_file as our_other_words
     print(our_other_words.our_dictionary["name"])
+    print(our_other_words.our_dictionary.keys())
+    print(our_other_words.our_dictionary.values())
 
 
     print("Simple Calculator")
@@ -42,5 +45,8 @@ def main():
     print("Result:", result)
 
 if __name__ == "__main__":
+
+    import Dictionary_file as our_words
+    print(our_words.our_dictionary.keys())
     print("hello from calculator.py")
-    main()
+    main(our_words)
