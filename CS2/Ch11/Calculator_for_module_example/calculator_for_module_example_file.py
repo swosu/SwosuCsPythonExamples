@@ -2,14 +2,14 @@
 
 import math_functions as mth_fun
 
-import Dictionary as our_words
+import Dictionary_file as our_words
 
 def main():
 
     print("Testing Dictionary")
     # get the definition of a word
     #print off the keys from the dictioanry
-    print(our_words.our_dict.keys())
+    print(our_words.our_dictionary.keys())
 
 
     print("Simple Calculator")
