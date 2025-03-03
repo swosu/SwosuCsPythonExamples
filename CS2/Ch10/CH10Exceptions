@@ -1,0 +1,22 @@
+# Split input into 2 parts: name and age
+parts = input(
+    "please enter a name a space then an age " +
+    ", then press enter").split()
+name = parts[0]
+while name != '-1':
+
+    try:
+        age = int(parts[1]) + 1
+        print(f'{name} {age}')
+    except ValueError:
+        print(
+            "Invalid age entered. " +
+            " Please enter a valid number for age.")
+        age = 0
+    # Get next line
+    parts = input(
+        "please enter a name, " +
+        " a space then an age, then press enter\n"
+    ).split()
+    name = parts[0]
+ 

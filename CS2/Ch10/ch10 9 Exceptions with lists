@@ -1,0 +1,12 @@
+names = ['Ryley', 'Edan', 
+		 'Reagan', 'Henry', 
+		 'Caius', 'Jane', 
+		 'Guto', 'Sonya', 
+		 'Tyrese', 'Johnny']
+try:
+	index = int(input("Enter an index: "))
+	print(names[index])
+except ValueError:
+	print("Please enter a valid integer.")
+except IndexError:
+	print("Index out of range.")
