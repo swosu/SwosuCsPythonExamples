@@ -75,7 +75,7 @@ def main():
         if file.tell() == 0:
             writer.writerow(["Fibo Num", "Iterative Time (s)", "Iterative Function Calls", "Iterative Additions", "Iterative Subtractions", "Iterative Memory Assignments", "Recursive Time (s)", "Recursive Function Calls", "Recursive Additions", "Recursive Subtractions", "Recursive Memory Assignments"])
         
-        for fibo_number in range(1, 40):
+        for fibo_number in range(40, 50):
             print(f"Calculating for n = {fibo_number}")
             result = calculator.measure_time_and_operations(fibo_number)
             writer.writerow([
