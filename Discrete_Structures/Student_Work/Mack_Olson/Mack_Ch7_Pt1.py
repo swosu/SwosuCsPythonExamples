@@ -36,7 +36,7 @@ def calculate():
         ax.axvline(x=num_people, color='green', linestyle='--', label=f'Minimum: {num_people}')
         plt.xlabel('Number of People')
         plt.ylabel('Probability of Shared Birthday')
-        plt.title('Birthday Paradox Probability')
+        plt.title('Shared Birthday Probability')
         plt.legend()
         plt.show()
     except ValueError:
