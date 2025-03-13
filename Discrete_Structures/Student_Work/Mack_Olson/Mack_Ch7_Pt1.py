@@ -7,7 +7,7 @@ import numpy as np
 def birthday_probability(n):
     prob = 1.0
     for i in range(n):
-        prob *= (365 - i) / 365
+        prob *= (366 - i) / 366
     return 1 - prob
 
 def find_min_people(target_prob):
@@ -44,7 +44,7 @@ def calculate():
 
 # Tkinter GUI
 root = tk.Tk()
-root.title("Birthday Probability Calculator")
+root.title("Shared Birthday Calculator")
 
 tk.Label(root, text="Enter probability percentage:").pack()
 entry = tk.Entry(root)
