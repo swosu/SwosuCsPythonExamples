@@ -4,17 +4,17 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import numpy as np
 
-def birthday_probability(n):
+def birthday_probability(num_people):
     prob = 1.0
-    for i in range(n):
+    for i in range(num_people):
         prob *= (366 - i) / 366
     return 1 - prob
 
 def find_min_people(target_prob):
-    n = 1
-    while birthday_probability(n) < target_prob:
-        n += 1
-    return n
+    num_people = 1
+    while birthday_probability(num_people) < target_prob:
+        num_people += 1
+    return num_people
 
 def calculate():
     try:
