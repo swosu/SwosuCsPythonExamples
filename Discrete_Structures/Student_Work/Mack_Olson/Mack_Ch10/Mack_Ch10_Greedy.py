@@ -55,7 +55,7 @@ class GreedyShortestPath:
             writer = csv.writer(f)
             writer.writerow(["Path"] + city_path)
             writer.writerow(["Total Cost", self.best_path_cost])
-        print(f"✅ Shortest path saved to: {output_file}")
+        print(f"Shortest path saved to: {output_file}")
 
 
 # === RUN SCRIPT BELOW ===
