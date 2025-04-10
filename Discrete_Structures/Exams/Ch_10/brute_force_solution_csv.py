@@ -1,8 +1,6 @@
 import os
 import pandas as pd
-
 import numpy as np
-
 import itertools
 
 
@@ -19,30 +17,34 @@ for file in file_list:
         csv_file_list.append(file)
 
 # print the names of the csv files
-for file in csv_file_list:
-    print(file)
+#for file in csv_file_list:
+#    print(file)
 
 # for each csv file in csv_file_list, open the file and save it as a dataframe
 # the data frame should be named after the file name
 
 # create a list of the data frames
-data_frame_list = []
-for file in csv_file_list:
-    data_frame_list.append(pd.read_csv(file))
+#data_frame_list = []
+#for file in csv_file_list:
+#    data_frame_list.append(pd.read_csv(file))
 
 # print the names of the data frames
 #for data_frame in data_frame_list:
 #    print(data_frame)
 
 # read in the data from 4.csv and save it as a dataframe
-df_4 = pd.read_csv('4.csv')
+#df_4 = pd.read_csv('4.csv')
+df_4 = pd.read_csv('4.csv', header=None)
+
+print("df_4 shape:", df_4.shape)
+print(df_4)
 
 
 # print the dataframe without row numbers
-print(df_4.to_string(index=False))
+#print(df_4.to_string(index=False))
 
 # print the dataframe with row numbers
-print(df_4)
+#print(df_4)
 
 # make a list of all possible paths through the 4 cities, visiting each city exactly once 
 # and returning to the starting city
