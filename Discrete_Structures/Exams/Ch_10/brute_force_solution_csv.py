@@ -19,8 +19,8 @@ for file in file_list:
         csv_file_list.append(file)
 
 # print the names of the csv files
-#for file in csv_file_list:
-    #print(file)
+for file in csv_file_list:
+    print(file)
 
 # for each csv file in csv_file_list, open the file and save it as a dataframe
 # the data frame should be named after the file name
@@ -32,7 +32,7 @@ for file in csv_file_list:
 
 # print the names of the data frames
 #for data_frame in data_frame_list:
-    #print(data_frame)
+#    print(data_frame)
 
 # read in the data from 4.csv and save it as a dataframe
 df_4 = pd.read_csv('4.csv')
@@ -40,6 +40,9 @@ df_4 = pd.read_csv('4.csv')
 
 # print the dataframe without row numbers
 print(df_4.to_string(index=False))
+
+# print the dataframe with row numbers
+print(df_4)
 
 # make a list of all possible paths through the 4 cities, visiting each city exactly once 
 # and returning to the starting city
@@ -69,7 +72,24 @@ total_distance_list = []
 total_distance = 0
 
 
+# for each path in possible_path_list, calculate the distance of the path
+# the distance is the sum of the distances between each city in the path
 
+# work through each path one at a time and create a dictionary that has the path as the key and the distance as the value
+# the dictionary should be named total_distance_dict
+total_distance_dict = {}
+for path in possible_path_list:
+    total_distance = 0
+    for i in range(len(path)-1):
+        total_distance += df_4.iloc[path[i]-1, path[i+1]-1]
+    total_distance += df_4.iloc[path[-1]-1, path[0]-1]
+    total_distance_dict[tuple(path)] = total_distance
+    total_distance_list.append(total_distance)
+
+# print the dictionary of total distances
+print('total_distance_dict: ')
+for key, value in total_distance_dict.items():
+    print(key, value)
     
 
 
