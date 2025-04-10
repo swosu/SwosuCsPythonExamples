@@ -33,11 +33,14 @@ file_list = os.listdir()
 #    print(data_frame)
 
 # set our city count
-city_count = 4
+city_count = 6
+
+# make our csv file name referencing the city count
+csv_file_name = str(city_count) + '.csv'
 
 # read in the data from 4.csv and save it as a dataframe
 #df = pd.read_csv('4.csv')
-df = pd.read_csv('4.csv', header=None)
+df = pd.read_csv(csv_file_name, header=None)
 
 print("df shape:", df.shape)
 print(df)
@@ -56,7 +59,11 @@ print(df)
 # the list should be in alphabetical order
 
 possible_path_list = []
-perms = itertools.permutations([1, 2, 3, 4])
+# create the base path based on the city count
+base_path = []
+for i in range(1, city_count+1):
+    base_path.append(i)
+perms = itertools.permutations(base_path)
 
 perms_list = [list(perm) for perm in perms]
 
