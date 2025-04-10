@@ -11,10 +11,10 @@ import itertools
 file_list = os.listdir()
 
 # make a list of the csv files in the current directory
-csv_file_list = []
-for file in file_list:
-    if file.endswith('.csv'):
-        csv_file_list.append(file)
+#csv_file_list = []
+#for file in file_list:
+#    if file.endswith('.csv'):
+#        csv_file_list.append(file)
 
 # print the names of the csv files
 #for file in csv_file_list:
@@ -32,19 +32,22 @@ for file in file_list:
 #for data_frame in data_frame_list:
 #    print(data_frame)
 
-# read in the data from 4.csv and save it as a dataframe
-#df_4 = pd.read_csv('4.csv')
-df_4 = pd.read_csv('4.csv', header=None)
+# set our city count
+city_count = 4
 
-print("df_4 shape:", df_4.shape)
-print(df_4)
+# read in the data from 4.csv and save it as a dataframe
+#df = pd.read_csv('4.csv')
+df = pd.read_csv('4.csv', header=None)
+
+print("df shape:", df.shape)
+print(df)
 
 
 # print the dataframe without row numbers
-#print(df_4.to_string(index=False))
+#print(df.to_string(index=False))
 
 # print the dataframe with row numbers
-#print(df_4)
+#print(df)
 
 # make a list of all possible paths through the 4 cities, visiting each city exactly once 
 # and returning to the starting city
@@ -83,8 +86,8 @@ total_distance_dict = {}
 for path in possible_path_list:
     total_distance = 0
     for i in range(len(path)-1):
-        total_distance += df_4.iloc[path[i]-1, path[i+1]-1]
-    total_distance += df_4.iloc[path[-1]-1, path[0]-1]
+        total_distance += df.iloc[path[i]-1, path[i+1]-1]
+    total_distance += df.iloc[path[-1]-1, path[0]-1]
     total_distance_dict[tuple(path)] = total_distance
     total_distance_list.append(total_distance)
 
