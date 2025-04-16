@@ -33,7 +33,7 @@ if __name__ == '__main__':
 
     # load the data
     our_data = Data_Loader.Data_Loader()
-    our_data.city_count = 6
+    our_data.city_count = 4
     our_data.load_data()
     print(f'file name is {our_data.file_name}')
     print(our_data.df.to_string(index=False))
