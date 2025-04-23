@@ -33,12 +33,6 @@ class Find_x_and_y():
             print('doubled the search magnitude')
 
 
-
-
-
-
-
-
 if __name__ == "__main__":
     print("hello")
     random.seed(42)
