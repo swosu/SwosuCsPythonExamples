@@ -47,6 +47,6 @@ def main(our_words):
 if __name__ == "__main__":
 
     import Dictionary_file as our_words
-    print(our_words.our_dictionary.keys())
+
     print("hello from calculator.py")
     main(our_words)
