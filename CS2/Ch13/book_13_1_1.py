@@ -2,6 +2,7 @@ class Item:
     def __init__(self):
         self.name = ''
         self.quantity = 0
+        self.price = 0.0
 
     def set_name(self, nm):
         self.name = nm
@@ -9,8 +10,11 @@ class Item:
     def set_quantity(self, qnty):
         self.quantity = qnty
 
+    def set_price(self, prc):
+        self.price = prc
+
     def display(self):
-        print(self.name, self.quantity)
+        print(f'Item: {self.name}  \nQuantity: {self.quantity}  \nPrice: ${self.price:.2f}')
 
 
 class Produce(Item):  # Derived from Item
@@ -46,11 +50,13 @@ class Bread(Produce):
 item1 = Item()
 item1.set_name('Smith Cereal')
 item1.set_quantity(9)
+item1.set_price(4.95)
 item1.display()
 
 item2 = Produce()
 item2.set_name('Apples')
 item2.set_quantity(40)
+item2.set_price(1.50)
 item2.set_expiration('May 5, 2018')
 item2.display()
 
