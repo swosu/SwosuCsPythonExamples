@@ -1,44 +1,9 @@
-Sure! Here's a random data visualization question:
-
-"You have a dataset showing daily coffee sales at five coffee shops over a year. What type of chart would best show the trend over time, and how would you make it easy to compare the performance of all five shops?"
-
-Want me to give you a few more for practice? 🎯
-
-
-1/2
-
-
-
-
-
-
-
-
-You said:
-gimme data
-
-
-ChatGPT said:
-Got it — here’s a quick dataset you can use:
-
-
-Date	Shop A	Shop B	Shop C	Shop D	Shop E
-2024-01-01	120	150	90	200	180
-2024-01-02	130	140	100	190	175
-2024-01-03	125	155	95	205	185
-2024-01-04	140	160	110	210	190
-2024-01-05	135	145	105	195	170
-This is just five days to keep it simple, but you can easily stretch it to a whole month or year if you want.
-
-Challenge (optional):
-
-Pick a visualization style (line chart, bar chart, etc.).
-
-Make it easy to compare shops over time.
-
-Add at least one small design detail to make it even clearer (like colors, labels, highlights).
-
-Want me to also throw in a "hard mode" version with more messy or missing data? 🎯
+Date        Shop A  Shop B  Shop C  Shop D  Shop E
+2024-01-01  120     150     90      200     180
+2024-01-02  130     140     100     190     175
+2024-01-03  125     155     95      205     185
+2024-01-04  140     160     110     210     190
+2024-01-05  135     145     105     195     170
 
 
 
