@@ -8,5 +8,5 @@ Austin: data_viz_2
 
 Garren: data_viz_3: Artwork popularity by color
 
-Mac: data_viz_6
+Mac: Correlation between increase of empathy and increase of reading. Branch: data_viz_6
 
