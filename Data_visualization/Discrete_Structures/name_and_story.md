@@ -6,7 +6,7 @@ Justin: data_viz_6
 
 Austin: data_viz_2
 
-Garren: data_vis_3
+Garren: data_vis_3: Artwork popularity by color
 
 Mac: data_viz_6
 
