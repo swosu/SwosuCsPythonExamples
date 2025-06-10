@@ -3,18 +3,10 @@ class TransportMode:
     def __init__(self, name, speed):
         self.name = name
         self.speed = speed
+        self.location = "Earth"
 
     def info(self):
-        print(f'{self.name} can go {self.speed} mph.')
-
-class Airplane(TransportMode, MotorVehicle):
-    def __init__(self, name, speed, wingspan):
-        TransportMode.__init__(self, name, speed)
-        
-    def add_fuel(self, amount):
-        self.fuel_gal += amount
-    def fly(self):
-        print('Flying is fun.')
+        print(f'Vehicle: {self.name} can go {self.speed} mph.')
 
 class MotorVehicle(TransportMode):
     def __init__(self, name, speed, mpg):
@@ -25,6 +17,11 @@ class MotorVehicle(TransportMode):
     def add_fuel(self, amount):
         self.fuel_gal += amount
 
+    def info(self):
+        TransportMode.info(self)
+        print(f'Fuel: {self.fuel_gal:f} gallons.  MPG: {
+            self.mpg}.')
+
     def drive(self, distance):
         required_fuel = distance / self.mpg
         if self.fuel_gal < required_fuel:
@@ -32,6 +29,22 @@ class MotorVehicle(TransportMode):
         else:
             self.fuel_gal -= required_fuel
             print(f'{self.fuel_gal:f} gallons remaining.')
+
+class Airplane(MotorVehicle):
+    def __init__(self, name, speed, wingspan):
+        self.wingspan = wingspan
+        self.altitude = 0
+        self.air_speed = 0
+        TransportMode.__init__(self, name, speed)
+        
+    def fly(self):
+        self.altitude = 30000
+        self.air_speed = 500
+        print('Flying is fun.')
+    
+    def info(self):
+        TransportMode.info(self)
+        print(f'Wingspan: {self.wingspan} feet.')
 
 class MotorCycle(MotorVehicle):
     def __init__(self, name, speed, mpg):
@@ -49,23 +62,14 @@ scooter.info()
 dirtbike.info()
 airplane.info()
 choice = input('Select scooter (s),  dirtbike (d), or airplane (a): ')
-bike = scooter if (choice == 's') else dirtbike
+if choice == 's':
+    scooter.wheelie()
+elif choice == 'd':
+    dirtbike.drive(100)
+elif choice == 'a':
+    airplane.fly()
+else:
+    print('Invalid selection.')
 
-menu = '\nSelect add fuel(f), go(g), wheelie(w), quit(q): '
-command = input(menu)
-while command != 'q':
-    if command == 'f':
-        fuel = int(input('Enter amount: '))
-        bike.add_fuel(fuel)
-    elif command == 'g':
-        distance = int(input('Enter distance: '))
-        bike.drive(distance)
-    elif command == 'w':
-        bike.wheelie()
-    elif command == 'q':
-        break
-    else:
-        print('Invalid command.')
 
-    command = input(menu)
 

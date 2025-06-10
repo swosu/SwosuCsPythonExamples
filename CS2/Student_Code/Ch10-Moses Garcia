@@ -1,0 +1,103 @@
+const readlineSync = require('readline-sync');
+
+
+console.log("1: Student Info\n2: Steps to Miles\n3: Division Calculator");
+
+
+try {
+    const program = parseInt(readlineSync.question("Please enter which program you would like to use: "));
+   
+    if (program === 1) {
+        // Run Student Info
+        class StudentInfoError extends Error {
+            constructor(message) {
+                super(message);
+                this.name = 'StudentInfoError';
+            }
+        }
+
+
+        function findID(name, info) {
+            if (name in info) {
+                return info[name];
+            } else {
+                throw new StudentInfoError(`Student ID not found for ${name}`);
+            }
+        }
+
+
+        function findName(ID, info) {
+            for (const [name, studentID] of Object.entries(info)) {
+                if (studentID === ID) {
+                    return name;
+                }
+            }
+            throw new StudentInfoError(`Student name not found for ${ID}`);
+        }
+
+
+        const studentInfo = {
+            'Reagan': 'rebradshaw835',
+            'Ryley': 'rbarber894',
+            'Peyton': 'pstott885',
+            'Tyrese': 'tmayo945',
+            'Caius': 'ccharlton329'
+        };
+
+
+        const userChoice = readlineSync.question("Enter either your first name (0) or your ID (1): ");
+
+
+        try {
+            if (userChoice === "0") {
+                const name = readlineSync.question("Enter your first name: ");
+                const result = findID(name, studentInfo);
+                console.log(result);
+            } else {
+                const ID = readlineSync.question("Enter your ID: ");
+                const result = findName(ID, studentInfo);
+                console.log(result);
+            }
+        } catch (error) {
+            if (error instanceof StudentInfoError) {
+                console.log(error.message);
+            } else {
+                throw error;
+            }
+        }
+    } else if (program === 2) {
+        // Run Steps to Miles
+        try {
+            const numSteps = parseInt(readlineSync.question("Please enter how many steps you'd like to calculate: "));
+            const stepsToMiles = numSteps / 2112;
+
+
+            if (numSteps < 0 || isNaN(numSteps)) {
+                throw new Error("The entered value cannot be negative or non-numeric");
+            } else {
+                console.log(stepsToMiles.toFixed(2));
+            }
+        } catch (error) {
+            console.log(`Exception: ${error.message}`);
+        }
+    } else if (program === 3) {
+        // Run Division Calculator
+        try {
+            const userNum = parseInt(readlineSync.question("Please enter your (Phone) number: "));
+            const divNum = parseInt(readlineSync.question("Please enter a number to divide by: "));
+            if (divNum === 0) {
+                throw new Error("Error: Cannot divide by zero.");
+            } else if (isNaN(userNum) || isNaN(divNum)) {
+                throw new Error("Error: Please enter valid integers.");
+            } else {
+                console.log("Result:", userNum / divNum);
+            }
+        } catch (error) {
+            console.log(error.message);
+        }
+    } else {
+        throw new Error("Please enter valid input (1, 2, 3)");
+    }
+} catch (error) {
+    console.log("An unexpected error occurred:", error);
+}

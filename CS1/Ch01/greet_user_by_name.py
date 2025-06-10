@@ -1,10 +1,14 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Sep  8 08:12:54 2022
+# be polite and ask the user for their name
+# then greet them by name
 
-@author: evertj
-"""
+# ask the user for their name
+name = input("What is your name? ")
 
-name = input('name?')
+# greet the user by name
+print("Hello, " + name + "!")
 
-print(name)
+# say goodbye
+print("Goodbye, " + name + "!")
+
+# say goodbye to the user by name
+print("Goodbye, " + name + "!")

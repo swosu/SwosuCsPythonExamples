@@ -1,0 +1,37 @@
+import time
+
+
+def is_prime(n):
+    if n < 2:
+        return False
+    for i in range(2, n):
+        if n % i == 0:
+            return False
+    return True
+
+
+def fibonacci(n):
+    a, b = 0, 1
+    fib = []
+    while a < n:
+        fib.append(a)
+        a, b = b, a + b
+    return fib
+
+
+def prime_fibonacci(n):
+    start = time.time()
+    fib = fibonacci(n)
+    primes = [x for x in fib if is_prime(x)]
+    end = time.time()
+    return primes, end - start
+
+
+while True:
+    num_cap = input('How many numbers should we test? (Enter "q" to quit): ')
+    if num_cap.lower() == 'q':
+        break
+    primes, time_taken = prime_fibonacci(int(num_cap))
+
+    print(f'Primes: {primes}')
+    print(f'Time taken: {time_taken} seconds')

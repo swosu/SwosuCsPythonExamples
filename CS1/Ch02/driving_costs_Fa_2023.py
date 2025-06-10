@@ -5,11 +5,11 @@ user_name = input('What is your name? ')
 print('hello', user_name)
 
 # ask users miles per gallon for their vehicle
-miles_per_gallon = int(input('What is your vehicle\'s miles per gallon? '))
+your_cars_fuel_economy_in_miles_per_gallon = int(input('What is your vehicle\'s miles per gallon? '))
 
-if miles_per_gallon < 10:
+if your_cars_fuel_economy_in_miles_per_gallon < 10:
     print('ouch, that\'s a gas guzzler')
-elif miles_per_gallon > 30:
+elif your_cars_fuel_economy_in_miles_per_gallon > 30:
     print('nice, that\'s a fuel efficient car')
 else:
     print('that\'s a good car')
@@ -38,7 +38,7 @@ else:
     distance = 238900
 
 # calculate cost of trip
-cost_of_trip = distance / miles_per_gallon * gas_price_per_gallon
+cost_of_trip = distance / your_cars_fuel_economy_in_miles_per_gallon * gas_price_per_gallon
 
 # print cost of trip
 print('The cost of your trip is $', cost_of_trip)

@@ -1,0 +1,3 @@
+"C:\Program Files\CMake\bin\cmake.exe" -E rm -f CMakeFiles\testSuite.dir/objects.a
+C:\msys64\ucrt64\bin\ar.exe qc CMakeFiles\testSuite.dir/objects.a @CMakeFiles\testSuite.dir\objects1.rsp
+C:\msys64\ucrt64\bin\g++.exe -g -Wl,--whole-archive CMakeFiles\testSuite.dir/objects.a -Wl,--no-whole-archive -o testSuite.exe -Wl,--out-implib,libtestSuite.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\testSuite.dir\linkLibs.rsp
