@@ -1,1 +1,80 @@
+import pygame
+import os
+import random
 
+# --- Constants ---
+CARD_WIDTH = 100
+CARD_HEIGHT = 145
+SCREEN_WIDTH = 800
+SCREEN_HEIGHT = 600
+
+# --- Card Properties ---
+SUITS = ['H', 'D', 'S', 'C']  # Hearts, Diamonds, Spades, Clubs
+RANKS = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13']
+
+# --- Paths ---
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+CARD_FOLDER = os.path.join(BASE_DIR, 'Cards')
+
+# --- Pygame Init ---
+pygame.init()
+screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pygame.display.set_caption("Card Game")
+clock = pygame.time.Clock()
+
+# --- Load the full deck ---
+def load_deck():
+    deck = []
+    for suit in SUITS:
+        for rank in RANKS:
+            card_id = f"{suit}{rank}"
+            file_path = os.path.join(CARD_FOLDER, f"{card_id}.png")
+            try:
+                card_image = pygame.image.load(file_path).convert_alpha()
+                card_image = pygame.transform.scale(card_image, (CARD_WIDTH, CARD_HEIGHT))
+                deck.append((card_id, card_image))
+            except Exception as e:
+                print(f"Failed to load {file_path}: {e}")
+    return deck
+
+# --- Deal cards to players ---
+def deal(deck, num_players=2, cards_each=5):
+    hands = [[] for _ in range(num_players)]
+    for _ in range(cards_each):
+        for hand in hands:
+            if deck:
+                hand.append(deck.pop())
+    return hands
+
+# --- Render a player's hand ---
+def draw_hand(hand, y_pos):
+    x_pos = 50
+    for _, card_img in hand:
+        screen.blit(card_img, (x_pos, y_pos))
+        x_pos += CARD_WIDTH + 10
+
+# --- Main Game Loop ---
+def main():
+    running = True
+    deck = load_deck()
+    random.shuffle(deck)
+    hands = deal(deck, num_players=2, cards_each=5)
+
+    while running:
+        screen.fill((0, 128, 0))  # Green background
+
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+
+        # Draw both hands
+        draw_hand(hands[0], 100)  # Player 1
+        draw_hand(hands[1], 300)  # Player 2
+
+        pygame.display.flip()
+        clock.tick(30)
+
+    pygame.quit()
+
+if __name__ == "__main__":
+    main()
