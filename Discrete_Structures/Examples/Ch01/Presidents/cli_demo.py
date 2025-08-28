@@ -315,12 +315,20 @@ def run_cli_demo():
         for idx, c in enumerate(hand):
             by_rank.setdefault(c.rank, []).append(idx)
 
-        # Suggest a best safe move
-        suggestion = best_move(hand, rnd.current_play, plays)
-        if suggestion:
-            s_size, s_opt = suggestion
-            s_cards = " ".join(str(hand[j]) for j in s_opt)
-            print(f"Suggestion: {plural(s_size, 'card')} -> {s_cards}")
+        # Suggestions:
+        if rnd.current_play is None:
+            # On a fresh lead, show multiple categories (safe, non-breaking)
+            multi = suggestion_line_for_lead(hand)
+            if multi:
+                print(multi)
+        else:
+            # When following, keep the existing best-move pointer
+            suggestion = best_move(hand, rnd.current_play, plays)
+            if suggestion:
+                s_size, s_opt = suggestion
+                s_cards = " ".join(str(hand[j]) for j in s_opt)
+                print(f"Suggestion: {plural(s_size, 'card')} -> {s_cards}")
+
         # Show options with break warnings for ANY size if it consumes part of a larger group
         for i, opt in enumerate(opts, 1):
             rank = hand[opt[0]].rank
