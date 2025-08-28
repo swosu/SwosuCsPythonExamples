@@ -135,6 +135,15 @@ def plural(n, word):
 
 
 
+
+
+
+
+
+
+
+
+
 def break_tag(count: int) -> str:
     return {
         1: "",    # not breaking anything
@@ -280,14 +289,13 @@ def run_cli_demo():
             s_cards = " ".join(str(hand[j]) for j in s_opt)
             print(f"Suggestion: {plural(s_size, 'card')} -> {s_cards}")
 
-        # Show options with break warnings (only matters when size==1 and count>1)
+        # Show options with break warnings for ANY size if it consumes part of a larger group
         for i, opt in enumerate(opts, 1):
             rank = hand[opt[0]].rank
             group_size = len(by_rank[rank])
-            tag = break_tag(group_size) if size == 1 and group_size > 1 else ""
+            tag = break_tag(group_size) if group_size > size else ""
             cards_str = " ".join(str(hand[j]) for j in opt)
             print(f"{i}. {cards_str} {tag}".rstrip())
-
         try:
             sel = int(input("Pick which option: ").strip()) - 1
             chosen = opts[sel]
