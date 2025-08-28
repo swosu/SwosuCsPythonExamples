@@ -51,6 +51,11 @@ def ranks_strictly_higher_than(rank: str):
     return [r for r in RANKS if RANK_TO_VALUE[r] > v]
 
 def generate_options(hand, current_play):
+
+
+
+
+
     """
     Return dict {size: [list_of_index_lists]} for LEGAL sizes only.
     Singles list includes ONLY true singletons (ranks with count==1),
@@ -96,6 +101,72 @@ def format_minimum_needed(current_play):
     if not need:
         return f"Nothing beats {current_play.rank}; passing is your only option."
     return f"Minimum to beat: {current_play.size} x higher than {current_play.rank} (i.e., {', '.join(need)})."
+
+def break_tag(count: int) -> str:
+    return {
+        1: "",    # not breaking anything
+        2: "[breaks pair]",
+        3: "[breaks triple]",
+        4: "[breaks quad]",
+    }.get(count, "")
+
+def best_move(hand, current_play, plays_by_size):
+    """
+    Return (size, index_list) or None for a 'best' safe move.
+    Heuristics:
+      - Lead: lowest singleton; else lowest pair; else lowest triple; else quad.
+      - Follow single: lowest higher singleton; else take 1 from the largest group (3/4 then 2).
+      - Follow multi: lowest higher set of required size.
+    """
+    if not plays_by_size:
+        return None
+
+    # Map hand rank -> indices to know multiplicities
+    by_rank = {}
+    for idx, c in enumerate(hand):
+        by_rank.setdefault(c.rank, []).append(idx)
+
+    def option_rank(opt):  # opt is list of indices for a single-rank play
+        return hand[opt[0]].rank
+
+    def opt_value(opt):
+        # used to sort by ascending strength
+        from cards import RANK_TO_VALUE
+        return RANK_TO_VALUE[option_rank(opt)]
+
+    if current_play is None:
+        # Prefer singles then pairs, etc. by ascending rank
+        for size in (1, 2, 3, 4):
+            if size in plays_by_size:
+                candidates = sorted(plays_by_size[size], key=opt_value)
+                return (size, candidates[0])
+        return None
+
+    need_size = current_play.size
+    if need_size == 1:
+        # Prefer true singletons first
+        singles = plays_by_size.get(1, [])
+        if singles:
+            # Rank singletons only: those whose rank count==1 in hand
+            true_singletons = [opt for opt in singles if len(by_rank[option_rank(opt)]) == 1]
+            if true_singletons:
+                return (1, sorted(true_singletons, key=opt_value)[0])
+            # Otherwise, pick from biggest group so we likely leave a pair/triple intact
+            # Sort candidates by (-group_count, value)
+            singles_sorted = sorted(
+                singles,
+                key=lambda opt: (-len(by_rank[option_rank(opt)]), opt_value(opt))
+            )
+            return (1, singles_sorted[0])
+        return None
+    else:
+        # Need exact size; pick lowest that beats
+        if need_size in plays_by_size:
+            candidates = sorted(plays_by_size[need_size], key=opt_value)
+            return (need_size, candidates[0])
+        return None
+
+
 
 def run_cli_demo():
     players = setup_lobby()
