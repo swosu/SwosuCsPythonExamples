@@ -68,6 +68,11 @@ def explain_follow(prev_play, candidate_size, candidate_rank):
 
 
 
+def cards_str(cards):
+    return " ".join(str(c) for c in cards)
+
+
+
 def ranks_strictly_higher_than(rank: str):
     v = RANK_TO_VALUE[rank]
     return [r for r in RANKS if RANK_TO_VALUE[r] > v]
