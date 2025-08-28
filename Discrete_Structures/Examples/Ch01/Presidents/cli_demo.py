@@ -70,53 +70,53 @@ def ranks_strictly_higher_than(rank: str):
 
 def generate_options(hand, current_play):
     """
-    Return { size: [ [hand_index,...], ... ] } where each inner list is a legal
-    same-rank play. Rules:
-      - If leading: allow sizes 1..4. For size=1, list ONLY true singletons
-        (ranks with count==1) to avoid cracking sets by default.
-      - If following: allow ONLY the same size as the pile, and require strictly
-        higher rank. For size=1 while following, list ANY higher single (even if
-        that breaks a pair/triple/quad); we’ll warn in the UI before committing.
+    Return dict {size: [list_of_index_lists]} for LEGAL sizes only.
+
+    Policy:
+      - If LEADING: singles list includes ONLY true singletons (to avoid
+        breaking pairs/triples/quads by default).
+      - If FOLLOWING A SINGLE: list ALL higher singles, even if it breaks a set.
+      - If FOLLOWING multi (pair/triple/quad): list only higher sets of that exact size.
     """
     # Count indices by rank
     by_rank = {}
     for idx, c in enumerate(hand):
         by_rank.setdefault(c.rank, []).append(idx)
 
-    # Legal sizes + admissible ranks
     if current_play is None:
         legal_sizes = {1, 2, 3, 4}
-        allowed_ranks = set(RANKS)  # any rank when leading
+        higher_ranks = RANKS  # any rank allowed when leading
+        following_single = False
     else:
         legal_sizes = {current_play.size}
-        # only strictly higher ranks are allowed
-        allowed_ranks = {r for r in RANKS if RANK_TO_VALUE[r] > RANK_TO_VALUE[current_play.rank]}
+        higher_ranks = ranks_strictly_higher_than(current_play.rank)
+        following_single = (current_play.size == 1)
 
     plays = {1: [], 2: [], 3: [], 4: []}
 
     for rank, indices in by_rank.items():
-        if current_play is not None and rank not in allowed_ranks:
+        if current_play is not None and rank not in higher_ranks:
             continue
 
-        cnt = len(indices)
+        count = len(indices)
 
         # Singles
         if 1 in legal_sizes:
             if current_play is None:
-                # Leading: only true singletons to avoid cracking sets unintentionally
-                if cnt == 1:
+                # Leading: only show true singletons
+                if count == 1:
                     plays[1].append([indices[0]])
             else:
-                # Following a single: ANY higher single is valid (even if it breaks a set)
-                # Choose a canonical representative index for that rank (lowest index)
-                plays[1].append([indices[0]])
+                # Following a single: show ANY higher single (even if it breaks a set)
+                if count >= 1:
+                    plays[1].append([indices[0]])
 
-        # Multi-card plays (pairs/triples/quads): only list if we have enough copies
+        # Multi-sets (pairs/triples/quads): only if size is legal this turn
         for size in (2, 3, 4):
-            if size in legal_sizes and cnt >= size:
+            if size in legal_sizes and count >= size:
                 plays[size].append(indices[:size])
 
-    # Drop empty sizes
+    # Strip empty sizes
     return {s: opts for s, opts in plays.items() if opts}
 
 def format_minimum_needed(current_play):
@@ -127,6 +127,12 @@ def format_minimum_needed(current_play):
         return f"Nothing beats {current_play.rank}; passing is your only option."
     return f"Minimum to beat: {current_play.size} x higher than {current_play.rank} (i.e., {', '.join(need)})."
 
+
+def plural(n, word):
+    return f"{n} {word}" + ("" if n == 1 else "s")
+
+
+
 def break_tag(count: int) -> str:
     return {
         1: "",    # not breaking anything
@@ -134,6 +140,9 @@ def break_tag(count: int) -> str:
         3: "[breaks triple]",
         4: "[breaks quad]",
     }.get(count, "")
+
+
+
 
 def best_move(hand, current_play, plays_by_size):
     """
@@ -250,20 +259,61 @@ def run_cli_demo():
             print("Invalid selection.")
             continue
 
-        size = menu_map[choice]
+                size = menu_map[choice]
         opts = plays[size]
+
+        # Map rank -> indices in hand to detect breaks
+        by_rank = {}
+        for idx, c in enumerate(hand):
+            by_rank.setdefault(c.rank, []).append(idx)
+
+        # Show options with break warnings (only matters when size==1 and count>1)
+                # Suggest a best safe move
+        suggestion = best_move(hand, rnd.current_play, plays)
+        if suggestion:
+            s_size, s_opt = suggestion
+            s_cards = " ".join(str(hand[j]) for j in s_opt)
+            print(f"Suggestion: {plural(s_size, 'card')} -> {s_cards}")
+
         for i, opt in enumerate(opts, 1):
+            rank = hand[opt[0]].rank
+            group_size = len(by_rank[rank])
+            tag = break_tag(group_size) if size == 1 and group_size > 1 else ""
             cards_str = " ".join(str(hand[j]) for j in opt)
-            print(f"{i}. {cards_str}")
+            print(f"{i}. {cards_str} {tag}".rstrip())
+
         try:
             sel = int(input("Pick which option: ").strip()) - 1
-            rnd.play_cards(pid, opts[sel])
+            chosen = opts[sel]
+
+            # If this play will break a set, confirm first
+            chosen_rank = hand[chosen[0]].rank
+            group_size = len(by_rank[chosen_rank])
+            if size == 1 and group_size > 1:
+                confirm = input(
+                    f"This will break a {['','pair','triple','quad'][group_size]}. Proceed? [y/N]: "
+                ).strip().lower()
+                if confirm != "y":
+                    print("Okay, not playing that. You may choose another option or pass.")
+                    continue
+
+            rnd.play_cards(pid, chosen)
             print("Played successfully.")
         except Exception as e:
             print("Invalid play:", e)
 
     # End of round
-    print("\n=== Round finished! Order:", rnd.finished_order)
+    print("\n=== Round finished! ===")
+    order = rnd.finished_order
+    if order:
+        pres = players[order[0]][1]
+        scum = players[order[-1]][1]
+        names_line = " > ".join(players[i][1] for i in order)
+        print(f"Finish order: {names_line}")
+        print(f"President: {pres}")
+        if len(order) >= 2:
+            print(f"Scum: {scum}")
+
 
 if __name__ == "__main__":
     try:
