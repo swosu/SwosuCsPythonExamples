@@ -300,7 +300,6 @@ def run_cli_demo():
             s_size, s_opt = suggestion
             s_cards = " ".join(str(hand[j]) for j in s_opt)
             print(f"Suggestion: {plural(s_size, 'card')} -> {s_cards}")
-
         # Show options with break warnings for ANY size if it consumes part of a larger group
         for i, opt in enumerate(opts, 1):
             rank = hand[opt[0]].rank
@@ -308,6 +307,32 @@ def run_cli_demo():
             tag = break_tag(group_size) if group_size > size else ""
             cards_str = " ".join(str(hand[j]) for j in opt)
             print(f"{i}. {cards_str} {tag}".rstrip())
+        
+        # --- Teaching hints (non-selectable info) when LEADING ---
+        if rnd.current_play is None:
+            # 1) If leading singles, show the breaking singles you could also lead
+            if size == 1:
+                breaking_singles = [c for (c, lbl) in singles_with_break_info(hand) if lbl]
+                if breaking_singles:
+                    print("Other lead singles (would break sets): " + " ".join(str(c) for c in breaking_singles))
+
+            # 2) Preview other lead categories (pairs/triples/quads) with break labels
+            for n in (2, 3, 4):
+                groups = n_kind_with_break_info(hand, n)
+                if groups:
+                    # Show up to 3 examples to keep it tidy
+                    examples = []
+                    for cards_list, lbl in groups[:3]:
+                        ex = cards_str(cards_list)
+                        if lbl:
+                            ex += f" [{lbl}]"
+                        examples.append(ex)
+                    print(f"Also possible lead: {n}-kind e.g.: " + " | ".join(examples))
+        # --- End teaching hints ---
+
+
+
+
         raw = input("Pick which option (or p=pass): ").strip().lower()
         if raw == "p":
             try:
