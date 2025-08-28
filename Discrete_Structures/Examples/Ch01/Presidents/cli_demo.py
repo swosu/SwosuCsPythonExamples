@@ -46,52 +46,77 @@ def setup_lobby():
 
     return names  # list of tuples (kind, name, bot_type|None)
 
+
+def explain_follow(prev_play, candidate_size, candidate_rank):
+    """
+    Return a human-friendly explanation of whether (candidate_size of candidate_rank)
+    is allowed on top of prev_play.
+    """
+    if prev_play is None:
+        return "Legal: you’re leading—any size and rank may start the trick."
+    if candidate_size != prev_play.size:
+        return f"Illegal: must play {prev_play.size}-of-a-kind to follow, not {candidate_size}."
+    if RANK_TO_VALUE[candidate_rank] <= RANK_TO_VALUE[prev_play.rank]:
+        return (f"Illegal: rank must be strictly higher than {prev_play.rank}. "
+                f"{candidate_rank} does not beat it.")
+    return (f"Legal: {candidate_size}-of-a-kind {candidate_rank} beats "
+            f"{prev_play.size}-of-a-kind {prev_play.rank}.")
+
+
+
 def ranks_strictly_higher_than(rank: str):
     v = RANK_TO_VALUE[rank]
     return [r for r in RANKS if RANK_TO_VALUE[r] > v]
 
 def generate_options(hand, current_play):
-
-
-
-
-
     """
-    Return dict {size: [list_of_index_lists]} for LEGAL sizes only.
-    Singles list includes ONLY true singletons (ranks with count==1),
-    to avoid breaking pairs/trips/quads.
+    Return { size: [ [hand_index,...], ... ] } where each inner list is a legal
+    same-rank play. Rules:
+      - If leading: allow sizes 1..4. For size=1, list ONLY true singletons
+        (ranks with count==1) to avoid cracking sets by default.
+      - If following: allow ONLY the same size as the pile, and require strictly
+        higher rank. For size=1 while following, list ANY higher single (even if
+        that breaks a pair/triple/quad); we’ll warn in the UI before committing.
     """
     # Count indices by rank
     by_rank = {}
     for idx, c in enumerate(hand):
         by_rank.setdefault(c.rank, []).append(idx)
 
-    # Which sizes are even legal this turn?
+    # Legal sizes + admissible ranks
     if current_play is None:
         legal_sizes = {1, 2, 3, 4}
-        higher_ranks = RANKS  # any rank allowed when leading
+        allowed_ranks = set(RANKS)  # any rank when leading
     else:
         legal_sizes = {current_play.size}
-        higher_ranks = ranks_strictly_higher_than(current_play.rank)
+        # only strictly higher ranks are allowed
+        allowed_ranks = {r for r in RANKS if RANK_TO_VALUE[r] > RANK_TO_VALUE[current_play.rank]}
 
     plays = {1: [], 2: [], 3: [], 4: []}
+
     for rank, indices in by_rank.items():
-        # must be a rank that can follow (or any if leading)
-        if current_play is not None and rank not in higher_ranks:
+        if current_play is not None and rank not in allowed_ranks:
             continue
 
-        count = len(indices)
-        # Singles: only if this rank is a true singleton
-        if 1 in legal_sizes and count == 1:
-            plays[1].append([indices[0]])
+        cnt = len(indices)
 
-        # Doubles/Triples/Quads: if we have enough copies
+        # Singles
+        if 1 in legal_sizes:
+            if current_play is None:
+                # Leading: only true singletons to avoid cracking sets unintentionally
+                if cnt == 1:
+                    plays[1].append([indices[0]])
+            else:
+                # Following a single: ANY higher single is valid (even if it breaks a set)
+                # Choose a canonical representative index for that rank (lowest index)
+                plays[1].append([indices[0]])
+
+        # Multi-card plays (pairs/triples/quads): only list if we have enough copies
         for size in (2, 3, 4):
-            if size in legal_sizes and count >= size:
-                # For Presidents, any same-rank subset is equivalent—just expose the first N
+            if size in legal_sizes and cnt >= size:
                 plays[size].append(indices[:size])
 
-    # remove sizes with no options (so we don’t offer invalid menus)
+    # Drop empty sizes
     return {s: opts for s, opts in plays.items() if opts}
 
 def format_minimum_needed(current_play):
