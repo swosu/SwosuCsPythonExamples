@@ -100,21 +100,23 @@ def generate_options(hand, current_play):
 
         count = len(indices)
 
+
+
         # Singles
         if 1 in legal_sizes:
             if current_play is None:
-                # Leading: only show true singletons
-                if count == 1:
+                # Leading: show ANY single (we'll label breaking ones in the menu)
+                if count >= 1:
                     plays[1].append([indices[0]])
             else:
                 # Following a single: show ANY higher single (even if it breaks a set)
                 if count >= 1:
                     plays[1].append([indices[0]])
 
-        # Multi-sets (pairs/triples/quads): only if size is legal this turn
-        for size in (2, 3, 4):
-            if size in legal_sizes and count >= size:
-                plays[size].append(indices[:size])
+
+
+
+
 
     # Strip empty sizes
     return {s: opts for s, opts in plays.items() if opts}

@@ -137,3 +137,109 @@ def new_round(num_players: int, seed: int = 123) -> RoundEngine:
     hands = deal_hands(num_players, rng=rng)
     return RoundEngine(hands)
 
+
+
+# === Presidents CLI helpers: non-breaking vs. breaking choices =================
+# These are additive utilities for the CLI. They do not alter engine behavior.
+# Safe to paste into engine.py without touching existing functions.
+# ------------------------------------------------------------------------------
+from collections import Counter
+from typing import List, Tuple, Optional
+
+# If your project already defines a Card type, we just use its interface:
+# - hashable / comparable, supports sorted(hand)
+# - has .rank for equality-by-rank grouping (whatever your cards.py uses)
+# No import here on purpose to avoid circulars; engine.py already imports cards.
+
+def _count_by_rank(hand) -> Counter:
+    """
+    Return Counter mapping rank -> count in hand.
+    Works with whatever 'rank' type your Card uses, so long as equality works.
+    """
+    return Counter(getattr(c, "rank") for c in hand)
+
+def _break_label_for_count(cnt: int) -> Optional[str]:
+    """
+    Given total copies of a rank in hand, return the label describing
+    what stronger set you'd be breaking by taking a subset.
+    """
+    if cnt >= 4:
+        return "breaks quad"
+    if cnt == 3:
+        return "breaks triple"
+    if cnt == 2:
+        return "breaks pair"
+    return None
+
+def singles_with_break_info(hand) -> List[Tuple[object, Optional[str]]]:
+    """
+    Return a list of (card, break_label_or_None) for every card in hand.
+    - If playing this single would reduce a pair/triple/quad at that rank,
+      label it accordingly.
+    - The list is sorted by your existing Card ordering (sorted(hand)).
+    """
+    counts = _count_by_rank(hand)
+    out = []
+    for c in sorted(hand):
+        cnt = counts[getattr(c, "rank")]
+        out.append((c, _break_label_for_count(cnt)))
+    return out
+
+def n_kind_with_break_info(hand, n: int) -> List[Tuple[List[object], Optional[str]]]:
+    """
+    Return all n-of-a-kind options in the hand as a list of (cards_list, label).
+    - For each rank with count >= n, we produce exactly one n-card option
+      (first n cards in that rank by the existing hand order).
+    - If the rank has more than n copies, taking n will 'break' a higher set,
+      so we label it ('breaks triple' / 'breaks quad').
+    - Results are sorted by the rank order implied by your Card comparator.
+    """
+    if n not in (2, 3, 4):
+        raise ValueError("n_kind_with_break_info supports n in {2,3,4}")
+
+    # Group cards by rank, preserving overall sorted order for stability.
+    grouped = {}
+    for c in sorted(hand):
+        r = getattr(c, "rank")
+        grouped.setdefault(r, []).append(c)
+
+    out = []
+    # Iterate ranks in the same order as they appear in the sorted hand.
+    # Using an ordered pass over unique ranks as they first occur:
+    seen = set()
+    ordered_ranks = []
+    for c in sorted(hand):
+        r = getattr(c, "rank")
+        if r not in seen:
+            seen.add(r)
+            ordered_ranks.append(r)
+
+    for r in ordered_ranks:
+        cards = grouped[r]
+        cnt = len(cards)
+        if cnt >= n:
+            label = _break_label_for_count(cnt) if cnt > n else None
+            out.append((cards[:n], label))
+    return out
+
+def best_non_breaking_single(hand):
+    """
+    Convenience helper: return the first single that does NOT break a pair/triple/quad.
+    Returns (card) or None if all singles would break something.
+    """
+    for c, label in singles_with_break_info(hand):
+        if label is None:
+            return c
+    return None
+
+def best_non_breaking_n_kind(hand, n: int):
+    """
+    Convenience helper for pairs/triples/quads: first n-kind that doesn't break a higher set.
+    Returns (cards_list) or None.
+    """
+    for cards, label in n_kind_with_break_info(hand, n):
+        if label is None:
+            return cards
+    return None
+# ===============================================================================
+
