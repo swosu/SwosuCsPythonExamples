@@ -56,32 +56,13 @@ assert sys.version_info >= (3,11), f"Python 3.11+ required, found {sys.version}"
 print("✅ Python 3.11 looks good!")
 PYCHK
 
-# ---- Create runtests.sh helper (idempotent) ----
-RUNTESTS="${HERE}/runtests.sh"
-if [[ ! -f "${RUNTESTS}" ]]; then
-  cat > "${RUNTESTS}" <<'RUN'
-#!/usr/bin/env bash
-set -euo pipefail
-# Always use the project venv's Python so version matches (3.11+)
-exec "$(dirname "$0")/.venv/bin/python" -m pytest "$@"
-RUN
-  chmod +x "${RUNTESTS}"
-fi
-
-# ---- Run tests once so users see green ----
-echo "👉 Running tests"
-"${HERE}/.venv/bin/python" -m pytest -q || true
-
 echo "👉 ✅ Setup complete!"
 echo
 echo "👉 Next steps:"
-echo "👉   1) Activate the venv when you want an interactive shell:"
+echo "👉   1) Activate the venv for an interactive shell:"
 echo "👉        source .venv/bin/activate"
 echo "👉   2) Or run tests without activating the venv:"
 echo "👉        ./runtests.sh -q"
 echo "👉   3) Run the CLI demo without activating the venv:"
 echo "👉        ./.venv/bin/python cli_demo.py"
-echo
-echo "👉 Pro tip: if tests fail because the wrong Python runs, use:"
-echo "👉        ./runtests.sh -q"
 
