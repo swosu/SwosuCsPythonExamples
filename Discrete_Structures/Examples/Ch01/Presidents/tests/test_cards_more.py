@@ -3,8 +3,6 @@ import itertools
 import random
 import pytest
 
-from Presidents.cards import deal_hands, new_deck, RANKS, SUITS, Card, sort_hand
-
 from cards import Card, new_deck, sort_hand, deal_hands, RANKS, SUITS, RANK_TO_VALUE, SUIT_TO_VALUE
 
 def test_card_is_hashable_and_frozen():

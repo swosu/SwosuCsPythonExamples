@@ -3,8 +3,6 @@ import itertools
 import random
 import pytest
 
-from Presidents.cards import deal_hands, new_deck, RANKS, SUITS, Card, sort_hand
-
 from cards import deal_hands, new_deck, RANKS, SUITS, Card, sort_hand
 
 def test_new_deck_has_52_unique_cards():
