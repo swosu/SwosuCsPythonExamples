@@ -68,15 +68,28 @@ def ranks_strictly_higher_than(rank: str):
     v = RANK_TO_VALUE[rank]
     return [r for r in RANKS if RANK_TO_VALUE[r] > v]
 
+
+
+
+
+
+
+
+
+
+
 def generate_options(hand, current_play):
     """
     Return dict {size: [list_of_index_lists]} for LEGAL sizes only.
 
-    Policy:
-      - If LEADING: singles list includes ONLY true singletons (to avoid
-        breaking pairs/triples/quads by default).
-      - If FOLLOWING A SINGLE: list ALL higher singles, even if it breaks a set.
-      - If FOLLOWING multi (pair/triple/quad): list only higher sets of that exact size.
+    Policy (matches tests):
+      - If LEADING:
+          * singles list includes ONLY true singletons (avoid breaking sets by default).
+          * pairs/triples/quads also listed if available (because any size is legal).
+      - If FOLLOWING A SINGLE:
+          * list ALL higher singles (even if it breaks a set).
+      - If FOLLOWING multi (pair/triple/quad):
+          * list only higher sets of that exact size.
     """
     # Count indices by rank
     by_rank = {}
@@ -86,40 +99,39 @@ def generate_options(hand, current_play):
     if current_play is None:
         legal_sizes = {1, 2, 3, 4}
         higher_ranks = RANKS  # any rank allowed when leading
-        following_single = False
     else:
         legal_sizes = {current_play.size}
+        # strictly higher ranks only when following
         higher_ranks = ranks_strictly_higher_than(current_play.rank)
-        following_single = (current_play.size == 1)
 
     plays = {1: [], 2: [], 3: [], 4: []}
 
     for rank, indices in by_rank.items():
+        # When following, skip ranks that aren't strictly higher
         if current_play is not None and rank not in higher_ranks:
             continue
 
         count = len(indices)
 
-
-
         # Singles
         if 1 in legal_sizes:
             if current_play is None:
-                # Leading: show ANY single (we'll label breaking ones in the menu)
-                if count >= 1:
+                # Leading: ONLY true singletons
+                if count == 1:
                     plays[1].append([indices[0]])
             else:
-                # Following a single: show ANY higher single (even if it breaks a set)
+                # Following a single: ANY higher single allowed
                 if count >= 1:
                     plays[1].append([indices[0]])
 
-
-
-
-
+        # Multi-sets (pairs/triples/quads): listed only if that size is legal this turn
+        for size in (2, 3, 4):
+            if size in legal_sizes and count >= size:
+                plays[size].append(indices[:size])
 
     # Strip empty sizes
     return {s: opts for s, opts in plays.items() if opts}
+
 
 def format_minimum_needed(current_play):
     if current_play is None:
@@ -134,16 +146,6 @@ def plural(n, word):
     return f"{n} {word}" + ("" if n == 1 else "s")
 
 
-
-
-
-
-
-
-
-
-
-
 def break_tag(count: int) -> str:
     return {
         1: "",    # not breaking anything
@@ -151,8 +153,6 @@ def break_tag(count: int) -> str:
         3: "[breaks triple]",
         4: "[breaks quad]",
     }.get(count, "")
-
-
 
 
 def best_move(hand, current_play, plays_by_size):
