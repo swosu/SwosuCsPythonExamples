@@ -296,8 +296,21 @@ def run_cli_demo():
             tag = break_tag(group_size) if group_size > size else ""
             cards_str = " ".join(str(hand[j]) for j in opt)
             print(f"{i}. {cards_str} {tag}".rstrip())
+        raw = input("Pick which option (or p=pass): ").strip().lower()
+        if raw == "p":
+            try:
+                rnd.pass_turn(pid)
+                print("You passed.")
+            except Exception as e:
+                print("Invalid pass:", e)
+            continue
+        if raw == "":
+            print("Tip: enter a number to play, or 'p' to pass.")
+            continue
         try:
-            sel = int(input("Pick which option: ").strip()) - 1
+            sel = int(raw) - 1
+
+
             chosen = opts[sel]
 
             # If this play will break a set, confirm first
