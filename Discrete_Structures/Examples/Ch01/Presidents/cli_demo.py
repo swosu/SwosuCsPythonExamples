@@ -74,6 +74,25 @@ def cards_str(cards):
     return " ".join(str(c) for c in cards)
 
 
+def suggestion_line_for_lead(hand):
+    """Return a pretty multi-category suggestion string for a fresh lead, or None."""
+    parts = []
+    # Best safe single (doesn't break sets)
+    s = best_non_breaking_single(hand)
+    if s:
+        parts.append(f"1 card -> {s}")
+    # Best safe pair/triple/quad
+    for n in (2, 3, 4):
+        grp = best_non_breaking_n_kind(hand, n)
+        if grp:
+            parts.append(f"{n} cards -> {cards_str(grp)}")
+    if parts:
+        return "Suggestion: " + " | ".join(parts)
+    return None
+
+
+
+
 
 def ranks_strictly_higher_than(rank: str):
     v = RANK_TO_VALUE[rank]
