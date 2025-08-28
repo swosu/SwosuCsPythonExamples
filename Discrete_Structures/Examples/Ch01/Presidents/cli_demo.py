@@ -259,7 +259,7 @@ def run_cli_demo():
             print("Invalid selection.")
             continue
 
-                size = menu_map[choice]
+        size = menu_map[choice]
         opts = plays[size]
 
         # Map rank -> indices in hand to detect breaks
