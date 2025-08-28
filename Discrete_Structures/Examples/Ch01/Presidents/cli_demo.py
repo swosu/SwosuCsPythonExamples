@@ -264,7 +264,10 @@ def run_cli_demo():
         menu_sizes = sorted(plays.keys())
         menu_map = {str(i+1): s for i, s in enumerate(menu_sizes)}
         labels = ", ".join(f"{k}={menu_map[k]}-kind" for k in menu_map)
-        print(f"Options: {labels}, p=pass")
+        if rnd.current_play is None:
+            print(f"Options: {labels}")
+        else:
+            print(f"Options: {labels}, p=pass")
         choice = input("Your choice: ").strip().lower()
 
         if choice == "p":
