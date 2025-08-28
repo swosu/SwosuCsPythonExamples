@@ -1,7 +1,11 @@
 # cli_demo.py — improved CLI with lobby + strict option filtering
-from engine import new_round, classify_play, is_legal_follow, Play
+from engine import (
+    new_round, classify_play, is_legal_follow, Play,
+    singles_with_break_info, n_kind_with_break_info,  # NEW
+)
 from cards import RANKS, RANK_TO_VALUE
 import sys
+
 
 BOT_TYPES = ["random", "greedy"]  # placeholder list; behavior TBA
 
