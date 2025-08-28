@@ -310,19 +310,22 @@ def run_cli_demo():
         try:
             sel = int(raw) - 1
 
-
             chosen = opts[sel]
 
-            # If this play will break a set, confirm first
+            # If this play will break a larger set, confirm first (works for any size)
             chosen_rank = hand[chosen[0]].rank
             group_size = len(by_rank[chosen_rank])
-            if size == 1 and group_size > 1:
+            if group_size > size:
+                # Correct mapping: 2->pair, 3->triple, 4->quad
+                kind_map = {2: "pair", 3: "triple", 4: "quad"}
+                kind = kind_map.get(group_size, "set")
                 confirm = input(
-                    f"This will break a {['','pair','triple','quad'][group_size]}. Proceed? [y/N]: "
+                    f"This will break a {kind}. Proceed? [y/N]: "
                 ).strip().lower()
                 if confirm != "y":
                     print("Okay, not playing that. You may choose another option or pass.")
                     continue
+
 
             rnd.play_cards(pid, chosen)
             print("Played successfully.")
