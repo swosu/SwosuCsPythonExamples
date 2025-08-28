@@ -2,16 +2,19 @@ import copy
 import itertools
 import random
 import pytest
+import dataclasses
+
 
 from cards import Card, new_deck, sort_hand, deal_hands, RANKS, SUITS, RANK_TO_VALUE, SUIT_TO_VALUE
+
 
 def test_card_is_hashable_and_frozen():
     c = Card("A", "♠")
     s = {c}
     assert c in s
-    with pytest.raises(Exception):
-        # dataclass(frozen=True) should block mutation
-        object.__setattr__(c, "rank", "3")
+    # Try normal assignment, which should fail
+    with pytest.raises((AttributeError, dataclasses.FrozenInstanceError)):
+        c.rank = "3"
 
 def test_ordering_transitivity_and_tiebreaker():
     # rank ordering

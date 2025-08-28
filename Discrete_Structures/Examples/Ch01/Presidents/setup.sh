@@ -83,5 +83,11 @@ else
   pytest -q tests
 fi
 
-say "All set! Activate later with: source $VENV_DIR/bin/activate"
+say "✅ Setup complete!"
+say ""
+say "To start working, run:"
+say "   source $VENV_DIR/bin/activate"
+say ""
+say "When finished, deactivate with:"
+say "   deactivate"
 
