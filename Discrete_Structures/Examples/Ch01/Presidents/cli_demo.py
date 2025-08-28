@@ -255,6 +255,10 @@ def run_cli_demo():
                 print("Invalid pass:", e)
             continue
 
+
+
+
+
         if choice not in menu_map:
             print("Invalid selection.")
             continue
@@ -267,14 +271,14 @@ def run_cli_demo():
         for idx, c in enumerate(hand):
             by_rank.setdefault(c.rank, []).append(idx)
 
-        # Show options with break warnings (only matters when size==1 and count>1)
-                # Suggest a best safe move
+        # Suggest a best safe move
         suggestion = best_move(hand, rnd.current_play, plays)
         if suggestion:
             s_size, s_opt = suggestion
             s_cards = " ".join(str(hand[j]) for j in s_opt)
             print(f"Suggestion: {plural(s_size, 'card')} -> {s_cards}")
 
+        # Show options with break warnings (only matters when size==1 and count>1)
         for i, opt in enumerate(opts, 1):
             rank = hand[opt[0]].rank
             group_size = len(by_rank[rank])
@@ -301,6 +305,8 @@ def run_cli_demo():
             print("Played successfully.")
         except Exception as e:
             print("Invalid play:", e)
+
+
 
     # End of round
     print("\n=== Round finished! ===")
