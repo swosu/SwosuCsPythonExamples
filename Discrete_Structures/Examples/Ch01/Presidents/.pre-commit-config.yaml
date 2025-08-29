@@ -1,0 +1,8 @@
+repos:
+  - repo: local
+    hooks:
+      - id: no-tabs-in-py
+        name: Reject tabs in Python files
+        entry: bash -c '(! grep -R -n $'\''\t'\'' --include="*.py" --exclude-dir=.venv .)'
+        language: system
+        types: [python]

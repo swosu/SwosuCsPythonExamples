@@ -7,9 +7,33 @@ from engine import (
 )
 from cards import RANKS, RANK_TO_VALUE
 import sys
-
+import random  # add near top with other imports
 
 BOT_TYPES = ["random", "greedy"]  # placeholder list; behavior TBA
+
+
+
+def choose_bot_play(hand, current_play, plays_by_size, bot_type: str):
+    """
+    Return (size, indices) for the bot to play, or None to pass.
+    - 'greedy': use best_move() heuristic (safe + low).
+    - 'random': pick any legal size and a random option of that size.
+    """
+    if not plays_by_size:
+        return None  # must pass
+
+    if bot_type == "greedy":
+        return best_move(hand, current_play, plays_by_size)
+
+    # default/random policy
+    legal_sizes = sorted(plays_by_size.keys())
+    size = random.choice(legal_sizes)
+    opt = random.choice(plays_by_size[size])
+    return (size, opt)
+
+
+
+
 
 def setup_lobby():
     print("=== Presidents CLI Setup ===")
@@ -274,11 +298,21 @@ def run_cli_demo():
 
         # Bots not yet implemented—stub: always pass (or we could add random soon)
         if kind == "bot":
-            print(f"{name} (bot) is thinking... (stub) -> pass")
+            print(f"{name} (bot) is thinking...")
             try:
-                rnd.pass_turn(pid)
+                move = choose_bot_play(hand, rnd.current_play, plays, bot_type or "greedy")
+                if not move:
+                    rnd.pass_turn(pid)
+                    print(f"{name} passes.")
+                else:
+                    size, indices = move
+                    cards_txt = " ".join(str(hand[j]) for j in indices)
+                    rnd.play_cards(pid, indices)
+                    print(f"{name} plays {cards_txt} ({size}-kind).")
             except Exception as e:
-                print("Bot failed to pass:", e)
+                print(f"{name} (bot) error:", e)
+                # if something goes wrong, fail safe: pass
+                rnd.pass_turn(pid)
             continue
 
         # Human menu: only offer valid sizes
@@ -334,8 +368,8 @@ def run_cli_demo():
             rank = hand[opt[0]].rank
             group_size = len(by_rank[rank])
             tag = break_tag(group_size) if group_size > size else ""
-            cards_str = " ".join(str(hand[j]) for j in opt)
-            print(f"{i}. {cards_str} {tag}".rstrip())
+            cards_text = " ".join(str(hand[j]) for j in opt)
+            print(f"{i}. {cards_text} {tag}".rstrip())
         
         # --- Teaching hints (non-selectable info) when LEADING ---
         if rnd.current_play is None:
