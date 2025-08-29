@@ -1,35 +1,19 @@
 from hypothesis import given, strategies as st
-from cards import RANKS, SUITS, Card
-from engine import Play  # if Play is a dataclass; otherwise adapt
-from strategy import generate_options, ranks_strictly_higher_than
+from cards import Card, RANKS, SUITS, RANK_TO_VALUE
+from engine import Play, is_legal_follow
 
 all_cards = [Card(r, s) for r in RANKS for s in SUITS]
 
 @given(
-    hand=st.lists(st.sampled_from(all_cards), min_size=1, max_size=13, unique=True),
-    # Either None (lead) or a legal Play size with some rank
-    cur=st.one_of(
-        st.just(None),
-        st.builds(lambda sz, rk: Play(size=sz, rank=rk),
-                  st.sampled_from([1,2,3,4]),
-                  st.sampled_from(RANKS))
-    )
+    prev_size=st.sampled_from([1,2,3,4]),
+    prev_rank=st.sampled_from(RANKS),
+    next_size=st.sampled_from([1,2,3,4]),
+    next_rank=st.sampled_from(RANKS),
 )
-def test_generate_options_only_offers_legal_moves(hand, cur):
-    plays = generate_options(hand, cur)
-    for size, opts in plays.items():
-        for idxs in opts:
-            # all cards in the option share a rank
-            ranks = {hand[i].rank for i in idxs}
-            assert len(ranks) == 1
-            assert len(idxs) == size
-            if cur is None:
-                # leading: any size allowed
-                assert size in {1,2,3,4}
-            else:
-                # must match size
-                assert size == cur.size
-                # and be strictly higher rank
-                rank = next(iter(ranks))
-                assert rank in ranks_strictly_higher_than(cur.rank)
+def test_is_legal_follow_matches_rule(prev_size, prev_rank, next_size, next_rank):
+    prev = Play(size=prev_size, rank=prev_rank)
+    nxt  = Play(size=next_size, rank=next_rank)
+    ok = is_legal_follow(prev, nxt)
+    expected = (next_size == prev_size) and (RANK_TO_VALUE[next_rank] > RANK_TO_VALUE[prev_rank])
+    assert ok == expected
 

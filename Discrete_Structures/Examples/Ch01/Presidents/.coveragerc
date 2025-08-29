@@ -1,0 +1,15 @@
+# .coveragerc (repo root)
+[run]
+omit =
+    cli_demo.py
+    check_env.py
+    tools/*
+    tests/*
+    cov_html/*
+    */__init__.py
+
+[report]
+exclude_lines =
+    pragma: no cover
+    if __name__ == "__main__":
+

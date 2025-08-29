@@ -1,39 +1,23 @@
 # cli_demo.py — improved CLI with lobby + strict option filtering
 
+import sys
+import random
+
+
 from engine import (
     new_round, classify_play, is_legal_follow, Play,
     singles_with_break_info, n_kind_with_break_info,
     best_non_breaking_single, best_non_breaking_n_kind,  # ADD THESE
 )
 from cards import RANKS, RANK_TO_VALUE
-import sys
-import random  # add near top with other imports
+from strategy import (
+    ranks_strictly_higher_than,
+    generate_options,
+    best_move,
+)
+from bots import choose_bot_play
 
 BOT_TYPES = ["random", "greedy"]  # placeholder list; behavior TBA
-
-
-
-def choose_bot_play(hand, current_play, plays_by_size, bot_type: str):
-    """
-    Return (size, indices) for the bot to play, or None to pass.
-    - 'greedy': use best_move() heuristic (safe + low).
-    - 'random': pick any legal size and a random option of that size.
-    """
-    if not plays_by_size:
-        return None  # must pass
-
-    if bot_type == "greedy":
-        return best_move(hand, current_play, plays_by_size)
-
-    # default/random policy
-    legal_sizes = sorted(plays_by_size.keys())
-    size = random.choice(legal_sizes)
-    opt = random.choice(plays_by_size[size])
-    return (size, opt)
-
-
-
-
 
 def setup_lobby():
     print("=== Presidents CLI Setup ===")
@@ -114,79 +98,6 @@ def suggestion_line_for_lead(hand):
         return "Suggestion: " + " | ".join(parts)
     return None
 
-
-
-
-
-def ranks_strictly_higher_than(rank: str):
-    v = RANK_TO_VALUE[rank]
-    return [r for r in RANKS if RANK_TO_VALUE[r] > v]
-
-
-
-
-
-
-
-
-
-
-
-def generate_options(hand, current_play):
-    """
-    Return dict {size: [list_of_index_lists]} for LEGAL sizes only.
-
-    Policy (matches tests):
-      - If LEADING:
-          * singles list includes ONLY true singletons (avoid breaking sets by default).
-          * pairs/triples/quads also listed if available (because any size is legal).
-      - If FOLLOWING A SINGLE:
-          * list ALL higher singles (even if it breaks a set).
-      - If FOLLOWING multi (pair/triple/quad):
-          * list only higher sets of that exact size.
-    """
-    # Count indices by rank
-    by_rank = {}
-    for idx, c in enumerate(hand):
-        by_rank.setdefault(c.rank, []).append(idx)
-
-    if current_play is None:
-        legal_sizes = {1, 2, 3, 4}
-        higher_ranks = RANKS  # any rank allowed when leading
-    else:
-        legal_sizes = {current_play.size}
-        # strictly higher ranks only when following
-        higher_ranks = ranks_strictly_higher_than(current_play.rank)
-
-    plays = {1: [], 2: [], 3: [], 4: []}
-
-    for rank, indices in by_rank.items():
-        # When following, skip ranks that aren't strictly higher
-        if current_play is not None and rank not in higher_ranks:
-            continue
-
-        count = len(indices)
-
-        # Singles
-        if 1 in legal_sizes:
-            if current_play is None:
-                # Leading: ONLY true singletons
-                if count == 1:
-                    plays[1].append([indices[0]])
-            else:
-                # Following a single: ANY higher single allowed
-                if count >= 1:
-                    plays[1].append([indices[0]])
-
-        # Multi-sets (pairs/triples/quads): listed only if that size is legal this turn
-        for size in (2, 3, 4):
-            if size in legal_sizes and count >= size:
-                plays[size].append(indices[:size])
-
-    # Strip empty sizes
-    return {s: opts for s, opts in plays.items() if opts}
-
-
 def format_minimum_needed(current_play):
     if current_play is None:
         return "You are leading; any legal size is allowed."
@@ -207,64 +118,6 @@ def break_tag(count: int) -> str:
         3: "[breaks triple]",
         4: "[breaks quad]",
     }.get(count, "")
-
-
-def best_move(hand, current_play, plays_by_size):
-    """
-    Return (size, index_list) or None for a 'best' safe move.
-    Heuristics:
-      - Lead: lowest singleton; else lowest pair; else lowest triple; else quad.
-      - Follow single: lowest higher singleton; else take 1 from the largest group (3/4 then 2).
-      - Follow multi: lowest higher set of required size.
-    """
-    if not plays_by_size:
-        return None
-
-    # Map hand rank -> indices to know multiplicities
-    by_rank = {}
-    for idx, c in enumerate(hand):
-        by_rank.setdefault(c.rank, []).append(idx)
-
-    def option_rank(opt):  # opt is list of indices for a single-rank play
-        return hand[opt[0]].rank
-
-    def opt_value(opt):
-        # used to sort by ascending strength
-        from cards import RANK_TO_VALUE
-        return RANK_TO_VALUE[option_rank(opt)]
-
-    if current_play is None:
-        # Prefer singles then pairs, etc. by ascending rank
-        for size in (1, 2, 3, 4):
-            if size in plays_by_size:
-                candidates = sorted(plays_by_size[size], key=opt_value)
-                return (size, candidates[0])
-        return None
-
-    need_size = current_play.size
-    if need_size == 1:
-        # Prefer true singletons first
-        singles = plays_by_size.get(1, [])
-        if singles:
-            # Rank singletons only: those whose rank count==1 in hand
-            true_singletons = [opt for opt in singles if len(by_rank[option_rank(opt)]) == 1]
-            if true_singletons:
-                return (1, sorted(true_singletons, key=opt_value)[0])
-            # Otherwise, pick from biggest group so we likely leave a pair/triple intact
-            # Sort candidates by (-group_count, value)
-            singles_sorted = sorted(
-                singles,
-                key=lambda opt: (-len(by_rank[option_rank(opt)]), opt_value(opt))
-            )
-            return (1, singles_sorted[0])
-        return None
-    else:
-        # Need exact size; pick lowest that beats
-        if need_size in plays_by_size:
-            candidates = sorted(plays_by_size[need_size], key=opt_value)
-            return (need_size, candidates[0])
-        return None
-
 
 
 def run_cli_demo():

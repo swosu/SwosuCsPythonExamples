@@ -24,7 +24,22 @@ fi
 echo "-> Using interpreter: $("$PY" -c 'import sys; print(sys.executable)')"
 echo "-> Python version:    $("$PY" -V)"
 
-# 4) Run tests
+# 4) Run tests (no exec); capture status
 echo "-> Running pytest..."
-exec "$PY" -m pytest "$@"
+"$PY" -m pytest "$@"
+status=$?
+
+# 5) LOC summary (largest files first)
+echo
+echo "-> LOC summary (top heavy files):"
+"$here/tools/report/loc.sh" | sed -n '1,100p'  # script will already sort DESC
+
+# 6) Optional quick smoke sim only if tests passed
+if [ $status -eq 0 ] && [ -x "$here/tools/sim/simulate.py" ]; then
+  echo
+  echo "-> Quick bot-only simulation:"
+  "$here/tools/sim/simulate.py" || true
+fi
+
+exit $status
 

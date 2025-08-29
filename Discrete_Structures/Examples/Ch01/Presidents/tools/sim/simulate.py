@@ -1,3 +1,10 @@
+#!/usr/bin/env python3
+# tools/sim/simulate.py
+import sys, os
+# ensure repo root on sys.path when running as a script
+ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+sys.path.insert(0, ROOT)
+
 from engine import new_round
 from strategy import generate_options
 from bots import choose_bot_play
