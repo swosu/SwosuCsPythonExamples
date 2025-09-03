@@ -37,6 +37,13 @@ class TestParseInput(unittest.TestCase):
         result = parse_input()
         self.assertEqual(result, [14.25])
 
+    def test_parser_has_docstring(self):
+        """Ensure parse_input has a meaningful docstring."""
+        from parser import parse_input
+        self.assertIsNotNone(parse_input.__doc__)
+        self.assertTrue(len(parse_input.__doc__.strip()) > 10)  # not empty, not trivial
+
+
 
 if __name__ == "__main__":
     unittest.main()
