@@ -1,0 +1,7 @@
+class Dog:
+    pass
+
+# Make a Dog object
+my_dog = Dog()
+
+print(my_dog) 
