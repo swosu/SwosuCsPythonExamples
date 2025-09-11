@@ -268,3 +268,13 @@ __snapshots__/
 # .idea/**/shelf/
 # .idea/**/workspace.xml
 # .idea/**/libraries/
+
+# Jupyter Notebook metadata noise
+*.ipynb~           # temporary backup notebooks
+profile_default/   # user profiles
+.ipython/          # IPython history/settings
+
+# JupyterLab settings
+.jupyter/
+.lab/
+
