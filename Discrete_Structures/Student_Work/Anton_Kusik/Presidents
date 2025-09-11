@@ -1,0 +1,114 @@
+import random
+
+#Set All Cards so they can be shuffled and passed out
+All_cards = ["A","A","A","A","2","2","2","2","3","3","3","3","4","4","4","4","5","5","5","5","6","6","6","6","7","7","7","7","8","8","8","8","9","9","9","9","10","10","10","10","J","J","J","J","Q","Q","Q","Q","K","K","K","K"]
+
+#Find out how many players are playing and set arrays for each player
+num_players = int(input("number of players:"))
+players = [[] for _ in range(num_players)]
+
+#Shuffle all cards array
+random.shuffle(All_cards)
+
+#randomly distribute the cards between the players
+turn = 0
+while All_cards:
+    players[turn % num_players].append(All_cards.pop())
+    turn += 1
+
+#Set the rank order and define a function so each player sees there cards sorted
+rank_order = ["2", "3","4","5","6","7","8","9","10","J","Q","K","A"]
+def card_sort(card):
+    return rank_order.index(card)
+
+#Call back sorting function and sort each players array
+for i in range(num_players):
+    players[i].sort(key=card_sort)
+
+#Print each array for each player sorted
+for i in range(num_players):
+    print(f"Player {i+1}'s hand: {players[i]}")
+
+#Set variables to call back to
+pile = []
+last_play = None
+passes = 0
+current_player = 0
+
+#Function to test if the current card beats the last
+def is_valid_play(play, last_play):
+    #Checks if passed
+    if not play:
+        return False
+    rank = play[0]
+    count = len(play)
+    
+    #Checks for all played multiple cards to be same value
+    if any(c != rank for c in play):
+        return False
+    
+    #If pile has no cards in it
+    if last_play is None:
+        return True 
+        
+    last_rank, last_count = last_play
+
+    #Checks to make sure pairs or triples have the same amount as last played
+    if count != last_count:
+        return False
+    
+    #Check to see if card played is higher than last card
+    return card_sort(rank) > card_sort(last_rank)
+    
+#Keep going until any array for any of the players is empty
+while any(players):
+    #Show current player their hand
+    hand = players[current_player]
+    print(f"\n--- Player {current_player+1}'s turn ---")
+    print(f"Current pile: {pile if pile else 'Empty'}")
+    print(f"Your hand: {hand}")
+    
+    while True:
+        #Making sure however the player types the cards or pass, it will go through
+        move = input("Play cards: ").strip()
+        if move.lower() == "pass":
+            chosen_play = []
+            break
+        else:
+            chosen_play = move.split()
+            
+            #Checks to make sure you have the card inyour hand and the card is better than previous card
+            if all(hand.count(card) >= chosen_play.count(card) for card in set(chosen_play)):
+                if is_valid_play(chosen_play, last_play):
+                    break
+                else:
+                    print("❌ Invalid play (must beat last play). Try again.")
+            else:
+                print("❌ You don't have those cards. Try again.")
+    
+    #Removes played card from players hand and puts it on top of the pile, if passed add pass to counter  
+    if chosen_play:
+        # Play chosen cards
+        for card in chosen_play:
+            hand.remove(card)
+        pile = chosen_play
+        last_play = (chosen_play[0], len(chosen_play))
+        passes = 0
+        print(f"✅ Player {current_player+1} plays {chosen_play}")
+    else:
+        print(f"❌ Player {current_player+1} passes")
+        passes += 1
+
+    # If everyone else passed, clear pile reset last_play and passes
+    if passes >= num_players - 1:
+        print("Pile cleared!")
+        pile = []
+        last_play = None
+        passes = 0
+
+    # If player has emptied hand
+    if not hand:
+        print(f"🎉 Player {current_player+1} is out of cards!")
+
+    # Next player
+    current_player = (current_player + 1) % num_players
