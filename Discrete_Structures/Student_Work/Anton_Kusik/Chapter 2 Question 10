@@ -1,1 +1,71 @@
+import random
 
+#Function for random matrices
+def generate_boolean_matrix(m, n):
+    return [[random.randint(0, 1) for _ in range(n)] for _ in range(m)]
+
+#Function to test if matrices meet and join one another
+def meet_and_join(A, B):
+    #Tests to see if matrices are same length
+    if len(A) != len(B) or len(A[0]) != len(B[0]):
+        raise ValueError("Matrices must have the same dimensions")
+    #Tests each variable in the matrix against the variable in the same location in the other matrix
+    m, n = len(A), len(A[0])
+    meet = [[0 for _ in range(n)] for _ in range(m)]
+    join = [[0 for _ in range(n)] for _ in range(m)]
+    for i in range(m):
+        for j in range(n):
+            meet[i][j] = A[i][j] & B[i][j]
+            join[i][j] = A[i][j] | B[i][j]
+    return meet, join
+
+#Function for if user wants to manually input matrices
+def get_manual_matrix(rows, cols, name):
+    print(f"\nEnter matrix {name} row by row (only 0s and 1s, separated by spaces):")
+    matrix = []
+    for i in range(rows):
+        while True:
+            row = input(f"Row {i+1}: ").split()
+            if len(row) != cols:
+                print(f"❌ Please enter exactly {cols} values.")
+                continue
+            try:
+                row = [int(x) for x in row]
+            except ValueError:
+                print("❌ Only numbers are allowed.")
+                continue
+            if all(x in (0, 1) for x in row):
+                matrix.append(row)
+                break
+            else:
+                print("❌ Only 0 and 1 are allowed.")
+    return matrix
+
+rows = int(input("Enter number of rows: "))
+cols = int(input("Enter number of columns: "))
+mode = input("Type 'random' for random matrices or anything else to input manually: ").strip().lower()
+
+if mode == "random":
+    A = generate_boolean_matrix(rows, cols)
+    B = generate_boolean_matrix(rows, cols)
+else:
+    A = get_manual_matrix(rows, cols, "A")
+    B = get_manual_matrix(rows, cols, "B")
+
+print("\nMatrix A:")
+for row in A:
+    print(row)
+
+print("\nMatrix B:")
+for row in B:
+    print(row)
+
+meet, join = meet_and_join(A, B)
+
+print("\nMeet (A ∧ B):")
+for row in meet:
+    print(row)
+
+print("\nJoin (A ∨ B):")
+for row in join:
+    print(row)
