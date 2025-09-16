@@ -1,0 +1,6 @@
+Profile code so we see how much memory it uses
+Time how long a code takes to complete a tast multiple times
+Keep track of how long a code takes to complete a task multiple times
+Reort back the best time for that data set size, the worst time for that data set, and the average time for that data set.
+Keep track of memory used for that data set size.
+The code should be able to use multiple algorithms to complete the same process
