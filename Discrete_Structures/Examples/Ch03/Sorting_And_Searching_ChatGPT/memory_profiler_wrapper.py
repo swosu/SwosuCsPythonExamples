@@ -1,3 +1,5 @@
+import time
+import statistics
 import tracemalloc
 
 def run_with_memory(algorithm, data, trials=10):
