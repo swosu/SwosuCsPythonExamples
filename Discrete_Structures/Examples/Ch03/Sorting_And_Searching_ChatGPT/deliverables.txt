@@ -1,0 +1,95 @@
+1) Core Learning Goals for Today
+
+See how algorithm performance changes with input size.
+
+Understand best, worst, and average cases.
+
+Measure time and memory use empirically.
+
+Compare different algorithms solving the same task.
+
+Connect results to Big‑O intuition.
+
+2) Deliverables (Prioritized)
+(A) Experiment Framework (must‑haves)
+
+Algorithms to Include
+
+Searching: Linear, Binary
+
+Sorting: Bubble, Insertion, Merge, Quick, Built‑in Timsort
+
+Input Families (to trigger case behavior)
+
+Random, Sorted, Reverse, Nearly sorted, Duplicates
+
+Experiment Matrix
+
+Array sizes: small → large (e.g., 50 → 100k)
+
+Trials per size: multiple runs (e.g., 30) for average/stability
+
+(B) Metrics to Capture (student focus)
+
+Time Measurement
+
+Record multiple runs; report best, worst, average
+
+Memory Measurement
+
+Capture memory usage per algorithm/data size
+
+Comparison Counts / Swaps (for sorting)
+
+(Optional extension if time permits)
+
+(C) Reporting & Visualization
+
+Aggregate Results
+
+For each algorithm × size: best, worst, average time; memory usage
+
+Visuals
+
+Time vs input size (linear + log‑log)
+
+Memory vs input size
+
+Case comparison plots (best/worst/average)
+
+(D) Enrichment / Extensions
+
+Parallel or optimized variants
+
+Show built‑in library sort (Timsort) vs student‑coded sorts
+
+(Optional) Parallelized implementation for larger sizes
+
+Optional extras
+
+Quicksort pivot strategies
+
+Non‑comparison sorts (Counting/Radix)
+
+Cache effects / constant factors
+
+3) Protocol & Reproducibility Notes
+
+Multiple trials per condition → average results.
+
+Use fixed seeds for random data → reproducible experiments.
+
+Compare outputs to Python sorted() to verify correctness.
+
+Document environment (CPU, Python version).
+
+4) Data & Artifacts
+
+Raw CSV data for each run (algorithm, size, metrics).
+
+Aggregated summary tables (best/worst/avg).
+
+Figures (time vs n, memory vs n).
+
+Student worksheet with reflection prompts (predictions vs results).
+
