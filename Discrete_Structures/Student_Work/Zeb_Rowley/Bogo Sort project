@@ -1,0 +1,32 @@
+import random
+import time
+
+#Check if the array is sorted in order.
+def is_sorted(arr):
+    for i in range(len(arr) - 1):
+        if arr[i] > arr[i + 1]:
+            return False
+    return True
+
+#Perform BOGO sort inside of the random number array
+def bogo_sort(arr):
+    attempts = 0
+    while not is_sorted(arr):
+        random.shuffle(arr)
+        attempts += 1
+    print(f"Sorted after {attempts} shuffles!")
+    return arr
+
+#Creates a timer to see how long BOGO sort ran for
+def Timer(numbers):
+    start = time.perf_counter()  #start timer
+    result = bogo_sort(numbers)  #run bogo sort function
+    end = time.perf_counter()    #end timer
+    print(f"Time taken: {end - start:.2f} seconds") #paste time with 6 decimal points
+    return result
+    
+
+numbers = [random.randint(1, 100) for i in range(15)]  #Make a random numbers for the array
+print("Original:", numbers)
+sorted_numbers = Timer(numbers)
+print("Sorted:", sorted_numbers)
