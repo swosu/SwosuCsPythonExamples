@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2025.10.2)  2 OCT 2025 11:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020) (preloaded format=pdflatex 2025.10.2)  2 OCT 2025 11:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -92,19 +92,38 @@ LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
 ))
+(/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
 
-! LaTeX Error: File `fullpage.sty' not found.
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks20
+)
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 
-Type X to quit or <RETURN> to proceed,
-or enter new name. (Default extension: sty)
-
-Enter file name: 
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+))
+\Gm@cnth=\count199
+\Gm@cntv=\count266
+\c@Gm@tempcnt=\count267
+\Gm@bindingoffset=\dimen148
+\Gm@wd@mp=\dimen149
+\Gm@odd@mp=\dimen150
+\Gm@even@mp=\dimen151
+\Gm@layoutwidth=\dimen152
+\Gm@layoutheight=\dimen153
+\Gm@layouthoffset=\dimen154
+\Gm@layoutvoffset=\dimen155
+\Gm@dimlist=\toks21
+)
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
 File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
-\l__color_backend_stack_int=\count199
+\l__color_backend_stack_int=\count268
 \l__pdf_internal_box=\box49
 )
-No file ch_04_section_02_example_01_teacher.aux.
+(./ch_04_section_02_example_01_teacher.aux)
 \openout1 = `ch_04_section_02_example_01_teacher.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 6.
@@ -121,6 +140,41 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 6.
 LaTeX Font Info:    ... okay on input line 6.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 6.
 LaTeX Font Info:    ... okay on input line 6.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(72.26999pt, 469.75502pt, 72.26999pt)
+* v-part:(T,H,B)=(72.26999pt, 650.43001pt, 72.26999pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=469.75502pt
+* \textheight=650.43001pt
+* \oddsidemargin=0.0pt
+* \evensidemargin=0.0pt
+* \topmargin=-37.0pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=12.0pt
+* \footskip=30.0pt
+* \marginparwidth=44.0pt
+* \marginparsep=10.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
 LaTeX Font Info:    Trying to load font information for U+msa on input line 14.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -131,29 +185,18 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 14.
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-)
-Overfull \hbox (18.12265pt too wide) detected at line 56
-\OT1/cmr/m/n/12 (11011010101)[] = 1 \OMS/cmsy/m/n/12 ^^A \OT1/cmr/m/n/12 2[] + 
-1 \OMS/cmsy/m/n/12 ^^A \OT1/cmr/m/n/12 2[] + 0 \OMS/cmsy/m/n/12 ^^A \OT1/cmr/m/
-n/12 2[] + 1 \OMS/cmsy/m/n/12 ^^A \OT1/cmr/m/n/12 2[] + 1 \OMS/cmsy/m/n/12 ^^A 
-\OT1/cmr/m/n/12 2[] + 0 \OMS/cmsy/m/n/12 ^^A \OT1/cmr/m/n/12 2[] + 1 \OMS/cmsy/
-m/n/12 ^^A \OT1/cmr/m/n/12 2[] + 0 \OMS/cmsy/m/n/12 ^^A \OT1/cmr/m/n/12 2[] + 1
- \OMS/cmsy/m/n/12 ^^A \OT1/cmr/m/n/12 2[] + 0 \OMS/cmsy/m/n/12 ^^A \OT1/cmr/m/n
-/12 2[] + 1 \OMS/cmsy/m/n/12 ^^A \OT1/cmr/m/n/12 2[]
- []
+) [1
 
-[1
-
-{/usr/share/texlive/texmf-dist/fonts/map/pdftex/updmap/pdftex.map}] [2]
+{/usr/share/texlive/texmf-dist/fonts/map/pdftex/updmap/pdftex.map}]
 (./ch_04_section_02_example_01_teacher.aux) ) 
 Here is how much of TeX's memory you used:
- 1548 strings out of 481008
- 20004 string characters out of 5909439
- 302459 words of memory out of 5000000
- 18770 multiletter control sequences out of 15000+600000
+ 2093 strings out of 481008
+ 27977 string characters out of 5909439
+ 319452 words of memory out of 5000000
+ 19299 multiletter control sequences out of 15000+600000
  409609 words of font info for 50 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 67i,5n,74p,254b,141s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 68i,4n,74p,254b,141s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/share/texlive/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texmf-dist/fonts/typ
 e1/public/amsfonts/cm/cmbx8.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
@@ -161,11 +204,11 @@ ic/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/ams
 fonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
 m/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10
 .pfb>
-Output written on ch_04_section_02_example_01_teacher.pdf (2 pages, 64024 bytes
-).
+Output written on ch_04_section_02_example_01_teacher.pdf (1 page, 63688 bytes)
+.
 PDF statistics:
- 35 PDF objects out of 1000 (max. 8388607)
- 24 compressed objects within 1 object stream
+ 32 PDF objects out of 1000 (max. 8388607)
+ 22 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
