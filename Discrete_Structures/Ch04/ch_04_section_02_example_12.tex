@@ -1,0 +1,51 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+
+\begin{document}
+
+\section*{Example 12 Worksheet: Fast Modular Exponentiation}
+
+\textbf{Problem:} Use Algorithm 5 to find $3^{544} \pmod{645}$.
+
+\subsection*{Step-by-Step Solution}
+Algorithm 5 works by:
+\begin{enumerate}
+    \item Writing the exponent ($544$) in binary.
+    \item Iterating through the bits, squaring at each step, and multiplying only when the current bit is $1$.
+    \item Reducing by the modulus after every multiplication.
+\end{enumerate}
+
+\noindent
+Binary form of $544$: $(1000100000)_2$.
+
+\noindent
+Steps (values of $i$, $x$, and $power$):
+\begin{itemize}
+    \item $i=0$: $a_0=0$, $x=1$, $power = 3^2 \pmod{645} = 9$.
+    \item $i=1$: $a_1=0$, $x=1$, $power = 9^2 \pmod{645} = 81$.
+    \item $i=2$: $a_2=0$, $x=1$, $power = 81^2 \pmod{645} = 111$.
+    \item $i=3$: $a_3=0$, $x=1$, $power = 111^2 \pmod{645} = 66$.
+    \item $i=4$: $a_4=0$, $x=1$, $power = 66^2 \pmod{645} = 486$.
+    \item $i=5$: $a_5=1$, $x=(1 \cdot 486) \pmod{645} = 486$, $power = 486^2 \pmod{645} = 126$.
+    \item $i=6$: $a_6=0$, $x=486$, $power = 126^2 \pmod{645} = 396$.
+    \item $i=7$: $a_7=0$, $x=486$, $power = 396^2 \pmod{645} = 81$.
+    \item $i=8$: $a_8=0$, $x=486$, $power = 81^2 \pmod{645} = 111$.
+    \item $i=9$: $a_9=1$, $x=(486 \cdot 111) \pmod{645} = 36$, $power = 111^2 \pmod{645} = 36$.
+\end{itemize}
+
+\noindent
+Final answer: $3^{544} \pmod{645} = \boxed{36}$.
+
+---
+
+\subsection*{Practice Problems}
+
+\begin{enumerate}
+    \item Easier: Compute $2^{13} \pmod{19}$ using Algorithm 5.
+    \item Medium: Compute $7^{45} \pmod{50}$ using Algorithm 5.
+    \item Harder: Compute $11^{117} \pmod{221}$ using Algorithm 5.
+\end{enumerate}
+
+\end{document}
+
