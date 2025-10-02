@@ -1,0 +1,77 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{Worksheet: Hexadecimal Expansion (Example 5)}
+\end{center}
+
+\section*{Part A — Worked Example}
+
+\textbf{Problem.} Find the hexadecimal expansion of $(177130)_{10}$.
+
+\textbf{Step 1: Recall.} To convert from decimal to base $16$, divide repeatedly by $16$ and record the remainders. The remainders (read bottom-to-top) give the digits.
+
+\medskip
+\textbf{Step 2: Divide $177130$ by $16$.}
+\[
+177130 = 16 \cdot 11070 + 10.
+\]
+Remainder $=10$ (which corresponds to $A$ in hexadecimal).
+
+\medskip
+\textbf{Step 3: Divide $11070$ by $16$.}
+\[
+11070 = 16 \cdot 691 + 14.
+\]
+Remainder $=14$ (which corresponds to $E$).
+
+\medskip
+\textbf{Step 4: Divide $691$ by $16$.}
+\[
+691 = 16 \cdot 43 + 3.
+\]
+Remainder $=3$.
+
+\medskip
+\textbf{Step 5: Divide $43$ by $16$.}
+\[
+43 = 16 \cdot 2 + 11.
+\]
+Remainder $=11$ (which corresponds to $B$).
+
+\medskip
+\textbf{Step 6: Divide $2$ by $16$.}
+\[
+2 = 16 \cdot 0 + 2.
+\]
+Remainder $=2$, quotient $=0$. Stop here.
+
+\medskip
+\textbf{Step 7: Collect remainders.} Reading bottom-to-top: $2, B, 3, E, A$.
+
+\[
+(177130)_{10} = (2B3EA)_{16}.
+\]
+
+\fbox{$(177130)_{10} = (2B3EA)_{16}$}
+
+---
+
+\section*{Part B — Easier Practice Problems}
+1. Convert $(255)_{10}$ into hexadecimal.
+2. Convert $(4095)_{10}$ into hexadecimal.
+
+\vspace{2cm}
+
+---
+
+\section*{Part C — Harder Challenge}
+Convert $(1048575)_{10}$ into hexadecimal. (Hint: $1048575 = 2^{20} - 1$.)
+
+\vspace{3cm}
+
+\end{document}
+

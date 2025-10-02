@@ -1,0 +1,77 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{Solutions: Conversions Between Binary, Octal, and Hexadecimal (Example 7)}
+\end{center}
+
+\section*{Part A — Worked Example}
+
+1. $(11\;1110\;1011\;1100)_{2} \to$ Octal:  
+\[
+011\;111\;010\;111\;100 \quad \Rightarrow \quad 3,7,2,7,4
+\]  
+Answer: $(37274)_{8}$.
+
+\medskip
+2. $(11\;1110\;1011\;1100)_{2} \to$ Hexadecimal:  
+\[
+0011\;1110\;1011\;1100 \quad \Rightarrow \quad 3,E,B,C
+\]  
+Answer: $(3EBC)_{16}$.
+
+\medskip
+3. $(765)_{8} \to$ Binary:  
+\[
+7=111,\; 6=110,\; 5=101
+\]  
+Answer: $(111110101)_{2}$.
+
+\medskip
+4. $(\text{A8D})_{16} \to$ Binary:  
+\[
+A=1010,\; 8=1000,\; D=1101
+\]  
+Answer: $(101010001101)_{2}$.
+
+---
+
+\section*{Part B — Easier Problems}
+
+1. $(101101)_{2}$ to octal:  
+Group into 3’s: $101,101 = 5,5$.  
+Answer: $(55)_{8}$.
+
+\medskip
+2. $(47)_{8}$ to binary:  
+\[
+4=100,\; 7=111
+\]  
+Answer: $(100111)_{2}$.
+
+---
+
+\section*{Part C — Harder Challenge}
+
+$(111011110101)_{2}$.  
+
+- Octal grouping (3’s): $111,011,110,101 = 7,3,6,5$.  
+Answer: $(7365)_{8}$.  
+
+- Hex grouping (4’s): $1110,1111,0101 = E,F,5$.  
+Answer: $(EF5)_{16}$.
+
+---
+
+\section*{Teaching Notes}
+\begin{itemize}
+  \item Remind students: grouping into 3’s for octal, 4’s for hex is the fastest way.  
+  \item Encourage them to pad with leading zeros if needed.  
+  \item Cross-check: convert both octal and hex back to binary to confirm.  
+\end{itemize}
+
+\end{document}
+

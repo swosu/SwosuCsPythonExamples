@@ -1,0 +1,81 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{Worksheet: Conversions Between Binary, Octal, and Hexadecimal (Example 7)}
+\end{center}
+
+\section*{Part A — Worked Example}
+
+\textbf{Problem.} Find the octal and hexadecimal expansions of $(11\;1110\;1011\;1100)_{2}$ and the binary expansions of $(765)_{8}$ and $(\text{A8D})_{16}$.
+
+\medskip
+\textbf{Step 1: Convert $(11\;1110\;1011\;1100)_{2}$ to octal.}
+
+- Group binary digits into blocks of 3 (add leading zeros if needed):  
+\[
+011,\;111,\;010,\;111,\;100
+\]  
+- Convert each block to octal: $3, 7, 2, 7, 4$.  
+\[
+(11\;1110\;1011\;1100)_{2} = (37274)_{8}
+\]
+
+\medskip
+\textbf{Step 2: Convert $(11\;1110\;1011\;1100)_{2}$ to hexadecimal.}
+
+- Group binary digits into blocks of 4:  
+\[
+0011,\;1110,\;1011,\;1100
+\]  
+- Convert each block: $3, E, B, C$.  
+\[
+(11\;1110\;1011\;1100)_{2} = (3EBC)_{16}
+\]
+
+\medskip
+\textbf{Step 3: Convert $(765)_{8}$ to binary.}
+
+- Each octal digit becomes 3 binary digits:  
+\[
+7 = 111,\; 6 = 110,\; 5 = 101
+\]  
+\[
+(765)_{8} = (111110101)_{2}
+\]
+
+\medskip
+\textbf{Step 4: Convert $(\text{A8D})_{16}$ to binary.}
+
+- Each hex digit becomes 4 binary digits:  
+\[
+A = 1010,\; 8 = 1000,\; D = 1101
+\]  
+\[
+(\text{A8D})_{16} = (101010001101)_{2}
+\]
+
+\fbox{Final Answers: $(37274)_{8},\; (3EBC)_{16},\; (111110101)_{2},\; (101010001101)_{2}$}
+
+---
+
+\section*{Part B — Easier Practice Problems}
+
+1. Convert $(101101)_{2}$ to octal.  
+2. Convert $(47)_{8}$ to binary.  
+
+\vspace{2cm}
+
+---
+
+\section*{Part C — Harder Challenge}
+
+Convert $(111011110101)_{2}$ into both octal and hexadecimal.
+
+\vspace{3cm}
+
+\end{document}
+

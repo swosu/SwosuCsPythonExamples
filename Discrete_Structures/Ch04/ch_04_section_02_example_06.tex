@@ -1,0 +1,98 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{Worksheet: Binary Expansion (Example 6)}
+\end{center}
+
+\section*{Part A — Worked Example}
+
+\textbf{Problem.} Find the binary expansion of $(241)_{10}$.
+
+\textbf{Step 1: Recall.} To convert a decimal number to binary (base $2$), divide repeatedly by $2$ and record the remainders. The remainders (read bottom-to-top) give the binary digits.
+
+\medskip
+\textbf{Step 2: Divide $241$ by $2$.}
+\[
+241 = 2 \cdot 120 + 1
+\]
+Remainder $=1$.
+
+\medskip
+\textbf{Step 3: Divide $120$ by $2$.}
+\[
+120 = 2 \cdot 60 + 0
+\]
+Remainder $=0$.
+
+\medskip
+\textbf{Step 4: Divide $60$ by $2$.}
+\[
+60 = 2 \cdot 30 + 0
+\]
+Remainder $=0$.
+
+\medskip
+\textbf{Step 5: Divide $30$ by $2$.}
+\[
+30 = 2 \cdot 15 + 0
+\]
+Remainder $=0$.
+
+\medskip
+\textbf{Step 6: Divide $15$ by $2$.}
+\[
+15 = 2 \cdot 7 + 1
+\]
+Remainder $=1$.
+
+\medskip
+\textbf{Step 7: Divide $7$ by $2$.}
+\[
+7 = 2 \cdot 3 + 1
+\]
+Remainder $=1$.
+
+\medskip
+\textbf{Step 8: Divide $3$ by $2$.}
+\[
+3 = 2 \cdot 1 + 1
+\]
+Remainder $=1$.
+
+\medskip
+\textbf{Step 9: Divide $1$ by $2$.}
+\[
+1 = 2 \cdot 0 + 1
+\]
+Remainder $=1$, quotient $=0$. Stop here.
+
+\medskip
+\textbf{Step 10: Collect remainders.} Reading bottom-to-top: $11110001$.
+
+\[
+(241)_{10} = (11110001)_{2}.
+\]
+
+\fbox{$(241)_{10} = (11110001)_{2}$}
+
+---
+
+\section*{Part B — Easier Practice Problems}
+1. Convert $(13)_{10}$ to binary.  
+2. Convert $(100)_{10}$ to binary.  
+
+\vspace{2cm}
+
+---
+
+\section*{Part C — Harder Challenge}
+Convert $(1023)_{10}$ into binary. (Hint: $1023 = 2^{10} - 1$.)
+
+\vspace{3cm}
+
+\end{document}
+

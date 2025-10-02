@@ -1,0 +1,99 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{Solutions: Hexadecimal Expansion (Example 5)}
+\end{center}
+
+\section*{Part A — Worked Example}
+Shown step-by-step:
+
+\[
+177130 \div 16 = 11070 \, r10 \quad (A)
+\]
+\[
+11070 \div 16 = 691 \, r14 \quad (E)
+\]
+\[
+691 \div 16 = 43 \, r3
+\]
+\[
+43 \div 16 = 2 \, r11 \quad (B)
+\]
+\[
+2 \div 16 = 0 \, r2
+\]
+
+Digits: $(2B3EA)_{16}$.
+
+---
+
+\section*{Part B — Easier Practice Solutions}
+
+1. $(255)_{10}$:
+\[
+255 \div 16 = 15 \, r15 \quad (F)
+\]
+\[
+15 \div 16 = 0 \, r15 \quad (F)
+\]
+Answer: $(255)_{10} = (FF)_{16}$.
+
+\medskip
+2. $(4095)_{10}$:
+\[
+4095 \div 16 = 255 \, r15 \quad (F)
+\]
+\[
+255 \div 16 = 15 \, r15 \quad (F)
+\]
+\[
+15 \div 16 = 0 \, r15 \quad (F)
+\]
+Answer: $(4095)_{10} = (FFF)_{16}$.
+
+---
+
+\section*{Part C — Harder Challenge Solution}
+
+\[
+1048575 = 2^{20} - 1.
+\]
+
+Successive division by $16$ gives all remainders equal to $15$:
+
+\[
+1048575 \div 16 = 65535 \, r15 \quad (F)
+\]
+\[
+65535 \div 16 = 4095 \, r15 \quad (F)
+\]
+\[
+4095 \div 16 = 255 \, r15 \quad (F)
+\]
+\[
+255 \div 16 = 15 \, r15 \quad (F)
+\]
+\[
+15 \div 16 = 0 \, r15 \quad (F)
+\]
+
+Answer:
+\[
+(1048575)_{10} = (FFFFF)_{16}.
+\]
+
+---
+
+\section*{Teaching Notes}
+\begin{itemize}
+  \item Highlight that A–F are digits $10$–$15$.
+  \item Easier problems illustrate short expansions ($FF$, $FFF$).
+  \item The challenge problem emphasizes recognizing special forms like $2^n - 1$.
+\end{itemize}
+
+\end{document}
+

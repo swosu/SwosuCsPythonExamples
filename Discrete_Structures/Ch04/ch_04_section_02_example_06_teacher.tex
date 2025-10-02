@@ -1,0 +1,87 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{Solutions: Binary Expansion (Example 6)}
+\end{center}
+
+\section*{Part A — Worked Example}
+\[
+241 \div 2 = 120 \, r1
+\]
+\[
+120 \div 2 = 60 \, r0
+\]
+\[
+60 \div 2 = 30 \, r0
+\]
+\[
+30 \div 2 = 15 \, r0
+\]
+\[
+15 \div 2 = 7 \, r1
+\]
+\[
+7 \div 2 = 3 \, r1
+\]
+\[
+3 \div 2 = 1 \, r1
+\]
+\[
+1 \div 2 = 0 \, r1
+\]
+
+Reading bottom-to-top: $(11110001)_{2}$.
+
+---
+
+\section*{Part B — Easier Practice Solutions}
+
+1. $(13)_{10}$:  
+\[
+13 \div 2 = 6 \, r1,\;
+6 \div 2 = 3 \, r0,\;
+3 \div 2 = 1 \, r1,\;
+1 \div 2 = 0 \, r1.
+\]  
+Answer: $(13)_{10} = (1101)_{2}$.
+
+\medskip
+2. $(100)_{10}$:  
+\[
+100 \div 2 = 50 \, r0,\;
+50 \div 2 = 25 \, r0,\;
+25 \div 2 = 12 \, r1,\;
+12 \div 2 = 6 \, r0,\;
+6 \div 2 = 3 \, r0,\;
+3 \div 2 = 1 \, r1,\;
+1 \div 2 = 0 \, r1.
+\]  
+Answer: $(100)_{10} = (1100100)_{2}$.
+
+---
+
+\section*{Part C — Harder Challenge Solution}
+
+$(1023)_{10}$. Note: $1023 = 2^{10} - 1$.
+
+This means the binary expansion will be ten 1's in a row.
+
+\[
+(1023)_{10} = (1111111111)_{2}.
+\]
+
+---
+
+\section*{Teaching Notes}
+\begin{itemize}
+  \item Reinforce the bottom-to-top reading of remainders.
+  \item Use powers of $2$ to recognize special forms (like $2^n - 1$).
+  \item Encourage students to double-check by recomputing in decimal.
+\end{itemize}
+
+\end{document}
+
