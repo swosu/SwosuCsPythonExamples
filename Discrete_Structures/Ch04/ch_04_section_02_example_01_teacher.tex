@@ -1,0 +1,75 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fullpage}
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{Solutions: Decimal Expansions from Binary Numbers}
+\end{center}
+
+\section*{Part A: Worked Example (from text)}
+
+\textbf{Problem:} Find the decimal expansion of the binary integer $(0101011111)_2$.
+
+\textbf{Solution:} 
+\[
+(0101011111)_2 = 0 \cdot 2^9 + 1 \cdot 2^8 + 0 \cdot 2^7 + 1 \cdot 2^6 + 0 \cdot 2^5
++ 1 \cdot 2^4 + 1 \cdot 2^3 + 1 \cdot 2^2 + 1 \cdot 2^1 + 1 \cdot 2^0
+\]
+
+\[
+= 256 + 64 + 16 + 8 + 4 + 2 + 1
+\]
+
+\[
+= 351
+\]
+
+So, \(\mathbf{(0101011111)_2 = (351)_{10}}\).
+
+---
+
+\section*{Part B: Easier Practice}
+
+\textbf{Problem:} Convert $(1011)_2$ to decimal.  
+
+\textbf{Solution:} 
+\[
+(1011)_2 = 1 \cdot 2^3 + 0 \cdot 2^2 + 1 \cdot 2^1 + 1 \cdot 2^0
+= 8 + 0 + 2 + 1 = 11
+\]
+
+So, \(\mathbf{(1011)_2 = (11)_{10}}\).
+
+---
+
+\section*{Part C: Harder Practice}
+
+\textbf{Problem:} Convert $(11011010101)_2$ to decimal.  
+
+\textbf{Solution:} 
+\[
+(11011010101)_2 = 1 \cdot 2^{10} + 1 \cdot 2^9 + 0 \cdot 2^8 + 1 \cdot 2^7 + 1 \cdot 2^6 
++ 0 \cdot 2^5 + 1 \cdot 2^4 + 0 \cdot 2^3 + 1 \cdot 2^2 + 0 \cdot 2^1 + 1 \cdot 2^0
+\]
+
+\[
+= 1024 + 512 + 0 + 128 + 64 + 0 + 16 + 0 + 4 + 0 + 1
+\]
+
+\[
+= 1749
+\]
+
+So, \(\mathbf{(11011010101)_2 = (1749)_{10}}\).
+
+---
+
+\section*{Part D: Reflection}
+
+Binary expansions are sums of powers of 2, just like decimal expansions are sums of powers of 10. The only difference is the base. Each base-$b$ expansion expresses a number as digits multiplied by powers of $b$.
+
+\end{document}
+
