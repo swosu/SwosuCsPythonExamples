@@ -1,0 +1,77 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+
+\title{Ch 4.2 — Example 10 Worksheet\\Binary Multiplication via Algorithm 3}
+\author{Discrete Structures}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Goal}
+Multiply two positive integers given in binary using \textbf{Algorithm 3 (Multiplication of Integers)}:
+\begin{itemize}
+  \item For each bit $b_j$ of the multiplier $b$, form a partial product $c_j$:
+        \[
+           c_j = \begin{cases}
+             a \text{ shifted left $j$ places}, & \text{if } b_j=1,\\
+             (0)_2, & \text{if } b_j=0.
+           \end{cases}
+        \]
+  \item Add all partial products using \textbf{Algorithm 2 (binary addition)}.
+\end{itemize}
+
+\section*{Worked Example (from the text)}
+Find the product of $a=(110)_2$ and $b=(101)_2$.
+
+\subsection*{Step 1 — Identify bits of the multiplier}
+$b=(101)_2$ has bits (from least significant to most) $b_0=1$, $b_1=0$, $b_2=1$.
+
+\subsection*{Step 2 — Form partial products}
+Shift $a=(110)_2$ by $j$ places when $b_j=1$.
+\[
+\begin{aligned}
+b_0=1:&\quad c_0 = (110)_2 \cdot 2^0 = (110)_2.\\[4pt]
+b_1=0:&\quad c_1 = (000)_2 \qquad\text{(all zeros)}.\\[4pt]
+b_2=1:&\quad c_2 = (110)_2 \cdot 2^2 = (11000)_2.
+\end{aligned}
+\]
+
+\subsection*{Step 3 — Add the partial products (Algorithm 2)}
+Pad with initial zeros to align columns and add:
+\[
+\begin{array}{r}
+\phantom{(}11000\phantom{)}\\
+\phantom{(}00000\phantom{)}\\
++ \; 00110\\ \hline
+\phantom{(}11110
+\end{array}
+\quad\Rightarrow\quad (11110)_2.
+\]
+
+\subsection*{Step 4 — Quick decimal check (optional)}
+$(110)_2=6$, $(101)_2=5$, and $6\cdot 5=30$, while $(11110)_2=16+8+4+2=30$. Checks out.
+
+\paragraph{Answer.} $(110)_2(101)_2=(1\,1110)_2$.
+
+\bigskip
+\hrule
+\bigskip
+
+\section*{Student Practice}
+Show clear partial products and use Algorithm 2 for each addition.
+
+\subsection*{A. Easier (warm-up)}
+1) $(101)_2 \times (11)_2$
+
+\subsection*{B. Harder (challenge)}
+2) $(10011)_2 \times (1011)_2$ \hfill (two 1s close together; more carries)\\
+3) $(111010)_2 \times (10111)_2$ \hfill (longer; many partials)
+
+\bigskip
+\textit{Space for work}:
+
+\vfill
+\end{document}
+

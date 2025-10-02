@@ -1,0 +1,99 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+
+\title{Section 4.2 — Example 9 Teacher Manual\\
+Counting Bit Additions in Algorithm 2}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Detailed explanation (matching Example 9)}
+At each bit position $j$ Algorithm 2 computes
+\[
+d=\big\lfloor \tfrac{a_j+b_j+c}{2}\big\rfloor,\qquad s_j=a_j+b_j+c-2d,\qquad c\leftarrow d.
+\]
+Implementing the three-bit sum $a_j+b_j+c$ uses at most two one-bit additions:
+\[
+t_1=(a_j+b_j)\quad\text{and}\quad t_2=t_1+c.
+\]
+If $c=0$ and $a_j+b_j<2$, the second add is effectively a no-op, so the total count is \emph{strictly less than $2n$}. In any case, the bound $\le 2n$ yields linear time $O(n)$.
+
+\section*{Worked examples}
+
+\subsection*{A. Two-bit example: $(11)_2 + (01)_2$}
+\begin{center}
+\begin{tabular}{c|c c c|c c}
+$j$ & $a_j$ & $b_j$ & $c$ (in) & $s_j$ & $c$ (out)\\\hline
+0 & 1 & 1 & 0 & $0$ & $1$\\
+1 & 1 & 0 & 1 & $0$ & $1$\\\hline
+\multicolumn{6}{c}{$s_2=1$}
+\end{tabular}
+\end{center}
+Result: $(100)_2$. Bit additions used $\le 4$.
+
+\subsection*{B. Four-bit example: $(1011)_2 + (0110)_2$}
+\begin{center}
+\begin{tabular}{c|c c c|c c}
+$j$ & $a_j$ & $b_j$ & $c$ (in) & $s_j$ & $c$ (out)\\\hline
+0 & 1 & 0 & 0 & $1$ & $0$\\
+1 & 1 & 1 & 0 & $0$ & $1$\\
+2 & 0 & 1 & 1 & $0$ & $1$\\
+3 & 1 & 0 & 1 & $0$ & $1$\\\hline
+\multicolumn{6}{c}{$s_4=1$}
+\end{tabular}
+\end{center}
+Result: $(10001)_2$. Bit additions used $\le 8$.
+
+\section*{Solutions to student practice}
+
+\subsection*{1) $(0101)_2 + (0011)_2$}
+\begin{center}
+\begin{tabular}{c|c c c|c c}
+$j$ & $a_j$ & $b_j$ & $c$ (in) & $s_j$ & $c$ (out)\\\hline
+0 & 1 & 1 & 0 & $0$ & $1$\\
+1 & 0 & 1 & 1 & $0$ & $1$\\
+2 & 1 & 0 & 1 & $0$ & $1$\\
+3 & 0 & 0 & 1 & $1$ & $0$\\\hline
+\multicolumn{6}{c}{$s_4=0$}
+\end{tabular}
+\end{center}
+Answer: $(10000)_2$.
+
+\subsection*{2) $(1001)_2 + (0001)_2$}
+\begin{center}
+\begin{tabular}{c|c c c|c c}
+$j$ & $a_j$ & $b_j$ & $c$ (in) & $s_j$ & $c$ (out)\\\hline
+0 & 1 & 1 & 0 & $0$ & $1$\\
+1 & 0 & 0 & 1 & $1$ & $0$\\
+2 & 0 & 0 & 0 & $0$ & $0$\\
+3 & 1 & 0 & 0 & $1$ & $0$\\\hline
+\multicolumn{6}{c}{$s_4=0$}
+\end{tabular}
+\end{center}
+Answer: $(1010)_2$.
+
+\subsection*{3) $(11101101)_2 + (10111011)_2$}
+Work right-to-left; lots of carries chain through:
+\begin{center}
+\begin{tabular}{c|c c c|c c}
+$j$ & $a_j$ & $b_j$ & $c$ (in) & $s_j$ & $c$ (out)\\\hline
+0 & 1 & 1 & 0 & 0 & 1\\
+1 & 0 & 1 & 1 & 0 & 1\\
+2 & 1 & 1 & 1 & 1 & 1\\
+3 & 1 & 0 & 1 & 0 & 1\\
+4 & 0 & 1 & 1 & 0 & 1\\
+5 & 1 & 1 & 1 & 1 & 1\\
+6 & 1 & 0 & 1 & 0 & 1\\
+7 & 1 & 1 & 1 & 1 & 1\\\hline
+\multicolumn{6}{c}{$s_8=1$}
+\end{tabular}
+\end{center}
+Answer: $(1\,011010000)_2=(1011010000)_2$.
+
+\paragraph{Bit-addition count bound.} In all three problems, the number of one-bit additions is $<2n$ and $\le 2n$, so linear in the input length.
+
+\end{document}
+

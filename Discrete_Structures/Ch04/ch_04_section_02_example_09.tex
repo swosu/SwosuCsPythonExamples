@@ -1,0 +1,85 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+
+\title{Section 4.2 — Example 9 Worksheet\\
+Counting Bit Additions in Algorithm 2}
+\author{}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Problem (from Example 9)}
+How many \emph{additions of bits} are required by \textbf{Algorithm 2 (Addition of Integers)} to add two integers with at most $n$ bits in their binary representations?
+
+\subsection*{Key idea}
+At each bit position $j$ (from right to left), Algorithm 2 forms the three-bit sum
+\[
+a_j + b_j + c \quad (c \in \{0,1\} \text{ is the incoming carry}),
+\]
+then outputs the sum bit $s_j$ and the next carry $c'$. Computing $a_j+b_j+c$ can be done with \emph{at most two} one-bit additions:
+\begin{enumerate}
+  \item add the pair $a_j+b_j$ (one bit-addition);
+  \item add the carry: $(a_j+b_j)+c$ (one more bit-addition, sometimes trivial if $c=0$ and no carry occurs).
+\end{enumerate}
+Hence the total number of bit additions is \emph{less than $2n$}; in particular it is $\le 2n$ and therefore the running time is $O(n)$.
+
+\section*{Worked examples (Algorithm 2, step-by-step)}
+
+\subsection*{A. Two-bit example}
+Add $a=(11)_2$ and $b=(01)_2$.
+
+We process bits from right (least significant) to left (most significant). Let $c$ be the incoming carry; initially $c=0$.
+
+\medskip
+\begin{center}
+\begin{tabular}{c|c c c|c c}
+$j$ & $a_j$ & $b_j$ & $c$ (in) & $s_j$ & $c$ (out)\\\hline
+0 & 1 & 1 & 0 & $0$ & $1$\\
+1 & 1 & 0 & 1 & $0$ & $1$\\\hline
+\multicolumn{6}{c}{$s_2=c_{\text{final}}=1$}
+\end{tabular}
+\end{center}
+
+Thus the result is $s=(1\,00)_2=(100)_2$.  
+Bit-addition count: at most $2$ per column $\Rightarrow$ at most $4$ total.
+
+\subsection*{B. Four-bit example}
+Add $a=(1011)_2$ and $b=(0110)_2$.
+
+\medskip
+\begin{center}
+\begin{tabular}{c|c c c|c c}
+$j$ & $a_j$ & $b_j$ & $c$ (in) & $s_j$ & $c$ (out)\\\hline
+0 & 1 & 0 & 0 & $1$ & $0$\\
+1 & 1 & 1 & 0 & $0$ & $1$\\
+2 & 0 & 1 & 1 & $0$ & $1$\\
+3 & 1 & 0 & 1 & $0$ & $1$\\\hline
+\multicolumn{6}{c}{$s_4=c_{\text{final}}=1$}
+\end{tabular}
+\end{center}
+
+Hence $a+b=(1\,0001)_2=(10001)_2$.  
+Again, at most two bit additions per column $\Rightarrow$ at most $2\cdot 4=8$ bit additions.
+
+\section*{Why ``less than $2n$'' and $O(n)$?}
+Some columns may not \emph{need} to add the carry (e.g., $c=0$ and $a_j+b_j<2$); practical implementations can skip that second bit-addition. Therefore the \# of bit additions is $<2n$ and certainly $\le 2n$. As a function of $n$, that is linear time: $O(n)$.
+
+\section*{Your turn}
+Use Algorithm 2. Show your table of columns $j$, $a_j$, $b_j$, $c$ (in), $s_j$, $c$ (out).
+
+\subsection*{Two easier}
+\begin{enumerate}
+  \item $(0101)_2 + (0011)_2$
+  \item $(1001)_2 + (0001)_2$
+\end{enumerate}
+
+\subsection*{One harder}
+\begin{enumerate}
+  \setcounter{enumi}{2}
+  \item $(11101101)_2 + (10111011)_2$
+\end{enumerate}
+
+\end{document}
+
