@@ -11,3 +11,12 @@ __pycache__/
 Thumbs.db
 .vscode/
 .idea/
+
+
+# LaTeX
+*.aux
+*.log
+*.out
+*.toc
+*.pdf
+
