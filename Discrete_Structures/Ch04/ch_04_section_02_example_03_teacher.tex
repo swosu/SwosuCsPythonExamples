@@ -1,0 +1,63 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{Solutions: Decimal Expansion from Hexadecimal (Example 3)}
+\end{center}
+
+\section*{Part A — Worked Example}
+\[
+(FACE)_{16} = 15\cdot 16^3 + 10\cdot 16^2 + 12\cdot 16^1 + 14\cdot 16^0
+\]
+\[
+= 61{,}440 + 2{,}560 + 192 + 14 = \boxed{64{,}206}.
+\]
+
+---
+
+\section*{Part B — Easier Practice}
+\textbf{Problem:} $(2B)_{16}$.  
+\[
+2\cdot 16^1 + 11\cdot 16^0 = 32 + 11 = \boxed{43}.
+\]
+
+---
+
+\section*{Part C — Easier Practice}
+\textbf{Problem:} $(7F)_{16}$.  
+\[
+7\cdot 16^1 + 15\cdot 16^0 = 112 + 15 = \boxed{127}.
+\]
+
+---
+
+\section*{Part D — Harder Practice}
+\textbf{Problem:} $(BEEF)_{16}$.  
+Digits: $B=11,\; E=14,\; F=15$.
+
+\[
+(BEEF)_{16} = 11\cdot 16^3 + 14\cdot 16^2 + 14\cdot 16^1 + 15\cdot 16^0.
+\]
+
+\[
+= 11\cdot 4096 + 14\cdot 256 + 14\cdot 16 + 15\cdot 1.
+\]
+
+\[
+= 45{,}056 + 3{,}584 + 224 + 15 = \boxed{48{,}879}.
+\]
+
+---
+
+\section*{Teaching Notes}
+\begin{itemize}
+  \item Emphasize hex digits A–F map to 10–15.
+  \item Point out binary shortcut: each hex digit corresponds to a 4-bit binary block.
+  \item Common pitfalls: forgetting to expand digits above 9, or miscomputing $16^2=256$.
+\end{itemize}
+
+\end{document}
+

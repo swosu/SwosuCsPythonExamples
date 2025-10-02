@@ -1,0 +1,78 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{Worksheet: Octal Expansion (Example 4)}
+\end{center}
+
+\section*{Part A — Worked Example}
+
+\textbf{Problem.} Find the octal expansion of $(12345)_{10}$.
+
+\textbf{Step 1: Recall.} To convert from decimal to base $8$, divide repeatedly by $8$ and record the remainders. The remainders (read bottom-to-top) give the digits.
+
+\medskip
+\textbf{Step 2: Divide $12345$ by $8$.}
+\[
+12345 = 8 \cdot 1543 + 1.
+\]
+Remainder $=1$, quotient $=1543$.
+
+\medskip
+\textbf{Step 3: Divide $1543$ by $8$.}
+\[
+1543 = 8 \cdot 192 + 7.
+\]
+Remainder $=7$, quotient $=192$.
+
+\medskip
+\textbf{Step 4: Divide $192$ by $8$.}
+\[
+192 = 8 \cdot 24 + 0.
+\]
+Remainder $=0$, quotient $=24$.
+
+\medskip
+\textbf{Step 5: Divide $24$ by $8$.}
+\[
+24 = 8 \cdot 3 + 0.
+\]
+Remainder $=0$, quotient $=3$.
+
+\medskip
+\textbf{Step 6: Divide $3$ by $8$.}
+\[
+3 = 8 \cdot 0 + 3.
+\]
+Remainder $=3$, quotient $=0$. Stop here.
+
+\medskip
+\textbf{Step 7: Collect remainders.} Reading bottom-to-top: $3,0,0,7,1$.
+
+\[
+(12345)_{10} = (30071)_{8}.
+\]
+
+\fbox{$(12345)_{10} = (30071)_{8}$}
+
+---
+
+\section*{Part B — Easier Practice Problems}
+1. Convert $(25)_{10}$ into octal.
+2. Convert $(64)_{10}$ into octal.
+3. Convert $(255)_{10}$ into octal.
+
+Show all division steps!
+
+---
+
+\section*{Part C — Harder Challenge}
+Convert $(54321)_{10}$ into octal.
+
+\textbf{Hint:} Write each division step clearly and check by converting back.
+
+\end{document}
+

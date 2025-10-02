@@ -1,0 +1,110 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{Solutions: Octal Expansion (Example 4)}
+\end{center}
+
+\section*{Part A — Worked Example}
+Already shown in worksheet:
+\[
+12345 \div 8 \Rightarrow 1543 \, r1
+\]
+\[
+1543 \div 8 \Rightarrow 192 \, r7
+\]
+\[
+192 \div 8 \Rightarrow 24 \, r0
+\]
+\[
+24 \div 8 \Rightarrow 3 \, r0
+\]
+\[
+3 \div 8 \Rightarrow 0 \, r3
+\]
+Digits: $(30071)_8$.
+
+---
+
+\section*{Part B — Easier Practice Solutions}
+
+1. $(25)_{10}$:
+\[
+25 = 8\cdot3 + 1 \quad \Rightarrow r1
+\]
+\[
+3 = 8\cdot0 + 3 \quad \Rightarrow r3
+\]
+Answer: $(25)_{10} = (31)_{8}$.
+
+\medskip
+2. $(64)_{10}$:
+\[
+64 = 8\cdot8 + 0
+\]
+\[
+8 = 8\cdot1 + 0
+\]
+\[
+1 = 8\cdot0 + 1
+\]
+Digits: $(100)_{8}$.
+
+\medskip
+3. $(255)_{10}$:
+\[
+255 = 8\cdot31 + 7
+\]
+\[
+31 = 8\cdot3 + 7
+\]
+\[
+3 = 8\cdot0 + 3
+\]
+Digits: $(377)_{8}$.
+
+---
+
+\section*{Part C — Harder Challenge Solution}
+
+Convert $(54321)_{10}$:
+
+\[
+54321 \div 8 = 6790 \, r1
+\]
+\[
+6790 \div 8 = 848 \, r6
+\]
+\[
+848 \div 8 = 106 \, r0
+\]
+\[
+106 \div 8 = 13 \, r2
+\]
+\[
+13 \div 8 = 1 \, r5
+\]
+\[
+1 \div 8 = 0 \, r1
+\]
+
+Digits (bottom-to-top): $1,5,2,0,6,1$.
+
+\[
+(54321)_{10} = (152061)_{8}.
+\]
+
+---
+
+\section*{Teaching Notes}
+\begin{itemize}
+  \item Emphasize writing quotients and remainders in columns.
+  \item Students often forget to read remainders bottom-to-top.
+  \item Always check by converting octal back to decimal.
+\end{itemize}
+
+\end{document}
+

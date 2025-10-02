@@ -1,0 +1,67 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{Worksheet: Decimal Expansion from Hexadecimal (Example 3)}
+\end{center}
+
+\section*{Part A — Worked Example (detailed)}
+
+\textbf{Problem.} What is the decimal expansion of $(FACE)_{16}$?
+
+\textbf{Step 1: Recall place values in base 16.}
+Each digit corresponds to $16^k$:
+\[
+(d_3d_2d_1d_0)_{16} = d_3 \cdot 16^3 + d_2 \cdot 16^2 + d_1 \cdot 16^1 + d_0 \cdot 16^0.
+\]
+
+\textbf{Step 2: Translate hex digits to decimal digits.}
+\[
+F = 15,\; A = 10,\; C = 12,\; E = 14.
+\]
+
+\textbf{Step 3: Substitute digits.}
+\[
+(FACE)_{16} = 15\cdot 16^3 + 10\cdot 16^2 + 12\cdot 16^1 + 14\cdot 16^0.
+\]
+
+\textbf{Step 4: Compute powers of 16.}
+\[
+16^3=4096,\quad 16^2=256,\quad 16^1=16,\quad 16^0=1.
+\]
+
+\textbf{Step 5: Multiply out.}
+\[
+15\cdot 4096 = 61{,}440,\quad 10\cdot 256 = 2{,}560,\quad 12\cdot 16 = 192,\quad 14\cdot 1 = 14.
+\]
+
+\textbf{Step 6: Add contributions.}
+\[
+61{,}440 + 2{,}560 + 192 + 14 = 64{,}206.
+\]
+
+\textbf{Answer:} \fbox{$(FACE)_{16} = (64206)_{10}$}
+
+\section*{Part B — Easier Practice}
+Convert $(2B)_{16}$ to decimal. Show all steps.
+
+\vspace{2cm}
+
+\section*{Part C — Easier Practice}
+Convert $(7F)_{16}$ to decimal. Show all steps.
+
+\vspace{2cm}
+
+\section*{Part D — Harder Practice}
+Convert $(BEEF)_{16}$ to decimal. Show all steps.
+
+\vspace{3cm}
+
+\section*{Reflection}
+How is converting from hexadecimal to decimal similar to converting from octal or binary?
+
+\end{document}
+
