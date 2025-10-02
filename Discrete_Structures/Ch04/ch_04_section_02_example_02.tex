@@ -1,0 +1,92 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{Worksheet: Decimal Expansion from Octal (Example 2)}
+\end{center}
+
+\section*{Goal}
+Convert an octal (base 8) numeral into its decimal (base 10) value using place value.
+
+\section*{Part A — Worked Example (detailed)}
+\textbf{Problem.} What is the decimal expansion of $(7016)_8$?
+
+\textbf{Idea.} In base $8$, each position is a power of $8$: from right to left
+$8^0,8^1,8^2,8^3,\dots$.
+For digits $d_3d_2d_1d_0$ we have:
+\[
+(d_3d_2d_1d_0)_8 = d_3\cdot 8^3 + d_2\cdot 8^2 + d_1\cdot 8^1 + d_0\cdot 8^0.
+\]
+
+\textbf{Step 1: Label digits and place values.}
+\[
+(7016)_8 = 7\cdot 8^3 + 0\cdot 8^2 + 1\cdot 8^1 + 6\cdot 8^0.
+\]
+
+\textbf{Step 2: Evaluate powers of 8.}
+\[
+8^3=512,\quad 8^2=64,\quad 8^1=8,\quad 8^0=1.
+\]
+
+\textbf{Step 3: Multiply digits by powers.}
+\[
+7\cdot 512 = 3584,\quad 0\cdot 64 = 0,\quad 1\cdot 8 = 8,\quad 6\cdot 1 = 6.
+\]
+
+\textbf{Step 4: Add the contributions.}
+\[
+3584 + 0 + 8 + 6 = 3598.
+\]
+
+\textbf{Conclusion.} \fbox{$(7016)_8 = (3598)_{10}$}
+
+\medskip
+\textbf{(Optional) Horner’s Method (left-to-right accumulate).}
+\[
+(((7)\cdot 8 + 0)\cdot 8 + 1)\cdot 8 + 6
+= (56\cdot 8 + 1)\cdot 8 + 6 = (449)\cdot 8 + 6 = 3598.
+\]
+Same answer, fewer big numbers along the way.
+
+\section*{Part B — Easier Practice}
+Convert $(52)_8$ to decimal. Show all steps (place values, multiply, add).
+
+\medskip
+\textbf{Work:}
+\[
+(52)_8 = \underline{\hspace{2.5cm}}\cdot 8^1 + \underline{\hspace{2.5cm}}\cdot 8^0
+\]
+\[
+= \underline{\hspace{4cm}} + \underline{\hspace{4cm}} = \underline{\hspace{4cm}}
+\]
+
+\vspace{1.5cm}
+
+\section*{Part C — Harder Practice}
+Convert $(574321)_8$ to decimal. \emph{Hint:} write powers
+$8^5,8^4,8^3,8^2,8^1,8^0$ first.
+
+\medskip
+\textbf{Work setup:}
+\[
+(574321)_8 = 5\cdot 8^5 + 7\cdot 8^4 + 4\cdot 8^3 + 3\cdot 8^2 + 2\cdot 8^1 + 1\cdot 8^0
+\]
+\[
+8^5=\underline{\hspace{1.8cm}},\;
+8^4=\underline{\hspace{1.8cm}},\;
+8^3=\underline{\hspace{1.8cm}},\;
+8^2=\underline{\hspace{1.8cm}},\;
+8^1=\underline{\hspace{1.8cm}},\;
+8^0=\underline{\hspace{1.8cm}}
+\]
+
+\vspace{3cm}
+
+\section*{Quick Self-Check}
+Why does the method above look exactly like the base-10 method, except with $8$ instead of $10$?
+
+\end{document}
+

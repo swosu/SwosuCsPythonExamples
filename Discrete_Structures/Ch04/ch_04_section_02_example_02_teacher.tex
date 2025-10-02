@@ -1,0 +1,67 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+
+\begin{document}
+
+\begin{center}
+\Large\textbf{Solutions: Decimal Expansion from Octal (Example 2)}
+\end{center}
+
+\section*{Part A — Worked Example}
+\textbf{Problem.} $(7016)_8$.
+
+\textbf{Solution (place value).}
+\[
+(7016)_8 = 7\cdot 8^3 + 0\cdot 8^2 + 1\cdot 8^1 + 6\cdot 8^0
+= 7\cdot 512 + 0\cdot 64 + 1\cdot 8 + 6\cdot 1
+\]
+\[
+= 3584 + 0 + 8 + 6 = \mathbf{3598}.
+\]
+\textbf{Alternative (Horner).}
+\[
+(((7)\cdot 8 + 0)\cdot 8 + 1)\cdot 8 + 6 = 3598.
+\]
+Therefore, $\boxed{(7016)_8 = (3598)_{10}}$.
+
+\section*{Part B — Easier Practice}
+\textbf{Problem.} $(52)_8$.
+
+\textbf{Solution.}
+\[
+(52)_8 = 5\cdot 8^1 + 2\cdot 8^0 = 5\cdot 8 + 2\cdot 1 = 40 + 2 = \boxed{42}.
+\]
+Horner check: $(5)\cdot 8 + 2 = 42$.
+
+\section*{Part C — Harder Practice}
+\textbf{Problem.} $(574321)_8$.
+
+\textbf{Solution.}
+\[
+(574321)_8 = 5\cdot 8^5 + 7\cdot 8^4 + 4\cdot 8^3 + 3\cdot 8^2 + 2\cdot 8^1 + 1\cdot 8^0.
+\]
+\[
+8^5=32768,\; 8^4=4096,\; 8^3=512,\; 8^2=64,\; 8^1=8,\; 8^0=1.
+\]
+\[
+= 5\cdot 32768 + 7\cdot 4096 + 4\cdot 512 + 3\cdot 64 + 2\cdot 8 + 1\cdot 1
+\]
+\[
+= 163{,}840 + 28{,}672 + 2{,}048 + 192 + 16 + 1
+= \boxed{194{,}769}.
+\]
+Horner check:
+\[
+((((((5)\cdot 8 + 7)\cdot 8 + 4)\cdot 8 + 3)\cdot 8 + 2)\cdot 8 + 1) = 194{,}769.
+\]
+
+\section*{Teaching Notes}
+\begin{itemize}
+  \item Emphasize base-$b$ place value: $\sum d_i b^i$ mirrors decimal exactly.
+  \item Encourage Horner’s method for speed and fewer big intermediate sums.
+  \item Common pitfalls: mis-ordering powers, forgetting $8^0=1$, and dropping a digit.
+\end{itemize}
+
+\end{document}
+
