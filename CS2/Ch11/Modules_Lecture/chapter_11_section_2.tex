@@ -1,0 +1,197 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{amsmath, amssymb}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+
+% --------------------------------------------------------------
+% Page style
+% --------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Chapter 11.2: Finding Modules}
+\lhead{SWOSU Computer Science}
+\rfoot{\thepage}
+
+% --------------------------------------------------------------
+% Listings setup
+% --------------------------------------------------------------
+\definecolor{codegray}{gray}{0.95}
+\lstset{
+  backgroundcolor=\color{codegray},
+  basicstyle=\ttfamily\small,
+  frame=single,
+  breaklines=true,
+  showstringspaces=false,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{purple},
+  tabsize=4
+}
+
+% --------------------------------------------------------------
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{blue!60!black}}
+  {\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{blue!40!black}}
+  {\thesubsection}{1em}{}
+
+\newtcolorbox{activitybox}[2][]{colback=blue!5!white,colframe=blue!75!black,title={#2},fonttitle=\bfseries,#1}
+\newtcolorbox{conceptbox}[2][]{colback=green!5!white,colframe=green!50!black,title={#2},fonttitle=\bfseries,#1}
+\newtcolorbox{reflectionbox}[2][]{colback=orange!5!white,colframe=orange!60!black,title={#2},fonttitle=\bfseries,#1}
+
+% --------------------------------------------------------------
+\begin{document}
+
+\begin{center}
+  \vspace*{1cm}
+  {\Huge \textbf{Chapter 11.2 – Finding Modules}}\\[0.5cm]
+  {\Large Teaching Notes and Student Activities}\\[1cm]
+  \rule{\textwidth}{0.4pt}\\[1cm]
+\end{center}
+
+% ==============================================================
+\section{Learning Objectives}
+\begin{itemize}
+  \item Explain how Python searches for modules when executing an \texttt{import} statement.
+  \item Identify the directories contained in the \texttt{sys.path} list.
+  \item Understand the use of the environment variable \texttt{PYTHONPATH}.
+  \item Avoid naming conflicts between custom and built-in modules.
+\end{itemize}
+
+% ==============================================================
+\section{How Python Finds Modules}
+
+When an \texttt{import} statement is executed, Python begins searching for a file that matches the module name. The interpreter checks the following in order:
+
+\begin{enumerate}
+  \item Built-in modules (e.g., \texttt{sys}, \texttt{math}, \texttt{time}).  
+  \item Directories listed in the variable \texttt{sys.path}.
+\end{enumerate}
+
+The \texttt{sys.path} variable is a list of directories that Python searches when locating modules.  
+It typically contains:
+\begin{enumerate}[label=\arabic*.]
+  \item The directory of the executing script.  
+  \item Any directories specified by the environment variable \texttt{PYTHONPATH}.  
+  \item The directory where Python itself is installed.
+\end{enumerate}
+
+\begin{conceptbox}{Example – Inspecting \texttt{sys.path}}
+\begin{lstlisting}[language=Python]
+import sys
+for path in sys.path:
+    print(path)
+\end{lstlisting}
+Running this script displays all directories Python searches for modules.  
+This can help diagnose “module not found” errors.
+\end{conceptbox}
+
+\subsection*{Built-in Modules}
+A \textbf{built-in module} comes pre-installed with Python.  
+Examples include:
+\begin{itemize}
+  \item \texttt{math} – mathematical functions
+  \item \texttt{sys} – access to system-level variables
+  \item \texttt{time} – time and date utilities
+\end{itemize}
+
+If a built-in module with the same name exists, it will always be loaded first.  
+For example, naming your own file \texttt{math.py} could break imports that expect the standard library version.
+
+\begin{reflectionbox}{Naming Rule of Thumb}
+Avoid naming your own modules after existing Python libraries like \texttt{os.py}, \texttt{json.py}, or \texttt{math.py}.  
+Python may accidentally load your local file instead of the standard module!
+\end{reflectionbox}
+
+% ==============================================================
+\section{Environment Variables and PYTHONPATH}
+
+The environment variable \texttt{PYTHONPATH} can be used to tell Python where to look for additional modules.  
+
+On Windows:
+\begin{lstlisting}
+set PYTHONPATH="C:\myModules;C:\other"
+\end{lstlisting}
+
+On Linux or macOS:
+\begin{lstlisting}[language=bash]
+export PYTHONPATH="/home/student/myModules:/opt/extraModules"
+\end{lstlisting}
+
+This allows developers to maintain separate module directories for projects or labs.
+
+% ==============================================================
+\section{Student Activity – Where Does Python Look?}
+
+\begin{activitybox}{Participation Activity 11.2.1 – Finding Modules}
+\begin{enumerate}
+  \item Create a new file called \texttt{hello\_mod.py} that contains:
+  \begin{lstlisting}[language=Python]
+def say_hello():
+    print("Hello from your custom module!")
+  \end{lstlisting}
+
+  \item Open a new Python shell in the same directory and run:
+  \begin{lstlisting}[language=Python]
+import hello_mod
+hello_mod.say_hello()
+  \end{lstlisting}
+
+  \item Now move the file to another directory. Try importing it again.
+  \begin{itemize}
+    \item What happens when the file isn’t in the same folder?
+    \item Can you use \texttt{PYTHONPATH} or modify \texttt{sys.path} to fix it?
+  \end{itemize}
+
+  \item Try running:
+  \begin{lstlisting}[language=Python]
+import sys
+print(sys.path)
+  \end{lstlisting}
+  and observe which directories Python searches.
+
+  \item Experiment:  
+  Create a file called \texttt{math.py} with this content:
+  \begin{lstlisting}[language=Python]
+def bad_idea():
+    print("Oops, I replaced the real math module!")
+  \end{lstlisting}
+
+  Then run:
+  \begin{lstlisting}[language=Python]
+import math
+print(dir(math))
+  \end{lstlisting}
+
+  Discuss why this is a problem!
+\end{enumerate}
+\end{activitybox}
+
+% ==============================================================
+\section{Quick Quiz}
+\begin{enumerate}
+  \item When an import statement executes, Python immediately checks the current directory for a matching file. \textbf{(True)}  
+  \item The environment variable \texttt{PYTHONPATH} can specify extra module directories. \textbf{(True)}  
+  \item \texttt{math.py} is a good name for a new module. \textbf{(False)}  
+\end{enumerate}
+
+% ==============================================================
+\begin{reflectionbox}{Why This Matters}
+Understanding how Python locates modules helps students:
+\begin{itemize}
+  \item Debug ``ModuleNotFoundError'' problems.
+  \item Manage multiple project environments cleanly.
+  \item Prevent naming collisions with standard libraries.
+\end{itemize}
+\end{reflectionbox}
+
+% ==============================================================
+\end{document}
+

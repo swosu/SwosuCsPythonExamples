@@ -1,0 +1,371 @@
+\documentclass[12pt]{article}
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{amsmath, amssymb}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\usepackage{enumitem}
+
+% --------------------------------------------------------------
+% Page style
+% --------------------------------------------------------------
+\pagestyle{fancy}
+\fancyhf{}
+\rhead{Chapter 11.1: Modules (Teacher Edition)}
+\lhead{SWOSU Computer Science}
+\rfoot{\thepage}
+\setlength{\headheight}{15pt}
+
+% --------------------------------------------------------------
+% Listings setup
+% --------------------------------------------------------------
+\definecolor{codegray}{gray}{0.95}
+\lstset{
+  backgroundcolor=\color{codegray},
+  basicstyle=\ttfamily\small,
+  frame=single,
+  breaklines=true,
+  showstringspaces=false,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{purple},
+  tabsize=4
+}
+
+% --------------------------------------------------------------
+% Box environments
+% --------------------------------------------------------------
+\newtcolorbox{activitybox}[2][]{colback=blue!5!white,colframe=blue!75!black,
+  title={#2},fonttitle=\bfseries,#1,breakable}
+
+\newtcolorbox{conceptbox}[2][]{colback=green!5!white,colframe=green!50!black,
+  title={#2},fonttitle=\bfseries,#1,breakable}
+
+\newtcolorbox{reflectionbox}[2][]{colback=orange!5!white,colframe=orange!60!black,
+  title={#2},fonttitle=\bfseries,#1,breakable}
+
+\newtcolorbox{teacherbox}[2][]{colback=yellow!10!white,colframe=yellow!60!black,
+  title={💡 Instructor Notes – #2},fonttitle=\bfseries\itshape,#1,breakable}
+
+% --------------------------------------------------------------
+\begin{document}
+
+\begin{center}
+  \vspace*{1cm}
+  {\Huge \textbf{Chapter 11.1 – Python Modules}}\\[0.5cm]
+  {\Large Teacher Edition with Full Notes and Solutions}\\[1cm]
+  \rule{\textwidth}{0.4pt}\\[1cm]
+\end{center}
+
+% ==============================================================
+\section{Learning Objectives}
+\begin{itemize}
+  \item Define what a \textbf{module} is in Python.
+  \item Explain how to \textbf{import} and use modules.
+  \item Demonstrate the \textbf{importing process}.
+  \item Distinguish between \textbf{scripts} and \textbf{modules}.
+  \item Practice writing and importing custom modules.
+\end{itemize}
+
+% ==============================================================
+\section{Core Concepts and Vocabulary}
+
+\begin{conceptbox}{Essential Terms}
+\begin{itemize}
+  \item \textbf{Script}: A file ending in \texttt{.py} that is executed directly to perform a task.
+  \item \textbf{Module}: A Python file that defines reusable code (functions, variables, or classes) that can be imported by another script.
+  \item \textbf{Import}: The command that brings a module’s definitions into another program.
+  \item \textbf{Namespace}: A “labeled space” that keeps identifiers from one module separate from another.
+  \item \textbf{Dependency}: A module required by another program to run.
+  \item \textbf{sys.modules}: Python’s internal dictionary of all loaded modules.
+\end{itemize}
+\end{conceptbox}
+
+\begin{teacherbox}{Vocabulary Notes}
+Point out that modules are *namespaces*.  
+The idea of “where does a name live?” will later connect to classes, packages, and scopes.  
+Stress the value of modularity and how this supports collaboration across files.
+\end{teacherbox}
+
+% ==============================================================
+\section{Introducing Modules}
+
+When you use Python interactively, all variables and functions vanish when you close the interpreter.  
+To reuse them, you save the code in a \textbf{script} file.  
+But when multiple programs need the same code, it’s better to put those definitions in a \textbf{module}.
+
+\begin{activitybox}{Participation Activity – What Is a Module?}
+\textbf{Step 1: Create a file \texttt{math\_utils.py}}
+\begin{lstlisting}[language=Python]
+def double(x):
+    return 2 * x
+
+def triple(x):
+    return 3 * x
+\end{lstlisting}
+
+\textbf{Step 2: Create a second file \texttt{test\_math.py}}
+\begin{lstlisting}[language=Python]
+import math_utils
+
+print(math_utils.double(5))
+print(math_utils.triple(7))
+\end{lstlisting}
+
+\textbf{Expected Output:}
+\begin{lstlisting}
+10
+21
+\end{lstlisting}
+
+\textbf{Discussion:}  
+Why is this approach better than copying the same functions into every script?
+\end{activitybox}
+
+\begin{teacherbox}{Suggested Solution}
+Encourage students to say:
+\begin{itemize}
+  \item “It’s reusable.”  
+  \item “If I fix a bug in one place, all scripts benefit.”  
+  \item “It helps organize code by responsibility.”  
+\end{itemize}
+You can demo editing \texttt{math\_utils.py} once and rerunning multiple importing scripts to show consistency.
+\end{teacherbox}
+
+% ==============================================================
+\section{How Import Works}
+
+When Python sees \texttt{import mymodule}, it executes the following:
+
+\begin{enumerate}
+  \item Checks whether \texttt{mymodule} is already loaded in \texttt{sys.modules}.  
+  \item If not, creates a \textbf{module object}.  
+  \item Executes all the code inside \texttt{mymodule.py}.  
+  \item Adds the module object to \texttt{sys.modules}.  
+  \item Binds the module’s name into the importer’s namespace.
+\end{enumerate}
+
+\begin{activitybox}{Demonstration – The Importing Process}
+\textbf{File: \texttt{tools.py}}
+\begin{lstlisting}[language=Python]
+print("tools.py is running!")
+
+def greet(name):
+    print(f"Hello, {name}!")
+\end{lstlisting}
+
+\textbf{File: \texttt{main.py}}
+\begin{lstlisting}[language=Python]
+import tools
+
+print("main.py continues")
+tools.greet("Jeremy")
+\end{lstlisting}
+
+\textbf{Expected Output:}
+\begin{lstlisting}
+tools.py is running!
+main.py continues
+Hello, Jeremy!
+\end{lstlisting}
+\end{activitybox}
+
+\begin{teacherbox}{Explanation and Solution Discussion}
+Explain that when a module is first imported, Python actually *runs* the file.  
+Subsequent imports skip execution because the module now exists in \texttt{sys.modules}.  
+Have students verify this by adding another \texttt{import tools} line—it won’t print “tools.py is running!” twice.
+\end{teacherbox}
+
+% ==============================================================
+\section{Using Imported Modules}
+
+Once a module is imported, you can access its contents with dot notation:
+\begin{lstlisting}[language=Python]
+import math_utils
+print(math_utils.double(10))   # 20
+\end{lstlisting}
+
+Temporary overwriting is possible:
+\begin{lstlisting}[language=Python]
+math_utils.double = lambda x: x * 10
+print(math_utils.double(2))    # 20
+\end{lstlisting}
+
+\begin{teacherbox}{Instructor Notes}
+Explain that reassignment like this affects only the in-memory object, not the source file.  
+Restarting Python resets everything.
+\end{teacherbox}
+
+% ==============================================================
+\section{Guided Practice – Importing Multiple Modules}
+
+\begin{activitybox}{Try This!}
+\textbf{File: \texttt{weather.py}}
+\begin{lstlisting}[language=Python]
+def forecast():
+    return "Sunny and warm"
+\end{lstlisting}
+
+\textbf{File: \texttt{mood.py}}
+\begin{lstlisting}[language=Python]
+def today():
+    return "Feeling great!"
+\end{lstlisting}
+
+\textbf{File: \texttt{main.py}}
+\begin{lstlisting}[language=Python]
+import weather
+import mood
+
+print(weather.forecast(), "and", mood.today())
+\end{lstlisting}
+
+\textbf{Expected Output:}
+\begin{lstlisting}
+Sunny and warm and Feeling great!
+\end{lstlisting}
+
+\textbf{Follow-up Tasks:}
+\begin{enumerate}
+  \item Add a \texttt{print()} statement at the top of each module to announce when it’s imported.
+  \item Observe which import prints first.
+\end{enumerate}
+\end{activitybox}
+
+\begin{teacherbox}{Observation Discussion}
+If students import in this order:
+\begin{lstlisting}
+import weather
+import mood
+\end{lstlisting}
+then \texttt{weather} runs first.  
+Reversing them flips the print order—proof that Python executes modules as it imports them.  
+This becomes relevant later for circular imports.
+\end{teacherbox}
+
+% ==============================================================
+\section{Student Challenges with Solutions}
+
+\subsection*{Challenge 1 – Module Check}
+\textbf{Create a module \texttt{stats\_tools.py}:}
+\begin{lstlisting}[language=Python]
+def mean(nums):
+    return sum(nums) / len(nums)
+
+def median(nums):
+    nums.sort()
+    mid = len(nums) // 2
+    return nums[mid]
+\end{lstlisting}
+
+\textbf{Then use it in \texttt{analyze.py}:}
+\begin{lstlisting}[language=Python]
+import stats_tools
+
+data = [4, 7, 2, 9, 6]
+print(stats_tools.mean(data))
+print(stats_tools.median(data))
+\end{lstlisting}
+
+\textbf{Sample Output:}
+\begin{lstlisting}
+5.6
+6
+\end{lstlisting}
+
+\begin{teacherbox}{Teaching Focus}
+Discuss how sorting inside \texttt{median()} mutates the list; mention how you might copy it first.  
+Encourage testing with both even- and odd-length lists to extend thinking.
+\end{teacherbox}
+
+% --------------------------------------------------------------
+\subsection*{Challenge 2 – Reimport Experiment}
+\begin{lstlisting}[language=Python]
+import stats_tools
+import stats_tools
+\end{lstlisting}
+
+\textbf{Expected Behavior:} The module loads only once; Python reuses the object in \texttt{sys.modules}.  
+You can verify by printing:
+\begin{lstlisting}[language=Python]
+print(id(stats_tools))
+\end{lstlisting}
+twice and seeing the same memory address.
+
+\begin{teacherbox}{Discussion}
+Stress that this caching behavior is efficient and prevents redundant initialization.  
+If you *do* need to reload (e.g., during development), you can use:
+\begin{lstlisting}[language=Python]
+import importlib
+importlib.reload(stats_tools)
+\end{lstlisting}
+\end{teacherbox}
+
+% --------------------------------------------------------------
+\subsection*{Challenge 3 – Namespace Play}
+\begin{lstlisting}[language=Python]
+# cat.py
+def speak():
+    return "Meow!"
+
+# dog.py
+def speak():
+    return "Woof!"
+
+# zoo.py
+import cat, dog
+print(cat.speak(), dog.speak())
+\end{lstlisting}
+
+\textbf{Output:}
+\begin{lstlisting}
+Meow! Woof!
+\end{lstlisting}
+
+\begin{teacherbox}{Solution Key}
+Use this as a demonstration that each module provides its own namespace—no collisions even though both define \texttt{speak()}.  
+Introduce the idea that the dot operator explicitly references the module’s scope.
+\end{teacherbox}
+
+% ==============================================================
+\section{Reflection – Why Modules Matter}
+
+\begin{reflectionbox}{Key Takeaways}
+\begin{itemize}
+  \item Modules make code reusable and easier to maintain.
+  \item They support collaboration—different people can maintain different files.
+  \item Understanding module imports is essential for debugging and larger applications.
+\end{itemize}
+\end{reflectionbox}
+
+\begin{teacherbox}{Discussion Prompt}
+Ask students: “If you were designing a large game or app, how would you break it into modules?”  
+Encourage them to name example files (e.g., \texttt{player.py}, \texttt{inventory.py}, \texttt{battle.py}) to see real modular thinking.
+\end{teacherbox}
+
+% ==============================================================
+\section{Extension Prompts with Solutions}
+
+\begin{itemize}
+  \item \textbf{Task:} Create a module with a function \texttt{hello(name)} and import it using  
+  \texttt{from module import hello}.  
+  \textbf{Solution:}  
+  This imports only that function and allows calling \texttt{hello("World")} directly.
+  
+  \item \textbf{Task:} Investigate \texttt{importlib.reload()}.  
+  \textbf{Solution:}  
+  \texttt{importlib.reload()} re-runs a module’s code, which is useful when editing modules interactively.
+
+  \item \textbf{Task:} Try putting a module in a subfolder and import using dot notation.  
+  \textbf{Solution:}  
+  Example:  
+  \texttt{from utilities.math\_tools import mean}.  
+  Discuss package imports next section.
+\end{itemize}
+
+% ==============================================================
+\end{document}
+
