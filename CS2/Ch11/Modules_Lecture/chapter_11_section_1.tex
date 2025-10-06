@@ -1,54 +1,32 @@
 \documentclass[12pt]{article}
-\usepackage[a4paper, margin=1in]{geometry}
+\usepackage[utf8]{inputenc}
+\DeclareUnicodeCharacter{1F4A1}{\textbf{(Tip)}} % replace 💡 emoji safely
+
+\usepackage{geometry}
+\geometry{margin=1in}
 \usepackage{fancyhdr}
+\setlength{\headheight}{15pt}
 \usepackage{titlesec}
-\usepackage{amsmath, amssymb}
-\usepackage{hyperref}
+\usepackage{amsmath, amsfonts, amssymb}
 \usepackage{xcolor}
 \usepackage{listings}
 \usepackage{tcolorbox}
+\tcbuselibrary{breakable,skins}
 \usepackage{enumitem}
+\usepackage{caption}
+\usepackage{hyperref}
+\usepackage{graphicx}
 
-% --------------------------------------------------------------
-% Page style
-% --------------------------------------------------------------
-\pagestyle{fancy}
-\fancyhf{}
-\rhead{Chapter 11.1: Modules (Teacher Edition)}
-\lhead{SWOSU Computer Science}
-\rfoot{\thepage}
-\setlength{\headheight}{15pt}
+% Define color boxes
+\newtcolorbox{activitybox}[2][]{colback=blue!5!white,colframe=blue!75!black,title={#2},fonttitle=\bfseries,#1,breakable}
+\newtcolorbox{conceptbox}[2][]{colback=green!5!white,colframe=green!50!black,title={#2},fonttitle=\bfseries,#1,breakable}
+\newtcolorbox{reflectionbox}[2][]{colback=orange!5!white,colframe=orange!60!black,title={#2},fonttitle=\bfseries,#1,breakable}
+\newtcolorbox{teacherbox}[2][]{colback=yellow!5!white,colframe=yellow!50!black,title={#2},fonttitle=\bfseries,#1,breakable}
 
-% --------------------------------------------------------------
-% Listings setup
-% --------------------------------------------------------------
-\definecolor{codegray}{gray}{0.95}
-\lstset{
-  backgroundcolor=\color{codegray},
-  basicstyle=\ttfamily\small,
-  frame=single,
-  breaklines=true,
-  showstringspaces=false,
-  keywordstyle=\color{blue},
-  commentstyle=\color{gray},
-  stringstyle=\color{purple},
-  tabsize=4
-}
 
-% --------------------------------------------------------------
-% Box environments
-% --------------------------------------------------------------
-\newtcolorbox{activitybox}[2][]{colback=blue!5!white,colframe=blue!75!black,
-  title={#2},fonttitle=\bfseries,#1,breakable}
 
-\newtcolorbox{conceptbox}[2][]{colback=green!5!white,colframe=green!50!black,
-  title={#2},fonttitle=\bfseries,#1,breakable}
-
-\newtcolorbox{reflectionbox}[2][]{colback=orange!5!white,colframe=orange!60!black,
-  title={#2},fonttitle=\bfseries,#1,breakable}
-
-\newtcolorbox{teacherbox}[2][]{colback=yellow!10!white,colframe=yellow!60!black,
-  title={💡 Instructor Notes – #2},fonttitle=\bfseries\itshape,#1,breakable}
+\usepackage[utf8]{inputenc}
+\DeclareUnicodeCharacter{1F4A1}{\textbf{(Tip)}}
 
 % --------------------------------------------------------------
 \begin{document}
