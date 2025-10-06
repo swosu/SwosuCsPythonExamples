@@ -2,10 +2,10 @@
 
 ```mermaid
 flowchart TD
-    A[funcs.py\nDefines fct() and sq()]:::module
-    B[script1.py\nImports funcs.py\nUses fct()*sq()]:::script
-    C[script2.py\nImports funcs.py\nUses fct()/sq()]:::script
-    D[master_script.py\nImports funcs.py\nImports script1 & script2\nDemonstrates all together]:::main
+    A[funcs.py - defines fct() and sq()]:::module
+    B[script1.py - imports funcs.py and uses fct()*sq()]:::script
+    C[script2.py - imports funcs.py and uses fct()/sq()]:::script
+    D[master_script.py - imports funcs.py, script1, and script2]:::main
 
     A --> B
     A --> C
