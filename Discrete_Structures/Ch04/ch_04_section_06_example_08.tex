@@ -1,0 +1,90 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{array,booktabs,tabularx}
+\usepackage{enumitem}
+\usepackage{setspace}
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+
+% Define a roomy workspace box
+\newcommand{\workbox}[1]{\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}{\vspace{#1}}}}
+
+\begin{document}
+{\large \textbf{Discrete Structures \quad Chapter 4.6 — RSA Encryption}}
+
+\hrule
+\vspace{0.6em}
+
+\section*{Example 8 (Worksheet) — Encrypting with the RSA Cryptosystem}
+
+\textbf{Goal.} Encrypt the message \texttt{STOP} using the RSA cryptosystem with key \((n,e) = (2537, 13)\).
+
+\subsection*{Background idea}
+RSA is a \textbf{public key cryptosystem}. Anyone can use the public key \((n,e)\) to encrypt, but only the private key (involving \(d\)) can decrypt.  
+Each letter is first turned into a number (A=00, B=01, ..., Z=25), grouped into blocks that fit under \(n\), and then encrypted using
+\[
+c \equiv m^e \pmod{n}.
+\]
+
+\subsection*{Step 1 — Convert letters to numbers}
+We map \texttt{STOP} as:
+\[
+\texttt{S T O P} \Rightarrow 18\ 19\ 14\ 15.
+\]
+Group into four-digit blocks:
+\[
+1819 \quad 1415
+\]
+(because \(2525 < 2537 < 252525\), so 4 digits per block fits safely).
+
+\subsection*{Step 2 — Apply RSA encryption}
+For each block \(m\), compute
+\[
+c \equiv m^{13} \pmod{2537}.
+\]
+You can use fast modular exponentiation (successive squaring) to simplify:
+\[
+1819^{13} \pmod{2537} = 2081, \qquad 1415^{13} \pmod{2537} = 2182.
+\]
+Hence, the ciphertext is:
+\[
+\boxed{\texttt{2081 2182}}.
+\]
+
+\subsection*{Step 3 — Interpretation}
+We transmit \texttt{2081 2182}. Only someone with the private key \(d\) (that satisfies \(ed \equiv 1 \pmod{(p-1)(q-1)}\)) can decrypt the message.
+
+\subsection*{Tips \& tricks}
+\begin{itemize}[leftmargin=1.25em]
+  \item \textbf{Why 13?} — Because \(\gcd(13, (p-1)(q-1)) = 1\), ensuring encryption is reversible.
+  \item \textbf{Always check block size.} \(m\) must be smaller than \(n\).
+  \item \textbf{Decryption uses the inverse of \(e\)} — It “undoes” the exponentiation by modular arithmetic symmetry.
+  \item \textbf{RSA loves primes.} Choosing \(p,q\) large keeps \(n\) hard to factor.
+\end{itemize}
+
+\bigskip
+\hrule
+\vspace{0.6em}
+
+\section*{Practice — Your Turn}
+
+\textbf{Problem A (easier).} Encrypt \texttt{GO} using RSA with \((n,e)=(2537,13)\).  
+Hint: Convert \texttt{GO} → 06014 → use 4-digit block \(0601\), compute \(c \equiv m^{13} \pmod{2537}\).
+\workbox{2.2cm}
+
+\textbf{Problem B (similar).} Encrypt \texttt{HELP} using RSA with \((n,e)=(2537,13)\).  
+Show all modular exponentiation steps clearly.
+\workbox{3.0cm}
+
+\textbf{Problem C (challenge).} Encrypt \texttt{SAVE THE PLANET} using RSA with \((n,e)=(2537,13)\).  
+Break your message into 4-digit blocks and compute each ciphertext block.  
+(Hint: spaces can be ignored or replaced by 26.)
+\workbox{4.2cm}
+
+\bigskip
+\textbf{Reflection.} In one or two sentences, explain \emph{why} RSA’s security depends on factoring large primes.
+\workbox{1.5cm}
+
+\end{document}
+

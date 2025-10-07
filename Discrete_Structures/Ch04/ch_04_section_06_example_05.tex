@@ -1,0 +1,102 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{array,booktabs,tabularx}
+\usepackage{enumitem}
+\usepackage{setspace}
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+
+% roomy writing space boxes
+\newcommand{\workbox}[1]{\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}{\vspace{#1}}}}
+
+\begin{document}
+{\large \textbf{Discrete Structures \quad Chapter 4.6 — Cryptography}}
+
+\hrule
+\vspace{0.6em}
+
+\section*{Example 5 (Worksheet) — Cracking a Shift Cipher by Frequency}
+
+\textbf{Problem.} We intercepted the ciphertext \texttt{ZNK KGXRE HOXJ MKZY ZNK CUXS} produced by a shift cipher. What was the original plaintext?
+
+\subsection*{Why this works}
+In English text, some letters appear more often (E, T, A, O, I, N). A shift cipher preserves \emph{relative} frequencies, just moves them around the alphabet. If a letter occurs most often in the ciphertext, it likely corresponds to one of the most common plaintext letters. Hypothesize a mapping, compute the shift \(k\), and test by decrypting.
+
+\subsection*{Step 1 — Count letter frequencies}
+Ignore spaces/punctuation and count:
+
+\medskip
+\begin{tabular}{cccccccccccccc}
+\toprule
+K & Z & X & N & G & R & E & H & O & J & M & Y & C & U & S\\
+\midrule
+4 & 3 & 3 & 2 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1\\
+\bottomrule
+\end{tabular}
+
+\medskip
+The most frequent letter is \(\texttt{K}\).
+
+\subsection*{Step 2 — Form a hypothesis}
+In normal English, \(\texttt{E}\) is often the most frequent letter. Hypothesize that \(E\) (which is \(4\) with A=0) was shifted to \(K\) (which is \(10\)). Then the encryption used
+\[
+k \equiv 10 - 4 \equiv 6 \pmod{26}.
+\]
+So decryption should be \(\;p \equiv c - 6 \pmod{26}\).
+
+\subsection*{Step 3 — Test by decrypting}
+Try a few letters to check the hypothesis:
+\[
+\texttt{Z}\ (25)\ \mapsto\ 25-6=19\Rightarrow \texttt{T},\qquad
+\texttt{N}\ (13)\ \mapsto\ 7\Rightarrow \texttt{H},\qquad
+\texttt{K}\ (10)\ \mapsto\ 4\Rightarrow \texttt{E}.
+\]
+The first three letters become \texttt{THE}, which is promising. Decrypt the whole string with \(k=6\).
+
+\subsection*{Step 4 — Conclusion}
+Full decryption yields:
+\[
+\boxed{\texttt{THE EARLY BIRD GETS THE WORM}}
+\]
+Because this makes excellent English, our hypothesis \(k=6\) is accepted.
+
+\subsection*{Tips, tricks, and pitfalls}
+\begin{itemize}[leftmargin=1.25em]
+  \item \textbf{A=0} convention: \(E=4,\ K=10\). Off-by-one mistakes derail the shift quickly.
+  \item \textbf{Test, then trust.} A frequency guess is just a hypothesis; always decrypt a chunk to confirm.
+  \item \textbf{One-letter words} in ciphertext often map to \texttt{A} or \texttt{I}; common bigrams like \texttt{TH}, \texttt{HE}, \texttt{TO} are great anchors.
+  \item \textbf{Decrypt rule:} \(p\equiv c-k\pmod{26}\). Negative values? Add 26.
+\end{itemize}
+
+\bigskip
+\hrule
+\vspace{0.5em}
+
+\section*{Practice — Your Turn}
+
+\textbf{Problem A (easier).} Decrypt the ciphertext \texttt{URYYB JBEYQ} given it was made with a shift \(k=13\). \\
+\emph{Hint:} subtract 13 from each letter mod 26.
+\workbox{2.0cm}
+
+\textbf{Problem B (similar).} The ciphertext below was made with an \emph{unknown} shift:
+\[
+\texttt{ZHOFRPH WR FODVV}
+\]
+Find \(k\) and the plaintext. \\
+\emph{Hints:} the block \texttt{WR} might be \texttt{TO}, or \texttt{FODVV} looks like \texttt{CLASS}.
+\workbox{2.2cm}
+
+\textbf{Problem C (harder).} The ciphertext was produced by a shift cipher with \emph{unknown} \(k\):
+\[
+\texttt{YMJ VZNHP GWTBS KTC OZRUX TAJW YMJ QFED ITL}
+\]
+Determine \(k\) using a smart guess (look for a repeated common word), then decrypt the whole message.
+\workbox{3.0cm}
+
+\bigskip
+\textbf{Reflection.} Briefly explain why frequency analysis defeats a shift cipher but not a one-time pad.
+\workbox{1.6cm}
+
+\end{document}
+

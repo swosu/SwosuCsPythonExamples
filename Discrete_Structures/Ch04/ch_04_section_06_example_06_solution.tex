@@ -1,0 +1,70 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+{\large \textbf{Discrete Structures \quad Chapter 4.6 — Cryptography}}
+
+\hrule
+\vspace{0.6em}
+
+\section*{Solutions — Example 6 Practice (Transposition, $\sigma=[3,1,4,2]$)}
+
+\textbf{Permutation recap.} Encryption (per block): \(c_1c_2c_3c_4 = p_2\,p_4\,p_1\,p_3\).  
+Decryption uses \(\sigma^{-1}\): \(c_1 \to p_2,\ c_2 \to p_4,\ c_3 \to p_1,\ c_4 \to p_3.\)
+
+\subsection*{Problem A (easier) — Encrypt \texttt{MATH NERD}}
+Remove space and block: \(\texttt{MATH}\ \texttt{NERD}\).
+\[
+\begin{aligned}
+\texttt{MATH}:&\quad p=\texttt{M,A,T,H} \Rightarrow c=\texttt{A H M T},\\
+\texttt{NERD}:&\quad p=\texttt{N,E,R,D} \Rightarrow c=\texttt{E D N R}.
+\end{aligned}
+\]
+\[
+\boxed{\texttt{AHMT EDNR}}
+\]
+
+\subsection*{Problem B (similar) — Decrypt \texttt{OEHM OKWR}}
+Blocks: \(\texttt{OEHM}\ \texttt{OKWR}\). Use \(\sigma^{-1}\).
+\[
+\texttt{OEHM}: c_1 \to p_2=O,\ c_2 \to p_4=E,\ c_3 \to p_1=H,\ c_4 \to p_3=M
+\Rightarrow \texttt{HOME}.
+\]
+\[
+\texttt{OKWR}: c_1 \to p_2=O,\ c_2 \to p_4=K,\ c_3 \to p_1=W,\ c_4 \to p_3=R
+\Rightarrow \texttt{WORK}.
+\]
+\[
+\boxed{\texttt{HOME WORK}}
+\]
+
+\subsection*{Problem C (harder) — Encrypt \texttt{DATA SCIENCE} (pad with X)}
+Normalize: \(\texttt{DATASCIENCE}\) (11 letters) → pad: \(\texttt{DATASCIENCEX}\).  
+Blocks: \(\texttt{DATA}\ \texttt{SCIE}\ \texttt{NCEX}\).
+\[
+\begin{aligned}
+\texttt{DATA}:&\quad p=\texttt{D,A,T,A} \Rightarrow c=\texttt{A A D T},\\
+\texttt{SCIE}:&\quad p=\texttt{S,C,I,E} \Rightarrow c=\texttt{C E S I},\\
+\texttt{NCEX}:&\quad p=\texttt{N,C,E,X} \Rightarrow c=\texttt{C X N E}.
+\end{aligned}
+\]
+\[
+\boxed{\texttt{AADT CESI CXNE}}
+\]
+
+\bigskip
+\hrule
+\bigskip
+
+\textbf{Key takeaways.}
+\begin{itemize}
+  \item Transposition ciphers permute positions, not letters—so frequencies are unchanged.
+  \item Always decrypt with the inverse permutation \(\sigma^{-1}\).
+  \item Padding guarantees all blocks are full; document your padding rule (e.g., use \texttt{X}).
+\end{itemize}
+
+\end{document}
+

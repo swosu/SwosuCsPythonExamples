@@ -1,0 +1,56 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+{\large \textbf{Discrete Structures \quad Chapter 4.6 — Cryptography}}
+
+\hrule
+\vspace{0.6em}
+
+\section*{Solutions — Example 5 Practice}
+
+\subsection*{Problem A (easier)}
+Ciphertext: \texttt{URYYB JBEYQ}; shift \(k=13\) (ROT13). \\
+Decrypt by \(p \equiv c-13 \pmod{26}\) (or apply ROT13 again):
+\[
+\boxed{\texttt{HELLO WORLD}}
+\]
+
+\subsection*{Problem B (similar)}
+Ciphertext: \texttt{ZHOFRPH WR FODVV}, unknown \(k\). \\
+Guess that \texttt{WR} is \texttt{TO}. Then \(W=22\) should map to \(T=19\), so \(k\equiv 22-19\equiv 3\) and decryption uses \(p\equiv c-3\pmod{26}\). Check also that \texttt{FODVV} becomes \texttt{CLASS}:
+\[
+F(5)\to C(2),\ O(14)\to L(11),\ D(3)\to A(0),\ V(21)\to S(18),\ V(21)\to S(18).
+\]
+Hence \(k=3\) and
+\[
+\boxed{\texttt{WELCOME TO CLASS}}
+\]
+
+\subsection*{Problem C (harder)}
+Ciphertext: \texttt{YMJ VZNHP GWTBS KTC OZRUX TAJW YMJ QFED ITL}. \\
+The trigram \texttt{YMJ} repeats and often corresponds to \texttt{THE}. If so,
+\[
+Y(24) \to T(19) \Rightarrow k \equiv 24-19 \equiv 5,\quad \text{so decrypt with } p\equiv c-5\pmod{26}.
+\]
+Applying \(k=5\) across the text yields:
+\[
+\boxed{\texttt{THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG}}
+\]
+
+\bigskip
+\hrule
+\bigskip
+
+\textbf{Takeaways.}
+\begin{itemize}
+  \item Shift ciphers preserve frequency shape; a good guess (E, T, A, O) usually cracks \(k\).
+  \item Decryption rule: \(p\equiv c-k\pmod{26}\); verify the guess by reading for sensible English.
+  \item Longer texts make frequency clues stronger; short texts can be ambiguous, so test multiple hypotheses.
+\end{itemize}
+
+\end{document}
+

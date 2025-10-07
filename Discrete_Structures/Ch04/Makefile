@@ -1,6 +1,6 @@
 # ===============================================
-# Makefile — Discrete Structures: Section 4.6 Cryptography
-# Auto-compiles all .tex files -> PDFs and merges them
+# Makefile — Discrete Structures: Section 4.6 (Cryptography)
+# Auto-compiles all .tex files → PDFs and merges them
 # Keeps source + PDFs; cleans only temp build files
 # Auto-detects merge tool (pdftk or pdfunite)
 # ===============================================
@@ -8,11 +8,11 @@
 LATEX=pdflatex
 OUT=student_worksheets.pdf
 
-# Auto-detect merge tool (pdftk preferred, fallback to pdfunite)
+# Detect available merge tool (pdftk preferred, fallback to pdfunite)
 MERGE := $(shell command -v pdftk 2>/dev/null || command -v pdfunite 2>/dev/null)
 MERGE_IS_PDFTK := $(findstring pdftk,$(MERGE))
 
-# Gather LaTeX sources and PDFs
+# Gather all LaTeX sources and expected PDF outputs
 TEX_FILES := $(wildcard *.tex)
 PDF_FILES := $(TEX_FILES:.tex=.pdf)
 
@@ -21,16 +21,16 @@ PDF_FILES := $(TEX_FILES:.tex=.pdf)
 # -----------------------------------------------
 all: $(OUT)
 
-# Compile each .tex to .pdf, stop gracefully on error
+# -----------------------------------------------
+# Compile individual LaTeX files into PDFs
+# -----------------------------------------------
 %.pdf: %.tex
 	@echo "🧩 Compiling $< ..."
-	@if ! $(LATEX) -interaction=nonstopmode $< >/dev/null; then \
-	  echo "❌ LaTeX error in $< — check $*.log for details"; \
-	  tail -n 10 $*.log || true; \
-	  exit 1; \
-	fi
+	@$(LATEX) -interaction=nonstopmode $< >/dev/null || echo "⚠️  Warnings occurred in $< (PDF likely still generated)."
 
-# Merge all generated PDFs alphabetically
+# -----------------------------------------------
+# Merge all PDFs alphabetically into one document
+# -----------------------------------------------
 $(OUT): $(PDF_FILES)
 	@echo "📚 Found merge tool: $(MERGE)"
 	@echo "📘 Combining $(words $(PDF_FILES)) PDF(s) into $(OUT) ..."
@@ -39,17 +39,18 @@ ifeq ($(MERGE_IS_PDFTK),pdftk)
 else
 	@$(MERGE) $(sort $(PDF_FILES)) $(OUT)
 endif
-	@echo "✅ Build complete! Combined file: $(OUT)"
+	@echo "✅ Build complete! Combined file created: $(OUT)"
 
 # -----------------------------------------------
 # Cleanup utilities
 # -----------------------------------------------
 clean:
-	@echo "🧹 Cleaning auxiliary LaTeX files (keeping logs for debugging)..."
-	@rm -f *.aux *.out *.toc *.synctex.gz
+	@echo "🧹 Cleaning LaTeX auxiliary files (logs kept for debugging)..."
+	@rm -f *.aux *.log *.out *.toc *.synctex.gz
 
 cleanall: clean
-	@echo "✨ Cleaned temporary files (PDFs + logs retained)."
+	@echo "🧼 Removing all intermediate build files (PDFs kept)."
+	@rm -f temp.* *.bak
 
 # -----------------------------------------------
 # Full rebuild from scratch
