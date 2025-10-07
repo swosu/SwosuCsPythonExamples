@@ -1,0 +1,116 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,array}
+\setlength{\parskip}{0.65em}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+{\large \textbf{Discrete Structures \qquad Chapter 4.6 — Cryptography}}\\
+\textbf{Solutions: Example 9 (RSA Decryption)}
+
+\hrule
+\vspace{0.6em}
+
+\section*{Core facts for this example}
+Public key: \((n,e)=(2537,13)\) with \(n=43\cdot59\).\\
+Euler totient: \(\phi(n)=(p-1)(q-1)=42\cdot58=2436\).\\
+Private exponent \(d\) is the inverse of \(e\) modulo \(\phi(n)\):
+\[
+13d\equiv 1\pmod{2436}\quad\Rightarrow\quad d=937.
+\]
+Decryption works blockwise: for each ciphertext block \(c\),
+\[
+m \equiv c^{\,d}\pmod{n} \qquad\text{and then map } m\text{ back to letters with }A=00,\dots,Z=25.
+\]
+
+\section*{Textbook Example 9 — Full decryption}
+Ciphertext: \(\texttt{0981 0461}\).
+
+\subsection*{Block 1: \(c=0981\Rightarrow 981\)}
+We use repeated squaring (mod \(2537\)) and write \(d=937=512+256+128+32+8+1\).
+\[
+\begin{array}{r|rrrrrrrrr}
+\text{power} & 1 & 2 & 4 & 8 & 16 & 32 & 64 & 128 & 256 & 512\\\hline
+981^{\text{power}} \bmod 2537 &
+981 & 838 & 1922 & 1325 & 450 & 441 & 322 & 2472 & 1688 & 293
+\end{array}
+\]
+Multiply only the needed entries (powers \(1,8,32,128,256,512\)), reducing after each step:
+\[
+981\cdot1325\cdot441\cdot2472\cdot1688\cdot293 \equiv \boxed{704}\pmod{2537}.
+\]
+So \(m_1=0704\Rightarrow \texttt{07 04}=\texttt{H E}\).
+
+\subsection*{Block 2: \(c=0461\Rightarrow 461\)}
+Again with \(d=937=512+256+128+32+8+1\):
+\[
+\begin{array}{r|rrrrrrrrr}
+\text{power} & 1 & 2 & 4 & 8 & 16 & 32 & 64 & 128 & 256 & 512\\\hline
+461^{\text{power}} \bmod 2537 &
+461 & 1950 & 2074 & 1261 & 1959 & 1737 & 676 & 316 & 913 & 1433
+\end{array}
+\]
+Multiply the needed entries (powers \(1,8,32,128,256,512\)):
+\[
+461\cdot1261\cdot1737\cdot316\cdot913\cdot1433 \equiv \boxed{1115}\pmod{2537}.
+\]
+So \(m_2=1115\Rightarrow \texttt{11 15}=\texttt{L P}\).
+
+\textbf{Plaintext:} \(\boxed{\texttt{HELP}}\).
+
+\medskip
+\textit{Checks and teaching notes.} Emphasize (i) mapping is two digits per letter with leading zeros preserved; (ii) block size \(4\) works because \(2525<n=2537<252525\); (iii) reduce after \emph{every} multiplication to keep numbers small.
+
+\hrule
+\vspace{0.5em}
+
+\section*{Practice Solutions}
+
+\subsection*{Problem A (easier)}
+\textbf{Prompt.} Decrypt the single block \(\texttt{2081}\).
+
+\textbf{Work.} Compute \(m\equiv 2081^{937}\pmod{2537}\). (Repeated squaring or any correct modular-pow tool is fine.) One clean path gives
+\[
+2081^{937}\equiv \boxed{1819}\pmod{2537}.
+\]
+Split to letters: \(18\to \texttt{S}\), \(19\to \texttt{T}\). \\
+\textbf{Answer:} \(\boxed{\texttt{ST}}\).
+
+\subsection*{Problem B (similar)}
+\textbf{Prompt.} Decrypt the two blocks \(\texttt{2081 2182}\).
+
+\textbf{Work.} From part A, \(2081^{937}\equiv 1819\Rightarrow \texttt{ST}\).
+Similarly,
+\[
+2182^{937}\equiv \boxed{1415}\pmod{2537}\Rightarrow \texttt{14 15}=\texttt{O P}.
+\]
+\textbf{Answer:} \(\boxed{\texttt{STOP}}\).
+
+\subsection*{Problem C (harder)}
+\textbf{Prompt.} Decrypt \(\texttt{0981 0724 1774}\). Same key.
+
+\textbf{Work.} Blockwise decryption:
+\[
+\begin{aligned}
+0981^{937}&\equiv \boxed{0704}\pmod{2537} &&\Rightarrow \texttt{HE},\\
+0724^{937}&\equiv \boxed{1111}\pmod{2537} &&\Rightarrow \texttt{LL},\\
+1774^{937}&\equiv \boxed{1423}\pmod{2537} &&\Rightarrow \texttt{OX}.
+\end{aligned}
+\]
+\textbf{Answer:} \(\boxed{\texttt{HELLOX}}\) (final \texttt{X} is padding to complete a two-letter block).
+
+\medskip
+\textit{Coach’s notes.}
+\begin{itemize}
+\item When a message length is odd (in letters), a padding letter (commonly \texttt{X}) is appended so every numeric string splits cleanly into four-digit blocks.
+\item If students’ intermediate residues differ, check two things: (1) their exponent decomposition of \(937\) and (2) that they reduced modulo \(2537\) after \emph{every} multiply and square.
+\end{itemize}
+
+\hrule
+\vspace{0.4em}
+\textbf{Quick reference: letter map (A=00,\dots,Z=25).}\\
+\(\{00,01,\dots,09\}\to\{\texttt{A},\texttt{B},\dots,\texttt{J}\},\;
+10\to\texttt{K},\;11\to\texttt{L},\;\dots,\;25\to\texttt{Z}.\)
+
+\end{document}
+
