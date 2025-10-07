@@ -1,0 +1,128 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,booktabs,array,tabularx}
+\usepackage{enumitem}
+\setlength{\parskip}{0.65em}
+\setlength{\parindent}{0pt}
+
+% A roomy writing-space box
+\newcommand{\workbox}[1]{%
+  \vspace{0.25em}\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}{\vspace{#1}}}%
+}
+
+\begin{document}
+{\large \textbf{Discrete Structures \qquad Chapter 4.6 — Cryptography}}
+
+\hrule
+\vspace{0.6em}
+
+\section*{Example 9 (Worksheet) — RSA Decryption (work the process, not just the answer)}
+
+\textbf{Problem.} We receive the ciphertext blocks \texttt{0981 0461} produced by the RSA cryptosystem from Example 8. The public key was \((n,e)=(2537,13)\) with \(n=43\cdot59\). Decrypt the message.
+
+\subsection*{The big idea (the why)}
+RSA works in blocks. If a block \(c\) was encrypted with \(c \equiv m^e \pmod{n}\), then anyone who knows the \emph{private} exponent \(d\) (the inverse of \(e\bmod\phi(n)\)) can recover the plaintext block via
+\[
+m \equiv c^d \pmod{n}.
+\]
+This is fast thanks to \emph{repeated squaring}. After recovering each numeric block \(m\), translate back to letters using two digits per letter: \(A=00,\dots, Z=25\). Leading zeros matter!
+
+\subsection*{Step 1 — Compute the private exponent \(d\)}
+\[
+\phi(n)=(p-1)(q-1)=42\cdot58=2436,\qquad \text{find }d\text{ with }13d\equiv 1\pmod{2436}.
+\]
+Extended Euclid gives \(d=937\) (indeed \(13\cdot 937=12181=1+5\cdot2436\)).
+
+\subsection*{Step 2 — Decrypt each block with repeated squaring}
+
+\textbf{Block 1:} \(c=0981\Rightarrow c=981\).
+\[
+m \equiv 981^{937}\pmod{2537},\qquad 937=512+256+128+32+8+1.
+\]
+Squares mod \(2537\):
+\[
+\begin{array}{r|rrrrrrrrr}
+\text{power} & 1 & 2 & 4 & 8 & 16 & 32 & 64 & 128 & 256 & 512\\\hline
+981^{\text{power}} \bmod 2537 & 
+981 & 838 & 1922 & 1325 & 450 & 441 & 322 & 2472 & 1688 & 293
+\end{array}
+\]
+Multiply only the needed entries (powers \(1,8,32,128,256,512\)):
+\[
+\begin{aligned}
+r&\leftarrow 1\\
+r&\cdot 981 \equiv 981\\
+r&\cdot 1325 \equiv  981\cdot1325 \equiv  1717\\
+r&\cdot 441 \equiv  1717\cdot441 \equiv  1251\\
+r&\cdot 2472 \equiv  1251\cdot2472 \equiv  282\\
+r&\cdot 1688 \equiv  282\cdot1688 \equiv  1292\\
+r&\cdot 293 \equiv  1292\cdot293 \equiv  \boxed{704}
+\end{aligned}
+\]
+So \(m_1=0704\Rightarrow \texttt{07 04}=\texttt{H E}\).
+
+\medskip
+\textbf{Block 2:} \(c=0461\Rightarrow c=461\).
+\[
+m \equiv 461^{937}\pmod{2537},\qquad 937=512+256+128+32+8+1.
+\]
+Squares mod \(2537\):
+\[
+\begin{array}{r|rrrrrrrrr}
+\text{power} & 1 & 2 & 4 & 8 & 16 & 32 & 64 & 128 & 256 & 512\\\hline
+461^{\text{power}} \bmod 2537 & 
+461 & 1950 & 2074 & 1261 & 1959 & 1737 & 676 & 316 & 913 & 1433
+\end{array}
+\]
+Multiply the needed entries (powers \(1,8,32,128,256,512\)):
+\[
+\begin{aligned}
+r&\leftarrow 1\\
+r&\cdot 461 \equiv 461\\
+r&\cdot 1261 \equiv  461\cdot1261 \equiv  1327\\
+r&\cdot 1737 \equiv  1327\cdot1737 \equiv  1559\\
+r&\cdot 316 \equiv  1559\cdot316 \equiv  1122\\
+r&\cdot 913 \equiv  1122\cdot913 \equiv  82\\
+r&\cdot 1433 \equiv  82\cdot1433 \equiv \boxed{1115}
+\end{aligned}
+\]
+So \(m_2=1115\Rightarrow \texttt{11 15}=\texttt{L P}\).
+
+\subsection*{Step 3 — Read the plaintext}
+Blocks \(0704\ 1115\) translate to \(\boxed{\texttt{HELP}}\).
+
+\subsection*{Tips, tricks, and common pitfalls}
+\begin{itemize}[leftmargin=1.2em]
+\item Keep the two-digit mapping straight: \(A=00,\ldots,J=09,\ldots,Z=25\). Leading zeros are part of the block!
+\item Choose the block size so that each four–digit block \(m\) is \(\boldsymbol{< n}\). Here \(2N=4\) works because \(2525 < 2537 < 252525\).
+\item When doing repeated squaring, build a small table of \(c^{1}, c^{2}, c^{4}, \dots\) and then multiply only the powers that add up to \(d\).
+\item Arithmetic gets easier if you reduce \emph{often}. Every product should be brought back modulo \(n\) immediately.
+\end{itemize}
+
+\bigskip
+\hrule
+\vspace{0.4em}
+\section*{Practice — Your Turn (use \(n=2537,\ e=13,\ d=937\))}
+Use the same key as above. Show your exponentiation steps and \emph{keep} leading zeros when converting back to letters.
+
+\textbf{Problem A (easier).} Decrypt the single block \texttt{2081}. What two letters do you get?  
+\emph{Hint:} compute \(2081^{937}\bmod 2537\) and then split the result as \(\_\_\ \_\_\).
+\workbox{2.2cm}
+
+\textbf{Problem B (similar).} Decrypt the two–block ciphertext \texttt{2081 2182}.  
+\emph{Reminder:} convert each four–digit block separately, then map back to letters.
+\workbox{2.6cm}
+
+\textbf{Problem C (harder).} The ciphertext \texttt{0981 0724 1774} was made with the same key.  
+\begin{itemize}[leftmargin=1.2em, topsep=0.2em,itemsep=0.2em]
+\item Decrypt all three blocks.
+\item Translate to letters. If the last block ends with a padding letter \texttt{X}, circle it.
+\end{itemize}
+\workbox{3.2cm}
+
+\bigskip
+\textbf{Reflection.} In one or two sentences, explain why knowing \(e\) and \(n\) does \emph{not} make decryption easy, but knowing \(d\) does.
+\workbox{1.6cm}
+
+\end{document}
+

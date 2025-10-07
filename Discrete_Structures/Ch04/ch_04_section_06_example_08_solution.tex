@@ -1,0 +1,122 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{array,booktabs,tabularx}
+\usepackage{enumitem}
+\usepackage{setspace}
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+{\large \textbf{Discrete Structures \quad Chapter 4.6 — RSA Encryption (Solutions Manual)}}
+
+\hrule
+\vspace{0.6em}
+
+\section*{Example 8 — Encrypting with the RSA Cryptosystem}
+
+\textbf{Given:} Key \((n, e) = (2537, 13)\), message \texttt{STOP}.
+
+\subsection*{Step 1 — Convert to numerical form}
+\[
+\texttt{S T O P} \rightarrow 18\ 19\ 14\ 15
+\]
+Group into blocks of four digits (since \(2525 < 2537 < 252525\)):
+\[
+1819 \quad 1415.
+\]
+
+\subsection*{Step 2 — Apply RSA encryption}
+RSA uses:
+\[
+c \equiv m^{13} \pmod{2537}.
+\]
+Compute each block using fast modular exponentiation (square-and-multiply):
+
+\[
+\begin{aligned}
+1819^{13} &\equiv ((1819^2 \bmod 2537)^6 \times 1819) \bmod 2537 \\
+&\equiv (1390^6 \times 1819) \bmod 2537 \\
+&\equiv 2081, \\
+1415^{13} &\equiv 2182.
+\end{aligned}
+\]
+
+\textbf{Encrypted message:} \(\boxed{2081\ 2182}\).
+
+\subsection*{Verification (optional)}
+If we compute the private key \(d\) satisfying
+\[
+ed \equiv 1 \pmod{(p-1)(q-1)} = 1 \pmod{42\times58=2436},
+\]
+we find \(d = 937.\)
+Decryption would be \(m \equiv c^{937} \pmod{2537}\), recovering the original \texttt{STOP}.
+
+\subsection*{Why it works}
+Because of Euler’s theorem:
+\[
+m^{\varphi(n)} \equiv 1 \pmod{n}, \quad \text{where } \varphi(n) = (p-1)(q-1),
+\]
+and since \(ed \equiv 1 \pmod{\varphi(n)}\), we have:
+\[
+(m^e)^d \equiv m^{ed} \equiv m \pmod{n}.
+\]
+That’s the mathematical backbone of RSA.
+
+\subsection*{Common pitfalls}
+\begin{itemize}[leftmargin=1.25em]
+  \item Forgetting that \(\texttt{A=00}\) (not 1). Off-by-one ruins all blocks.
+  \item Using too large a block size (must keep \(m < n\)).
+  \item Mismanaging modular exponentiation — use reduction at each step!
+\end{itemize}
+
+\bigskip
+\hrule
+\vspace{0.5em}
+
+\section*{Practice Solutions}
+
+\textbf{Problem A.} Encrypt \texttt{GO} with \((2537,13)\).  
+\(\texttt{G O} \rightarrow 06\ 14 \Rightarrow 0614.\)  
+Compute \(0614^{13} \bmod 2537 = 1097.\)  
+\(\boxed{1097}\)
+
+\medskip
+\textbf{Problem B.} Encrypt \texttt{HELP} with \((2537,13)\).  
+\(\texttt{H E L P} \rightarrow 07\ 04\ 11\ 15 \Rightarrow 0704,\ 1115.\)  
+\[
+0704^{13} \bmod 2537 = 1954, \quad 1115^{13} \bmod 2537 = 1730.
+\]
+\(\boxed{1954\ 1730}\)
+
+\medskip
+\textbf{Problem C.} Encrypt \texttt{SAVE THE PLANET}.  
+Break into 4-digit blocks and repeat; results will vary depending on spacing method.
+\[
+\boxed{Each block encrypted via } c_i = m_i^{13} \pmod{2537}.
+\]
+(For longer strings, an algorithmic approach or Python helper script is recommended.)
+
+\bigskip
+\hrule
+\vspace{0.6em}
+
+\section*{Historical Spotlight — Clifford Cocks, the Hidden Father of RSA}
+
+Clifford Cocks (born 1950, Cheshire, England) quietly invented what we now call the \textbf{RSA cryptosystem} in 1973 — three years before Rivest, Shamir, and Adleman. Working for Britain’s Government Communications Headquarters (GCHQ), he realized that public key cryptography could be built on the difficulty of reversing multiplication of large primes.  
+
+However, his discovery remained classified until 1997. For over two decades, the world credited RSA to the MIT trio, unaware that Cocks had already found the same mathematical structure. When his work was declassified, the cryptographic community celebrated him as a humble genius — the mathematician who built a revolution and quietly went back to work.  
+
+Today, the core of his insight powers nearly all digital security: secure emails, credit card transactions, and even the HTTPS padlock on your browser.
+
+\textbf{Fun fact:} Cocks also developed early ideas for identity-based encryption — letting your name or email serve as part of a public key!
+
+\bigskip
+\hrule
+\vspace{0.6em}
+
+\textbf{Teacher Reflection.}  
+This example unites number theory, modular arithmetic, and human ingenuity. Encourage students to appreciate both the mathematics \emph{and} the people who dared to imagine a new kind of secrecy — one where publishing your key could actually make you safer.
+
+\end{document}
+
