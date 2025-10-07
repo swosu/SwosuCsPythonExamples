@@ -1,0 +1,82 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{array,booktabs}
+\usepackage{enumitem}
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+{\large \textbf{Discrete Structures \quad Chapter 4.6 — Cryptography}}
+
+\hrule
+\vspace{0.6em}
+
+\section*{Solutions for Example 2 Practice}
+
+\subsection*{Problem A (easier). \quad Encrypt with \(k=4\): \texttt{MATH IS FUN}}
+\textbf{Map to numbers (A=0):}
+\[
+\texttt{MATH IS FUN} \Rightarrow 12,0,19,7,\; 8,18,\; 5,20,13.
+\]
+\textbf{Add \(4\) mod 26:}
+\[
+12,0,19,7 \mapsto 16,4,23,11 \quad\ (\text{M}\to\text{Q},\ \text{A}\to\text{E},\ \ldots)
+\]
+\[
+8,18 \mapsto 12,22 \qquad 5,20,13 \mapsto 9,24,17.
+\]
+\textbf{Back to letters:}
+\[
+16,4,23,11, \ 12,22, \ 9,24,17 \Rightarrow \boxed{\texttt{QEXL MW JYR}}.
+\]
+\emph{Why it works:} Every step is addition in \(\mathbb{Z}_{26}\); wrap ensures letters stay in 0–25.
+
+\bigskip
+
+\subsection*{Problem B (similar). \quad Decrypt with \(k=11\): \texttt{SPWWZ HZCWO}}
+\textbf{Numbers for ciphertext:}
+\[
+\texttt{SPWWZ HZCWO} \Rightarrow 18,15,22,22,25,\; 7,25,2,22,14.
+\]
+\textbf{Subtract 11 (or add 15) mod 26:}
+\[
+18,15,22,22,25 \mapsto 7,4,11,11,14 \quad (\text{H,E,L,L,O})
+\]
+\[
+7,25,2,22,14 \mapsto 22,14,17,11,3 \quad (\text{W,O,R,L,D}).
+\]
+\textbf{Plaintext:} \(\boxed{\texttt{HELLO WORLD}}\).
+
+\bigskip
+
+\subsection*{Problem C (harder). \quad Unknown \(k\): \texttt{P HT HA AOL WHYR}}
+\textbf{Strategy (the why):} Look for patterns. A one-letter word is probably \texttt{I} or \texttt{A}. Also, \texttt{AOL} famously appears when ``\texttt{THE}'' is shifted by \(k=7\) (since \(19{+}7=26\equiv 0=\text{A}\), etc.).
+
+\textbf{Infer \(k\):} If \(\texttt{AOL}\) is \(\texttt{THE}\), then the shift is \(k=7\).
+
+\textbf{Decrypt by subtracting 7:}
+\[
+\texttt{P} \mapsto \texttt{I},\quad
+\texttt{HT} \mapsto \texttt{AM},\quad
+\texttt{HA} \mapsto \texttt{AT},\quad
+\texttt{AOL} \mapsto \texttt{THE},\quad
+\texttt{WHYR} \mapsto \texttt{PARK}.
+\]
+\[
+\Rightarrow \boxed{\texttt{I AM AT THE PARK}}.
+\]
+
+\bigskip
+\hrule
+\bigskip
+
+\textbf{Key takeaways.}
+\begin{itemize}[leftmargin=1.25em]
+  \item Encryption: \(E_k(p)=(p+k)\bmod 26\), Decryption: \(D_k(c)=(c-k)\bmod 26\).
+  \item Unknown \(k\) can be cracked with educated guesses (``\texttt{THE}'', one-letter words) or brute force (only 26 options).
+  \item Thinking in \(\mathbb{Z}_{26}\) explains the wrap-around and keeps errors low.
+\end{itemize}
+
+\end{document}
+

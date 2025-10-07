@@ -1,0 +1,219 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+
+\title{\textbf{Caesar Cipher Decryption} \\ Teacher Solutions Manual}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Problem A Solution: Decrypt ``CAT'' with shift $k=3$}
+
+\textbf{Step 1: Convert letters to numbers}
+
+\begin{align*}
+\text{F} &= 5 \\
+\text{D} &= 3 \\
+\text{W} &= 22
+\end{align*}
+
+Number sequence: 5 \quad 3 \quad 22
+
+\vspace{0.3cm}
+
+\textbf{Step 2: Apply decryption function $f(p) = (p - 3) \bmod 26$}
+
+\begin{align*}
+f(5) &= (5 - 3) \bmod 26 = 2 \bmod 26 = 2 \\
+f(3) &= (3 - 3) \bmod 26 = 0 \bmod 26 = 0 \\
+f(22) &= (22 - 3) \bmod 26 = 19 \bmod 26 = 19
+\end{align*}
+
+Decrypted numbers: 2 \quad 0 \quad 19
+
+\vspace{0.3cm}
+
+\textbf{Step 3: Convert back to letters}
+
+\begin{align*}
+2 &= \text{C} \\
+0 &= \text{A} \\
+19 &= \text{T}
+\end{align*}
+
+\vspace{0.3cm}
+\noindent\textbf{Answer:} \fbox{\textbf{CAT}}
+
+\vspace{0.5cm}
+
+\begin{tcolorbox}[colback=yellow!10!white,colframe=orange!50!black,title=\textbf{Teaching Note}]
+This is the easiest problem because: (1) short message, (2) all results are positive (no negative numbers to handle), and (3) it's the reverse of Problem A from the encryption worksheet. Students can verify their answer by re-encrypting CAT with $k=3$ to get FDW.
+\end{tcolorbox}
+
+\vspace{0.8cm}
+\hrule
+\vspace{0.8cm}
+
+\section*{Problem B Solution: Decrypt ``MJQQT BTWQI'' with shift $k=5$}
+
+\textbf{Step 1: Convert letters to numbers}
+
+Breaking down by word:
+\begin{itemize}[leftmargin=*]
+\item \textbf{MJQQT:} M=12, J=9, Q=16, Q=16, T=19
+\item \textbf{BTWQI:} B=1, T=19, W=22, Q=16, I=8
+\end{itemize}
+
+Number sequence: 
+\begin{center}
+12 \quad 9 \quad 16 \quad 16 \quad 19 \qquad 1 \quad 19 \quad 22 \quad 16 \quad 8
+\end{center}
+
+\vspace{0.3cm}
+
+\textbf{Step 2: Apply decryption function $f(p) = (p - 5) \bmod 26$}
+
+\begin{align*}
+f(12) &= (12 - 5) \bmod 26 = 7 \bmod 26 = 7 \\
+f(9) &= (9 - 5) \bmod 26 = 4 \bmod 26 = 4 \\
+f(16) &= (16 - 5) \bmod 26 = 11 \bmod 26 = 11 \\
+f(16) &= (16 - 5) \bmod 26 = 11 \bmod 26 = 11 \\
+f(19) &= (19 - 5) \bmod 26 = 14 \bmod 26 = 14 \\
+f(1) &= (1 - 5) \bmod 26 = -4 \bmod 26 = 22 \quad \text{(} -4 + 26 = 22\text{)} \\
+f(19) &= (19 - 5) \bmod 26 = 14 \bmod 26 = 14 \\
+f(22) &= (22 - 5) \bmod 26 = 17 \bmod 26 = 17 \\
+f(16) &= (16 - 5) \bmod 26 = 11 \bmod 26 = 11 \\
+f(8) &= (8 - 5) \bmod 26 = 3 \bmod 26 = 3
+\end{align*}
+
+Decrypted numbers:
+\begin{center}
+7 \quad 4 \quad 11 \quad 11 \quad 14 \qquad 22 \quad 14 \quad 17 \quad 11 \quad 3
+\end{center}
+
+\vspace{0.3cm}
+
+\textbf{Step 3: Convert back to letters}
+
+\begin{itemize}[leftmargin=*]
+\item 7=H, 4=E, 11=L, 11=L, 14=O
+\item 22=W, 14=O, 17=R, 11=L, 3=D
+\end{itemize}
+
+\vspace{0.3cm}
+\noindent\textbf{Answer:} \fbox{\textbf{HELLO WORLD}}
+
+\vspace{0.5cm}
+
+\begin{tcolorbox}[colback=yellow!10!white,colframe=orange!50!black,title=\textbf{Teaching Note}]
+This problem introduces negative numbers! When we decrypt B (position 1) with shift 5, we get: $1 - 5 = -4$.
+
+To handle negative results in modular arithmetic: $-4 \bmod 26 = 22$
+
+Students can calculate this by adding 26: $-4 + 26 = 22$, which corresponds to the letter W.
+
+\textbf{Connection:} Students encrypted "HELLO WORLD" in the previous worksheet and got "MJQQT BTWQI". Now they're decrypting it back—reinforcing the inverse relationship between encryption and decryption.
+\end{tcolorbox}
+
+\vspace{0.8cm}
+\hrule
+\vspace{0.8cm}
+
+\section*{Problem C Solution: Decrypt ``EJKKR ZRUOJ'' with shift $k=5$}
+
+\textbf{Step 1: Convert letters to numbers}
+
+Breaking down by word:
+\begin{itemize}[leftmargin=*]
+\item \textbf{EJKKR:} E=4, J=9, K=10, K=10, R=17
+\item \textbf{ZRUOJ:} Z=25, R=17, U=20, O=14, J=9
+\end{itemize}
+
+Number sequence: 
+\begin{center}
+4 \quad 9 \quad 10 \quad 10 \quad 17 \qquad 25 \quad 17 \quad 20 \quad 14 \quad 9
+\end{center}
+
+\vspace{0.3cm}
+
+\textbf{Step 2: Apply decryption function $f(p) = (p - 5) \bmod 26$}
+
+\begin{align*}
+f(4) &= (4 - 5) \bmod 26 = -1 \bmod 26 = 25 \quad \text{(} -1 + 26 = 25\text{)} \\
+f(9) &= (9 - 5) \bmod 26 = 4 \bmod 26 = 4 \\
+f(10) &= (10 - 5) \bmod 26 = 5 \bmod 26 = 5 \\
+f(10) &= (10 - 5) \bmod 26 = 5 \bmod 26 = 5 \\
+f(17) &= (17 - 5) \bmod 26 = 12 \bmod 26 = 12 \\
+f(25) &= (25 - 5) \bmod 26 = 20 \bmod 26 = 20 \\
+f(17) &= (17 - 5) \bmod 26 = 12 \bmod 26 = 12 \\
+f(20) &= (20 - 5) \bmod 26 = 15 \bmod 26 = 15 \\
+f(14) &= (14 - 5) \bmod 26 = 9 \bmod 26 = 9 \\
+f(9) &= (9 - 5) \bmod 26 = 4 \bmod 26 = 4
+\end{align*}
+
+Decrypted numbers:
+\begin{center}
+25 \quad 4 \quad 5 \quad 5 \quad 12 \qquad 20 \quad 12 \quad 15 \quad 9 \quad 4
+\end{center}
+
+\vspace{0.3cm}
+
+\textbf{Step 3: Convert back to letters}
+
+\begin{itemize}[leftmargin=*]
+\item 25=Z, 4=E, 5=F, 5=F, 12=M
+\item 20=U, 12=M, 15=P, 9=I, 4=E
+\end{itemize}
+
+\vspace{0.3cm}
+\noindent\textbf{Answer:} \fbox{\textbf{ZEFFM UMPIE}}
+
+\vspace{0.5cm}
+
+\begin{tcolorbox}[colback=yellow!10!white,colframe=orange!50!black,title=\textbf{Teaching Note}]
+This is the \textit{challenge} problem because it starts with E (position 4), which requires wrapping around when decrypted.
+
+When we compute $f(4) = (4 - 5) = -1$, we need to wrap around to the \emph{end} of the alphabet:
+$$-1 \bmod 26 = 25 \text{ (the letter Z)}$$
+
+Students can think of it this way: going back 1 from A brings you to Z (the last letter).
+
+Mathematically: $-1 + 26 = 25$
+
+\textbf{Multiple negative cases:} This problem is harder because it has multiple instances where students need to handle negative results, giving them more practice with this crucial concept.
+
+\textbf{Pattern recognition:} Students might notice that letters early in the alphabet (A, B, C, D, E) will always produce negative results when the shift is larger than their position number.
+\end{tcolorbox}
+
+\vspace{0.8cm}
+\hrule
+\vspace{0.8cm}
+
+\section*{Common Student Errors to Watch For}
+
+\begin{enumerate}[leftmargin=*]
+\item \textbf{Forgetting to handle negative numbers:} Students might write $4 - 5 = -1$ and stop there, not realizing they need to add 26. Watch for students who leave negative numbers in their final answer.
+
+\item \textbf{Adding instead of subtracting:} Some students confuse encryption and decryption, using $(p + k)$ instead of $(p - k)$.
+
+\item \textbf{Incorrect negative arithmetic:} Students might compute $-4 + 26$ incorrectly. Emphasize: start at 26, count backward 4.
+
+\item \textbf{Off-by-one errors with A=0:} Remind students that A=0, not A=1. When they decrypt to position 0, that's the letter A.
+
+\item \textbf{Not checking their work:} Students can verify decryption by re-encrypting their answer with the same shift—they should get back the original ciphertext.
+\end{enumerate}
+
+\vspace{0.5cm}
+
+\section*{Extension Activity}
+
+Have students encrypt a message with one shift value, then decrypt it with the same shift value to verify they get back the original message. This reinforces the inverse relationship:
+
+$$\text{Message} \xrightarrow{+k} \text{Ciphertext} \xrightarrow{-k} \text{Message}$$
+
+\end{document}

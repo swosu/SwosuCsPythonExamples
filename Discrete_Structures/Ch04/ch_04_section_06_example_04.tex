@@ -1,0 +1,79 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{enumitem}
+\usepackage{setspace}
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+
+\newcommand{\workbox}[1]{\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}{\vspace{#1}}}}
+
+\begin{document}
+{\large \textbf{Discrete Structures \quad Chapter 4.6 — Cryptography}}
+
+\hrule
+\vspace{0.6em}
+
+\section*{Example 4 — Affine Cipher Warm-Up}
+
+\textbf{Goal.} Determine which letter replaces \texttt{K} when the encryption function
+\[
+f(p) = (7p + 3) \bmod 26
+\]
+is used.
+
+\subsection*{Big idea (the why):}
+The affine cipher multiplies the plaintext value by a “stretch” factor and then shifts it.
+It combines multiplication and addition inside modular arithmetic.
+
+\[
+\text{Encryption: } E(p) = (a p + b)\bmod 26
+\qquad\quad
+\text{Decryption: } D(c) = a^{-1}(c - b)\bmod 26.
+\]
+The constants \(a\) and \(b\) are keys.  \(a\) must be coprime to 26 so that \(a^{-1}\) exists.
+
+\subsection*{Step 1 — Convert letter K to a number}
+\[
+K \rightarrow 10
+\]
+
+\subsection*{Step 2 — Apply the function \(f(p)=(7p+3)\bmod 26\)}
+\[
+f(10) = (7\cdot10 + 3)\bmod 26 = 73\bmod26 = 21.
+\]
+
+\subsection*{Step 3 — Convert number 21 back to a letter}
+\[
+21 \rightarrow V
+\]
+
+\textbf{Result:} \(K\) is encrypted as \(V\).
+
+\subsection*{Why it works:}
+Multiplying by 7 mixes up the order of letters more effectively than a simple shift, yet
+because 7 and 26 are coprime, every letter still maps to exactly one output.
+
+\bigskip
+\hrule
+\vspace{0.5em}
+
+\section*{Practice (your turn!)}
+
+\textbf{Problem A (easier).} Using \(f(p)=(3p+1)\bmod26\), find what letter replaces \texttt{C}.  
+\emph{Hint:} \(C=2\).
+\workbox{2cm}
+
+\textbf{Problem B (similar).} Using \(f(p)=(5p+7)\bmod26\), find what letter replaces \texttt{H}.  
+\emph{Hint:} compute carefully, mod 26.
+\workbox{2cm}
+
+\textbf{Problem C (harder).} Encrypt the word \texttt{DOG} using \(f(p)=(11p+8)\bmod26\).  
+Write each step clearly: letter → number → formula → result → letter.
+\workbox{3cm}
+
+\textbf{Reflection.} Why must \(a\) be coprime with 26 for this cipher to be reversible?
+\workbox{2cm}
+
+\end{document}
+

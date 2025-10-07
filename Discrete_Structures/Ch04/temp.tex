@@ -1,0 +1,92 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{array,tabularx,booktabs}
+\usepackage{enumitem}
+\usepackage{setspace}
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+
+% roomy writing space boxes
+\newcommand{\workbox}[1]{\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}{\vspace{#1}}}}
+
+\begin{document}
+{\large \textbf{Discrete Structures \quad Chapter 4.6 — Cryptography}}
+
+\hrule
+\vspace{0.6em}
+
+\section*{Example 2 (Worksheet) — Shift Cipher with \(k=11\)}
+
+\textbf{Goal.} Encrypt the message \texttt{STOP GLOBAL WARMING} using Caesar's shift cipher with \(k=11\).
+
+\subsection*{Big idea (the ``why''):}%
+We model letters as numbers in \(\mathbb{Z}_{26}\) so that a shift is just \emph{modular addition}. This keeps us in the alphabet and gives the wrap-around from \(Z\) back to \(A\).
+
+\[
+\text{A}=0,\ \text{B}=1,\ \ldots,\ \text{Z}=25
+\qquad\qquad
+E_k(p) = (p + k) \bmod 26.
+\]
+
+For this example, \(k=11\).
+
+\subsection*{Step 1 — Normalize and map letters \(\to\) numbers}
+We use uppercase and keep spaces. Convert each letter of \texttt{STOP GLOBAL WARMING} to its number:
+\[
+\underbrace{\texttt{STOP}}_{18\;19\;14\;15}
+\quad
+\underbrace{\texttt{GLOBAL}}_{6\;11\;14\;1\;0\;11}
+\quad
+\underbrace{\texttt{WARMING}}_{22\;0\;17\;12\;8\;13\;6}.
+\]
+
+\subsection*{Step 2 — Apply the shift \(k=11\) (add 11 mod 26)}
+Compute \(c \equiv p+11 \pmod{26}\) for each number. Do the wrap when you go past 25.
+\[
+\begin{aligned}
+\texttt{STOP}:&\quad 18,19,14,15 \mapsto 3,4,25,0 \\
+\texttt{GLOBAL}:&\quad 6,11,14,1,0,11 \mapsto 17,22,25,12,11,22 \\
+\texttt{WARMING}:&\quad 22,0,17,12,8,13,6 \mapsto 7,11,2,23,19,24,17.
+\end{aligned}
+\]
+
+\subsection*{Step 3 — Map numbers \(\to\) letters and keep spaces}
+\[
+3,4,25,0\ \ |\ 17,22,25,12,11,22\ \ |\ 7,11,2,23,19,24,17
+\quad\Rightarrow\quad
+\boxed{\texttt{DEZA RWZMLW HLCXTYR}}
+\]
+
+\subsection*{Helpful tips \& common pitfalls}
+\begin{itemize}[leftmargin=1.25em]
+  \item \textbf{A=0, not 1.} Off-by-one mistakes are the #1 bug.
+  \item \textbf{Wrap cleanly:} if \(p+k\ge 26\), subtract 26 (i.e., reduce mod 26).
+  \item \textbf{Spaces/punctuation} pass through unchanged; only letters get shifted.
+  \item \textbf{Decrypting} with \(k=11\) is the same as adding \(-11\) (or \(+15\)) mod 26.
+\end{itemize}
+
+\bigskip
+\hrule
+\vspace{0.6em}
+
+\section*{Practice (your turn!)}
+
+\textbf{Problem A (easier).} Encrypt with \(k=4\): \texttt{MATH IS FUN} \\
+\emph{Why:} smaller shift, shorter phrase—perfect confidence builder.
+\workbox{2.0cm}
+
+\textbf{Problem B (similar).} Decrypt with \(k=11\): \texttt{SPWWZ HZCWO} \\
+\emph{Tip:} subtract 11 mod 26 or add 15.
+\workbox{2.0cm}
+
+\textbf{Problem C (harder).} Unknown \(k\). Decrypt the Caesar ciphertext: \texttt{P HT HA AOL WHYR} \\
+\emph{Hints:} a one-letter word is often \texttt{I} or \texttt{A}. The block \texttt{AOL} frequently shows up when ``\texttt{THE}'' is encrypted with \(k=7\).
+\workbox{2.4cm}
+
+\bigskip
+\textbf{Reflection.} In one sentence: explain why modular arithmetic guarantees a valid letter after every shift. \\
+\workbox{1.2cm}
+
+\end{document}
+

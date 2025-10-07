@@ -1,0 +1,59 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+{\large \textbf{Discrete Structures \quad Chapter 4.6 — Cryptography}}
+
+\hrule
+\vspace{0.6em}
+
+\section*{Solutions — Example 4 Affine Cipher}
+
+\subsection*{Example Walk-Through}
+\(K\to10,\; f(p)=(7p+3)\bmod26.\)
+\[
+f(10) = (7\cdot10 + 3)\bmod26 = 73\bmod26 = 21.
+\]
+\(21\) corresponds to \(V\).  
+\boxed{K \to V}
+
+---
+
+\subsection*{Problem A}
+\(C=2.\)
+\[
+f(2) = (3\cdot2 + 1)\bmod26 = 7.
+\]
+\(7\rightarrow H.\)
+\boxed{C\to H}
+
+\subsection*{Problem B}
+\(H=7.\)
+\[
+f(7) = (5\cdot7 + 7)\bmod26 = 42\bmod26 = 16.
+\]
+\(16\rightarrow Q.\)
+\boxed{H\to Q}
+
+\subsection*{Problem C}
+Encrypt \texttt{DOG} with \(f(p)=(11p+8)\bmod26.\)
+
+\[
+\begin{array}{rclcl}
+D&=&3 &\Rightarrow& (11\cdot3+8)\bmod26 = 41\bmod26=15\rightarrow P\\
+O&=&14&\Rightarrow& (11\cdot14+8)\bmod26 =162\bmod26=6\rightarrow G\\
+G&=&6 &\Rightarrow& (11\cdot6+8)\bmod26 =74\bmod26=22\rightarrow W
+\end{array}
+\]
+\boxed{\texttt{DOG}\rightarrow\texttt{PGW}}
+
+\subsection*{Reflection Answer}
+If \(a\) shares a factor with 26, then some letters collapse to the same output (no unique
+inverse), making decryption impossible.  Only when \(\gcd(a,26)=1\) does the cipher remain
+bijective and reversible.
+
+\end{document}
+

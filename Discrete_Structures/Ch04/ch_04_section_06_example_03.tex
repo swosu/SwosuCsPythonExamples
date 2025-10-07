@@ -1,0 +1,205 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{tcolorbox}
+
+\title{\textbf{Caesar Cipher Decryption} \\ Student Worksheet}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Understanding Decryption}
+
+Previously, we learned how to \textbf{encrypt} messages using the Caesar cipher. Now we'll learn to \textbf{decrypt} them—convert the secret message back to the original!
+
+The key insight: \textbf{Decryption is the reverse of encryption.}
+
+\begin{itemize}[leftmargin=*]
+\item \textbf{Encryption:} We shifted letters \emph{forward} by $k$ positions using $f(p) = (p + k) \bmod 26$
+\item \textbf{Decryption:} We shift letters \emph{backward} by $k$ positions using $f(p) = (p - k) \bmod 26$
+\end{itemize}
+
+\vspace{0.3cm}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!50!black,title=\textbf{Key Concept: Negative Numbers and Mod}]
+When we subtract and get a negative number, we need to ``wrap around'' the other direction. For example, if we try to go back 7 from the letter E (position 4), we get $4 - 7 = -3$. 
+
+To handle this, we compute: $-3 \bmod 26 = 23$ (which is the letter X).
+
+\textbf{Quick trick:} If you get a negative number, just add 26 to make it positive!
+$$-3 + 26 = 23$$
+\end{tcolorbox}
+
+\vspace{0.5cm}
+
+\section*{Example 3: Worked Solution}
+
+\textbf{Question:} Decrypt the ciphertext message ``LEWLYPLUJL PZ H NYLHA HSOHOLY'' that was encrypted with the shift cipher with shift $k = 7$.
+
+\vspace{0.3cm}
+
+\noindent\textbf{\textcolor{blue}{Solution:}}
+
+\textbf{Step 1: Convert letters to numbers}
+
+We use our standard A=0, B=1, C=2, \ldots, Z=25 system. Let's convert the ciphertext:
+
+\begin{itemize}[leftmargin=*]
+\item \textbf{LEWLYPLUJL:} L=11, E=4, W=22, L=11, Y=24, P=15, L=11, U=20, J=9, L=11
+\item \textbf{PZ:} P=15, Z=25
+\item \textbf{H:} H=7
+\item \textbf{NYLHA:} N=13, Y=24, L=11, H=7, A=0
+\item \textbf{HSOHOLY:} A=0, L=11, H=7, O=14, L=11, Y=24
+\end{itemize}
+
+\vspace{0.2cm}
+\noindent Our number sequence is:
+\begin{center}
+\begin{tabular}{cccccccccc}
+11 & 4 & 22 & 11 & 24 & 15 & 11 & 20 & 9 & 11 \\
+\end{tabular}
+\end{center}
+\begin{center}
+\begin{tabular}{cc}
+15 & 25 \\
+\end{tabular}
+\qquad
+\begin{tabular}{c}
+7 \\
+\end{tabular}
+\qquad
+\begin{tabular}{ccccc}
+13 & 24 & 11 & 7 & 0 \\
+\end{tabular}
+\qquad
+\begin{tabular}{cccccc}
+0 & 11 & 7 & 9 & 14 & 11 & 24
+\end{tabular}
+\end{center}
+
+\vspace{0.3cm}
+
+\textbf{Step 2: Apply the decryption function}
+
+We apply $f(p) = (p - 7) \bmod 26$ to shift backward by 7. Let's work through each number:
+
+\begin{align*}
+f(11) &= (11 - 7) \bmod 26 = 4 \bmod 26 = 4 \\
+f(4) &= (4 - 7) \bmod 26 = -3 \bmod 26 = 23 \quad \text{(add 26: } -3 + 26 = 23\text{)} \\
+f(22) &= (22 - 7) \bmod 26 = 15 \bmod 26 = 15 \\
+f(11) &= (11 - 7) \bmod 26 = 4 \bmod 26 = 4 \\
+f(24) &= (24 - 7) \bmod 26 = 17 \bmod 26 = 17 \\
+f(15) &= (15 - 7) \bmod 26 = 8 \bmod 26 = 8 \\
+f(11) &= (11 - 7) \bmod 26 = 4 \bmod 26 = 4 \\
+f(20) &= (20 - 7) \bmod 26 = 13 \bmod 26 = 13 \\
+f(9) &= (9 - 7) \bmod 26 = 2 \bmod 26 = 2 \\
+f(11) &= (11 - 7) \bmod 26 = 4 \bmod 26 = 4
+\end{align*}
+
+Continuing for the remaining letters:
+\begin{align*}
+f(15) &= 8, \quad f(25) = 18, \quad f(7) = 0 \\
+f(13) &= 6, \quad f(24) = 17, \quad f(11) = 4, \quad f(7) = 0, \quad f(0) = 19 \\
+f(0) &= 19, \quad f(11) = 4, \quad f(7) = 0, \quad f(9) = 2, \quad f(14) = 7, \quad f(11) = 4, \quad f(24) = 17
+\end{align*}
+
+\vspace{0.2cm}
+\noindent Our decrypted numbers are:
+\begin{center}
+\begin{tabular}{cccccccccc}
+4 & 23 & 15 & 4 & 17 & 8 & 4 & 13 & 2 & 4 \\
+\end{tabular}
+\end{center}
+\begin{center}
+\begin{tabular}{cc}
+8 & 18 \\
+\end{tabular}
+\qquad
+\begin{tabular}{c}
+0 \\
+\end{tabular}
+\qquad
+\begin{tabular}{ccccc}
+6 & 17 & 4 & 0 & 19 \\
+\end{tabular}
+\qquad
+\begin{tabular}{ccccccc}
+19 & 4 & 0 & 2 & 7 & 4 & 17
+\end{tabular}
+\end{center}
+
+\vspace{0.3cm}
+
+\begin{tcolorbox}[colback=green!5!white,colframe=green!50!black,title=\textbf{Pro Tip: Handling Negative Results}]
+Whenever $(p - k)$ gives you a negative number:
+\begin{enumerate}
+\item Notice it's negative
+\item Add 26 to make it positive
+\item That's your answer!
+\end{enumerate}
+Example: $(4 - 7) = -3$, so $-3 + 26 = 23$
+\end{tcolorbox}
+
+\vspace{0.3cm}
+
+\textbf{Step 3: Convert numbers back to letters}
+
+Using A=0, B=1, \ldots, Z=25:
+
+\begin{itemize}[leftmargin=*]
+\item 4=E, 23=X, 15=P, 4=E, 17=R, 8=I, 4=E, 13=N, 2=C, 4=E
+\item 8=I, 18=S
+\item 0=A
+\item 6=G, 17=R, 4=E, 0=A, 19=T
+\item 19=T, 4=E, 0=A, 2=C, 7=H, 4=E, 17=R
+\end{itemize}
+
+\vspace{0.3cm}
+\noindent\textbf{Final Answer:} The decrypted message is \fbox{\textbf{EXPERIENCE IS A GREAT TEACHER}}
+
+\vspace{0.3cm}
+
+\begin{tcolorbox}[colback=purple!5!white,colframe=purple!50!black,title=\textbf{Why This Works}]
+If someone encrypted a message by shifting forward 7, we decrypt by shifting backward 7. It's like walking 7 steps forward, then 7 steps back—you end up where you started!
+\end{tcolorbox}
+
+\vspace{0.5cm}
+
+\hrule
+
+\vspace{0.5cm}
+
+\section*{Practice Problems}
+
+\subsection*{Problem A (Easier Warm-up)}
+
+Decrypt the ciphertext ``\textbf{FDW}'' that was encrypted with shift $k=3$.
+
+\vspace{0.3cm}
+\noindent\textit{Hint: This is a short message. Remember to subtract 3 from each letter's position. If you get negative numbers, add 26!}
+
+\vspace{5cm}
+
+\subsection*{Problem B (Standard Practice)}
+
+Decrypt the ciphertext ``\textbf{MJQQT BTWQI}'' that was encrypted with shift $k=5$.
+
+\vspace{0.3cm}
+\noindent\textit{Hint: You encrypted this message in the previous worksheet! Now decrypt it to get back the original message.}
+
+\vspace{6cm}
+
+\subsection*{Problem C (Challenge)}
+
+Decrypt the ciphertext ``\textbf{EJKKR ZRUOJ}'' that was encrypted with shift $k=5$.
+
+\vspace{0.3cm}
+\noindent\textit{Challenge: Some of these letters will give negative results when you subtract 5. Practice your wrapping-around skills!}
+
+\vspace{6cm}
+
+\end{document}
