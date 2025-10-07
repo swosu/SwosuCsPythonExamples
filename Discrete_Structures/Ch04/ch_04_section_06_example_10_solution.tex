@@ -1,0 +1,135 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{array,booktabs}
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+
+\newcommand{\A}{\mathbb{A}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\begin{document}
+{\large \textbf{Discrete Structures \quad Chapter 4.6 — Cryptography}}
+
+\hrule
+\vspace{0.6em}
+
+\section*{Example 10 (Solutions) — RSA Digital Signatures}
+
+\subsection*{Quick reminders}
+\begin{itemize}
+  \item Letter$\leftrightarrow$number map (used by the text): A$\!\to$00, B$\!\to$01, \dots, I$\!\to$08, J$\!\to$09, \dots, Z$\!\to$25.
+  \item Make fixed-size blocks so each block $m$ satisfies $0\le m < n$.
+  \item \textbf{Sign} one block: $s \equiv m^{d} \pmod n$.\quad \textbf{Verify}: $m' \equiv s^{e} \pmod n$; accept iff $m'=m$.
+  \item \textbf{Fast modular exponentiation (square–and–multiply)} is the tool for computing $a^b \bmod n$ efficiently.
+\end{itemize}
+
+\subsection*{Textbook walkthrough (signature for “MEET AT NOON”)}
+Public key $(n,e)=(2537,13)$ and private key $d=937$ (from Ex.\ 9).  
+Blocks of the message (using A=00,\dots,Z=25): \(\;1204\ 0419\ 0019\ 1314\ 1413.\)
+
+\textbf{Signer (Alice) computes the signature blocks}
+\[
+s_i \equiv m_i^{\,d} \pmod{2537}.
+\]
+With fast modular exponentiation (or a calculator), this yields
+\[
+\boxed{0817\ 0555\ 1310\ 2173\ 1026}.
+\]
+
+\textbf{Verifier (anyone) checks}
+\[
+m_i' \equiv s_i^{\,e}\pmod{2537}.
+\]
+Raising each block above to the $13$th power modulo $2537$ gives back
+\[
+1204\ 0419\ 0019\ 1314\ 1413,
+\]
+which matches Alice’s original blocks, so the signature is \emph{valid}. Because only the holder of $d$ can produce blocks that verify under $e$, recipients are convinced the message came from Alice.
+
+\bigskip
+\hrule
+\vspace{0.5em}
+
+\section*{Practice Solutions}
+
+\subsection*{Problem A (easier)}
+\textbf{Task.} With $(n,e,d)=(77,13,37)$, sign the message \(\texttt{HI}\) and verify.
+
+\textbf{Block set-up.} Since $n=77<100$, we must use \emph{two-digit} blocks:
+\[
+\texttt{HI}\ \longrightarrow\ 07\ 08 \quad(\text{A}=00,\dots,\text{I}=08).
+\]
+
+\textbf{Sign each block:} $s\equiv m^{37}\pmod{77}$.
+
+\underline{$m=07$}. Write $37=32+4+1$.  Square–and–multiply (all mod $77$):
+\[
+7^1\!=7,\quad 7^2\!=49,\quad 7^4\!=14,\quad 7^8\!=42,\quad 7^{16}\!=70,\quad 7^{32}\!=49.
+\]
+So \(7^{37}\equiv 7^{32}\!\cdot 7^{4}\!\cdot 7\equiv 49\cdot14\cdot7\equiv 28 \pmod{77}\).
+
+\underline{$m=08$}. Powers (mod $77$):
+\[
+8^1\!=8,\; 8^2\!=64,\;8^4\!=15,\;8^8\!=71,\;8^{16}\!=36,\;8^{32}\!=64.
+\]
+Hence \(8^{37}\equiv 8^{32}\!\cdot 8^{4}\!\cdot 8\equiv 64\cdot15\cdot8\equiv 57 \pmod{77}\).
+
+\textbf{Signature blocks:} \(\boxed{28\ 57}\).
+
+\textbf{Verify:} compute $m'\equiv s^{13}\pmod{77}$.  
+One can reuse the tables above or a calculator:
+\[
+28^{13}\equiv 7 \pmod{77}\quad\text{and}\quad 57^{13}\equiv 8 \pmod{77}.
+\]
+Thus we recover \(07\ 08\) $\Rightarrow$ \(\texttt{HI}\). \(\checkmark\)
+
+\subsection*{Problem B (similar)}
+\textbf{Task.} With $(n,e,d)=(2537,13,937)$, sign \(\texttt{OK}\) and verify.
+
+\textbf{Blocks.} $n=2537$ allows 4-digit blocks.  
+\(\texttt{OK}\to 14\ 10 \Rightarrow m=1410\).
+
+\textbf{Sign:} \(s\equiv 1410^{937}\pmod{2537}=\boxed{0802}.\)
+
+\textbf{Verify:} \(s^{13}\equiv 802^{13}\equiv 1410\pmod{2537}\Rightarrow\) back to \(\texttt{OK}\). \(\checkmark\)
+
+\emph{(Computation notes.)} A short binary-exponent table for $1410^{2^k}\bmod 2537$ plus multiply on 1-bits of $937$ (binary $=1110101001_2$) reproduces the result efficiently; a CAS or Python also confirms $802$.
+
+\subsection*{Problem C (harder)}
+\textbf{Task.} Using public key $(2537,13)$, check whether the claimed signature
+\[
+\boxed{0817\ 0555\ 1310\ 2173\ 1026}
+\]
+matches the message “\texttt{MEET AT NOON}”.
+
+\textbf{Verification.} Raise each $s_i$ to the 13th power mod 2537:
+\[
+0817^{13}\!\equiv 1204,\;
+0555^{13}\!\equiv 0419,\;
+1310^{13}\!\equiv 0019,\;
+2173^{13}\!\equiv 1314,\;
+1026^{13}\!\equiv 1413\ (\bmod 2537).
+\]
+These are exactly the blocks for “MEET AT NOON,” so the signature is valid.  
+\emph{If even one block failed to match, we would reject the signature immediately.}
+
+\bigskip
+\hrule
+\vspace{0.5em}
+
+\section*{Teaching notes, tips, and gotchas (for review)}
+\begin{itemize}
+  \item \textbf{Block sizing matters.} Always choose the largest even number of digits so each block $m$ is $<n$. Small $n$ (like $77$) means 2-digit blocks; $n=2537$ allows 4-digit blocks.
+  \item \textbf{Signature vs.\ encryption.} Sign with the \emph{private} exponent $d$; anyone verifies with the \emph{public} exponent $e$. (Encrypting for secrecy goes the other way.)
+  \item \textbf{Square–and–multiply} is your friend: precompute $a^{1},a^{2},a^{4},a^{8},\dots$ mod $n$ and multiply the powers that correspond to 1-bits of the exponent.
+  \item \textbf{Common mistakes:}
+    \begin{itemize}
+      \item Mixing the A=0 mapping (00–25) with A=1. Stick to A=00,\dots,Z=25 for RSA in this section.
+      \item Building a block $\ge n$. If that happens, reduce the block size.
+      \item Forgetting leading zeros when translating back (e.g., 0419 not 419).
+    \end{itemize}
+\end{itemize}
+
+\end{document}
+

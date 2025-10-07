@@ -1,0 +1,115 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amssymb}
+\usepackage{array, booktabs}
+\usepackage{enumitem}
+\usepackage{setspace}
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+
+% roomy writing box for answers
+\newcommand{\workbox}[1]{\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}{\vspace{#1}}}}
+
+\begin{document}
+{\large \textbf{Discrete Structures \quad Chapter 4.6 — Digital Signatures and RSA Authentication}}
+
+\hrule
+\vspace{0.8em}
+
+\section*{Example 10 — Signing a Message with RSA}
+
+\textbf{Scenario:}  
+Alice’s public RSA cryptosystem uses \( n = 43 \times 59 = 2537 \) and \( e = 13 \).  
+Her private key is \( d = 937 \), as computed in Example 9.  
+She wishes to send the message “MEET AT NOON” to her friends so that they are \emph{certain} it came from her.
+
+\vspace{0.5em}
+\textbf{Goal:} Learn how RSA can be used to \emph{sign} a message—proving authenticity, not just secrecy.
+
+\subsection*{Step 1 — Translate the message into numbers}
+Using the standard letter-number system (A=00, B=01, …, Z=25):  
+\[
+M = \text{MEET AT NOON} \Rightarrow 1204\ 0419\ 0019\ 1314\ 1413
+\]
+(Verify this translation carefully! It’s essential to the encryption and decryption process.)
+
+\subsection*{Step 2 — Apply Alice’s \emph{private key} to each block}
+Alice uses her private key \( d = 937 \) to compute:
+\[
+x^{937} \pmod{2537}
+\]
+for each message block \( x \).  
+This operation produces a “digital signature” that can only be generated with Alice’s private key.
+
+\subsection*{Step 3 — Compute the results (with modular exponentiation)}
+Using fast modular exponentiation (as in Example 9):
+\[
+\begin{aligned}
+1204^{937} &\equiv 817 \pmod{2537} \\
+0419^{937} &\equiv 555 \pmod{2537} \\
+0019^{937} &\equiv 1310 \pmod{2537} \\
+1314^{937} &\equiv 2173 \pmod{2537} \\
+1413^{937} &\equiv 1026 \pmod{2537}
+\end{aligned}
+\]
+
+So, the message Alice sends (in blocks) is:
+\[
+0817\ 0555\ 1310\ 2173\ 1026
+\]
+
+\subsection*{Step 4 — Verification by the recipient}
+When her friends receive the message, they apply Alice’s \emph{public key} \( e = 13 \) to each block:
+\[
+E_{(2537,13)}(c) = c^{13} \pmod{2537}
+\]
+This reverses Alice’s signature and recovers the plaintext.  
+If the recovered message reads “MEET AT NOON,” they know it truly came from Alice.
+
+\subsection*{Key takeaway}
+Digital signatures use the \emph{private key to sign} and the \emph{public key to verify}.  
+This is the opposite direction from encryption (where public encrypts and private decrypts).  
+It guarantees message authenticity and integrity — no one else could have produced this result.
+
+\vspace{1em}
+\hrule
+\vspace{0.5em}
+
+\section*{Practice — Your Turn!}
+
+\textbf{Problem A (Warm-up):}  
+Alice’s key is \( n = 77 \), \( e = 13 \), and \( d = 37 \).  
+She wants to sign the message “HI,” represented as \( 0708 \).  
+Compute the signature block \( c = m^d \pmod{77} \).  
+Then, verify that \( c^e \pmod{77} \) returns \( 0708 \).
+\workbox{3cm}
+
+\textbf{Problem B (Moderate):}  
+Bob uses the same RSA parameters as Example 10: \( n = 2537 \), \( e = 13 \), \( d = 937 \).  
+He signs the message “HELP” (encoded as \( 0704\ 1115 \)).  
+Compute \( m^d \pmod{2537} \) for each block, and verify correctness.
+\workbox{4cm}
+
+\textbf{Problem C (Challenge):}  
+Suppose Eve intercepts Alice’s public key \( (2537, 13) \) and one of her signed messages.  
+Why can’t Eve “fake” Alice’s signature without knowing \( d = 937 \)?  
+Use your understanding of modular arithmetic and factorization to explain the barrier to forgery.  
+\workbox{4cm}
+
+\vspace{1em}
+\textbf{Reflection:}  
+Describe in your own words how digital signatures strengthen security compared to regular RSA encryption.  
+\workbox{2cm}
+
+\vspace{1em}
+\hrule
+\textbf{Quick Tips:}
+\begin{itemize}[leftmargin=1.25em]
+  \item Public key \( (n, e) \) — used to verify or encrypt.
+  \item Private key \( d \) — used to sign or decrypt.
+  \item Large primes \( p, q \) make \( n = pq \) hard to factor, ensuring security.
+  \item Modular arithmetic is your shield: it keeps numbers within manageable limits.
+\end{itemize}
+
+\end{document}
+
