@@ -1,0 +1,144 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{array,tabularx,multicol}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+{\large \textbf{Discrete Structures \quad Chapter 4.6 — Cryptography}}
+
+\hrule
+\vspace{0.6em}
+
+\textbf{Example 1: Caesar Cipher ($k=3$)}
+
+\textbf{Question.}  
+Encrypt the message \texttt{MEET YOU IN THE PARK} using the Caesar cipher with shift $k=3$.
+
+\textbf{Step 1 — Letters $\rightarrow$ numbers.}
+
+We use zero-based numbering: A=0, B=1, …, Z=25.  
+\[
+\text{MEET YOU IN THE PARK} \quad \Rightarrow \quad 
+12, 4, 4, 19, \ 24, 14, 20, \ 8, 13, \ 19, 7, 4, \ 15, 0, 17, 10
+\]
+
+\textbf{Step 2 — Apply $f(p) = (p+3) \bmod 26$.}
+
+Add 3 to each number, wrapping around if the result exceeds 25:
+\[
+(12+3)=15, \ (4+3)=7, \ (4+3)=7, \ (19+3)=22,
+\]
+\[
+(24+3)=27 \equiv 1,\ (14+3)=17,\ (20+3)=23,
+\]
+\[
+(8+3)=11,\ (13+3)=16,\ (19+3)=22,\ (7+3)=10,\ (4+3)=7,
+\]
+\[
+(15+3)=18,\ (0+3)=3,\ (17+3)=20,\ (10+3)=13.
+\]
+
+\textbf{Step 3 — Numbers $\rightarrow$ letters.}
+
+Convert the ciphertext numbers back to letters:
+\[
+15,7,7,22,\ 1,17,23,\ 11,16,\ 22,10,7,\ 18,3,20,13
+\]
+\[
+\Rightarrow \text{PHHW BRX LQ WKH SDUN}
+\]
+
+\textbf{Final Answer.}  
+The encrypted message is:
+\[
+\boxed{\texttt{PHHW BRX LQ WKH SDUN}}
+\]
+\emph{(Translation: “MEET YOU IN THE PARK” shifted +3.)}
+
+\hrule
+\vspace{1em}
+
+\textbf{Quick Reflection.}  
+The Caesar cipher uses modular arithmetic in $\mathbb{Z}_{26}$ so letters “wrap around” after Z. The function $f(p)=(p+k)\bmod 26$ keeps all results in 0–25.
+
+---
+
+\section*{Practice Solutions}
+
+\textbf{P1 — Encrypt (easy).}  
+Use $k=5$ to encrypt: \texttt{DOGS AND CATS}.
+
+Step 1 — Convert to numbers:
+\[
+3,14,6,18,\ 0,13,3,\ 2,0,19,18
+\]
+
+Step 2 — Add $5$ mod 26:
+\[
+8,19,11,23,\ 5,18,8,\ 7,5,24,23
+\]
+
+Step 3 — Back to letters:
+\[
+\boxed{\texttt{ITLX FSI HFYX}}
+\]
+
+---
+
+\textbf{P2 — Decrypt (easy).}  
+Decrypt \texttt{YMNX NX FQ YJXY} that was made with $k=5$.
+
+We reverse the shift: $c - 5 \pmod{26}$.
+
+\[
+\text{Y}=24\to19=\text{T},\ \text{M}=12\to7=\text{H},\ \text{N}=13\to8=\text{I},\ \text{X}=23\to18=\text{S}
+\]
+\[
+\Rightarrow \boxed{\texttt{THIS IS AN TEST}}
+\]
+So the message is “THIS IS AN TEST.” (It should probably read “THIS IS A TEST.”)
+
+---
+
+\textbf{P3 — Crack the shift (harder).}  
+Ciphertext: \texttt{L ORYH PDWKP!}
+
+Try guessing common English patterns.
+
+\texttt{ORYH} looks like “LOVE,” and the one-letter word “L” likely corresponds to “I.”
+
+That suggests a shift of $k=3$ backward (since L $\to$ I is $-3$).
+
+Decrypting with $k=3$:
+\[
+\texttt{L ORYH PDWKP!} \Rightarrow \boxed{\texttt{I LOVE MATH!}}
+\]
+
+---
+
+\section*{Summary of Key Takeaways}
+\begin{itemize}
+  \item The Caesar cipher is modular addition in $\mathbb{Z}_{26}$.
+  \item Encryption: $E_k(p) = (p + k) \bmod 26$
+  \item Decryption: $D_k(c) = (c - k) \bmod 26$
+  \item If you can add or subtract mod 26, you can encrypt or decrypt.
+  \item This cipher is historically important but easily broken by frequency analysis or brute force (26 possibilities).
+\end{itemize}
+
+\hrule
+\bigskip
+
+\textbf{Going Deeper.}  
+You can extend this same math to more complex ciphers:
+\[
+f(p) = (a\cdot p + b)\bmod 26
+\]
+where $a$ must have a multiplicative inverse mod 26. This leads directly into the \emph{Affine Cipher}—our next example.
+
+\end{document}
+

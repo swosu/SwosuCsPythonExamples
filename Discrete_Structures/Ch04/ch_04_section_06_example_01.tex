@@ -1,0 +1,126 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{array,tabularx,multicol}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{setspace}
+\setlength{\parskip}{0.6em}
+\setlength{\parindent}{0pt}
+
+% Simple work-box macro for roomy writing space
+\newcommand{\workbox}[1]{\fbox{\parbox{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}{\vspace{#1}}}}
+
+\begin{document}
+
+{\large \textbf{Discrete Structures \quad Chapter 4.6 — Cryptography}}
+
+\hrule
+\vspace{0.6em}
+
+\textbf{Example 1 (Student Worksheet): Caesar Cipher, shift $k=3$}
+
+\textbf{Learning goals.} Practice converting letters $\leftrightarrow$ numbers, computing $(p+k)\bmod 26$, and translating back.
+
+\textbf{Alphabet convention (zero-based).}
+\[
+\text{A}=0,\ \text{B}=1,\ \ldots,\ \text{Z}=25
+\]
+We work in $\mathbb{Z}_{26}$ (mod 26). Spaces and punctuation are carried through unchanged; we use uppercase.
+
+\textbf{Encryption rule.} For plaintext number $p\in\{0,\dots,25\}$ and shift $k$, the ciphertext number is
+\[
+c \equiv p + k \pmod{26}.
+\]
+For this worksheet we use \fbox{$k=3$} (the classic “Caesar +3”).
+
+\textbf{Fast tips (use 'em shamelessly):}
+\begin{itemize}[leftmargin=1.2em, itemsep=0.25em]
+  \item Add $3$ quickly by doing \emph{+1, +2, +3} as you scan, or use the wrap trick: adding $3$ to $24,25$ wraps to $1,2$.
+  \item Decrypting a $+3$ cipher is the same as \emph{adding $-3$}, i.e., adding $23$ mod $26$.
+  \item Common wrap cases: $24{+}3\to 1$ (Y$\to$B), $25{+}3\to 2$ (Z$\to$C).
+\end{itemize}
+
+\hrule
+\vspace{0.4em}
+
+\textbf{Guided task.} Encrypt the message:
+
+\medskip
+\centerline{\Large \texttt{MEET YOU IN THE PARK}}
+\medskip
+
+\textbf{Step 1 — Letters $\rightarrow$ numbers (A=0,...,Z=25).} Fill the \emph{plaintext numbers $p$} under each letter.
+\smallskip
+
+% Row of letter boxes with room for numbers beneath
+\begin{tabular}{*{16}{c}}
+M & E & E & T & Y & O & U & I & N & T & H & E & P & A & R & K \\
+\multicolumn{16}{c}{\rule{0pt}{1.2em}}\\[-0.8em]
+\multicolumn{16}{c}{\small (write numbers $p$ here)}
+\end{tabular}
+
+\medskip
+
+\textbf{Step 2 — Add the shift $k=3$ mod 26.} Compute $c\equiv p+3\pmod{26}$ for each position and write the results:
+\smallskip
+
+\workbox{1.7cm}
+
+\textbf{Step 3 — Numbers $\rightarrow$ letters.} Translate each $c$ back to letters to form the ciphertext:
+\smallskip
+
+\workbox{1.4cm}
+
+\textbf{Neatness check.} Your ciphertext should be readable in groups (keep the spaces from the original). If you decrypt with $-3$ you should land back on \texttt{MEET YOU IN THE PARK}.
+
+\vspace{0.6em}
+\hrule
+\vspace{0.6em}
+
+\textbf{Quick reference table (optional).} If you like a visual:
+\[
+\begin{array}{cccccccccccccccccccccccccc}
+\text{A}&\text{B}&\text{C}&\text{D}&\text{E}&\text{F}&\text{G}&\text{H}&\text{I}&\text{J}&\text{K}&\text{L}&\text{M}&\text{N}&\text{O}&\text{P}&\text{Q}&\text{R}&\text{S}&\text{T}&\text{U}&\text{V}&\text{W}&\text{X}&\text{Y}&\text{Z}\\
+0&1&2&3&4&5&6&7&8&9&10&11&12&13&14&15&16&17&18&19&20&21&22&23&24&25
+\end{array}
+\]
+
+\bigskip
+
+% ------------------------------------------------------------
+% PRACTICE: Two easier, one harder (still Caesar for Ex. 1)
+% ------------------------------------------------------------
+{\large \textbf{Practice (still Caesar, but you drive):}}
+\begin{enumerate}[label=\textbf{P\arabic*.}, leftmargin=1.4em, itemsep=0.9em]
+
+\item \textbf{Encrypt (easy).} Use $k=5$ to encrypt:
+\[
+\texttt{DOGS AND CATS}
+\]
+\emph{Hint:} D=3 so D$\mapsto$3+5=8 $\Rightarrow$ I. Keep spaces. \\
+\workbox{2.0cm}
+
+\item \textbf{Decrypt (easy).} The ciphertext below was made with a $k=5$ Caesar. Recover the plaintext.
+\[
+\texttt{YMNX NX FQ YJXY}
+\]
+\emph{Tip:} Decrypt by adding $-5$ (or $+21$) mod 26. \\
+\workbox{2.0cm}
+
+\item \textbf{Crack the shift (harder).} The message below is a Caesar cipher with \emph{unknown} $k$:
+\[
+\texttt{L ORYH PDWKP\!}
+\]
+\emph{Clues:} Try common words; guess that ``\texttt{PDWKP}'' might be ``\texttt{MATH?}'' or ``\texttt{MATHS?}''. Also, a one-letter word is often \texttt{A} or \texttt{I}. Determine $k$ and decrypt. \\
+\workbox{2.2cm}
+
+\end{enumerate}
+
+\bigskip
+
+\textbf{Reflection.} In one sentence: why does ``mod 26’’ make the Caesar cipher \emph{wrap} from Z back to A? \\
+\workbox{1.2cm}
+
+\end{document}
+
