@@ -1,0 +1,210 @@
+\documentclass[12pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{setspace}
+\setstretch{1.2}
+\setlength{\parskip}{0.8em}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+{\large \textbf{Discrete Structures \quad Chapter 4.6 — Cryptography}}
+
+\hrule
+\vspace{0.6em}
+
+\section*{Example 12 — The Tale of the Two Keys: Understanding SSH and ED25519}
+
+\subsection*{Scene 1 — The Birth of a Key Pair}
+
+Once upon a command line, a developer typed:
+
+\begin{verbatim}
+$ ssh-keygen -t ed25519 -C "your_email@example.com"
+\end{verbatim}
+
+and with that, two keys were born.
+
+\begin{itemize}
+  \item The \textbf{private key} (usually stored as \texttt{~/.ssh/id\_ed25519}) — a secret mathematical number you must never share.
+  \item The \textbf{public key} (stored as \texttt{~/.ssh/id\_ed25519.pub}) — a mathematically related value that anyone may see.
+\end{itemize}
+
+These two keys are linked by a one-way mathematical bond:  
+from the private key you can derive the public key,  
+but from the public key alone, you cannot feasibly find the private key.
+
+\textbf{In mathematical terms:}  
+The private key is a random number $k$ (an integer modulo a large prime number),  
+and the public key is $K = k \cdot B$,  
+where $B$ is a special base point on an elliptic curve called \emph{Curve25519}.
+
+The multiplication $\cdot$ here isn’t ordinary arithmetic — it’s \emph{elliptic curve point multiplication}.  
+It’s easy to go forward (compute $K$ from $k$),  
+but practically impossible to go backward (find $k$ given $K$).
+
+This one-way direction is what makes the system secure.
+
+\bigskip
+\hrule
+\vspace{0.5em}
+
+\subsection*{Scene 2 — The Meeting with GitHub}
+
+When you upload your \texttt{id\_ed25519.pub} to GitHub,  
+you’re essentially saying:
+
+\begin{quote}
+“GitHub, if anyone ever proves they know the private number $k$ that goes with this public key $K$,  
+please trust them — that’s me.”
+\end{quote}
+
+GitHub doesn’t need to store your private key or a password.  
+It just saves your public key $K$ and waits for you to prove your identity through math.
+
+\bigskip
+\hrule
+\vspace{0.5em}
+
+\subsection*{Scene 3 — The Silent Handshake}
+
+Later, when you try to connect:
+
+\begin{verbatim}
+$ git push origin main
+\end{verbatim}
+
+your computer (the \emph{client}) sends GitHub (the \emph{server}) a friendly request:
+“Hey, I’d like to log in using my public key $K$.”
+
+GitHub checks if it recognizes that $K$ from your account,  
+and if so, it sends back a one-time random challenge —  
+a random number $r$ that must be signed.
+
+Your computer uses your private key $k$ to produce a mathematical signature $\sigma$  
+that proves “I know $k$” without ever revealing $k$ itself.
+
+GitHub then uses your public key $K$ to check the signature:
+\[
+\text{Verify}(\sigma, r, K) \Rightarrow \text{True or False}.
+\]
+If the math checks out, GitHub knows it’s really you.
+
+\bigskip
+\textbf{No passwords were typed. No secrets were sent. Only proof.}
+
+This is called \textbf{public-key authentication},  
+and the math behind it (in ED25519) is built on the secure foundation of elliptic curve cryptography.
+
+\bigskip
+\hrule
+\vspace{0.5em}
+
+\subsection*{Scene 4 — Under the Hood: ED25519’s Elegant Math}
+
+At its heart, ED25519 uses a specific elliptic curve over a finite field $\mathbb{F}_p$  
+with $p = 2^{255} - 19$.  
+The curve equation looks like this:
+\[
+-x^2 + y^2 = 1 + d x^2 y^2
+\]
+where $d = -121665/121666$.
+
+All computations are done \emph{modulo} $p$.
+
+\textbf{Signing process (simplified):}
+\begin{enumerate}
+  \item Your private key $k$ is used to generate a random value $r$.
+  \item Compute a public value $R = r \cdot B$.
+  \item Hash together $(R, K, \text{message})$ to get a challenge $h$.
+  \item Compute a response $s = r + h \cdot k \pmod q$.
+  \item Your signature is the pair $(R, s)$.
+\end{enumerate}
+
+\textbf{Verification process:}
+\[
+sB \stackrel{?}{=} R + hK.
+\]
+If that equality holds, the signature is valid —  
+proving you knew the private key $k$ that corresponds to the public key $K$,  
+without ever revealing $k$ itself.
+
+\bigskip
+\hrule
+\vspace{0.5em}
+
+\subsection*{Scene 5 — Trust, Speed, and Beauty}
+
+Why ED25519? Because it’s:
+\begin{itemize}
+  \item \textbf{Fast.} Operations on Curve25519 are designed for efficiency on modern CPUs.
+  \item \textbf{Secure.} 255-bit keys are strong enough for decades of safety.
+  \item \textbf{Simple.} The algorithm avoids messy mathematical corner cases that plagued older elliptic curves.
+  \item \textbf{Deterministic.} The same private key always yields the same signature, eliminating random side-channel leaks.
+\end{itemize}
+
+\textbf{In short:}  
+ED25519 is the elegant modern successor to RSA — leaner, faster, and just as trustworthy.
+
+\bigskip
+\hrule
+\vspace{0.5em}
+
+\subsection*{Scene 6 — What Really Happens When You Push to GitHub}
+
+When you type:
+\begin{verbatim}
+git push origin main
+\end{verbatim}
+
+a full cryptographic handshake unfolds in milliseconds:
+
+\begin{enumerate}
+  \item GitHub sends a challenge (random data).
+  \item Your SSH client signs that challenge using your private key.
+  \item GitHub verifies the signature with your public key.
+  \item The secure session is established — encrypted, authenticated, and trusted.
+\end{enumerate}
+
+Every push, pull, or fetch after that uses the same session’s encrypted channel.  
+No passwords. No eavesdropping. Just math.
+
+\bigskip
+\hrule
+\vspace{0.5em}
+
+\subsection*{Epilogue — The Moral of the Story}
+
+SSH with ED25519 is not just about convenience —  
+it’s about \textbf{trust through proof, not secrecy.}
+
+\begin{quote}
+Your private key whispers: “I know something only I could know.”  
+Your public key declares: “Check my math, and you’ll believe me.”
+\end{quote}
+
+Together they make it possible for developers around the world  
+to collaborate securely — building bridges of trust made entirely of numbers.
+
+\bigskip
+\hrule
+\vspace{0.5em}
+
+\subsection*{Optional Extension for the Curious}
+
+If you’d like to visualize what’s really happening:
+\begin{itemize}
+  \item Generate a key: \texttt{ssh-keygen -t ed25519}
+  \item Print your public key: \texttt{cat ~/.ssh/id\_ed25519.pub}
+  \item Run: \texttt{ssh -vT git@github.com}
+\end{itemize}
+
+You’ll see each step of the cryptographic dialogue.  
+It’s math in motion — security as symphony.
+
+\bigskip
+\textbf{Takeaway:}  
+When you use SSH with GitHub, you are not “logging in.”  
+You are \emph{proving who you are with math}.
+
+\end{document}
+
