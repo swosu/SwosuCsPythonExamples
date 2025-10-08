@@ -1,4 +1,5 @@
-from UserClass import User
+from User_Class import User
+
 
 def main():
     # Create two users
