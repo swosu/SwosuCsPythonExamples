@@ -1,0 +1,90 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb, fancyhdr, geometry}
+\geometry{margin=1in}
+\pagestyle{fancy}
+\fancyhead[L]{\textbf{Discrete Structures}}
+\fancyhead[C]{Chapter 4.6 --- RSA Encryption}
+\fancyhead[R]{\textbf{Example: Simple RSA by Hand}}
+
+\begin{document}
+
+\begin{center}
+    \Large \textbf{Example: A Simple RSA Demonstration}\\[1em]
+    \normalsize (Toy model — not secure, but perfect for learning!)
+\end{center}
+
+\section*{Goal}
+Encrypt and decrypt the message \( M = 7 \) using a tiny RSA setup.
+
+\section*{Step 1. Choose primes}
+Let \( p = 5 \) and \( q = 11 \).\\[0.5em]
+Then
+\[
+n = p \times q = 5 \times 11 = 55,
+\quad
+\phi(n) = (p - 1)(q - 1) = 4 \times 10 = 40.
+\]
+
+\section*{Step 2. Choose public key exponent \( e \)}
+We need \( e \) such that \( 1 < e < 40 \) and \( \gcd(e, 40) = 1 \).\\
+Let’s choose \( e = 3 \), since \(\gcd(3,40) = 1\).
+
+\section*{Step 3. Compute private key exponent \( d \)}
+We need \( d \) such that
+\[
+e \times d \equiv 1 \pmod{40}.
+\]
+Try small values:
+\[
+3 \times 27 = 81 \equiv 1 \pmod{40}.
+\]
+So \( d = 27 \).
+
+\[
+\textbf{Public key: } (n, e) = (55, 3)
+\quad\quad
+\textbf{Private key: } (n, d) = (55, 27)
+\]
+
+\section*{Step 4. Encrypt a message}
+Let our message be \( M = 7 \).  
+Compute ciphertext:
+\[
+C \equiv M^e \pmod{n} = 7^3 \bmod 55 = 343 \bmod 55 = 13.
+\]
+
+\[
+\boxed{C = 13}
+\]
+
+\section*{Step 5. Decrypt the ciphertext}
+Now compute:
+\[
+M \equiv C^d \pmod{n} = 13^{27} \bmod 55.
+\]
+We can reduce step-by-step (or use a calculator):
+
+\[
+13^2 \equiv 4, \quad 13^4 \equiv 16, \quad 13^8 \equiv 36, \quad 13^{16} \equiv 31,
+\]
+and after combining exponents properly,
+\[
+13^{27} \bmod 55 = 7.
+\]
+
+\[
+\boxed{M = 7 \text{ (original message recovered!)}}
+\]
+
+\section*{Summary}
+\begin{itemize}
+    \item \( p=5, q=11 \Rightarrow n=55, \phi=40 \)
+    \item \( e=3, d=27 \)
+    \item Encrypt \( M=7 \Rightarrow C=13 \)
+    \item Decrypt \( C=13 \Rightarrow M=7 \)
+\end{itemize}
+
+\noindent Even though our numbers are tiny, this is exactly the same math that powers real RSA with 2048-bit primes.
+
+\end{document}
+
