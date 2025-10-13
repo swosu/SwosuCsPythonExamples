@@ -35,5 +35,6 @@ def look_to_see_if_it_is_only_numbers_or_no_if_it_has_other_stuff(user_string):
 
 if __name__ == "__main__":
     user_string = input('Please enter a string and press enter when you are done: ')
+    print(type(user_string))
 
     look_to_see_if_it_is_only_numbers_or_no_if_it_has_other_stuff(user_string)
