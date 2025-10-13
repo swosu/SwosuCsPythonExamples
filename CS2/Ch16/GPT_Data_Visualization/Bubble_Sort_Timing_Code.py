@@ -9,7 +9,7 @@ from scipy.optimize import curve_fit
 # --- Configuration ---
 list_sizes = [10, 20, 40, 80, 160, 320, 640, 1280, 2560]
 runs_per_size = 5
-output_image = "bubble_sort_timing.png"
+output_image = "bubble_sort_timing_simple.png"
 
 # --- Bubble Sort Function ---
 def bubble_sort(arr):
@@ -42,30 +42,27 @@ def power_law(n, a, b):
 params, _ = curve_fit(power_law, df["n"], df["time"])
 a, b = params
 
-# --- Generate Fitted Data for Smooth Curve ---
-n_fit = np.linspace(min(df["n"]), max(df["n"]), 200)
+# --- Generate Fitted Data ---
+n_fit = np.linspace(min(df["n"]), max(df["n"]), 300)
 t_fit = power_law(n_fit, a, b)
 
 # --- Visualization ---
 sns.set_theme(style="whitegrid", context="talk")
 
-plt.figure(figsize=(10, 6))
-# Raw data as bars
-sns.barplot(x="n", y="time", data=df, color="skyblue", alpha=0.7)
+plt.figure(figsize=(9, 6))
 
-# Best-fit curve as a line
-sns.lineplot(x=n_fit, y=t_fit, color="darkblue", linewidth=2.5, label=f"Fit: T = {a:.2e} * n^{b:.2f}")
+# Plot raw data points
+sns.scatterplot(x="n", y="time", data=df, color="dodgerblue", s=100, label="Measured time")
 
-plt.xscale("log")  # log axis for clarity
-plt.yscale("linear")
+# Plot fitted curve
+sns.lineplot(x=n_fit, y=t_fit, color="darkblue", linewidth=2.5,
+             label=f"Fit: T = {a:.2e} × n^{b:.2f}")
 
-plt.title("Bubble Sort Timing vs. List Size", fontsize=18, fontweight="bold")
-plt.xlabel("List Size (n, log scale)")
+plt.title("Bubble Sort Runtime vs. List Size", fontsize=18, fontweight="bold")
+plt.xlabel("List Size (n)")
 plt.ylabel("Average Time (seconds)")
 plt.legend()
 plt.tight_layout()
-
-# Save and show
 plt.savefig(output_image, dpi=300)
 plt.show()
 
