@@ -2,7 +2,13 @@
 import numpy as np
 import cupy as cp
 import time, csv, argparse, sys
+
+# ✅ Headless plotting setup
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+
+
 
 # --- PRIME FINDERS ---
 def cpu_sieve(n):
