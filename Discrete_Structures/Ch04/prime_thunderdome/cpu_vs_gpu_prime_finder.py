@@ -3,6 +3,9 @@ import numpy as np
 import cupy as cp
 import time, csv, argparse, sys
 
+import platform
+from datetime import datetime
+
 # ✅ Headless plotting setup
 import matplotlib
 matplotlib.use('Agg')
@@ -58,9 +61,21 @@ def run_benchmark(sizes, runs):
 
     return results
 
+
+# --- system tagging ---
+
+def system_tag():
+    cpu = platform.processor().replace(' ', '_')
+    gpu = cp.cuda.runtime.getDeviceProperties(0)['name'].decode().replace(' ', '_')
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    return f"{platform.node()}_{cpu}_{gpu}_{ts}"
+
+
 # --- CSV LOGGER ---
+
 def save_results(results):
-    filename = f"prime_race_results_{int(time.time())}.csv"
+    tag = system_tag()
+    filename = f"prime_race_results_{tag}.csv"
     with open(filename, "w", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=results[0].keys())
         writer.writeheader()
@@ -68,25 +83,26 @@ def save_results(results):
     print(f"\n📄 Results saved to {filename}")
     return filename
 
+
 # --- GRAPH MAKER ---
-def plot_results(results, outfile="prime_race_plot.png"):
+def plot_results(results):
+    tag = system_tag()
+    outfile = f"prime_race_plot_{tag}.png"
     sizes = sorted(set(r["range"] for r in results))
     cpu_avg = [np.mean([r["cpu_time"] for r in results if r["range"] == s]) for s in sizes]
     gpu_avg = [np.mean([r["gpu_time"] for r in results if r["range"] == s]) for s in sizes]
 
-    plt.figure(figsize=(8,6))
+    plt.figure(figsize=(9,7))
     plt.plot(sizes, cpu_avg, marker='o', label="CPU", linewidth=2)
     plt.plot(sizes, gpu_avg, marker='o', label="GPU", linewidth=2)
-    plt.xscale("log")
-    plt.yscale("log")
-    plt.xlabel("Range (n)")
-    plt.ylabel("Time (seconds)")
-    plt.title("Prime Finder: CPU vs GPU Showdown")
-    plt.legend()
-    plt.grid(True, which="both", ls="--")
-    plt.tight_layout()
-    plt.savefig(outfile)
+    plt.xscale("log"); plt.yscale("log")
+    plt.xlabel("Range (n)"); plt.ylabel("Time (seconds)")
+    plt.title(f"Prime Finder on {platform.node()} — Xeon vs Tesla T4")
+    plt.legend(); plt.grid(True, which="both", ls="--")
+    plt.tight_layout(); plt.savefig(outfile)
     print(f"📊 Plot saved to {outfile}")
+
+
 
 # --- MAIN ---
 if __name__ == "__main__":
