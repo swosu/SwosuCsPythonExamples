@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import numpy as np
 import cupy as cp
-import time, csv, argparse, os, sys
+import time, csv, argparse, sys
 import matplotlib.pyplot as plt
 
 # --- PRIME FINDERS ---
@@ -27,7 +27,7 @@ def run_benchmark(sizes, runs):
     print("\n🏁 Entering the Prime Thunderdome...\n")
 
     for n in sizes:
-        print(f"⚙️ Testing up to {int(n):,} ...")
+        print(f"⚙️  Testing up to {int(n):,} ...")
         for r in range(1, runs + 1):
             # CPU
             t0 = time.time()
@@ -55,5 +55,47 @@ def run_benchmark(sizes, runs):
 # --- CSV LOGGER ---
 def save_results(results):
     filename = f"prime_race_results_{int(time.time())}.csv"
-    with open(filename, "w"
+    with open(filename, "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=results[0].keys())
+        writer.writeheader()
+        writer.writerows(results)
+    print(f"\n📄 Results saved to {filename}")
+    return filename
+
+# --- GRAPH MAKER ---
+def plot_results(results, outfile="prime_race_plot.png"):
+    sizes = sorted(set(r["range"] for r in results))
+    cpu_avg = [np.mean([r["cpu_time"] for r in results if r["range"] == s]) for s in sizes]
+    gpu_avg = [np.mean([r["gpu_time"] for r in results if r["range"] == s]) for s in sizes]
+
+    plt.figure(figsize=(8,6))
+    plt.plot(sizes, cpu_avg, marker='o', label="CPU", linewidth=2)
+    plt.plot(sizes, gpu_avg, marker='o', label="GPU", linewidth=2)
+    plt.xscale("log")
+    plt.yscale("log")
+    plt.xlabel("Range (n)")
+    plt.ylabel("Time (seconds)")
+    plt.title("Prime Finder: CPU vs GPU Showdown")
+    plt.legend()
+    plt.grid(True, which="both", ls="--")
+    plt.tight_layout()
+    plt.savefig(outfile)
+    print(f"📊 Plot saved to {outfile}")
+
+# --- MAIN ---
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="CPU vs GPU Prime Benchmark")
+    parser.add_argument("--runs", type=int, default=3, help="Number of runs per size")
+    parser.add_argument("--sizes", nargs="+", type=float, default=[1e6, 10e6, 50e6, 100e6],
+                        help="List of max ranges to test")
+    args = parser.parse_args()
+
+    try:
+        results = run_benchmark(args.sizes, args.runs)
+        csv_file = save_results(results)
+        plot_results(results)
+        print("\n🏆 Benchmark complete! Check your CSV and plot for results.\n")
+    except cp.cuda.runtime.CUDARuntimeError as e:
+        print(f"❌ CUDA error: {e}")
+        sys.exit(1)
 
