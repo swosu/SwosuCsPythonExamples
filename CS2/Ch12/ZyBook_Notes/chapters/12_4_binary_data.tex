@@ -1,0 +1,161 @@
+\chapter{Binary Data}
+
+\section*{Binary Data Basics}
+Some files consist of data stored as a sequence of bytes, known as \textbf{binary data}, 
+that is not encoded into readable text using encodings like ASCII or UTF-8. 
+Examples include images, videos, and PDFs.
+
+When opened in a text editor, binary files often appear as random or unreadable symbols because 
+the editor is trying to interpret raw byte values as text characters.
+
+\texttt{bytes} objects are used in Python to represent sequences of byte values. 
+They are immutable (cannot be changed after creation), similar to strings. 
+A bytes object can be created using the built-in \texttt{bytes()} function or a bytes literal.
+
+\begin{itemize}
+  \item \texttt{bytes("A text string", "ascii")} – creates bytes from a string using ASCII encoding
+  \item \texttt{bytes(100)} – creates 100 zero-value bytes
+  \item \texttt{bytes([12, 15, 20])} – creates bytes from numeric values
+\end{itemize}
+
+You can also create a bytes literal by prefixing a string with \texttt{b}:
+
+\begin{lstlisting}[language=Python, caption={Creating a bytes object using a literal.}]
+my_bytes = b"This is a bytes literal"
+print(my_bytes)
+print(type(my_bytes))
+\end{lstlisting}
+
+\begin{verbatim}
+b'This is a bytes literal'
+<class 'bytes'>
+\end{verbatim}
+
+\section*{Byte String Literals}
+You can represent specific byte values using hexadecimal escape codes. 
+Each \texttt{\textbackslash xHH} represents one byte in hexadecimal form.
+
+\begin{lstlisting}[language=Python, caption={Byte string literals.}]
+print(b"123456789" == b"\x31\x32\x33\x34\x35\x36\x37\x38\x39")
+\end{lstlisting}
+
+\begin{verbatim}
+True
+\end{verbatim}
+
+\section*{Reading and Writing Binary Files}
+When working with binary files, use \texttt{'rb'} (read binary) or \texttt{'wb'} (write binary) modes.
+
+\begin{lstlisting}[language=Python, caption={Opening binary files.}]
+# Open file for binary reading
+f = open("data.bin", "rb")
+contents = f.read()
+f.close()
+
+# Open file for binary writing
+f = open("new_data.bin", "wb")
+f.write(b"\x01\x02\x03\x04")
+f.close()
+\end{lstlisting}
+
+In binary mode, Python does not translate newline characters. 
+On Windows, this avoids converting \texttt{\textbackslash n} to \texttt{\textbackslash r\textbackslash n}.
+
+\section*{Inspecting Binary Contents of a File}
+Suppose we have an image \texttt{ball.bmp}. 
+Reading it in binary mode allows us to inspect the raw byte values.
+
+\begin{lstlisting}[language=Python, caption={Inspecting binary contents of an image.}]
+f = open("ball.bmp", "rb")
+contents = f.read(32)
+f.close()
+
+print("First 32 bytes of ball.bmp:")
+print(contents)
+\end{lstlisting}
+
+This prints unreadable byte sequences like:
+\begin{verbatim}
+b'BM\xf6\x00\x00\x00\x00\x00\x00\x00\x06\x04\x00\x00...'
+\end{verbatim}
+
+\section*{Example: Altering a BMP Image}
+\begin{lstlisting}[language=Python, caption={Modifying pixels in a BMP image.}]
+import struct
+
+ball_file = open("ball.bmp", "rb")
+ball_data = ball_file.read()
+ball_file.close()
+
+# BMP header stores pixel data offset in bytes 10–14
+pixel_data_loc = struct.unpack("<I", ball_data[10-14])[0]
+
+# Replace 3000 pixels with red, green, yellow pattern
+new_pixels = b"\x01" * 3000 + b"\x02" * 3000 + b"\x03" * 3000
+
+# Create new image data
+new_data = ball_data[:pixel_data_loc] + new_pixels + ball_data[pixel_data_loc + len(new_pixels):]
+
+# Save altered image
+with open("new_ball.bmp", "wb") as f:
+    f.write(new_data)
+\end{lstlisting}
+
+\section*{Using the struct Module}
+The \texttt{struct} module helps pack and unpack data into byte sequences.
+
+\begin{lstlisting}[language=Python, caption={Packing and unpacking bytes.}]
+import struct
+
+# Pack integers into binary data
+data = struct.pack(">hh", 5, 256)
+print("Packed:", data)
+
+# Unpack binary back to integers
+unpacked = struct.unpack(">hh", data)
+print("Unpacked:", unpacked)
+\end{lstlisting}
+
+\begin{verbatim}
+Packed: b'\x00\x05\x01\x00'
+Unpacked: (5, 256)
+\end{verbatim}
+
+\section*{Performance Comparison: Binary vs Text Write Speed}
+Let’s see how fast binary writing can be compared to text writing.
+
+\begin{lstlisting}[language=Python, caption={Comparing binary and text file speeds.}]
+import time
+import os
+
+data_size = 10_000_000  # 10 MB
+text_data = "A" * data_size
+binary_data = b"A" * data_size
+
+# Write text data
+start = time.time()
+with open("text_test.txt", "w") as f:
+    f.write(text_data)
+text_time = time.time() - start
+
+# Write binary data
+start = time.time()
+with open("binary_test.bin", "wb") as f:
+    f.write(binary_data)
+binary_time = time.time() - start
+
+print(f"Text write: {text_time:.4f} s")
+print(f"Binary write: {binary_time:.4f} s")
+print(f"Binary is {(text_time/binary_time):.2f}x faster!")
+\end{lstlisting}
+
+Depending on your storage and system, binary writes are often slightly faster 
+because fewer conversions are performed during I/O operations.
+
+\section*{Key Takeaways}
+\begin{itemize}
+  \item Binary files store raw bytes, not human-readable text.
+  \item Use \texttt{rb} / \texttt{wb} modes for reading and writing binary files.
+  \item The \texttt{struct} module helps encode/decode structured binary data.
+  \item Binary I/O can be faster than text I/O for large datasets.
+\end{itemize}
