@@ -1,0 +1,49 @@
+\documentclass[12pt]{book}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{listings}
+\usepackage{xcolor}
+
+% --- Page style ---
+\pagestyle{fancy}
+\fancyhead[L]{ZyBooks Chapter 12 Companion}
+\fancyhead[R]{\leftmark}
+\fancyfoot[C]{\thepage}
+
+% --- Listings for code examples ---
+\lstset{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{gray!5},
+  frame=single,
+  breaklines=true,
+  showstringspaces=false,
+  keywordstyle=\color{blue},
+  commentstyle=\color{green!40!black},
+  stringstyle=\color{orange},
+}
+
+\title{ZyBooks Chapter 12: Files in Python}
+\author{Jeremy Evert}
+\date{\today}
+
+\begin{document}
+
+\frontmatter
+\maketitle
+\tableofcontents
+
+\mainmatter
+
+\include{chapters/chapter12}
+\include{chapters/12_1_reading_files}
+
+\backmatter
+\chapter*{Notes}
+This book was created to accompany the zyBooks interactive textbook, Chapter 12: Files. 
+Each section demonstrates the concepts with well-structured LaTeX code examples and clear explanations.
+
+\end{document}
