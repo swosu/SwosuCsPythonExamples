@@ -1,0 +1,98 @@
+\chapter{12.5 Command-Line Arguments and Files}
+
+\section*{Overview}
+Command-line arguments let your program take input file names or other parameters
+directly from the shell.  
+It’s how you tell your code: *“Work with this file today, not the one you hard-coded last night.”*
+
+\begin{quote}
+\textbf{Docs to Bookmark:}
+\begin{itemize}
+  \item \href{https://docs.python.org/3/library/sys.html}{sys module}
+  \item \href{https://docs.python.org/3/library/os.path.html}{os.path module}
+\end{itemize}
+\end{quote}
+
+---
+
+\section{Example: Using an Input File from the Command Line}
+
+\begin{lstlisting}[language=Python, caption={listing\_5\_1\_command\_line\_args.py}]
+import sys
+import os
+
+if len(sys.argv) != 2:
+    print(f"Usage: python {sys.argv[0]} input_file")
+    sys.exit(1)  # 1 = error
+
+file_name = sys.argv[1]
+print(f"Opening file {file_name}...")
+
+if not os.path.exists(file_name):
+    print("File does not exist.")
+    sys.exit(1)
+
+with open(file_name, "r", encoding="utf-8") as f:
+    print("Reading two integers.")
+    num1 = int(f.readline())
+    num2 = int(f.readline())
+
+print(f"Closing file {file_name}.")
+print(f"\nnum1: {num1}")
+print(f"num2: {num2}")
+print(f"num1 + num2 = {num1 + num2}")
+\end{lstlisting}
+
+\noindent
+\textbf{Run it like this:}
+
+\begin{verbatim}
+> python listing_5_1_command_line_args.py myfile1.txt
+> python listing_5_1_command_line_args.py myfile2.txt
+> python listing_5_1_command_line_args.py missing.txt
+\end{verbatim}
+
+\noindent
+Output examples:
+\begin{verbatim}
+Opening file myfile1.txt...
+Reading two integers.
+Closing file myfile1.txt.
+
+num1: 5
+num2: 10
+num1 + num2 = 15
+\end{verbatim}
+
+---
+
+\section{Files for Testing}
+
+\textbf{myfile1.txt}
+\begin{verbatim}
+5
+10
+\end{verbatim}
+
+\textbf{myfile2.txt}
+\begin{verbatim}
+-34
+7
+\end{verbatim}
+
+---
+
+\section{Extending the Idea}
+\begin{itemize}
+  \item Add a second argument for an \emph{output file}.
+  \item Add try/except to handle non-numeric data.
+  \item Use \texttt{argparse} for fancier options later in the course.
+\end{itemize}
+
+\section*{Practice Prompts}
+\begin{enumerate}
+  \item Modify the program so it accepts both an input and output filename:
+  \verb|python myscript.py infile.txt outfile.txt|
+  \item For a run as \verb|python scriptname data.txt|, what is \verb|sys.argv[1]|?
+  \item What happens if you forget the argument? Why does Python show a usage message?
+\end{enumerate}
