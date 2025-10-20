@@ -1,0 +1,8 @@
+Once upon a debug session,
+a weary coder named Jeremy whispered to the void:
+“Why won’t this compile?”
+
+The void whispered back:
+“Have you tried turning it off and on again?”
+
+And thus, the infinite loop of enlightenment began.
