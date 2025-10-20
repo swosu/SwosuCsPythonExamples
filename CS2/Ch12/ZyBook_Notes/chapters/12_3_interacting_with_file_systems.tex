@@ -1,0 +1,351 @@
+\chapter{12.3 Interacting With File Systems}
+
+\section*{Big Picture Mental Model}
+
+When your program touches the file system, several layers cooperate:
+
+\begin{enumerate}
+  \item \textbf{Your Python code} calls functions like \texttt{open()}, \texttt{os.stat()}, \texttt{os.remove()}, \texttt{pathlib.Path(...)}.
+  \item \textbf{CPython implementation} translates those calls into C functions that use the operating system's native API.
+        On Linux/macOS this is usually POSIX calls (open, read, write, stat, unlink).
+        On Windows it goes through the Win32 layer (CreateFileW, ReadFile, WriteFile, GetFileInformationByHandle, DeleteFileW).
+  \item \textbf{The operating system kernel} checks permissions, updates metadata, and interacts with the file system driver.
+        It also uses caches and scheduling to read/write blocks on storage devices.
+  \item \textbf{Hardware and firmware} (disk controller, SSD firmware, DMA) actually move bytes.
+        \textbf{CPUs (Intel/AMD/ARM)} execute instructions, switch between user mode and kernel mode on system calls,
+        and provide memory management and caching. The CPU does not know about "files" directly; it executes the OS code that does.
+\end{enumerate}
+
+\noindent
+Takeaway: Python gives a friendly interface, but durability, permissions, and path rules come from the OS and file system.
+
+\begin{quote}
+\textbf{Docs to Bookmark}
+\begin{itemize}
+  \item Python Tutorial: Reading and Writing Files -- \href{https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files}{docs.python.org}
+  \item \texttt{os} module -- \href{https://docs.python.org/3/library/os.html}{docs.python.org}
+  \item \texttt{os.path} module -- \href{https://docs.python.org/3/library/os.path.html}{docs.python.org}
+  \item \texttt{pathlib} -- \href{https://docs.python.org/3/library/pathlib.html}{docs.python.org}
+  \item \texttt{shutil} (copy, move) -- \href{https://docs.python.org/3/library/shutil.html}{docs.python.org}
+  \item File object methods (\texttt{flush}) -- \href{https://docs.python.org/3/library/io.html}{docs.python.org}
+\end{itemize}
+\end{quote}
+
+\section{Portable Paths: os.path.join and pathlib}
+
+Hard-coding backslashes (Windows) or slashes (Linux/macOS) makes code fragile. Use joiners.
+
+\begin{lstlisting}[language=Python, caption={Right vs. wrong for building file paths.}]
+import os
+from pathlib import Path
+
+def build_paths():
+    # WRONG on non-Windows and brittle even on Windows:
+    p_bad = "logs\\2025\\01\\log.txt"   # backslashes are Windows-only
+    print("Brittle:", p_bad)
+
+    # RIGHT: OS-appropriate separator via os.path.join
+    p_good = os.path.join("logs", "2025", "01", "log.txt")
+    print("Portable:", p_good)
+
+    # RIGHT: Path objects are even nicer
+    p = Path("logs") / "2025" / "01" / "log.txt"
+    print("Pathlib:", str(p))
+
+build_paths()
+\end{lstlisting}
+
+\noindent
+Windows note: inside Python string literals, a single backslash begins an escape (like \texttt{"\textbackslash n"}). Use raw strings like \texttt{r"C:\textbackslash users\textbackslash me"} or double the backslashes.
+
+\section{Existence, File vs. Directory, and Getting Size}
+
+\begin{lstlisting}[language=Python, caption={Check existence and type with both os.path and pathlib.}]
+import os
+from pathlib import Path
+
+def existence_and_type(path_str: str):
+    print("\n-- Using os.path --")
+    print("exists:", os.path.exists(path_str))
+    print("isfile:", os.path.isfile(path_str))
+    print("isdir:", os.path.isdir(path_str))
+
+    print("\n-- Using pathlib --")
+    p = Path(path_str)
+    print("exists:", p.exists())
+    print("is_file:", p.is_file())
+    print("is_dir:", p.is_dir())
+
+    if p.exists():
+        print("size:", p.stat().st_size, "bytes")
+
+existence_and_type("modes_demo.txt")
+existence_and_type("logs")
+\end{lstlisting}
+
+\section{Metadata: os.stat and datetime}
+
+\begin{lstlisting}[language=Python, caption={Inspect file metadata and pretty-print timestamps.}]
+import os, datetime
+from pathlib import Path
+
+def show_stat(path_str: str):
+    p = Path(path_str)
+    if not p.exists():
+        print(f"{path_str!r} does not exist")
+        return
+    st = p.stat()  # same as os.stat(path_str)
+    print("\n-- stat for", path_str, "--")
+    print("size:", st.st_size, "bytes")
+    print("mode (permission bits):", oct(st.st_mode))
+    print("modified:", datetime.datetime.fromtimestamp(st.st_mtime))
+    print("created (platform dependent):", datetime.datetime.fromtimestamp(st.st_ctime))
+
+show_stat("modes_demo.txt")
+\end{lstlisting}
+
+\noindent
+Platform note: \texttt{st\_ctime} is creation time on Windows, but on POSIX it is "metadata change" time.
+
+\section{Walking a Directory Tree}
+
+\begin{lstlisting}[language=Python, caption={Walk with os.walk and filter by extension.}]
+import os
+from pathlib import Path
+
+def list_py_files(root=".", ext=".txt"):
+    print(f"\nListing {ext} files under {root!r}")
+    for dirpath, subdirs, files in os.walk(root):
+        for name in files:
+            if name.lower().endswith(ext):
+                print(os.path.join(dirpath, name))
+
+list_py_files("logs", ".txt")
+\end{lstlisting}
+
+\noindent
+\texttt{os.walk} yields a 3-tuple per directory. The heavy lifting (reading directory entries) is done by the OS; Python iterates and filters.
+
+\section{Creating, Renaming, Copying, Deleting}
+
+\begin{lstlisting}[language=Python, caption={Safe create, rename, copy, and delete with error handling.}]
+import shutil
+from pathlib import Path
+
+def safe_create_dir(path: str):
+    Path(path).mkdir(parents=True, exist_ok=True)
+    print("Ensured directory exists:", path)
+
+def safe_rename(src: str, dst: str):
+    try:
+        # os.replace is atomic when src and dst are on the same filesystem
+        os.replace(src, dst)
+        print(f"Renamed {src!r} -> {dst!r}")
+    except FileNotFoundError:
+        print("Cannot rename: source not found.")
+    except PermissionError:
+        print("Cannot rename: permission denied.")
+
+def safe_copy(src: str, dst: str):
+    try:
+        shutil.copy2(src, dst)  # preserves timestamps and metadata where possible
+        print(f"Copied {src!r} -> {dst!r}")
+    except FileNotFoundError:
+        print("Cannot copy: source not found.")
+    except PermissionError:
+        print("Cannot copy: permission denied.")
+
+def safe_delete(path: str):
+    try:
+        Path(path).unlink()
+        print("Deleted file:", path)
+    except FileNotFoundError:
+        print("Nothing to delete:", path)
+    except IsADirectoryError:
+        print("Path is a directory; use rmdir or shutil.rmtree.")
+    except PermissionError:
+        print("Cannot delete: permission denied.")
+
+safe_create_dir("sandbox")
+Path("sandbox/demo.txt").write_text("hello\n", encoding="utf-8")
+safe_copy("sandbox/demo.txt", "sandbox/demo_copy.txt")
+safe_rename("sandbox/demo_copy.txt", "sandbox/demo_moved.txt")
+safe_delete("sandbox/demo_moved.txt")
+\end{lstlisting}
+
+\noindent
+Atomicity note: \texttt{os.replace} is designed to be atomic on the same filesystem volume. If you move across drives, use \texttt{shutil.move} which may copy then delete.
+
+\section{Portable File Path Building Activity}
+
+\begin{lstlisting}[language=Python, caption={Demonstrate os.path.join results on different OSes.}]
+import os
+
+def join_examples():
+    a = os.path.join("subdir", "output.txt")
+    b = os.path.join("sounds", "cars", "honk.mp3")
+    print("Example join A:", a)
+    print("Example join B:", b)
+    print("Path separator on this OS:", os.path.sep)
+
+join_examples()
+\end{lstlisting}
+
+\section{Splitting Paths and Getting Extensions}
+
+\begin{lstlisting}[language=Python, caption={Split with os.path.split and get extension with splitext.}]
+import os
+
+def split_examples(p: str):
+    head, tail = os.path.split(p)
+    root, ext = os.path.splitext(p)
+    print("\nSplit:", p)
+    print(" head:", head)
+    print(" tail:", tail)
+    print(" root:", root)
+    print(" ext:", ext)
+
+split_examples(os.path.join("C:\\", "Users", "Demo", "batsuit.jpg"))
+\end{lstlisting}
+
+\section{Challenge: Use os.walk to Count Specific Files}
+
+\begin{lstlisting}[language=Python, caption={Count .txt files and handle permissions gracefully.}]
+import os
+
+def count_ext(root: str, ext: str = ".txt") -> int:
+    total = 0
+    for dirpath, subdirs, files in os.walk(root, onerror=None):
+        for name in files:
+            if name.lower().endswith(ext):
+                total += 1
+    return total
+
+print("Number of .txt files under logs:", count_ext("logs", ".txt"))
+\end{lstlisting}
+
+\section{Safe and Durable Writes: Temp File + Atomic Replace}
+
+\begin{lstlisting}[language=Python, caption={Avoid partial writes by writing to a temp file and replacing.}]
+import os, tempfile
+from pathlib import Path
+
+def atomic_write_text(path: str, text: str):
+    target = Path(path)
+    target.parent.mkdir(parents=True, exist_ok=True)
+
+    # Create a temp file in the same directory to keep the replace atomic
+    with tempfile.NamedTemporaryFile("w", encoding="utf-8", dir=str(target.parent), delete=False) as tmp:
+        tmp.write(text)
+        tmp.flush()
+        os.fsync(tmp.fileno())  # push to disk as best as the OS can
+
+        tmp_name = tmp.name
+
+    # Replace is atomic on same filesystem; readers will see old or new, not partial
+    os.replace(tmp_name, str(target))
+    print("Atomically wrote:", target)
+
+atomic_write_text("sandbox/report.txt", "final contents\n")
+\end{lstlisting}
+
+\noindent
+Durability note: \texttt{flush()} moves data from Python to the OS; \texttt{os.fsync()} asks the OS to persist to storage. On real hardware, disk caches and controllers also play a role. If the computer loses power, even fsync cannot guarantee survival on every device, but it is the standard tool for best-effort durability.
+
+\section{Windows-Specific Notes}
+
+\begin{itemize}
+  \item Path length: old Windows APIs had a 260-character limit. Modern Windows can support longer paths with configuration; the prefix \texttt{\\\\?\\} can be involved under the hood. Pathlib and modern Python try to handle this for you.
+  \item Drives and UNC: paths can be drive-based (C:\textbackslash) or UNC (\texttt{\\\\server\\share\\path}). \texttt{pathlib.Path} handles both.
+  \item Newlines: text mode translates newlines to the OS convention. Use binary mode (\texttt{"rb"/"wb"}) if you need raw bytes.
+  \item Case: Windows file systems are usually case-insensitive but case-preserving; Linux is case-sensitive.
+\end{itemize}
+
+\section{Right vs. Wrong: OS Operations With Explanations}
+
+\begin{lstlisting}[language=Python, caption={Demonstrate typical mistakes and show the fixes.}]
+import os, io
+from pathlib import Path
+
+def show(path):
+    p = Path(path)
+    print(f"[{path}] exists:", p.exists(), "is_file:", p.is_file(), "is_dir:", p.is_dir())
+
+def wrong_then_right_remove():
+    # Wrong: try to unlink a directory with unlink
+    safe_create_dir("sandbox_dir")
+    try:
+        Path("sandbox_dir").unlink()
+    except IsADirectoryError as e:
+        print("Caught:", e)
+        print("Reason: unlink removes files, not directories.")
+    # Right:
+    try:
+        os.rmdir("sandbox_dir")
+        print("Removed empty directory 'sandbox_dir'")
+    except OSError as e:
+        print("Directory not empty; use shutil.rmtree if needed.")
+
+def wrong_then_right_open_dir():
+    # Wrong: open() expects files, not directories
+    safe_create_dir("sandbox_dir2")
+    try:
+        open("sandbox_dir2", "r")
+    except IsADirectoryError as e:
+        print("Caught:", e)
+        print("Reason: open() cannot open directories in text mode.")
+    # Right: list directory entries
+    print("Entries:", list(os.scandir("sandbox_dir2")))
+    os.rmdir("sandbox_dir2")
+
+wrong_then_right_remove()
+wrong_then_right_open_dir()
+\end{lstlisting}
+
+\section{Pathlib Cheatsheet}
+
+\begin{lstlisting}[language=Python, caption={Common pathlib operations, very readable.}]
+from pathlib import Path
+
+p = Path("logs") / "2025" / "01" / "log.txt"
+print("Parent:", p.parent)            # logs/2025/01
+print("Name:", p.name)                # log.txt
+print("Stem:", p.stem)                # log
+print("Suffix:", p.suffix)            # .txt
+
+p.parent.mkdir(parents=True, exist_ok=True)
+p.write_text("hello\n", encoding="utf-8")
+print("Read back:", p.read_text(encoding="utf-8"))
+
+for q in p.parent.rglob("*.txt"):
+    print("Found:", q)
+\end{lstlisting}
+
+\section*{Why This Works The Way It Works}
+
+\begin{itemize}
+  \item \textbf{System calls}: File operations cross from user mode to kernel mode through system calls. The CPU handles this transition (for x86, via syscall/sysenter or legacy int 0x80), then resumes your code when the OS returns. The CPU is agnostic about files; it only runs instructions.
+  \item \textbf{Caching layers}: The OS keeps a page cache to avoid slow disk I/O. That is why \texttt{write()} may not be visible until newline, flush, close, or after a delay. \texttt{os.fsync()} asks the OS to flush its cache to the storage driver.
+  \item \textbf{File systems}: NTFS, APFS, ext4, and others decide naming rules, metadata, and durability guarantees. Python does not change these rules; it exposes them.
+  \item \textbf{Portability}: Using \texttt{os.path.join} or \texttt{pathlib} and handling exceptions (\texttt{FileNotFoundError}, \texttt{PermissionError}, \texttt{IsADirectoryError}, \texttt{NotADirectoryError}) produces code that behaves well across OSes.
+\end{itemize}
+
+\section*{Practice Prompts For Students}
+
+\begin{enumerate}
+  \item Build a portable path for today's date, such as:
+  \verb|logs/YYYY/MM/DD/log.txt|. \\
+  Create any missing directories and write one line safely to that file.
+
+  \item Walk a directory tree and print the three largest files by size. \\
+  Explain how you computed file sizes using the \verb|os.stat()| function.
+
+  \item Write a function \verb|safe_replace(path, text)| that writes to a temporary file
+  and atomically replaces the target file, then verify that the contents were updated correctly.
+
+  \item On Windows, demonstrate the difference between a *raw string*
+  (e.g., \verb|r"C:\new\logs"|) and an *escaped string*
+  (e.g., \verb|"C:\\new\\logs"|). \\
+  Explain what happens with backslashes in each case.
+\end{enumerate}
+

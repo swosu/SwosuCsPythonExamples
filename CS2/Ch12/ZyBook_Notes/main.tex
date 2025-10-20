@@ -7,6 +7,13 @@
 \usepackage{titlesec}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage[utf8]{inputenc} % Ensure UTF-8 compatibility
+\usepackage[T1]{fontenc}
+\sloppy % allows better line breaking
+\usepackage{url}
+\usepackage{verbatim}
+
+
 
 % --- Page style ---
 \pagestyle{fancy}
@@ -18,14 +25,16 @@
 
 % --- Listings for code examples ---
 \lstset{
-  basicstyle=\ttfamily\small,
-  backgroundcolor=\color{gray!5},
+  basicstyle=\ttfamily\footnotesize,
+  backgroundcolor=\color{gray!10},
   frame=single,
   breaklines=true,
   showstringspaces=false,
-  keywordstyle=\color{blue},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue!70!black},
   commentstyle=\color{green!40!black},
-  stringstyle=\color{orange},
+  stringstyle=\color{orange!90!black},
 }
 
 \title{ZyBooks Chapter 12: Files in Python}
@@ -43,6 +52,7 @@
 \include{chapters/chapter12}
 \include{chapters/12_1_reading_files}
 \include{chapters/12_2_writing_files}
+\include{chapters/12_3_interacting_with_file_systems}
 
 \backmatter
 \chapter*{Notes}
