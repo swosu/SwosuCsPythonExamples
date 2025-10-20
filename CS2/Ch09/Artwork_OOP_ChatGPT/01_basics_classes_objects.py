@@ -2,8 +2,10 @@
 # Goal: Introduce classes, attributes, and objects.
 
 class Artist:
-    # TODO: Define class-level attributes (like name, birth_year, death_year)
-    pass
+    def __init__(self):
+        self.name = ""
+        self.birth_year = 0
+        self.death_year = 0
 
 
 if __name__ == "__main__":
