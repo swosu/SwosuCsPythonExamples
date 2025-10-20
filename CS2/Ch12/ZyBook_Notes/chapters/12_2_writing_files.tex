@@ -1,0 +1,207 @@
+\chapter{12.2 Writing Files}
+
+\section*{Overview}
+Programs write to files to persist data. In Python, \texttt{open()} returns a file object. 
+You control \textbf{what you can do} with the file via a mode string (e.g., \texttt{"w"}, \texttt{"a"}, \texttt{"r+"}). 
+Writing uses \texttt{write()} (text mode) or \texttt{buffer.write()} (binary). 
+This section demonstrates correct usage, common mistakes, and graceful error handling.
+
+\begin{quote}
+\textbf{Docs to Bookmark}
+\begin{itemize}
+  \item \href{https://docs.python.org/3/library/functions.html#open}{Builtins: \texttt{open()}}
+  \item \href{https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files}{Tutorial: Reading \& Writing Files}
+  \item \href{https://docs.python.org/3/library/io.html#io.TextIOBase.write}{\texttt{io.TextIOBase.write}}
+  \item \href{https://docs.python.org/3/library/io.html#io.IOBase.flush}{\texttt{IOBase.flush}}
+  \item \href{https://docs.python.org/3/library/os.html#os.fsync}{\texttt{os.fsync}}
+\end{itemize}
+\end{quote}
+
+\section{Modes at a Glance}
+\begin{tabular}{l l l l l}
+\textbf{Mode} & \textbf{Description} & \textbf{Read?} & \textbf{Write?} & \textbf{Overwrite?} \\
+\hline
+\texttt{"r"}   & Read existing text file                        & Yes & No  & No \\
+\texttt{"w"}   & Write text; create or \emph{overwrite}         & No  & Yes & Yes \\
+\texttt{"a"}   & Append text; create if missing                 & No  & Yes & No  \\
+\texttt{"r+"}  & Read \emph{and} write; file must exist         & Yes & Yes & No  \\
+\texttt{"w+"}  & Read \emph{and} write; truncates (overwrite)   & Yes & Yes & Yes \\
+\texttt{"a+"}  & Read \emph{and} append; create if missing      & Yes & Yes & No  \\
+\texttt{"x"}   & Create new file; error if it already exists    & No  & Yes & N/A \\
+\end{tabular}
+
+\section{Starter: writing a simple file (the ``right'' answer)}
+\begin{lstlisting}[language=Python, caption={Write two lines to a new file using "w".}]
+def write_example_right(path: str) -> None:
+    """Create/overwrite `path` and write two lines."""
+    with open(path, "w", encoding="utf-8") as f:
+        f.write("Example string.\n")
+        f.write("test....\n")  # newline ends the line-buffer
+    print(f"Wrote lines to {path!r}")
+
+write_example_right("myfile.txt")
+\end{lstlisting}
+
+\section{Numbers must be strings: catching the wrong answer first}
+\begin{lstlisting}[language=Python, caption={Demonstrate why f.write(10.0) is wrong, then fix.}]
+def demonstrate_write_number(path: str) -> None:
+    """Show TypeError when writing a float, then correct with str()."""
+    print("\n--- WRONG: writing a float directly ---")
+    try:
+        with open(path, "w", encoding="utf-8") as f:
+            f.write(10.0)     # ❌ TypeError: argument must be str, not float
+    except TypeError as e:
+        print(f"Caught {type(e).__name__}: {e}")
+        print("Explanation: write() in TEXT mode expects a str, not a number.")
+
+    print("\n--- RIGHT: convert to string first ---")
+    with open(path, "w", encoding="utf-8") as f:
+        num1, num2 = 5, 7.5
+        f.write(str(num1)); f.write(" + "); f.write(str(num2)); f.write(" = ")
+        f.write(str(num1 + num2)); f.write("\n")
+    print(f"Fixed: wrote numeric expression to {path!r}")
+
+demonstrate_write_number("numbers.txt")
+\end{lstlisting}
+
+\section{Activity 12.2.1: choosing the correct mode (with proofs)}
+\begin{lstlisting}[language=Python, caption={Try wrong modes first; explain errors; finish with the correct mode.}]
+from pathlib import Path
+import io
+
+def show_contents(path: str) -> None:
+    p = Path(path)
+    print(f"\n[{p.name}] now contains:")
+    print(p.read_text(encoding="utf-8") if p.exists() else "<missing>")
+
+def try_append_wrong_then_right(path: str) -> None:
+    """Goal: append 'APPEND' to file."""
+    Path(path).write_text("START\n", encoding="utf-8")  # seed
+
+    print("\n-- WRONG: open for reading and try to write --")
+    try:
+        with open(path, "r", encoding="utf-8") as f:  # 'r' is not writable
+            f.write("APPEND\n")
+    except io.UnsupportedOperation as e:
+        print(f"Caught {type(e).__name__}: {e}")
+        print("Explanation: mode 'r' opens for reading only; no writing allowed.")
+
+    print("\n-- RIGHT: open with 'a' to append --")
+    with open(path, "a", encoding="utf-8") as f:
+        f.write("APPEND\n")
+    show_contents(path)
+
+def try_overwrite_wrong_then_right(path: str) -> None:
+    """Goal: overwrite existing file entirely with 'NEW'."""
+    Path(path).write_text("KEEP?\n", encoding="utf-8")
+
+    print("\n-- WRONG guess: 'a' only appends, does not overwrite --")
+    with open(path, "a", encoding="utf-8") as f:
+        f.write("SHOULD-NOT-OVERWRITE\n")
+    show_contents(path)
+
+    print("\n-- RIGHT: use 'w' to truncate/overwrite --")
+    with open(path, "w", encoding="utf-8") as f:
+        f.write("NEW\n")
+    show_contents(path)
+
+def try_read_and_append(path: str) -> None:
+    """Goal: read and then append within one handle."""
+    print("\n-- Use 'a+' for read+append (file pointer starts at end) --")
+    with open(path, "a+", encoding="utf-8") as f:
+        f.seek(0)              # move to start so we can read
+        before = f.read()
+        print("Read existing text:\n" + before)
+        f.write("AND-MORE\n")
+    show_contents(path)
+
+try_append_wrong_then_right("modes_demo.txt")
+try_overwrite_wrong_then_right("modes_demo.txt")
+try_read_and_append("modes_demo.txt")
+\end{lstlisting}
+
+\section{Activity 12.2.2: output buffering \& flushing}
+\begin{lstlisting}[language=Python, caption={Show that buffers may delay writes; then force flush to disk.}]
+import os, time
+from pathlib import Path
+
+def buffering_demo(path: str) -> None:
+    p = Path(path)
+    if p.exists(): p.unlink()
+
+    print("\n-- Write without newline; read from another handle BEFORE flush --")
+    f = open(path, "w", encoding="utf-8")   # default buffering (line-buffered)
+    f.write("Write me (no newline)")        # stays in Python's buffer so far
+
+    # Try to read immediately from a separate handle
+    early = Path(path).read_text(encoding="utf-8") if p.exists() else "<missing>"
+    print(f"Early read BEFORE flush: {early!r}")
+    print("Explanation: On many systems you may see '', because data hasn't been flushed.")
+
+    print("\n-- Now flush Python buffer and the OS buffer --")
+    f.flush()                 # push Python buffer to OS
+    os.fsync(f.fileno())      # ask OS to sync to disk
+    late = Path(path).read_text(encoding="utf-8")
+    print(f"Read AFTER flush: {late!r}")
+
+    f.close()  # also flushes
+    print("Closing the file also flushes buffers.")
+
+buffering_demo("buffer_demo.txt")
+\end{lstlisting}
+
+\section{Activity 12.2.3: quick T/F checks with runnable evidence}
+\begin{lstlisting}[language=Python, caption={Answer the conceptual questions by executing proof code.}]
+import io
+
+def q1_write_float_always_error():
+    print("\nQ1) Does f.write(10.0) always error in text mode?")
+    try:
+        with open("q1.txt", "w", encoding="utf-8") as f:
+            f.write(10.0)  # ❌
+    except TypeError as e:
+        print("Answer: True. Reason ->", e)
+
+def q2_write_immediate():
+    print("\nQ2) Does write() immediately persist to the file on disk?")
+    with open("q2.txt", "w", encoding="utf-8") as f:
+        f.write("hi")  # no newline; may be buffered
+        try:
+            print("Immediate peek:", open("q2.txt", "r", encoding="utf-8").read())
+        finally:
+            f.flush()
+    print("Conclusion: Not guaranteed without newline/flush/close.")
+
+def q3_flush_forces_output():
+    print("\nQ3) Does flush()/fsync() force buffered data to disk?")
+    with open("q3.txt", "w", encoding="utf-8") as f:
+        f.write("sync me")
+        f.flush()
+        os.fsync(f.fileno())
+    print("Answer: True. Data forced to disk by flush() + fsync().")
+
+q1_write_float_always_error()
+q2_write_immediate()
+q3_flush_forces_output()
+\end{lstlisting}
+
+\section{Bonus: creating a file only if it doesn't exist}
+\begin{lstlisting}[language=Python, caption={Use 'x' mode to avoid overwriting by mistake.}]
+def create_once(path: str) -> None:
+    print(f"\nCreating {path!r} only if it does not exist...")
+    try:
+        with open(path, "x", encoding="utf-8") as f:  # ❌ FileExistsError if present
+            f.write("First-time content\n")
+        print("Success: file created.")
+    except FileExistsError as e:
+        print("Not created:", e)
+        print("Explanation: 'x' is for exclusive creation to prevent accidental clobbering.")
+
+create_once("create_only_once.txt")
+create_once("create_only_once.txt")  # call twice to show the error path
+\end{lstlisting}
+
+\section*{Summary}
+\begin{itemize}
+  \item Pick the right mode for the job: \texttt{"w"} overwrites, \texttt{"a"} appends, \texttt{"x"} creates once, and the \texttt{+} variants allow reading too.
+  \item \texttt{write()} in text mode requires \texttt{str}; conve
