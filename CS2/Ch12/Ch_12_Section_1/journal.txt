@@ -6,7 +6,5 @@ Victory smells faintly of burnt circuits and triumph.
 
 P.S. I think my USB drive just blinked at me. Twice.
 
-I would like to point out that files are persistent and what that means is that after you save the document the document lives on the computer and that means when we turn it off and we turn it back on again it's still going to be there the other nice thing about that is when we push the file up to the Internet it's still going to exist and we can manage all of this with source code and make the changes there
-
 Sincerely,
 The Technomancer Formerly Known as Sleep-Deprived
