@@ -1,0 +1,44 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{xcolor}
+
+\title{Teacher Solutions: Induction Worksheet}
+\author{SWOSU Discrete Structures}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Solution: The Ladder Proof}
+
+\noindent \textbf{Base Case:} For $n=1$, LHS = $1$, RHS = $\frac{1(1+1)}{2} = 1$. Works.
+
+\noindent \textbf{Inductive Step:}  
+Assume for some $k$,  
+\[
+1 + 2 + 3 + \dots + k = \frac{k(k+1)}{2}.
+\]
+
+\noindent Then for $k+1$:
+\[
+1 + 2 + 3 + \dots + k + (k+1) = \frac{k(k+1)}{2} + (k+1) = \frac{(k+1)(k+2)}{2}.
+\]
+Thus, by induction, the statement holds for all positive integers $n$.
+
+\section*{Solution: Divisibility by 3}
+
+For $n^3 - n$:
+\[
+n^3 - n = n(n-1)(n+1),
+\]
+which is the product of three consecutive integers — one of them must be divisible by 3.  
+Therefore, $n^3 - n$ is divisible by 3 for all $n \in \mathbb{Z}^+$.
+
+\section*{Instructor Note:}
+Make this lesson interactive — have students build a “ladder of proofs” on the board.  
+Each rung = one $n$. Then ask who can “climb” to the next.
+
+\end{document}
+

@@ -1,0 +1,28 @@
+\section*{5.1.5 Guidelines for Proofs by Mathematical Induction}
+
+Before diving into examples, it’s helpful to have a template — a “recipe” — for how
+to structure a mathematical induction proof. Think of this as your *proof
+playbook*, ready for any theorem that starts with “for all $n$...”.
+
+\subsection*{Template for Proofs by Mathematical Induction}
+
+\begin{enumerate}
+  \item Express the statement to prove in the form “for all $n \geq b$, $P(n)$” for a fixed integer $b$.
+  \item Write \textbf{Basis Step:} Show $P(b)$ is true.
+  \item Write \textbf{Inductive Step:} Assume $P(k)$ is true for an arbitrary integer $k \ge b$.
+  \item State what needs to be proved: show $P(k+1)$ is true.
+  \item Prove $P(k+1)$ using the assumption $P(k)$ — this is your induction magic moment.
+  \item Conclude the inductive step with, “This completes the inductive step.”
+  \item Finally, close the loop: “By mathematical induction, $P(n)$ is true for all $n \ge b$.”
+\end{enumerate}
+
+\begin{center}
+\fbox{\parbox{0.85\textwidth}{
+\textbf{Quick Tip:} Think of it like knocking over dominos — base case knocks the first one, the inductive step guarantees that each falling domino knocks the next.}}
+\end{center}
+
+\subsection*{Student Reflection}
+When have you ever used a “domino effect” idea in your own life? Maybe in
+a habit, a skill, or a game? Write a few sentences connecting induction to
+something you’ve learned by repetition.
+

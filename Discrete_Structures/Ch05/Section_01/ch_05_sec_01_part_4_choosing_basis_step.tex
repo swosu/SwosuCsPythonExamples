@@ -1,0 +1,35 @@
+\section*{5.1.4 Choosing the Correct Basis Step}
+
+Mathematical induction can be used to prove theorems other than those of the
+form “$P(n)$ is true for all positive integers $n$.” Often, we need to show that
+$P(n)$ is true for $n = b, b+1, b+2, \ldots$, where $b$ is an integer other than
+1. We can use mathematical induction to accomplish this, as long as we change
+the basis step by replacing $P(1)$ with $P(b)$.
+
+\textbf{In other words:} we use induction to show that $P(n)$ is true for
+$n = b, b+1, b+2, \ldots$, where $b$ is any integer. We start by proving that
+$P(b)$ is true in the basis step, and then show that the conditional statement
+$P(k) \rightarrow P(k+1)$ is true for $k = b, b+1, b+2, \ldots$
+
+\medskip
+\textbf{Domino Analogy:} Imagine a line of dominoes labeled
+$b, b+1, b+2, \ldots$  Knocking over the $b$th domino (the basis step) starts
+a chain reaction—each domino falls if the one before it does.
+
+\begin{example}[Nonstandard Basis Example]
+Suppose we want to prove a statement $P(n)$ for all nonnegative integers
+$n=0,1,2,\ldots$ In this case, our basis step will show that $P(0)$ is true.
+
+For instance, the formula
+\[
+1 + 2 + \cdots + n = \frac{n(n+1)}{2}
+\]
+can be shown to hold for $n=0,1,2,\ldots$ by verifying the base case $P(0)$
+and proving the inductive step as usual.
+\end{example}
+
+\begin{tcolorbox}[colback=blue!5!white,colframe=blue!75!black,title=Key Idea]
+The starting point of induction (\textit{the basis step}) can be any integer $b$,
+not just 1. Choose $b$ to match the domain where $P(n)$ is defined.
+\end{tcolorbox}
+

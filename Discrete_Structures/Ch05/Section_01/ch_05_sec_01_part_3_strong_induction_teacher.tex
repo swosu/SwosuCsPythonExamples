@@ -1,0 +1,35 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,amssymb,amsthm,xcolor}
+
+\title{Teacher Solutions – Section 5.1.3: Strong Induction}
+\author{SWOSU Discrete Structures}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Solution: Every Integer > 1 is a Product of Primes}
+
+\textbf{Base Case:} \(n=2\) is prime — true.
+
+\textbf{Inductive Hypothesis:}  
+Assume that for all integers \(2\le n\le k\), each can be written as a product of primes.
+
+\textbf{Inductive Step:}  
+For \(k+1\):
+\begin{itemize}
+    \item If \(k+1\) is prime, we’re done.
+    \item If \(k+1=ab\) where \(2\le a,b\le k\), then both \(a\) and \(b\) are products of primes by hypothesis.  
+      Therefore, \(k+1=ab\) is a product of primes.
+\end{itemize}
+
+Hence, by strong induction, every integer \(n>1\) can be expressed as a product of primes. ∎
+
+\section*{Instructor Notes}
+- Emphasize the difference between *regular* and *strong* induction.  
+  Students should see that strong induction assumes all previous cases, not just one.
+- Great demo: Use Jenga blocks as “integers” — show that pulling one requires all below it to be solid.
+- Encourage playful examples (pizza slices, staircases, Pokémon evolutions).
+
+\end{document}
+

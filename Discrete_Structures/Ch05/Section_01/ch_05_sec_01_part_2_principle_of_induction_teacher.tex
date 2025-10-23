@@ -1,0 +1,38 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{xcolor}
+
+\title{Teacher Solutions – Section 5.1.2: The Principle of Mathematical Induction}
+\author{SWOSU Discrete Structures}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Solution: Sum of Odd Integers Equals $n^2$}
+
+\textbf{Base Case:} For $n=1$, LHS = $1$, RHS = $1^2 = 1$. True.
+
+\textbf{Inductive Hypothesis:}  
+Assume for $n=k$,  
+\[
+1 + 3 + 5 + \dots + (2k - 1) = k^2.
+\]
+
+\textbf{Inductive Step:}  
+Then for $n = k+1$:
+\[
+1 + 3 + 5 + \dots + (2k - 1) + (2(k+1) - 1)
+= k^2 + (2k + 1)
+= (k+1)^2.
+\]
+Therefore, by induction, the statement holds for all positive integers $n$.
+
+\section*{Instructor Notes:}
+- Reinforce that $P(k)$ is \textit{assumed true only for one integer $k$}, not all integers.
+- Emphasize that this is not circular reasoning.
+- The domino and ladder metaphors are helpful mental models—keep them visual.
+- Let students explain the process in their own metaphors (stairs, cookies, chain reactions, etc.)
+
+\end{document}
+
