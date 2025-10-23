@@ -1,0 +1,236 @@
+\chapter{12.1 Reading Files}
+
+\section*{Overview}
+In this section, students learn how to read from files using Python's built-in \texttt{open()} function.  
+Files allow programs to save data permanently and retrieve it later---a sort of long-term memory for your code.  
+Instead of typing data every time the program runs, we can read it directly from disk like civilized programmers.
+
+\begin{quote}
+\textbf{Learning Goals:}
+\begin{itemize}
+  \item Understand how to open, read, and close text files safely.
+  \item Differentiate between \texttt{read()}, \texttt{readline()}, and \texttt{readlines()}.
+  \item Process and analyze file data (for example, computing averages).
+  \item Use best practices that prevent data loss and mysterious crashes.
+\end{itemize}
+\end{quote}
+
+---
+
+\section{Reading from a File}
+
+The simplest way to read data from a file is to use \texttt{open()} together with \texttt{read()}.
+This reads the entire file at once into a single string.
+
+\begin{lstlisting}[language=Python, caption={Reading an entire file safely.}]
+# Example 1: Reading the entire contents of a file
+
+from pathlib import Path
+
+file_path = Path("journal.txt")
+
+if file_path.exists():
+    with open(file_path, "r", encoding="utf-8") as journal:
+        contents = journal.read()
+        print("[Info] Successfully opened journal.txt!\n")
+        print(contents)
+else:
+    print("[Warning] File 'journal.txt' not found.")
+\end{lstlisting}
+
+\noindent
+\textbf{Key points:}
+\begin{itemize}
+  \item Always use \texttt{with open(...)} so Python closes the file automatically.
+  \item Always specify \texttt{encoding="utf-8"} to avoid surprises on Windows.
+  \item Check that the file exists before trying to read it---it's less embarrassing that way.
+\end{itemize}
+
+\begin{quote}
+\textbf{Sample File:} \texttt{journal.txt}
+\begin{verbatim}
+Dear Journal,
+
+Today I wrestled with a wild bug named SyntaxError.
+After three print statements and one sigh, I prevailed.
+
+Moral: Always close your parentheses before closing your laptop.
+\end{verbatim}
+\end{quote}
+
+---
+
+\section{A More Complete Example}
+
+Let’s take it up a notch: we’ll add clear print messages, read the contents,  
+and even perform a quick word analysis---because data deserves compliments too.
+
+\begin{lstlisting}[language=Python, caption={Reading and analyzing file contents.}]
+# Example 2: Read a file and analyze it
+
+from pathlib import Path
+
+path = Path("myfile.txt")
+
+if path.exists():
+    with open(path, "r", encoding="utf-8") as f:
+        print("[Info] Opening myfile.txt...")
+        contents = f.read()
+        print("[Success] File read successfully!\n")
+
+    print("--- File Contents ---")
+    print(contents)
+    print("----------------------\n")
+
+    words = contents.split()
+    print(f"[Stats] Word count: {len(words)}")
+    print(f"[Stats] Longest word: {max(words, key=len)}")
+else:
+    print("[Warning] File 'myfile.txt' not found.")
+\end{lstlisting}
+
+\begin{quote}
+\textbf{Sample File:} \texttt{myfile.txt}
+\begin{verbatim}
+Python is elegant.
+It reads like poetry.
+Sometimes, the bugs are haikus.
+\end{verbatim}
+\end{quote}
+
+---
+
+\section{Reading Line by Line}
+
+The \texttt{readlines()} method reads a file into a list, where each element is one line of text.
+This makes it easy to loop through lines individually.
+
+\begin{lstlisting}[language=Python, caption={Reading all lines into a list.}]
+# Example 3: Read lines from a file
+
+from pathlib import Path
+
+file_path = Path("readme.txt")
+
+if file_path.exists():
+    with open(file_path, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+
+    print(f"[Info] Found {len(lines)} lines in readme.txt.\n")
+
+    for i, line in enumerate(lines, start=1):
+        print(f"Line {i:>2}: {line.strip()}")
+
+    all_words = " ".join(lines).split()
+    print(f"\n[Result] Longest word: {max(all_words, key=len)}")
+else:
+    print("[Warning] File 'readme.txt' not found.")
+\end{lstlisting}
+
+\begin{quote}
+\textbf{Sample File:} \texttt{readme.txt}
+\begin{verbatim}
+Welcome to the File Reading Zone.
+Line 1: Preparation.
+Line 2: Curiosity.
+Line 3: Revelation.
+Line 4: Triumph.
+\end{verbatim}
+\end{quote}
+
+---
+
+\section{Processing Data from a File}
+
+Files often hold numbers, and it’s common to process them to compute things like sums or averages.  
+Here’s a calm, methodical way to do that without blowing up your CPU.
+
+\begin{lstlisting}[language=Python, caption={Computing an average from file data.}]
+# Example 4: Calculate the average of numbers stored in a file
+
+from pathlib import Path
+
+data_file = Path("mydata.txt")
+
+if data_file.exists():
+    with open(data_file, "r", encoding="utf-8") as f:
+        numbers = [int(line.strip()) for line in f if line.strip().isdigit()]
+
+    average = sum(numbers) / len(numbers)
+    print(f"[Result] Average value: {average:.2f}")
+else:
+    print("[Warning] File 'mydata.txt' not found.")
+\end{lstlisting}
+
+\begin{quote}
+\textbf{Sample File:} \texttt{mydata.txt}
+\begin{verbatim}
+10
+15
+25
+20
+30
+\end{verbatim}
+\end{quote}
+
+---
+
+\section{Iterating Directly Over a File Object}
+
+For very large files, it’s better to read one line at a time instead of loading the whole file.
+This approach uses minimal memory and maximum patience.
+
+\begin{lstlisting}[language=Python, caption={Memory-efficient iteration through a file.}]
+# Example 5: The efficient way to read a file
+
+with open("myfile.txt", "r", encoding="utf-8") as f:
+    for line_number, line in enumerate(f, start=1):
+        print(f"Line {line_number}: {line.strip()}")
+\end{lstlisting}
+
+This method works beautifully on files of any size,  
+even the ones so large you can hear your hard drive whisper, “Are you sure about this?”
+
+---
+
+\section{Practice Exercise}
+
+\textbf{Challenge:}  
+Write a program that asks the user for a filename, reads its contents,  
+and prints them in uppercase. Bonus points if you make it sound enthusiastic.
+
+\begin{lstlisting}[language=Python, caption={Challenge Activity: Transform file contents.}]
+# Example 6: Read and transform a file
+
+filename = input("Enter filename to shoutify: ")
+
+try:
+    with open(filename, "r", encoding="utf-8") as f:
+        contents = f.read()
+    print("\n[Result] SHOUTING MODE ACTIVATED:\n")
+    print(contents.upper())
+except FileNotFoundError:
+    print("[Warning] File not found. Please try again.")
+\end{lstlisting}
+
+---
+
+\section{Explore More}
+
+For more detailed tutorials and examples:
+\begin{itemize}
+  \item \href{https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files}{Python Docs: Reading and Writing Files}
+  \item \href{https://realpython.com/read-write-files-python/}{Real Python: Working with Files}
+  \item \href{https://www.w3schools.com/python/python_file_handling.asp}{W3Schools: File Handling in Python}
+\end{itemize}
+
+---
+
+\section*{Summary}
+\begin{itemize}
+  \item Use \texttt{with open()} for clean and automatic file handling.
+  \item \texttt{read()}, \texttt{readline()}, and \texttt{readlines()} each serve different use cases.
+  \item Always specify \texttt{encoding="utf-8"}.
+  \item Check file existence before opening it.
+  \item Never fear the file system—treat it like a friend that occasionally misplaces your stuff.
+\end{itemize}

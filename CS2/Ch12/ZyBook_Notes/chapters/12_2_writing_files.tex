@@ -1,0 +1,231 @@
+\chapter{12.2 Writing Files}
+
+\section*{Overview}
+
+Reading files is like visiting the library---you take in information.  
+Writing files, on the other hand, is like *becoming* the author.  
+In this section, students learn how to create, modify, and save text files safely.  
+
+Python’s built-in \texttt{open()} function provides multiple “modes” for writing, appending, and creating files.  
+You’ll also learn why some write operations fail, how to avoid data loss, and how to make your programs polite authors who close their notebooks when finished.
+
+\begin{quote}
+\textbf{Learning goals:}
+\begin{itemize}
+  \item Understand how file modes (\texttt{w}, \texttt{a}, \texttt{x}, etc.) affect writing behavior.
+  \item Learn to handle common write errors gracefully.
+  \item Explore buffering and flushing to ensure data is saved properly.
+  \item Appreciate the importance of file safety and reproducibility.
+\end{itemize}
+\end{quote}
+
+---
+
+\section{Basic File Writing}
+
+The \texttt{write()} method records text into a file.  
+Opening a file in mode \texttt{"w"} will create it if missing or overwrite it if it already exists.  
+Think of it as starting a new diary page—sometimes that’s what you want, sometimes it’s heartbreak.
+
+\begin{lstlisting}[language=Python, caption={Example 1: Writing text to a file.}]
+def write_basic_example():
+    """Write two lines to a new file."""
+    with open("myfile.txt", "w", encoding="utf-8") as f:
+        f.write("This is a brand-new file.\n")
+        f.write("Second line: this one overwrites any previous content.\n")
+    print("[Success] File written successfully!")
+
+write_basic_example()
+\end{lstlisting}
+
+\begin{quote}
+\textbf{Sample File Output:} \texttt{myfile.txt}
+\begin{verbatim}
+This is a brand-new file.
+Second line: this one overwrites any previous content.
+\end{verbatim}
+\end{quote}
+
+---
+
+\section{Why Some Writes Fail}
+
+You can only write strings to text files.  
+Attempting to write a number directly will cause Python to raise a dramatic \texttt{TypeError}.
+
+\begin{lstlisting}[language=Python, caption={Example 2: Handling write errors with style.}]
+def demonstrate_wrong_write():
+    """Show why writing numbers directly causes a TypeError."""
+    try:
+        with open("wrong_write.txt", "w", encoding="utf-8") as f:
+            # This will fail: write() only accepts strings.
+            f.write(3.14159)
+    except TypeError as e:
+        print("[Error]", e)
+        print("[Hint] Convert numbers to strings using str() or f-strings.")
+
+    # Correct version
+    with open("right_write.txt", "w", encoding="utf-8") as f:
+        num1, num2 = 5, 7.5
+        f.write(f"{num1} + {num2} = {num1 + num2}\n")
+    print("[Fixed] Math written successfully!")
+
+demonstrate_wrong_write()
+\end{lstlisting}
+
+---
+
+\section{File Modes}
+
+File modes are like the different moods of a writer—each one changes the tone of what happens next.
+
+\begin{center}
+\begin{tabular}{l l l l l}
+\textbf{Mode} & \textbf{Description} & \textbf{Read?} & \textbf{Write?} & \textbf{Overwrite?} \\
+\hline
+\texttt{r} & Read only & Yes & No & No \\
+\texttt{w} & Write (overwrite) & No & Yes & Yes \\
+\texttt{a} & Append to end & No & Yes & No \\
+\texttt{r+} & Read and write (must exist) & Yes & Yes & No \\
+\texttt{w+} & Read and write (truncates) & Yes & Yes & Yes \\
+\texttt{a+} & Read and append & Yes & Yes & No \\
+\texttt{x} & Create new file (error if exists) & No & Yes & N/A \\
+\end{tabular}
+\end{center}
+
+\begin{lstlisting}[language=Python, caption={Example 3: Trying wrong modes, then fixing them.}]
+from pathlib import Path
+import io
+
+def show_file(path):
+    p = Path(path)
+    print(f"\n[{p.name}] contents:")
+    print(p.read_text(encoding="utf-8") if p.exists() else "<missing>")
+
+def demonstrate_modes():
+    path = "modes_demo.txt"
+    Path(path).write_text("START\n", encoding="utf-8")
+
+    # Wrong: open in read mode, try to write
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            f.write("APPEND\n")
+    except io.UnsupportedOperation as e:
+        print("[Error]", e)
+        print("[Hint] 'r' is read-only; use 'a' for append.")
+
+    # Correct: append mode
+    with open(path, "a", encoding="utf-8") as f:
+        f.write("APPEND\n")
+
+    show_file(path)
+
+demonstrate_modes()
+\end{lstlisting}
+
+---
+
+\section{Append Mode: The Diary Approach}
+
+The \texttt{a} mode appends to an existing file—great for logs, journals, and confessions you don’t want erased.
+
+\begin{lstlisting}[language=Python, caption={Example 4: Appending to a file repeatedly.}]
+from datetime import datetime
+
+def append_to_log(entry, filename="daily_log.txt"):
+    """Append timestamped entries to a log file."""
+    with open(filename, "a", encoding="utf-8") as f:
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        f.write(f"[{timestamp}] {entry}\n")
+    print("[Info] Log entry added.")
+
+# Let's test a few entries
+append_to_log("Started Chapter 12 examples.")
+append_to_log("Tried append mode. It worked!")
+append_to_log("Feeling confident about file handling.")
+\end{lstlisting}
+
+---
+
+\section{Buffered Output and Flushing}
+
+When you write to a file, Python first stores the data in memory before writing it to disk.  
+This is called *buffering*---it makes writing faster, but also means data might not appear immediately.
+
+\begin{lstlisting}[language=Python, caption={Example 5: Forcing a buffer flush.}]
+import os, time
+from pathlib import Path
+
+def buffering_demo(path="buffer_demo.txt"):
+    p = Path(path)
+    if p.exists():
+        p.unlink()
+
+    f = open(path, "w", encoding="utf-8")
+    f.write("Write me (still in memory)...")
+    print("[Info] File opened and data written (but not yet saved).")
+    time.sleep(1)
+    f.flush()          # Push data from Python to OS
+    os.fsync(f.fileno())  # Ensure the OS writes it to disk
+    print("[Success] Data flushed to disk.")
+    f.close()
+
+buffering_demo()
+\end{lstlisting}
+
+---
+
+\section{Safe File Creation}
+
+The \texttt{"x"} mode is the “no overwrite allowed” option.  
+It’s perfect for protecting students’ lab reports, thesis drafts, or personal manifestos.
+
+\begin{lstlisting}[language=Python, caption={Example 6: Using 'x' mode to prevent overwrite.}]
+def create_once(filename="create_once.txt"):
+    try:
+        with open(filename, "x", encoding="utf-8") as f:
+            f.write("This file will never be overwritten.\n")
+        print(f"[Created] New file: {filename}")
+    except FileExistsError:
+        print(f"[Skipped] '{filename}' already exists; not overwritten.")
+
+create_once()
+create_once()
+\end{lstlisting}
+
+---
+
+\section{Fun Activity: The Compliment Machine}
+
+Let’s make something a bit sillier---a program that takes user input and writes  
+each compliment to a file so you can re-read your greatness later.
+
+\begin{lstlisting}[language=Python, caption={Example 7: The Compliment Machine.}]
+def compliment_machine():
+    filename = "compliments.txt"
+    print("Welcome to the Compliment Machine!")
+    print("Type compliments to save them; press Enter on an empty line to quit.\n")
+
+    with open(filename, "a", encoding="utf-8") as f:
+        while True:
+            compliment = input("Say something nice: ")
+            if not compliment.strip():
+                break
+            f.write(compliment + "\n")
+            print("[Saved] Compliment added!\n")
+
+    print(f"All compliments saved to {filename}.")
+
+compliment_machine()
+\end{lstlisting}
+
+---
+
+\section*{Summary}
+\begin{itemize}
+  \item Mode \texttt{"w"} overwrites, \texttt{"a"} appends, and \texttt{"x"} creates new.
+  \item \texttt{write()} only accepts strings; use \texttt{str()} or f-strings for other data.
+  \item Buffered writes may not appear immediately—use \texttt{flush()} or close the file.
+  \item The safest way to write: \texttt{with open(...)} ensures automatic cleanup.
+  \item Writing to files is how programs tell stories. Make yours a good one.
+\end{itemize}

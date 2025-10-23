@@ -1,0 +1,192 @@
+\chapter{12.4 Binary Data}
+
+\section*{Why Binary Files Feel Like Secret Code}
+
+Most files you touch daily (text, CSV, Python scripts) are human-readable.  
+Binary files, on the other hand, are the silent operators — full of raw bytes that mean nothing
+until decoded correctly. Think of them as data that only machines (or very patient humans)
+can love.
+
+Examples: images, videos, PDFs, ZIP archives.  
+Open them in Notepad and you’ll see digital hieroglyphs.
+
+---
+
+\section{Bytes in Python}
+
+A \texttt{bytes} object represents a sequence of byte values (0--255).  
+They are immutable, much like strings.
+
+\begin{lstlisting}[language=Python, caption={Creating bytes in different ways.}]
+# From a text string
+b1 = bytes("A text string", "ascii")
+
+# From a size (filled with zeros)
+b2 = bytes(10)
+
+# From numeric values
+b3 = bytes([12, 15, 20])
+
+print(b1)
+print(b2)
+print(b3)
+\end{lstlisting}
+
+---
+
+\section{Bytes Literals and Escapes}
+
+Prefix a string with \texttt{b} to make a bytes literal.
+You can also use hexadecimal escapes (\texttt{\textbackslash xHH}) to show specific values.
+
+\begin{lstlisting}[language=Python, caption={Byte literals and hex escapes.}]
+print(b"123456789" == b"\x31\x32\x33\x34\x35\x36\x37\x38\x39")
+\end{lstlisting}
+
+\textbf{Output:}
+\begin{verbatim}
+True
+\end{verbatim}
+
+Yes — the string \texttt{"123456789"} and the exact same bytes in hex are identical.
+One just wears a fancier coat.
+
+---
+
+\section{Reading and Writing Binary Files}
+
+When reading or writing binary data, use mode \texttt{'rb'} or \texttt{'wb'}.
+Binary mode skips newline conversions and encodings.
+
+\begin{lstlisting}[language=Python, caption={Opening files in binary mode.}]
+# Write binary bytes
+with open("data.bin", "wb") as f:
+    f.write(b"\x01\x02\x03\x04")
+
+# Read them back
+with open("data.bin", "rb") as f:
+    contents = f.read()
+    print(contents)
+\end{lstlisting}
+
+\textbf{Output:}
+\begin{verbatim}
+b'\x01\x02\x03\x04'
+\end{verbatim}
+
+---
+
+\section{Peeking Inside Binary Files}
+
+You can read a few bytes to see what a binary file looks like.
+This works well for identifying file headers.
+
+\begin{lstlisting}[language=Python, caption={Reading the first bytes of a file.}]
+with open("ball.bmp", "rb") as f:
+    header = f.read(32)
+
+print("First 32 bytes of ball.bmp:")
+print(header)
+\end{lstlisting}
+
+\textbf{Example output:}
+\begin{verbatim}
+b'BM\xf6\x00\x00\x00\x00\x00\x00\x00\x36\x04\x00\x00...'
+\end{verbatim}
+
+The first two bytes \texttt{BM} mark this as a BMP file —  
+the ancient but still cheerful “bitmap.”
+
+---
+
+\section{Editing Binary Data (Carefully!)}
+
+Binary files are like Jenga towers — one wrong byte and the whole thing collapses.  
+Still, here’s a playful example using the \texttt{struct} module to peek at and modify data.
+
+\begin{lstlisting}[language=Python, caption={Altering part of a BMP image.}]
+import struct, pathlib
+
+# Read entire file into memory
+data = pathlib.Path("ball.bmp").read_bytes()
+
+# Bytes 10 through 13 store the pixel data offset
+pixel_data_offset = struct.unpack("<I", data[10:14])[0]
+print("Pixel data starts at:", pixel_data_offset)
+
+# Let's change the first 3000 pixels to a repeating red-green-yellow pattern
+pattern = (b"\xff\x00\x00" + b"\x00\xff\x00" + b"\xff\xff\x00") * 1000
+new_data = data[:pixel_data_offset] + pattern + data[pixel_data_offset + len(pattern):]
+
+pathlib.Path("new_ball.bmp").write_bytes(new_data)
+print("Created modified image: new_ball.bmp")
+\end{lstlisting}
+
+\textbf{Note:} Don’t use this on family photos unless you like abstract art.
+
+---
+
+\section{Packing and Unpacking with struct}
+
+\texttt{struct.pack()} and \texttt{struct.unpack()} convert Python data to binary and back.
+
+\begin{lstlisting}[language=Python, caption={Packing and unpacking values.}]
+import struct
+
+# Pack two short integers (big-endian)
+data = struct.pack(">hh", 5, 256)
+print("Packed:", data)
+
+# Unpack them again
+numbers = struct.unpack(">hh", data)
+print("Unpacked:", numbers)
+\end{lstlisting}
+
+\textbf{Output:}
+\begin{verbatim}
+Packed: b'\x00\x05\x01\x00'
+Unpacked: (5, 256)
+\end{verbatim}
+
+This trick is essential for reading file headers, network protocols, or microcontroller data.
+
+---
+
+\section{Binary vs. Text Performance}
+
+Binary writes skip encoding overhead, often making them faster for large data dumps.
+
+\begin{lstlisting}[language=Python, caption={Comparing write speeds.}]
+import time, os
+
+N = 10_000_000
+text_data = "A" * N
+binary_data = b"A" * N
+
+start = time.time()
+with open("text_test.txt", "w") as f:
+    f.write(text_data)
+text_time = time.time() - start
+
+start = time.time()
+with open("binary_test.bin", "wb") as f:
+    f.write(binary_data)
+binary_time = time.time() - start
+
+print(f"Text write:   {text_time:.4f}s")
+print(f"Binary write: {binary_time:.4f}s")
+print(f"Binary was {text_time / binary_time:.2f}x faster!")
+\end{lstlisting}
+
+Your results may vary, but binary writing usually wins the sprint.
+
+---
+
+\section*{Summary}
+
+\begin{itemize}
+  \item Binary files store raw bytes — text encoding is not involved.
+  \item Use \texttt{rb} and \texttt{wb} for binary reads and writes.
+  \item The \texttt{struct} module is your translator between Python types and byte layouts.
+  \item Always test on copies — once a byte is gone, no “undo” button will save it.
+\end{itemize}

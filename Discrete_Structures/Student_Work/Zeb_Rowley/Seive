@@ -1,0 +1,68 @@
+import time
+from sympy import primerange  # Library method for primes
+
+# --- Basic Prime Checking Algorithm ---
+def is_prime(num):
+    if num < 2:
+        return False
+    for i in range(2, int(num**0.5) + 1):
+        if num % i == 0:
+            return False
+    return True
+
+def basic_prime_finder(end):
+    return [number for number in range(0, end + 1) if is_prime(number)]
+
+# --- Sieve of Eratosthenes Algorithm ---
+def sieve_of_eratosthenes(end):
+    if end < 2:
+        return []
+    prime = [True for _ in range(end + 1)]
+    prime[0], prime[1] = False, False
+
+    p = 2
+    while p * p <= end:
+        if prime[p]:
+            for i in range(p * p, end + 1, p):
+                prime[i] = False
+        p += 1
+
+    return [i for i in range(2, end + 1) if prime[i]]
+
+# --- SymPy Library Method ---
+def sympy_primes(end):
+    return list(primerange(0, end + 1))
+
+# --- User Input ---
+end = int(input("Enter the end of the range: "))
+
+# --- Run Basic Prime Finder ---
+start_time_basic = time.time()
+basic_primes = basic_prime_finder(end)
+end_time_basic = time.time()
+
+# --- Run Sieve of Eratosthenes ---
+start_time_sieve = time.time()
+sieve_primes = sieve_of_eratosthenes(end)
+end_time_sieve = time.time()
+
+# --- Run SymPy Method ---
+start_time_sympy = time.time()
+sympy_primes_list = sympy_primes(end)
+end_time_sympy = time.time()
+
+# --- Display Results ---
+print("\n--- Results ---")
+print(f"Range: 0 to {end}")
+print(f"Basic Prime Finder: {len(basic_primes)} primes, {end_time_basic - start_time_basic:.6f} seconds")
+print(f"Sieve of Eratosthenes: {len(sieve_primes)} primes, {end_time_sieve - start_time_sieve:.6f} seconds")
+print(f"SymPy primerange(): {len(sympy_primes_list)} primes, {end_time_sympy - start_time_sympy:.6f} seconds")
+
+# --- Verify all results are identical ---
+if basic_primes == sieve_primes == sympy_primes_list:
+    print("✅ All three methods produced identical results!")
+else:
+    print("⚠️ The methods produced different results.")
+
+# Uncomment to show primes
+# print("\nPrimes:", sympy_primes_list)

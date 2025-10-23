@@ -1,0 +1,252 @@
+\chapter{12.3 Interacting with File Systems}
+
+\section*{Overview}
+
+Welcome to the neighborhood of directories, drives, and disk blocks.
+Your Python code is about to make friends with the operating system.
+This chapter teaches how to explore, navigate, and manipulate files and folders safely.
+
+When your program touches the file system, several layers cooperate:
+
+\begin{enumerate}
+  \item \textbf{Python layer:} you call functions like \texttt{open()}, \texttt{os.stat()}, or \texttt{pathlib.Path()}.
+  \item \textbf{C layer:} CPython translates those into system calls such as \texttt{open}, \texttt{read}, and \texttt{write}.
+  \item \textbf{Operating system kernel:} checks permissions, updates metadata, and interacts with file-system drivers.
+  \item \textbf{Hardware:} disks and controllers actually move bytes.
+\end{enumerate}
+
+The key idea: Python provides a friendly façade, but the OS decides what is legal, safe, and durable.
+
+\begin{quote}
+\textbf{Docs to Bookmark:}
+\begin{itemize}
+  \item \href{https://docs.python.org/3/library/os.html}{\texttt{os} module}
+  \item \href{https://docs.python.org/3/library/pathlib.html}{\texttt{pathlib} module}
+  \item \href{https://docs.python.org/3/library/shutil.html}{\texttt{shutil}: copy, move, remove}
+  \item \href{https://docs.python.org/3/tutorial/inputoutput.html#reading-and-writing-files}{Reading \& Writing Files (Python Docs)}
+\end{itemize}
+\end{quote}
+
+---
+
+\section{Portable Paths: Stop Fighting the Slashes}
+
+Hard-coding \verb|\| or \verb|/| works until it doesn’t.
+Use \texttt{os.path.join()} or \texttt{pathlib.Path()} so your code runs everywhere.
+
+\begin{lstlisting}[language=Python, caption={Building file paths the right way.}]
+import os
+from pathlib import Path
+
+def build_paths():
+    # Wrong: brittle, Windows-only
+    p_bad = "logs\\2025\\01\\log.txt"
+    print("Brittle:", p_bad)
+
+    # Better: OS-appropriate separator
+    p_good = os.path.join("logs", "2025", "01", "log.txt")
+    print("Portable:", p_good)
+
+    # Best: Path objects are operator-friendly
+    p = Path("logs") / "2025" / "01" / "log.txt"
+    print("Pathlib:", p)
+
+build_paths()
+\end{lstlisting}
+
+\textbf{Tip:} In Windows paths, a single backslash begins an escape.
+Use raw strings like \verb|r"C:\Users\me\notes.txt"| to keep Python calm.
+
+---
+
+\section{Checking Existence and Size}
+
+\begin{lstlisting}[language=Python, caption={Check if something exists, and what kind of thing it is.}]
+import os
+from pathlib import Path
+
+def existence_and_type(path_str):
+    print(f"\nTesting: {path_str}")
+    print("-- os.path results --")
+    print(" exists:", os.path.exists(path_str))
+    print(" isfile:", os.path.isfile(path_str))
+    print(" isdir:", os.path.isdir(path_str))
+
+    print("-- pathlib results --")
+    p = Path(path_str)
+    print(" exists:", p.exists())
+    print(" is_file:", p.is_file())
+    print(" is_dir:", p.is_dir())
+    if p.exists():
+        print(" size:", p.stat().st_size, "bytes")
+
+existence_and_type("myfile.txt")
+existence_and_type("logs")
+\end{lstlisting}
+
+---
+
+\section{Reading File Metadata}
+
+\begin{lstlisting}[language=Python, caption={Inspect metadata and show friendly timestamps.}]
+import datetime
+from pathlib import Path
+
+def show_stat(path):
+    p = Path(path)
+    if not p.exists():
+        print(f"{path!r} does not exist.")
+        return
+    st = p.stat()
+    print("\n-- File metadata --")
+    print("size:", st.st_size, "bytes")
+    print("modified:", datetime.datetime.fromtimestamp(st.st_mtime))
+    print("created :", datetime.datetime.fromtimestamp(st.st_ctime))
+
+show_stat("myfile.txt")
+\end{lstlisting}
+
+\textbf{Note:} On Windows, \texttt{st\_ctime} means creation time.
+On Linux and macOS it means “metadata change time.”  
+Same name, different personality.
+
+---
+
+\section{Walking a Directory Tree}
+
+\begin{lstlisting}[language=Python, caption={List .txt files using os.walk.}]
+import os
+
+def list_txt_files(root="."):
+    print(f"\nSearching {root!r} for text files:")
+    for dirpath, subdirs, files in os.walk(root):
+        for name in files:
+            if name.lower().endswith(".txt"):
+                print(" ", os.path.join(dirpath, name))
+
+list_txt_files("logs")
+\end{lstlisting}
+
+This is great for projects with nested folders or for grading dozens of student files.
+
+---
+
+\section{Creating, Copying, and Deleting}
+
+\begin{lstlisting}[language=Python, caption={Safe create, copy, rename, delete.}]
+import os, shutil
+from pathlib import Path
+
+def safe_demo():
+    d = Path("sandbox")
+    d.mkdir(exist_ok=True)
+    (d / "demo.txt").write_text("Hello, filesystem!\n")
+
+    # Copy and rename
+    shutil.copy2(d / "demo.txt", d / "copy.txt")
+    os.replace(d / "copy.txt", d / "moved.txt")
+
+    # Delete safely
+    (d / "moved.txt").unlink(missing_ok=True)
+    print("Sandbox contents:", list(d.iterdir()))
+
+safe_demo()
+\end{lstlisting}
+
+\textbf{Atomicity tip:} \texttt{os.replace()} is atomic on the same drive—  
+either the old file stays or the new one appears, never half a file.
+
+---
+
+\section{Split, Join, and Inspect Paths}
+
+\begin{lstlisting}[language=Python, caption={Split and reassemble file paths.}]
+import os
+
+def split_examples(p):
+    head, tail = os.path.split(p)
+    root, ext = os.path.splitext(p)
+    print("\nSplit:", p)
+    print(" head:", head)
+    print(" tail:", tail)
+    print(" root:", root)
+    print(" ext :", ext)
+
+split_examples(os.path.join("C:\\", "Users", "Demo", "batsuit.jpg"))
+\end{lstlisting}
+
+If you ever need to rename every \texttt{.jpg} to \texttt{.png},  
+\texttt{os.path.splitext()} is your sidekick.
+
+---
+
+\section{Challenge: Counting Files}
+
+\begin{lstlisting}[language=Python, caption={Count all files with a given extension.}]
+import os
+
+def count_ext(root, ext=".txt"):
+    total = 0
+    for dirpath, _, files in os.walk(root):
+        for name in files:
+            if name.lower().endswith(ext):
+                total += 1
+    return total
+
+print("Number of .txt files under logs:", count_ext("logs"))
+\end{lstlisting}
+
+---
+
+\section{Atomic Writes (for the Perfectionists)}
+
+\begin{lstlisting}[language=Python, caption={Write safely using a temporary file.}]
+import os, tempfile
+from pathlib import Path
+
+def atomic_write_text(path, text):
+    target = Path(path)
+    target.parent.mkdir(parents=True, exist_ok=True)
+    with tempfile.NamedTemporaryFile("w", encoding="utf-8",
+                                     dir=target.parent, delete=False) as tmp:
+        tmp.write(text)
+        tmp.flush()
+        os.fsync(tmp.fileno())
+        tmp_name = tmp.name
+    os.replace(tmp_name, target)
+    print("Atomically wrote:", target)
+
+atomic_write_text("sandbox/report.txt", "Final, correct, no-half-file version.\n")
+\end{lstlisting}
+
+---
+
+\section{Windows-Specific Quirks}
+
+\begin{itemize}
+  \item Old APIs limited paths to 260 characters; modern Python can exceed this.
+  \item Windows is case-insensitive but case-preserving—\texttt{File.txt} and \texttt{file.txt} refer to the same file.
+  \item Text mode converts newlines automatically; use binary mode for raw bytes.
+\end{itemize}
+
+---
+
+\section{Practice Prompts}
+
+\begin{enumerate}
+  \item Create a directory structure \verb|logs/YYYY/MM/DD/| and write a file for today's date.
+  \item Walk a directory tree and print the three largest files.
+  \item Implement \verb|safe_replace(path, text)| that uses a temp file then \texttt{os.replace()}.
+  \item On Windows, demonstrate the difference between a raw string and an escaped string path.
+\end{enumerate}
+
+---
+
+\section*{Summary}
+
+\begin{itemize}
+  \item Use \texttt{pathlib} for readability and safety.
+  \item Always handle \texttt{FileNotFoundError}, \texttt{PermissionError}, and \texttt{IsADirectoryError}.
+  \item Remember: flushing and atomic replace are your insurance policies.
+  \item The file system is a conversation—speak politely, close files, and check before you delete.
+\end{itemize}
