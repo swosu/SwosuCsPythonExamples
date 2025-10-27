@@ -37,6 +37,16 @@ class Mammal(LivingPet):
 
     def make_sound(self):
         print(f"{self.name} makes a noise vaguely like '{self.species}' noises.")
+# ------------------------------
+# Subclasses of Bugs
+# ------------------------------
+class Spider(LivingPet):
+     def __init__(self, name, age=0, species="Generic Spider"):
+        super().__init__(name, age)
+         self.species = species
+
+    def make_sound(self):
+        print(f"{self.name} the {self.breed} meows judgmentally. 😾")
 
 # ------------------------------
 # Subclasses of Mammals
