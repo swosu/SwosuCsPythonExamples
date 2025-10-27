@@ -1,0 +1,59 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{multicol}
+\usepackage{enumitem}
+\usepackage{tikz}
+\usepackage{xcolor}
+\usepackage{lipsum}
+
+\title{Chapter 5.1: Mathematical Induction – The Infinite Ladder of Logic}
+\author{SWOSU Discrete Structures}
+\date{}
+
+\begin{document}
+\maketitle
+
+\section*{Introduction: Climbing the Infinite Ladder}
+
+Suppose we have an \textbf{infinite ladder}. You’re standing at the bottom, holding your coffee in one hand and your sense of dread in the other.  
+You know two things:
+\begin{enumerate}
+  \item You can reach the first rung. (Victory!)
+  \item If you can reach any rung $k$, then you can also reach the next rung $k+1$.
+\end{enumerate}
+
+\noindent By pure logic (and maybe caffeine), you can conclude that you’ll eventually reach every rung of that ladder.  
+\textit{This, my friend, is the essence of mathematical induction.}
+
+\section*{Student Challenge}
+
+Prove that for all positive integers $n$:
+\[
+1 + 2 + 3 + \dots + n = \frac{n(n+1)}{2}
+\]
+\vspace{2em}
+
+\noindent \textbf{Hint:} Think of this as a staircase to mathematical greatness.  
+Start small (the base case), then prove you can keep going (the inductive step).
+
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Base Case:} Prove it works for $n=1$. (You can do this in your sleep.)
+  \item \textbf{Inductive Step:} Assume it works for some $k$, and show it must work for $k+1$.
+  \item \textbf{Victory Lap:} Conclude that it works for all $n$. Then treat yourself to a cookie.
+\end{enumerate}
+
+\section*{Example: Inductive Thinking in the Wild}
+
+Let’s prove that $n^3 - n$ is divisible by 3 for all positive integers $n$.
+
+\noindent \textbf{Try it yourself:} test $n=1, 2, 3$ — see the pattern?  
+Now imagine the induction domino effect at work — if it’s true for one, it’s true for the next, and so on.
+
+\section*{Reflect}
+
+Where in life have you ever used an “inductive” idea —  
+believing something is true because it’s true in small cases and keeps working?  
+(\textit{Hint:} “My coffee cup always empties itself if I keep drinking” counts.)
+
+\end{document}
+

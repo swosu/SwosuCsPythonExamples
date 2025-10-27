@@ -1,0 +1,138 @@
+\chapter{12.6 The \texttt{with} Statement}
+
+\section*{Overview}
+A \texttt{with} statement is Python’s built-in way of managing resources — such as files — safely and elegantly.  
+When used with \texttt{open()}, it guarantees that the file is closed automatically when the block of code completes,  
+even if an exception occurs inside the block.
+
+Think of it as a friendly librarian: you borrow a book (open a file), do your reading,  
+and no matter what happens — whether you finish or drop your coffee — the librarian takes the book back and shelves it neatly.
+
+\begin{quote}
+\textbf{Docs to Bookmark:}
+\begin{itemize}
+  \item \href{https://docs.python.org/3/reference/compound_stmts.html#the-with-statement}{The with statement (Python Docs)}
+  \item \href{https://docs.python.org/3/tutorial/inputoutput.html#methods-of-file-objects}{File objects in Python}
+\end{itemize}
+\end{quote}
+
+---
+
+\section{Basic Example: Safe File Reading}
+
+\begin{lstlisting}[language=Python, caption={Opening and reading a file safely.}]
+print("Opening myfile.txt")
+with open("myfile.txt", "r", encoding="utf-8") as f:
+    contents = f.read()
+    print(contents)
+print("File closed automatically after this block!")
+\end{lstlisting}
+
+\noindent
+The \texttt{with} statement ensures that once you exit the block, \texttt{f.close()} is called automatically.  
+Even if an error occurs inside the block, Python still closes the file properly.
+
+---
+
+\section{Why Not Just Call \texttt{close()} Yourself?}
+
+\begin{lstlisting}[language=Python, caption={Manual open and close -- easy to forget.}]
+f = open("oops.txt", "w", encoding="utf-8")
+f.write("This file might stay open forever...")
+# Oops! We forgot f.close()
+\end{lstlisting}
+
+\noindent
+If you forget to close a file, it can remain locked or unflushed in memory —  
+causing confusion, corrupted files, or grumpy system administrators.  
+
+\begin{lstlisting}[language=Python, caption={Fixed using a with statement.}]
+with open("oops.txt", "w", encoding="utf-8") as f:
+    f.write("This version closes itself. Much better!")
+\end{lstlisting}
+
+---
+
+\section{Reading and Writing Together}
+
+\begin{lstlisting}[language=Python, caption={Using the same file object for reading and writing.}]
+print("Opening numbers.txt for reading and writing...")
+with open("numbers.txt", "r+", encoding="utf-8") as f:
+    num1 = int(f.readline())
+    num2 = int(f.readline())
+    product = num1 * num2
+    f.write(f"\nProduct: {product}\n")
+print("Closed numbers.txt automatically.")
+\end{lstlisting}
+
+---
+
+\section{Cautionary Tale: The File That Refused to Close}
+
+\begin{lstlisting}[language=Python, caption={Why using `with` is safer.}]
+# Scenario 1: Forgetting to close a file manually
+try:
+    f = open("chaos.txt", "w", encoding="utf-8")
+    f.write("Everything is fine so far...")
+    raise RuntimeError("Oops! Chaos strikes!")  # Something goes wrong!
+    f.close()
+except Exception as e:
+    print("Caught error:", e)
+    print("Did we close the file? Nope - it's still open!")
+
+# Scenario 2: Using 'with' guarantees closure even after errors
+try:
+    with open("calm.txt", "w", encoding="utf-8") as f:
+        f.write("Tranquility restored. File will close no matter what.")
+        raise RuntimeError("A wild exception appears!")
+except Exception as e:
+    print("Caught safely:", e)
+    print("File 'calm.txt' has already been closed automatically.")
+\end{lstlisting}
+
+
+\noindent
+Even though both blocks raise errors, only the second one guarantees that the file is properly closed.
+
+---
+
+\section{Challenge Example: Writing Logs}
+
+\begin{lstlisting}[language=Python, caption={Appending a timestamped log entry safely.}]
+from datetime import datetime
+
+def log_event(message):
+    """Append an event to a log file with timestamp."""
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    with open("log.txt", "a", encoding="utf-8") as log:
+        log.write(f"[{timestamp}] {message}\n")
+
+log_event("Program started successfully.")
+log_event("User pressed the red button.")
+\end{lstlisting}
+
+---
+
+\section{Quiz Questions}
+\begin{enumerate}
+  \item When does Python automatically close a file opened with \texttt{with}?  
+        \textbf{Answer:} When the indented block ends, even if an error occurs.
+  \item What is a \texttt{context manager}?  
+        \textbf{Answer:} An object that sets up and tears down resources automatically.
+  \item What happens if you forget \texttt{close()}?  
+        \textbf{Answer:} The file may remain locked or data may not be saved.
+\end{enumerate}
+
+---
+
+\section*{Summary}
+\begin{itemize}
+  \item Use \texttt{with open(...)} to ensure automatic closure of files.
+  \item It’s cleaner, safer, and preferred in all modern Python code.
+  \item Works great for other resources too (network sockets, database connections, etc.).
+\end{itemize}
+
+\begin{quote}
+\textbf{Moral of the story:}  
+If your program opens files without \texttt{with}, it’s like leaving the refrigerator door open — it still “works,” but you’re wasting power and asking for trouble.
+\end{quote}

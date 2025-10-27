@@ -1,5 +1,6 @@
 \documentclass[12pt]{book}
 
+% --- Packages ---
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage{graphicx}
 \usepackage{hyperref}
@@ -9,38 +10,40 @@
 \usepackage{xcolor}
 \usepackage[utf8]{inputenc} % Ensure UTF-8 compatibility
 \usepackage[T1]{fontenc}
-\sloppy % allows better line breaking
 \usepackage{url}
 \usepackage{verbatim}
-
-
+\sloppy % allows better line breaking
 
 % --- Page style ---
 \pagestyle{fancy}
 \fancyhead[L]{ZyBooks Chapter 12 Companion}
 \fancyhead[R]{\leftmark}
 \fancyfoot[C]{\thepage}
-
 \setlength{\headheight}{15pt}
 
-% --- Listings for code examples ---
+% --- Listings configuration ---
 \lstset{
   basicstyle=\ttfamily\footnotesize,
   backgroundcolor=\color{gray!10},
   frame=single,
   breaklines=true,
   showstringspaces=false,
-  numbers=left,
-  numberstyle=\tiny\color{gray},
+  numbers=none,                % removed line numbers for easy copy/paste
   keywordstyle=\color{blue!70!black},
   commentstyle=\color{green!40!black},
   stringstyle=\color{orange!90!black},
+  tabsize=4,
+  keepspaces=true,
+  columns=flexible,
+  captionpos=b                 % captions below code blocks
 }
 
+% --- Metadata ---
 \title{ZyBooks Chapter 12: Files in Python}
 \author{Jeremy Paul Evert}
 \date{\today}
 
+% ====================================================
 \begin{document}
 
 \frontmatter
@@ -54,10 +57,15 @@
 \include{chapters/12_2_writing_files}
 \include{chapters/12_3_interacting_with_file_systems}
 \include{chapters/12_4_binary_data}
+\include{chapters/12_5_command_line_arguments}
+\include{chapters/12_6_with_statement}
+\include{chapters/12_7_comma_separated_values}
+
 
 \backmatter
 \chapter*{Notes}
-This book was created to accompany the zyBooks interactive textbook, Chapter 12: Files. 
-Each section demonstrates the concepts with well-structured LaTeX code examples and clear explanations.
+This companion book was designed to accompany the zyBooks interactive textbook, Chapter~12: \textit{Files in Python}.  
+Each section includes clear examples that are ready to copy and paste directly from this PDF into your favorite code editor.  
+The examples also include sample data files, demonstrations of modern best practices, and a touch of humor to keep learning lively.
 
 \end{document}

@@ -1,0 +1,191 @@
+\chapter{Class Customization}
+
+\section*{9.8 Class Customization}
+
+\textbf{Class customization} is the process of defining how an instance of a class should behave
+for certain operations—such as printing, comparing, or arithmetic.  
+Python provides \textit{special method names} (sometimes called “dunder methods”) that begin
+and end with double underscores.  
+By defining these, programmers can customize how built-in behaviors interact with objects.
+
+\subsection*{Implementing \_\_str\_\_(): Custom Printing}
+
+\noindent\textbf{Example 9.8.1:} Implementing \_\_str\_\_ alters how the class is printed.
+
+\begin{multicols}{2}
+\textbf{Normal Printing:}
+\begin{lstlisting}[language=Python]
+class Toy:
+    def __init__(self, name, price, min_age):
+        self.name = name
+        self.price = price
+        self.min_age = min_age
+
+truck = Toy("Monster Truck XX", 14.99, 5)
+print(truck)
+\end{lstlisting}
+
+\columnbreak
+\textbf{Customized Printing:}
+\begin{lstlisting}[language=Python]
+class Toy:
+    def __init__(self, name, price, min_age):
+        self.name = name
+        self.price = price
+        self.min_age = min_age
+
+    def __str__(self):
+        return (f"{self.name} costs only ${self.price:.2f}. "
+                f"Not for children under {self.min_age}!")
+
+truck = Toy("Monster Truck XX", 14.99, 5)
+print(truck)
+\end{lstlisting}
+\end{multicols}
+
+\noindent Output:
+\begin{verbatim}
+Monster Truck XX costs only $14.99. Not for children under 5!
+\end{verbatim}
+
+\subsection*{Try It: Customizing Print Output}
+
+\begin{lstlisting}[language=Python]
+class Car:
+    def __init__(self, make, model, year, miles, price):
+        self.make = make
+        self.model = model
+        self.year = year
+        self.miles = miles
+        self.price = price
+
+    # FIXME: add __str__() to format output
+\end{lstlisting}
+
+\noindent
+Desired output example:
+\begin{verbatim}
+1989 Chevrolet Blazer:
+Mileage: 115000
+Sticker price: $3250
+\end{verbatim}
+
+\subsection*{Operator Overloading}
+
+Python also allows classes to redefine built-in operators such as \texttt{<}, \texttt{>}, \texttt{==}, and
+\texttt{+}.  This is done through special methods such as \texttt{\_\_lt\_\_}, \texttt{\_\_gt\_\_},
+\texttt{\_\_eq\_\_}, etc.
+
+\textbf{Example 9.8.2: Overloading the < Operator}
+
+\begin{lstlisting}[language=Python]
+class Time:
+    def __init__(self, hours, minutes):
+        self.hours = hours
+        self.minutes = minutes
+
+    def __str__(self):
+        return f"{self.hours}:{self.minutes:02d}"
+
+    def __lt__(self, other):
+        if self.hours < other.hours:
+            return True
+        elif self.hours == other.hours:
+            return self.minutes < other.minutes
+        return False
+\end{lstlisting}
+
+\noindent
+These comparison methods are known as \textbf{rich comparison methods}.
+\begin{center}
+\begin{tabular}{ll}
+\textbf{Method} & \textbf{Operator} \\
+\hline
+\_\_lt\_\_ & less than (<) \\
+\_\_le\_\_ & less than or equal (<=) \\
+\_\_gt\_\_ & greater than (>) \\
+\_\_ge\_\_ & greater than or equal (>=) \\
+\_\_eq\_\_ & equal (==) \\
+\_\_ne\_\_ & not equal (!=) \\
+\end{tabular}
+\end{center}
+
+\subsection*{Practice: Comparing Quarterbacks}
+
+\begin{lstlisting}[language=Python]
+class Quarterback:
+    def __init__(self, yrds, tds, cmps, atts, ints, wins):
+        self.wins = wins
+        self.rating = (((8.4 * yrds) + (330 * tds)
+                        + (100 * cmps) - (200 * ints)) / atts)
+
+    def __lt__(self, other):
+        return (self.rating < other.rating or
+                self.wins < other.wins)
+
+    def __gt__(self, other):
+        return (self.rating > other.rating and
+                self.wins > other.wins)
+\end{lstlisting}
+
+\subsection*{Challenge: Used Car Comparison}
+
+\begin{lstlisting}[language=Python]
+class UsedCar:
+    def __init__(self, price, condition):
+        self.price = price
+        self.condition = condition  # 0=poor, 5=new
+
+    def __lt__(self, other):
+        return self.price < other.price
+
+    def __le__(self, other):
+        return self.price <= other.price
+
+    def __gt__(self, other):
+        return self.condition > other.condition
+
+    def __ne__(self, other):
+        return (self.price != other.price or
+                self.condition != other.condition)
+\end{lstlisting}
+
+\subsection*{Defining \_\_str\_\_ for Custom Output}
+
+\textbf{Challenge:} Define \_\_str\_\_ for a simple CarRecord class.
+
+\begin{lstlisting}[language=Python]
+class CarRecord:
+    def __init__(self):
+        self.year_made = 0
+        self.car_vin = ""
+
+    def __str__(self):
+        return f"Year: {self.year_made}, VIN: {self.car_vin}"
+
+my_car = CarRecord()
+my_car.year_made = 2009
+my_car.car_vin = "ABC321"
+print(my_car)
+\end{lstlisting}
+
+\noindent Output:
+\begin{verbatim}
+Year: 2009, VIN: ABC321
+\end{verbatim}
+
+\subsection*{Reflection}
+
+\begin{itemize}
+\item How does \_\_str\_\_ help make debugging easier?
+\item Why might you overload comparison operators for a custom class?
+\item What risks exist when customizing too many class behaviors?
+\end{itemize}
+
+\noindent\textbf{Summary:}
+\begin{itemize}
+\item Class customization uses special method names (e.g., \_\_str\_\_, \_\_lt\_\_, \_\_eq\_\_).
+\item Enables clean printing, sorting, and comparison of class instances.
+\item Encourages readable, intuitive code design.
+\end{itemize}
+

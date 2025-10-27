@@ -1,0 +1,146 @@
+\chapter{12.7 Comma-Separated Values (CSV) Files}
+
+\section*{Overview}
+CSV (Comma-Separated Values) files are one of the most common ways to store and exchange data between programs.  
+They’re simple text files where each line represents a row of data, and each value is separated by a comma.  
+Think of them as a poor man’s spreadsheet — small, scrappy, and easy to work with!
+
+\begin{quote}
+\textbf{Learning goals:}
+\begin{itemize}
+  \item Understand how data is structured inside a CSV file.
+  \item Learn to read and process CSV data using Python’s built-in \texttt{csv} module.
+  \item Practice writing data back into CSV format.
+  \item Perform calculations on tabular data read from files.
+\end{itemize}
+\end{quote}
+
+---
+
+\section{A Typical CSV File}
+
+\begin{lstlisting}[language=Python, caption={Sample contents of a CSV file.}]
+name,hw1,hw2,midterm,final
+Petr Little,9,8,85,78
+Sam Tarley,10,10,99,100
+Jeff King,4,2,55,61
+\end{lstlisting}
+
+Each line represents a student record. Each comma separates a value (called a \textbf{field}).  
+Python can read and process these values efficiently using the \texttt{csv} module.
+
+---
+
+\section{Reading Rows from a CSV File}
+
+\begin{lstlisting}[language=Python, caption={Reading each row in a CSV file.}]
+import csv
+
+with open("grades.csv", "r", encoding="utf-8") as csvfile:
+    grades_reader = csv.reader(csvfile, delimiter=",")
+    row_num = 1
+    for row in grades_reader:
+        print(f"Row #{row_num}: {row}")
+        row_num += 1
+\end{lstlisting}
+
+\textbf{Explanation:}
+\begin{itemize}
+  \item \texttt{csv.reader()} returns an iterator — one list of fields per line.
+  \item The optional \texttt{delimiter} argument can change how fields are split (e.g., use \texttt{;} or \texttt{|}).
+  \item Each row is a list of strings. You can convert them to numbers later.
+\end{itemize}
+
+---
+
+\section{Calculating with CSV Data}
+
+\begin{lstlisting}[language=Python, caption={Using CSV data to compute averages.}]
+import csv
+
+grades = {}
+
+with open("grades.csv", "r", encoding="utf-8") as csvfile:
+    reader = csv.reader(csvfile)
+    header = next(reader)  # Skip the first row
+    for row in reader:
+        name = row[0]
+        scores = [float(x) for x in row[1:]]
+        hw1, hw2, midterm, final = scores
+        final_score = (hw1/10 * 0.05 + hw2/10 * 0.05 +
+                       midterm/100 * 0.40 + final/100 * 0.50) * 100
+        grades[name] = final_score
+
+for name, score in grades.items():
+    print(f"{name} earned {score:.1f}%")
+\end{lstlisting}
+
+\textbf{Output Example:}
+\begin{verbatim}
+Petr Little earned 81.5%
+Sam Tarley earned 99.6%
+Jeff King earned 55.5%
+\end{verbatim}
+
+---
+
+\section{Writing to a CSV File}
+
+\begin{lstlisting}[language=Python, caption={Writing lists of data to a CSV file.}]
+import csv
+
+row1 = ["100", "50", "29"]
+row2 = ["76", "32", "330"]
+
+with open("grades_output.csv", "w", newline="", encoding="utf-8") as csvfile:
+    writer = csv.writer(csvfile)
+    writer.writerow(row1)
+    writer.writerow(row2)
+
+print("Data successfully written to grades_output.csv")
+\end{lstlisting}
+
+\textbf{Notes:}
+\begin{itemize}
+  \item Always include \texttt{newline=""} when writing CSV files on Windows to prevent blank lines.
+  \item \texttt{writerow()} writes one list at a time.
+  \item \texttt{writerows()} writes multiple rows from a list of lists.
+\end{itemize}
+
+---
+
+\section{Mini Challenge}
+
+Create a script called \texttt{combine\_grades.py} that reads two CSV files:  
+\texttt{midterm.csv} and \texttt{final.csv}, merges the data by student name,  
+and writes a combined report to \texttt{summary.csv}.
+
+\begin{lstlisting}[language=Python, caption={Combining two CSV files.}]
+import csv
+
+with open("midterm.csv", "r") as mid, open("final.csv", "r") as fin, open("summary.csv", "w", newline="") as out:
+    mid_reader = csv.reader(mid)
+    fin_reader = csv.reader(fin)
+    writer = csv.writer(out)
+
+    next(mid_reader), next(fin_reader)  # skip headers
+    writer.writerow(["Name", "Midterm", "Final", "Average"])
+
+    for mid_row, fin_row in zip(mid_reader, fin_reader):
+        name = mid_row[0]
+        mid_score = float(mid_row[1])
+        fin_score = float(fin_row[1])
+        avg = (mid_score + fin_score) / 2
+        writer.writerow([name, mid_score, fin_score, f"{avg:.1f}"])
+\end{lstlisting}
+
+---
+
+\section*{Summary}
+\begin{itemize}
+  \item CSV files store tabular data using commas as separators.
+  \item Use the \texttt{csv} module for reading and writing structured data safely.
+  \item Always use \texttt{with open(...)} to handle file I/O automatically.
+  \item Convert strings to \texttt{int} or \texttt{float} before performing calculations.
+  \item Include \texttt{newline=""} when writing CSV files to avoid spacing issues.
+\end{itemize}
