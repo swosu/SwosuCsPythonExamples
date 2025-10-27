@@ -41,9 +41,9 @@ class Mammal(LivingPet):
 # Subclasses of Bugs
 # ------------------------------
 class Spider(LivingPet):
-     def __init__(self, name, age=0, species="Generic Spider"):
+    def __init__(self, name, age=0, species="Generic Spider"):
         super().__init__(name, age)
-         self.species = species
+        self.species = species
 
     def make_sound(self):
         print(f"{self.name} the {self.breed} meows judgmentally. 😾")
