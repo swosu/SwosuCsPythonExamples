@@ -1,24 +1,77 @@
 \documentclass[12pt]{book}
-\usepackage{amsmath, amssymb, amsthm}
-\usepackage{multicol, enumitem, tikz, xcolor, lipsum, graphicx, hyperref}
-\usepackage[margin=1in]{geometry}
-\usepackage{catchfile}
-\usepackage{pgffor}
 
+% === PACKAGES ===
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{multicol, enumitem, xcolor, lipsum, graphicx, hyperref}
+\usepackage[margin=1in]{geometry}
+\usepackage{tikz}
+\usepackage{pgffor}
+\usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{catchfile}
+\usepackage{titlesec}
+
+% === PAGE STYLE ===
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{CS2: Object-Oriented Programming}
+\fancyhead[R]{\leftmark}
+\fancyfoot[C]{\thepage}
+
+% === CODE LISTINGS STYLE ===
+\lstset{
+  basicstyle=\ttfamily\small,
+  backgroundcolor=\color{gray!5},
+  frame=single,
+  rulecolor=\color{gray!40},
+  breaklines=true,
+  postbreak=\mbox{\textcolor{gray}{$\hookrightarrow$}\space},
+  showstringspaces=false,
+  keywordstyle=\color{blue!70!black}\bfseries,
+  commentstyle=\color{gray!60}\itshape,
+  stringstyle=\color{teal!70!black},
+  captionpos=b
+}
+
+% === SECTION FORMATTING ===
+\titleformat{\chapter}[display]
+  {\bfseries\Large}
+  {\filright\Huge\thechapter}
+  {1ex}
+  {\titlerule\vspace{1ex}\filright}
+  [\vspace{1ex}\titlerule]
+
+\titleformat{\section}
+  {\bfseries\large}
+  {\thesection}{1em}{}
+
+% === TITLE INFO ===
 \title{CS2 Workbook: Object-Oriented Programming (Chapter 9)}
 \author{Jeremy Evert \\ Southwestern Oklahoma State University}
 \date{\today}
 
 \begin{document}
 
+% === FRONT MATTER ===
 \maketitle
 \tableofcontents
 \newpage
 
-% === AUTOLOAD CHAPTERS ===
-\foreach \chapterfile in {chapters/ch_09_01_introduction.tex, chapters/ch_09_02_grouping_data.tex, chapters/ch_09_03_instance_methods.tex}{
+% === CHAPTERS ===
+% Add or remove chapters as you develop them.
+\foreach \chapterfile in {
+  chapters/ch_09_01_introduction.tex,
+  chapters/ch_09_02_grouping_data.tex,
+  chapters/ch_09_03_instance_methods.tex,
+  chapters/ch_09_04_class_and_instance_object_types.tex,
+  chapters/ch_09_05_class_example_seat_reservation_system.tex
+  chapters/ch_09_06_class_constructors.tex
+  chapters/ch_09_07_class_interfaces.tex
+}{
   \input{\chapterfile}
+  \clearpage
 }
 
+% === END DOCUMENT ===
 \end{document}
 

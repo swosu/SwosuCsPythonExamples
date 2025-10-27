@@ -1,0 +1,124 @@
+\chapter{Class Interfaces}
+\label{ch:09_07_class_interfaces}
+
+\section*{Overview}
+A \textbf{class interface} defines the set of methods that a programmer uses to interact with an instance of a class.  
+The interface describes \emph{what} operations can be performed on an object, while the \textbf{implementation} describes \emph{how} those operations work internally.
+
+In this section, we will explore:
+\begin{itemize}
+    \item How to design class interfaces for readability and reuse.
+    \item How to separate interface from implementation.
+    \item The use of internal methods to simplify class logic.
+\end{itemize}
+
+\vspace{1em}
+\noindent
+\textbf{Key Idea:} A well-designed class acts like a mini toolbox---you can use its tools (the methods) without worrying about how each tool is built inside.
+
+\section{Example: The RaceTime Class Interface}
+
+Consider the following example that models a simple race timer.  
+The interface includes three methods:
+\begin{itemize}
+    \item \texttt{\_\_init\_\_()} — creates a new RaceTime instance.
+    \item \texttt{print\_time()} — prints the time to complete the race.
+    \item \texttt{print\_pace()} — prints the average pace per mile.
+\end{itemize}
+
+\begin{lstlisting}[language=Python, caption={A class interface consists of methods to interact with an instance.}]
+class RaceTime:
+    def __init__(self, start_time, end_time, distance):
+        self.start_time = start_time
+        self.end_time = end_time
+        self.distance = distance
+
+    def print_time(self):
+        # Implementation details hidden from user
+        ...
+
+    def print_pace(self):
+        # Implementation details hidden from user
+        ...
+\end{lstlisting}
+
+\vspace{1em}
+\noindent
+\textbf{Instructor Note:} Emphasize that users of the class only need to know how to call \texttt{print\_time()} or \texttt{print\_pace()}, not how they compute their results internally.
+
+\begin{center}
+\includegraphics[width=0.8\textwidth]{images/class_interfaces_diagram.png}
+\captionof{figure}{Visual overview of a class interface and its hidden implementation.}
+\end{center}
+
+\section{Internal (Private) Methods}
+Sometimes, a class includes internal helper methods that are not meant to be accessed directly.  
+By convention, these methods begin with an underscore (\_), signaling to programmers that they are used only inside the class.
+
+\begin{lstlisting}[language=Python, caption={RaceTime class with internal helper method.}]
+class RaceTime:
+    def __init__(self, start_hrs, start_mins, end_hrs, end_mins, dist):
+        self.start_hrs = start_hrs
+        self.start_mins = start_mins
+        self.end_hrs = end_hrs
+        self.end_mins = end_mins
+        self.dist = dist
+
+    def print_time(self):
+        total_time = self._diff_time()
+        print(f"Time to complete race: {total_time[0]}:{total_time[1]:02}")
+
+    def print_pace(self):
+        total_time = self._diff_time()
+        total_minutes = total_time[0]*60 + total_time[1]
+        print(f"Avg pace (mins/mile): {total_minutes / self.dist:.2f}")
+
+    def _diff_time(self):
+        """Internal helper method"""
+        if self.end_mins >= self.start_mins:
+            minutes = self.end_mins - self.start_mins
+            hours = self.end_hrs - self.start_hrs
+        else:
+            minutes = 60 - self.start_mins + self.end_mins
+            hours = self.end_hrs - self.start_hrs - 1
+        return (hours, minutes)
+\end{lstlisting}
+
+\section{Abstract Data Types (ADTs) and Information Hiding}
+A class can also represent an \textbf{Abstract Data Type (ADT)}, which hides the details of how data is stored or manipulated internally.  
+The ADT provides a public interface for the user while keeping private methods and variables hidden.
+
+\begin{itemize}
+    \item The user sees the interface (the public methods).
+    \item The developer maintains control of the internal logic.
+    \item This separation prevents accidental misuse and simplifies debugging.
+\end{itemize}
+
+\vspace{1em}
+\noindent
+In Python, private members are not enforced, but the underscore convention signals to other programmers that a method is intended for internal use only.
+
+\begin{quote}
+\textit{“An ADT is like a vending machine—you press a button, and magic happens inside.”}
+\end{quote}
+
+\section{Quick Review}
+\begin{enumerate}
+    \item The \textbf{interface} of a class defines what users can do with it.
+    \item The \textbf{implementation} defines how it does those things.
+    \item Internal methods usually begin with an underscore (\_).
+    \item A well-designed class separates its interface from its implementation.
+\end{enumerate}
+
+\section*{Participation Check}
+\begin{itemize}
+    \item True or False: A class interface consists of methods that a programmer should use to modify or access the class.
+    \item True or False: Internal methods should begin with an underscore in their name.
+    \item True or False: Internal methods cannot be called outside the class.
+    \item True or False: A well-designed class separates its interface from its implementation.
+\end{itemize}
+
+\vspace{2em}
+\noindent
+\textbf{Next Up:} In Section 9.8, we’ll learn about \textit{class customization}—defining how objects behave with built-in operators like \texttt{==}, \texttt{<}, or \texttt{+}.
+
