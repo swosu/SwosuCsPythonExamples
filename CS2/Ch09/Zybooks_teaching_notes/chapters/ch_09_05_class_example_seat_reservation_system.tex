@@ -1,0 +1,81 @@
+\chapter{Class Example: Seat Reservation System}
+
+\section*{9.5 Class Example – Airline Seat Reservation System}
+
+A \textbf{class} can represent a real-world entity that manages its own data and actions.  
+The example below models a simple airline seat reservation system. Each \texttt{Seat} object stores a passenger’s name and the amount paid.
+
+\begin{verbatim}
+class Seat:
+    def __init__(self):
+        self.first_name = ""
+        self.last_name = ""
+        self.paid = 0.0
+
+    def reserve(self, f_name, l_name, amt_paid):
+        self.first_name = f_name
+        self.last_name = l_name
+        self.paid = amt_paid
+
+    def make_empty(self):
+        self.first_name = ""
+        self.last_name = ""
+        self.paid = 0.0
+
+    def is_empty(self):
+        return self.first_name == ""
+
+    def print_seat(self):
+        print(f"{self.first_name} {self.last_name}, Paid: {self.paid:.2f}")
+
+
+def make_seats_empty(seats):
+    for s in seats:
+        s.make_empty()
+
+
+def print_seats(seats):
+    for i in range(len(seats)):
+        print(f"{i}:", end=" ")
+        seats[i].print_seat()
+
+
+num_seats = 5
+available_seats = []
+
+for i in range(num_seats):
+    available_seats.append(Seat())
+
+command = input("Enter command (p/r/q):\n")
+
+while command != "q":
+    if command == "p":  # Print seats
+        print_seats(available_seats)
+    elif command == "r":  # Reserve a seat
+        seat_num = int(input("Enter seat num:\n"))
+        if not available_seats[seat_num].is_empty():
+            print("Seat not empty")
+        else:
+            fname = input("Enter first name:\n")
+            lname = input("Enter last name:\n")
+            paid = float(input("Enter amount paid:\n"))
+            available_seats[seat_num].reserve(fname, lname, paid)
+    else:
+        print("Invalid command.")
+
+    command = input("Enter command (p/r/q):\n")
+\end{verbatim}
+
+\subsection*{Discussion}
+This example demonstrates:
+\begin{itemize}
+    \item Encapsulation of related data and behaviors within a class.
+    \item The use of methods to modify and access object state.
+    \item A program structure that makes expansion (like saving or loading seats) simple.
+\end{itemize}
+
+\subsection*{Visual Summary}
+\begin{center}
+    \includegraphics[width=0.8\textwidth]{../images/seat_reservation_diagram.png}
+\end{center}
+
