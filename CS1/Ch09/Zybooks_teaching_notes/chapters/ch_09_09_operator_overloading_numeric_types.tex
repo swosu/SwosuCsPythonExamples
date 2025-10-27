@@ -1,0 +1,165 @@
+\chapter{More Operator Overloading: Classes as Numeric Types}
+
+\section*{9.9 Classes as Numeric Types}
+
+Numeric operators such as \texttt{+}, \texttt{-}, \texttt{*}, and \texttt{/} can be overloaded using class customization techniques.  
+A user-defined class can thus be treated as a numeric object in which instances of that class can be added, subtracted, or otherwise combined.  
+
+Consider the example below, which represents a 24-hour clock.  
+The algorithm determines the absolute shortest distance between two given times.  
+For instance, the time between 5:00 and 3:30 (same day) is shorter than between 22:30 and 2:40 (across midnight).
+
+\begin{lstlisting}[language=Python, caption={Extending the Time class with an overloaded subtraction operator}]
+class Time24:
+    def __init__(self, hours, minutes):
+        self.hours = hours
+        self.minutes = minutes
+
+    def __str__(self):
+        return f"{self.hours:02d}:{self.minutes:02d}"
+
+    def __gt__(self, other):
+        if self.hours > other.hours:
+            return True
+        elif self.hours == other.hours and self.minutes > other.minutes:
+            return True
+        return False
+
+    def __sub__(self, other):
+        """Calculate absolute distance between two times."""
+        if self > other:
+            larger, smaller = self, other
+        else:
+            larger, smaller = other, self
+
+        hrs = larger.hours - smaller.hours
+        mins = larger.minutes - smaller.minutes
+        if mins < 0:
+            mins += 60
+            hrs -= 1
+        if hrs > 12:
+            hrs = 24 - hrs
+        return Time24(hrs, mins)
+
+t1 = Time24(5, 0)
+t2 = Time24(3, 30)
+print(f"Time difference: {t1 - t2}")   # Time difference: 01:30
+\end{lstlisting}
+
+\noindent
+The \texttt{\_\_sub\_\_()} method defines how subtraction behaves for two \texttt{Time24} instances.  
+If \texttt{t1} and \texttt{t2} are both \texttt{Time24} objects, then the expression \texttt{t1 - t2}  
+calls \texttt{t1.\_\_sub\_\_(t2)} and returns another \texttt{Time24} instance.
+
+\subsection*{Using \texttt{isinstance()} for Safer Subtraction}
+
+To handle subtraction of arbitrary types, we can use the built-in \texttt{isinstance()} function.  
+This ensures that our class behaves predictably even when mixed with other types.
+
+\begin{lstlisting}[language=Python, caption={The isinstance() check in operator overloading}]
+class Time24:
+    def __init__(self, hours, minutes):
+        self.hours = hours
+        self.minutes = minutes
+
+    def __str__(self):
+        return f"{self.hours:02d}:{self.minutes:02d}"
+
+    def __sub__(self, other):
+        # Handle subtraction by integer minutes
+        if isinstance(other, int):
+            return Time24(self.hours, self.minutes - other)
+        elif isinstance(other, Time24):
+            hrs = self.hours - other.hours
+            mins = self.minutes - other.minutes
+            if mins < 0:
+                mins += 60
+                hrs -= 1
+            if hrs < 0:
+                hrs += 24
+            return Time24(hrs, mins)
+        else:
+            raise NotImplementedError(f"Unsupported operand type: {type(other)}")
+
+t1 = Time24(10, 15)
+print(t1 - 45)              # Subtract 45 minutes
+print(t1 - Time24(8, 30))   # Time difference
+\end{lstlisting}
+
+\subsection*{Common Operator Methods}
+
+Python allows overloading of almost every arithmetic operator using special methods:
+
+\begin{center}
+\begin{tabular}{ll}
+\textbf{Method} & \textbf{Description} \\
+\hline
+\_\_add\_\_(self, other) & Addition (+) \\
+\_\_sub\_\_(self, other) & Subtraction (-) \\
+\_\_mul\_\_(self, other) & Multiplication (*) \\
+\_\_truediv\_\_(self, other) & Division (/) \\
+\_\_floordiv\_\_(self, other) & Floor Division (//) \\
+\_\_mod\_\_(self, other) & Modulus (\%) \\
+\_\_pow\_\_(self, other) & Exponentiation (**) \\
+\_\_abs\_\_(self) & Absolute Value (abs()) \\
+\_\_int\_\_(self) & Convert to integer (int()) \\
+\_\_float\_\_(self) & Convert to float (float()) \\
+\end{tabular}
+\end{center}
+
+\subsection*{Participation Example: LooseChange Class}
+
+\begin{lstlisting}[language=Python, caption={A simple numeric class using operator overloading}]
+class LooseChange:
+    def __init__(self, value):
+        self.value = value   # total cents
+
+    def __add__(self, other):
+        new_value = self.value + other.value
+        return LooseChange(new_value)
+
+    def __float__(self):
+        return self.value / 100.0
+
+lc1 = LooseChange(135)
+lc2 = LooseChange(115)
+print(float(lc1 + lc2))   # 2.50
+\end{lstlisting}
+
+\subsection*{Challenge Example: Duration Addition}
+
+\begin{lstlisting}[language=Python, caption={Operator overloading for adding durations}]
+class Duration:
+    def __init__(self, hours, minutes):
+        self.hours = hours
+        self.minutes = minutes
+
+    def __add__(self, other):
+        total_hours = self.hours + other.hours
+        total_minutes = self.minutes + other.minutes
+        if total_minutes >= 60:
+            total_hours += 1
+            total_minutes -= 60
+        return Duration(total_hours, total_minutes)
+
+first_trip = Duration(1, 35)
+second_trip = Duration(0, 43)
+total_trip = first_trip + second_trip
+print(total_trip.hours, total_trip.minutes)  # Output: 2 18
+\end{lstlisting}
+
+\section*{Instructor Notes}
+
+\begin{itemize}
+  \item Emphasize how operator overloading enhances readability and reuse.
+  \item Students often forget to return a new instance instead of a raw value.
+  \item Discuss when operator overloading improves clarity versus when it hides complexity.
+\end{itemize}
+
+\bigskip
+\noindent
+\textbf{Reflection:}  
+Encourage students to design a class (e.g., \texttt{BankAccount}, \texttt{Vector2D}, or \texttt{Temperature})  
+that uses at least two overloaded operators and one type conversion (\texttt{\_\_float\_\_} or \texttt{\_\_int\_\_}).
+
+

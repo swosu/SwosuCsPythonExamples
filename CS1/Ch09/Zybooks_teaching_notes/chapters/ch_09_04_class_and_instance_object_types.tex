@@ -1,0 +1,72 @@
+\chapter{Class and Instance Object Types}
+
+\section*{9.4.1 Understanding Class vs. Instance Objects}
+
+A class in Python acts as a \textbf{factory} that creates \textbf{instance objects}. 
+Each instance has its own data (attributes), but shares the same methods defined in the class.
+
+\begin{verbatim}
+class Time:
+    def __init__(self):
+        self.hours = 0
+        self.minutes = 0
+
+time1 = Time()
+time2 = Time()
+time1.hours = 5
+time2.hours = 7
+\end{verbatim}
+
+---
+
+\section*{9.4.2 Class Attributes vs. Instance Attributes}
+
+A \textbf{class attribute} is shared by all instances, while an \textbf{instance attribute} is unique to each object.
+
+\begin{verbatim}
+class MarathonRunner:
+    race_distance = 42.195  # Class attribute
+
+    def __init__(self):
+        self.speed = 0      # Instance attribute
+
+runner1 = MarathonRunner()
+runner2 = MarathonRunner()
+runner1.speed = 7.5
+runner2.speed = 3.0
+print(f"Runner1: {runner1.speed}, Runner2: {runner2.speed}")
+\end{verbatim}
+
+
+---
+
+\section*{9.4.3 Key Concept Summary}
+
+\begin{itemize}
+    \item \textbf{Class Object:} A template that defines data and behavior.
+    \item \textbf{Instance Object:} A unique copy created from the class.
+    \item \textbf{Class Attribute:} Shared by all instances.
+    \item \textbf{Instance Attribute:} Belongs only to one instance.
+\end{itemize}
+
+---
+
+\section*{9.4.4 Practice Activity}
+
+Modify the code below to add a method \texttt{print\_attributes()} 
+that prints both the class attribute and the instance attribute values.
+
+\begin{verbatim}
+class PhoneNumber:
+    area_code = "405"
+
+    def __init__(self):
+        self.number = "555-1234"
+
+# TODO: Add print_attributes method
+\end{verbatim}
+
+\begin{center}
+\textit{What happens if you change the class attribute after creating multiple instances?}
+\end{center}
+

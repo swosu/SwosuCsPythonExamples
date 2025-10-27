@@ -1,0 +1,122 @@
+\chapter{Class Constructors}
+\label{ch:class_constructors}
+
+\section*{9.6 Overview}
+A class constructor is a special method that defines how new objects are created and initialized.
+In Python, the constructor method is named \texttt{\_\_init\_\_()}.
+Constructors are used to set up instance attributes and can accept parameters to configure each new object.
+
+---
+
+\section*{Adding Parameters to a Constructor}
+
+\begin{lstlisting}[language=Python, caption={A simple constructor with parameters.}]
+class RaceTime:
+    def __init__(self, start_time, end_time, distance):
+        """Initialize race data."""
+        self.start_time = start_time    # Format: "H:MM"
+        self.end_time = end_time
+        self.distance = distance        # In miles
+
+# Create RaceTime objects
+time_jason = RaceTime("3:15", "7:45", 26.21875)
+time_bobby = RaceTime("3:15", "6:30", 26.21875)
+\end{lstlisting}
+
+Here, each new object receives its starting time, ending time, and race distance.
+This is more powerful than setting everything to zero — each instance can have its own data immediately upon creation.
+
+---
+
+\section*{Complete RaceTime Example}
+
+\begin{lstlisting}[language=Python, caption={RaceTime class with methods.}]
+class RaceTime:
+    def __init__(self, start_hrs, start_mins, end_hrs, end_mins, dist):
+        self.start_hrs = start_hrs
+        self.start_mins = start_mins
+        self.end_hrs = end_hrs
+        self.end_mins = end_mins
+        self.distance = dist
+
+    def print_time(self):
+        if self.end_mins >= self.start_mins:
+            minutes = self.end_mins - self.start_mins
+            hours = self.end_hrs - self.start_hrs
+        else:
+            minutes = 60 - self.start_mins + self.end_mins
+            hours = self.end_hrs - self.start_hrs - 1
+        print(f"Time to complete race: {hours}:{minutes:02d}")
+
+    def print_pace(self):
+        total_minutes = (self.end_hrs * 60 + self.end_mins) - \
+                        (self.start_hrs * 60 + self.start_mins)
+        pace = total_minutes / self.distance
+        print(f"Average pace: {pace:.2f} mins/mile")
+
+# Example interaction
+distance = 5.0
+start_hrs = int(input("Enter starting time hours: "))
+start_mins = int(input("Enter starting time minutes: "))
+end_hrs = int(input("Enter ending time hours: "))
+end_mins = int(input("Enter ending time minutes: "))
+
+race_time = RaceTime(start_hrs, start_mins, end_hrs, end_mins, distance)
+race_time.print_time()
+race_time.print_pace()
+\end{lstlisting}
+
+---
+
+\section*{Default Constructor Parameters}
+
+Constructors can also include default values for convenience.  
+This reduces repetition and helps when typical defaults are common.
+
+\begin{lstlisting}[language=Python, caption={Employee class with default parameters.}]
+class Employee:
+    def __init__(self, name, wage=8.25, hours=20):
+        """Default employee works part-time and earns minimum wage."""
+        self.name = name
+        self.wage = wage
+        self.hours = hours
+
+employees = [
+    Employee("Todd"),                   # uses defaults
+    Employee("Jason"),                  # uses defaults
+    Employee("Tricia", 12.50, 40)       # manager: custom values
+]
+
+for e in employees:
+    print(f"{e.name} earns ${e.wage * e.hours:.2f} per week")
+\end{lstlisting}
+
+---
+
+\section*{Constructors in Practice: Student Example}
+
+\begin{lstlisting}[language=Python, caption={Constructor with several defaults.}]
+class Student:
+    def __init__(self, name, grade=9, honors=False, athletics=False):
+        self.name = name
+        self.grade = grade
+        self.honors = honors
+        self.athletics = athletics
+
+johnny = Student("Johnny", grade=11, honors=True)
+tommy = Student("Tommy")
+
+print(f"{johnny.name}: grade {johnny.grade}, honors={johnny.honors}")
+print(f"{tommy.name}: grade {tommy.grade}, athletics={tommy.athletics}")
+\end{lstlisting}
+
+---
+
+\section*{Constructor Exercises}
+
+\begin{enumerate}
+    \item Modify \texttt{Employee} so that it tracks yearly pay in addition to hourly.
+    \item Add a method \texttt{is\_manager()} that returns \texttt{True} if wage > 12.
+    \item Rewrite \texttt{RaceTime} so that it accepts total minutes instead of hours and minutes separately.
+\end{enumerate}
+
