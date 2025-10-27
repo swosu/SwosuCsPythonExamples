@@ -1,0 +1,149 @@
+\chapter{Classes: Grouping Data}
+
+\section{Why Group Data into Classes?}
+
+Many variables in a program are closely related and should be bundled together.
+For instance, a time value consists of hours and minutes.
+Instead of managing two separate variables, we can define a \textbf{class} that groups them into one logical unit.
+
+\begin{quote}
+A \textbf{class} defines a new data type that groups related data (called \emph{attributes}) and the operations that act on them (called \emph{methods}).
+\end{quote}
+
+\section{Constructing a Simple Class}
+
+\subsection*{The \texttt{class} Keyword}
+
+\begin{verbatim}
+class ClassName:
+    # Statement-1
+    # Statement-2
+    # ...
+    # Statement-N
+\end{verbatim}
+
+A class defines both the data and the behaviors of an object.
+The example below defines a class named \texttt{Time} with two attributes.
+
+\subsection*{Example: Defining a Class with Two Data Attributes}
+
+\begin{verbatim}
+class Time:
+    """A class that represents a time of day."""
+    def __init__(self):
+        self.hours = 0
+        self.minutes = 0
+\end{verbatim}
+
+Here, the \texttt{\_\_init\_\_()} function is a special method called a \textbf{constructor}.
+It runs automatically when a new object (or instance) of \texttt{Time} is created.
+
+\section{Creating and Using an Object}
+
+\begin{verbatim}
+my_time = Time()
+my_time.hours = 7
+my_time.minutes = 15
+
+print(f"{my_time.hours} hours and {my_time.minutes} minutes")
+\end{verbatim}
+
+\textbf{Output:}
+\begin{verbatim}
+7 hours and 15 minutes
+\end{verbatim}
+
+Each variable created from the class (\texttt{my\_time}) is called an \textbf{instance}.
+The attributes of that instance are accessed using the \textbf{dot operator} (\texttt{.}).
+
+\section{Multiple Instances of a Class}
+
+You can create multiple independent instances, each maintaining its own data.
+
+\begin{verbatim}
+time1 = Time()
+time1.hours = 7
+time1.minutes = 30
+
+time2 = Time()
+time2.hours = 12
+time2.minutes = 45
+
+print(f"{time1.hours} hours and {time1.minutes} minutes")
+print(f"{time2.hours} hours and {time2.minutes} minutes")
+\end{verbatim}
+
+\textbf{Output:}
+\begin{verbatim}
+7 hours and 30 minutes
+12 hours and 45 minutes
+\end{verbatim}
+
+\section{Key Terms}
+
+\begin{description}
+    \item[class] A grouping of related data and behaviors.
+    \item[attribute] A variable stored within a class or instance.
+    \item[method] A function that belongs to a class.
+    \item[\_\_init\_\_] The constructor method called automatically when creating a new object.
+    \item[self] Refers to the instance itself within class methods.
+    \item[instance] An individual object created from a class.
+\end{description}
+
+\section{Practice Activity}
+
+\subsection*{Activity 9.2.1 – Define and Instantiate a Class}
+
+\begin{verbatim}
+class Person:
+    def __init__(self):
+        self.name = ""
+
+person1 = Person()
+person1.name = "Van"
+print(f"This is {person1.name}")
+\end{verbatim}
+
+\textbf{Output:}
+\begin{verbatim}
+This is Van
+\end{verbatim}
+
+\subsection*{Activity 9.2.2 – Create Your Own Class}
+
+Define a class called \texttt{BookData} with three attributes:
+\texttt{year\_published}, \texttt{title}, and \texttt{num\_chapters}.
+Create an instance of the class and assign values to its attributes.
+
+\begin{verbatim}
+class BookData:
+    def __init__(self):
+        self.year_published = 0
+        self.title = "Unknown"
+        self.num_chapters = 0
+
+my_book = BookData()
+my_book.year_published = 2001
+my_book.title = "A Tale of Two Cities"
+my_book.num_chapters = 45
+
+print(f"{my_book.title} ({my_book.year_published}) has {my_book.num_chapters} chapters.")
+\end{verbatim}
+
+\textbf{Output:}
+\begin{verbatim}
+A Tale of Two Cities (2001) has 45 chapters.
+\end{verbatim}
+
+\section*{Reflection Questions}
+\begin{enumerate}
+    \item What is the difference between a class and an instance?
+    \item Why is the \texttt{self} keyword required in class definitions?
+    \item How does \texttt{\_\_init\_\_()} help organize data?
+\end{enumerate}
+
+\section*{Visual Summary}
+\begin{center}
+\includegraphics[width=0.8\textwidth]{../images/grouping_data_into_classes.png}
+\end{center}
+

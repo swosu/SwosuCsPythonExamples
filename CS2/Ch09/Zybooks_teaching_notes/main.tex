@@ -1,0 +1,24 @@
+\documentclass[12pt]{book}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{multicol, enumitem, tikz, xcolor, lipsum, graphicx, hyperref}
+\usepackage[margin=1in]{geometry}
+\usepackage{catchfile}
+\usepackage{pgffor}
+
+\title{CS2 Workbook: Object-Oriented Programming (Chapter 9)}
+\author{Jeremy Evert \\ Southwestern Oklahoma State University}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\newpage
+
+% === AUTOLOAD CHAPTERS ===
+\foreach \chapterfile in {chapters/ch_09_01_introduction.tex, chapters/ch_09_02_grouping_data.tex, chapters/ch_09_03_instance_methods.tex}{
+  \input{\chapterfile}
+}
+
+\end{document}
+
