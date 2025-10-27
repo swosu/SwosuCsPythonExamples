@@ -59,15 +59,19 @@
 
 % === CHAPTERS ===
 % Add or remove chapters as you develop them.
-\foreach \chapterfile in {
-  chapters/ch_09_01_introduction.tex,
-  chapters/ch_09_02_grouping_data.tex,
-  chapters/ch_09_03_instance_methods.tex,
-  chapters/ch_09_04_class_and_instance_object_types.tex,
-  chapters/ch_09_05_class_example_seat_reservation_system.tex
-  chapters/ch_09_06_class_constructors.tex
-  chapters/ch_09_07_class_interfaces.tex
-}{
+
+% === AUTOLOAD CHAPTERS ===
+\input{chapters/ch_09_01_introduction.tex}
+\input{chapters/ch_09_02_grouping_data.tex}
+\input{chapters/ch_09_03_instance_methods.tex}
+\input{chapters/ch_09_04_class_and_instance_object_types.tex}
+\input{chapters/ch_09_05_class_example_seat_reservation_system.tex}
+\input{chapters/ch_09_06_class_constructors.tex}
+\input{chapters/ch_09_07_class_interfaces.tex}
+\input{chapters/ch_09_08_class_customization.tex}
+
+
+{
   \input{\chapterfile}
   \clearpage
 }
