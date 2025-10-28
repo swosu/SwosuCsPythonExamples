@@ -1,0 +1,153 @@
+\chapter{Inheritance and Class Hierarchies}
+
+\section*{9.11 Inheritance and Reuse in Object-Oriented Programming}
+
+Inheritance allows one class (the \textbf{child} or \textbf{subclass}) to reuse and extend the
+behavior of another class (the \textbf{parent} or \textbf{base class}). This reduces
+duplication and encourages code reuse—similar to how every car model inherits features
+like wheels, engines, and doors from the general concept of a vehicle.
+
+\subsection*{Example: A Vehicle Family Tree}
+
+Imagine a \texttt{Vehicle} class that defines attributes and methods shared by all vehicles.
+Specific types of vehicles—such as \texttt{Car}, \texttt{Truck}, and \texttt{Motorcycle}—
+can inherit from it and add their own unique traits.
+
+\begin{verbatim}
+class Vehicle:
+    def __init__(self, make, model):
+        self.make = make
+        self.model = model
+    
+    def start(self):
+        print(f"{self.make} {self.model} engine started.")
+    
+    def stop(self):
+        print(f"{self.make} {self.model} engine stopped.")
+
+class Car(Vehicle):
+    def __init__(self, make, model, doors):
+        super().__init__(make, model)
+        self.doors = doors
+    
+    def open_trunk(self):
+        print(f"{self.make} {self.model}'s trunk is now open.")
+
+class Truck(Vehicle):
+    def __init__(self, make, model, towing_capacity):
+        super().__init__(make, model)
+        self.towing_capacity = towing_capacity
+    
+    def tow(self, weight):
+        print(f"Towing {weight} lbs out of {self.towing_capacity} lbs capacity.")
+\end{verbatim}
+
+\subsection*{Discussion}
+
+Each subclass inherits the \texttt{start()} and \texttt{stop()} methods from
+\texttt{Vehicle}. They don’t need to be rewritten unless behavior must change.
+
+\begin{verbatim}
+my_car = Car("Ford", "Focus", 4)
+my_truck = Truck("Nissan", "Titan", 9000)
+
+my_car.start()
+my_car.open_trunk()
+my_truck.start()
+my_truck.tow(6000)
+\end{verbatim}
+
+Output:
+\begin{verbatim}
+Ford Focus engine started.
+Ford Focus's trunk is now open.
+Nissan Titan engine started.
+Towing 6000 lbs out of 9000 lbs capacity.
+\end{verbatim}
+
+\subsection*{Using super()}
+
+The \texttt{super()} function lets the subclass call the constructor (or other methods)
+of its parent. Without it, the base attributes would not be initialized.
+
+\subsection*{Method Overriding}
+
+A subclass can redefine (override) methods from its parent to create specialized behavior.
+
+\begin{verbatim}
+class ElectricCar(Car):
+    def start(self):
+        print(f"{self.make} {self.model} powers on silently. ⚡")
+\end{verbatim}
+
+\begin{verbatim}
+tesla = ElectricCar("Tesla", "Model 3", 4)
+tesla.start()
+\end{verbatim}
+
+Output:
+\begin{verbatim}
+Tesla Model 3 powers on silently. ⚡
+\end{verbatim}
+
+\subsection*{Class Hierarchy Diagram}
+
+\begin{center}
+\begin{tikzpicture}[
+    node distance=2cm,
+    every node/.style={draw, fill=blue!10, rounded corners, minimum width=3cm, align=center}
+]
+\node (vehicle) {Vehicle};
+\node (car) [below left=of vehicle] {Car};
+\node (truck) [below right=of vehicle] {Truck};
+\node (electriccar) [below=of car] {ElectricCar};
+
+\draw[->, thick] (car) -- (vehicle);
+\draw[->, thick] (truck) -- (vehicle);
+\draw[->, thick] (electriccar) -- (car);
+\end{tikzpicture}
+\end{center}
+
+\subsection*{Practice Activity 9.11.1 – Create Your Own Hierarchy}
+
+Create a base class called \texttt{Animal} with attributes \texttt{name} and \texttt{sound}.
+Then create subclasses \texttt{Dog} and \texttt{Cat} that each override a \texttt{make\_sound()}
+method to print their own noises.
+
+\begin{verbatim}
+class Animal:
+    def __init__(self, name):
+        self.name = name
+    def make_sound(self):
+        print("Some generic sound")
+
+class Dog(Animal):
+    def make_sound(self):
+        print(f"{self.name} says Woof!")
+
+class Cat(Animal):
+    def make_sound(self):
+        print(f"{self.name} says Meow!")
+\end{verbatim}
+
+Reflection:
+\begin{itemize}
+    \item What benefits does inheritance provide for large codebases?
+    \item When might it be better to avoid inheritance and use composition instead?
+    \item Can a class inherit from more than one parent in Python?
+\end{itemize}
+
+\subsection*{Summary}
+
+\begin{itemize}
+    \item Inheritance enables code reuse and logical hierarchies.
+    \item \texttt{super()} connects child classes to parent initialization.
+    \item Method overriding allows specialization.
+    \item Real-world analogy: All vehicles share traits (wheels, engines), but each subclass
+    adds its own personality.
+\end{itemize}
+
+\begin{center}
+\textit{“Every subclass stands on the shoulders of its superclass.”}
+\end{center}
+
