@@ -12,6 +12,20 @@
 \newunicodechar{✓}{\checkmark}
 \setlength{\headheight}{15pt} % silences fancyhdr warning
 \usepackage{tikz}
+\usepackage{listings}
+\usepackage{float} % For [H] figures
+
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  breakatwhitespace=true,
+  columns=fullflexible,
+  inputencoding=utf8,
+  extendedchars=true,
+  literate={✓}{{\checkmark}}1 {✅}{{\checkmark}}1
+}
+
 
 \geometry{margin=1in}
 \onehalfspacing

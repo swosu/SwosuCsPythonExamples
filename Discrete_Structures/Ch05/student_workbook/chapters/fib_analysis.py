@@ -95,5 +95,5 @@ def plot_results(csv_file="fib_results.csv"):
 if __name__ == "__main__":
     measure_fibonacci(30)
     plot_results()
-    print("✅ Fibonacci analysis complete. Results saved to fib_results.csv and fib_results_plot.pdf")
+    print("[OK] Fibonacci analysis complete. Results saved to fib_results.csv and fib_results_plot.pdf")
 
