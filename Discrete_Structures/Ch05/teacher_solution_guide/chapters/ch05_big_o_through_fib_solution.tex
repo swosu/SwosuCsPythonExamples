@@ -1,7 +1,103 @@
-\chapter{ch05 big o through fib solution}
+\chapter{Understanding Big-O Through Fibonacci --- Teacher's Commentary}
 \label{ch05_big_o_through_fib_solution}
 
-This is a placeholder for \texttt{ch05_big_o_through_fib_solution.tex}.
+\section{Overview and Teaching Arc}
+This chapter is where students meet efficiency as a *character* in the recursive story.
+They have already seen recursion as poetry and measurement as physics;
+now, they will see \emph{Big-O} as philosophy---a way to describe how beauty
+behaves when stretched toward infinity.
 
-% TODO: Add teacher notes, solutions, and discussion guidance here.
+Your task as instructor: guide them from the emotional hum of Fibonacci’s
+pattern into the cool, analytic light of asymptotic reasoning.
+
+\section{Connecting Concept to Code}
+Students now have empirical data from the Tracker experiment.
+Invite them to revisit their CSV or plotted graphs.
+
+\begin{itemize}
+  \item Ask: ``What shape does recursion’s time take?’’
+  \item Ask: ``When does wonder become waste?’’
+\end{itemize}
+
+Explain that Big-O abstracts the details but keeps the melody.
+Every measurement they made is one note in the infinite symphony of growth rates.
+
+\section{Discussion of Key Results}
+Show the two cost equations on the board:
+
+\[
+T_{\text{naive}}(n) = T(n-1) + T(n-2) + O(1)
+\]
+\[
+T_{\text{memoized}}(n) = T(n-1) + O(1)
+\]
+
+Then draw the moral:
+recursion without memory grows like rumor; recursion with memory grows like wisdom.
+
+Encourage them to sketch the exponential and linear curves on the same axes.
+When $n$ is small, both seem gentle; by $n=30$, the exponential explodes off the chart.
+Let that contrast speak louder than any proof.
+
+\section{Teaching Activities}
+
+\subsection*{Classroom Experiment}
+Run all three implementations side by side: naive, memoized, and iterative.
+Project a live graph if possible.
+
+\begin{enumerate}
+  \item Ask students to predict the runtime for $n=35$.
+  \item Let them \texttt{timeit} the functions.
+  \item Pause for that stunned silence when the recursive one stalls.
+\end{enumerate}
+
+\subsection*{Whiteboard Derivation}
+Derive the recurrence together.
+Each branch in the Fibonacci tree births two more until leaves overrun the forest.
+Then prune with memoization and show how the forest becomes a single vine.
+This visualization ties Big-O directly to recursive structure.
+
+\section{Analogies and Metaphors}
+\begin{quote}
+Big-O is the mathematician’s weather report:
+it doesn’t tell you whether it will rain tomorrow,
+but it tells you how storms grow.
+\end{quote}
+
+Offer students tangible comparisons:
+\begin{itemize}
+  \item $O(n)$ --- a calm climb up a hill.
+  \item $O(n^2)$ --- a staircase that doubles back.
+  \item $O(2^n)$ --- a volcano; breathtaking, but deadly for laptops.
+\end{itemize}
+
+Encourage them to describe algorithmic growth using their own metaphors.
+Let them own the language.
+
+\section{Extension and Reflection}
+Push beyond the graph:
+\begin{itemize}
+  \item What other algorithms behave exponentially?
+  \item Can memoization be seen as evolution—memory as survival strategy?
+  \item How does empirical timing confirm (or challenge) theoretical Big-O?
+\end{itemize}
+
+End with a reflective prompt:
+\begin{quote}
+If recursion is a story that repeats itself,
+Big-O is the measure of how long the story can keep being told.
+\end{quote}
+
+\section{Instructor Notes}
+\begin{itemize}
+  \item Run the full experiment early in class; discuss results mid-lesson.
+  \item Encourage students to annotate their plots with asymptotic labels.
+  \item Reinforce that Big-O compares shapes, not seconds.
+\end{itemize}
+
+\section{Transition to Chapter 6}
+The next chapter turns the analysis inward:
+\emph{Memoization as Memory of the Mind.}
+Students will see that remembering one’s past—both in code and in cognition—
+transforms impossible problems into elegant ones.
 
