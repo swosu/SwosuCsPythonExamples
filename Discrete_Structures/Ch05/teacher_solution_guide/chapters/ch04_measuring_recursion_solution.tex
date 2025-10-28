@@ -1,7 +1,59 @@
-\chapter{ch04 measuring recursion solution}
-\label{ch04_measuring_recursion_solution}
+\chapter{Measuring the Cost of Recursion --- Teacher's Commentary}
 
-This is a placeholder for \texttt{ch04_measuring_recursion_solution.tex}.
+\section{Teaching Overview}
+This chapter moves from wonder to measurement. Students have seen recursion bloom; now they must quantify its cost. As an instructor, your role is to turn curiosity into data.
 
-% TODO: Add teacher notes, solutions, and discussion guidance here.
+Key goal: help students feel the \textit{weight} of recursion. The Tracker class turns invisible stack frames into visible numbers.
+
+\section{Pedagogical Setup}
+Before class:
+\begin{itemize}
+  \item Have students run the code \texttt{measure\_fibonacci()} from Chapter 4 of the student workbook.
+  \item Ask them to predict: which will grow faster, calls or additions? Which chart will be exponential?
+  \item Display the recursive vs. iterative plots side by side.
+\end{itemize}
+
+Teaching tip: Pause at each plot. Ask: \textit{What does the shape tell you? What story does this data whisper?}
+
+\section{Instructor Notes on Code}
+The \texttt{DataTracker} class is not about performance optimization; it’s about cognitive visibility.
+Encourage students to:
+\begin{itemize}
+  \item Trace which lines increment counters.
+  \item Modify it to count multiplications or return depths.
+  \item Compare run-to-run variation.
+\end{itemize}
+
+Then connect the dots to Big-O notation — it’s not abstract now; it’s empirical.
+
+\section{Common Pitfalls}
+\begin{itemize}
+  \item Students forget to reset counters between runs.
+  \item They compare recursive vs iterative without realizing base cases differ.
+  \item They confuse stack growth with data growth — emphasize call count vs. memory use.
+\end{itemize}
+
+\section{Extension Ideas}
+\begin{itemize}
+  \item Challenge them to add memoization and measure again.
+  \item Introduce timing for each $n$ and graph log-scale axes to reveal asymptotic behavior.
+  \item Ask: “How could we verify this with induction?”
+\end{itemize}
+
+\section{Reflection Prompts}
+\begin{quote}
+Recursion is the art of calling yourself until you learn something new each time.
+\end{quote}
+
+\begin{itemize}
+  \item What does the graph of recursion \emph{feel} like?
+  \item When does elegance become inefficiency?
+  \item Can you love a slow algorithm if it teaches you something fast?
+\end{itemize}
+
+\section{Instructor Reflection}
+This chapter transforms recursion from poetry into physics. By measuring time, calls, and assignments, you bridge emotion and evidence.
+
+Encourage students to end the session by answering one final question:
+\textit{If your code were a living thing, what would it remember between calls?}
 
