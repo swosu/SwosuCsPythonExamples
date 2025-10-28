@@ -1,0 +1,65 @@
+\chapter{Foundations of Induction and Recursion}
+
+This chapter introduces the central ideas of \textbf{mathematical induction} and \textbf{recursion} as presented in Chapter 5 of Kenneth Rosen's \emph{Discrete Mathematics and Its Applications}.
+
+\section{The Big Picture}
+
+Mathematical induction and recursion are two sides of the same elegant coin. Induction is how we \emph{prove} things about a process that repeats. Recursion is how we \emph{define} that process.
+
+We use induction to reason that what works for one step will work for the next. We use recursion to build structures or compute results by defining a problem in terms of smaller instances of itself.
+
+\section{Key Ideas from Rosen’s Chapter 5}
+
+\begin{itemize}
+  \item \textbf{Basis Step:} Prove that a statement is true for an initial value (usually $n=0$ or $n=1$).
+  \item \textbf{Inductive Step:} Assume it is true for $n=k$ (the \emph{inductive hypothesis}) and prove it for $n=k+1$.
+  \item \textbf{Strong Induction:} Sometimes we assume it’s true for \emph{all} previous cases up to $k$ to prove it for $k+1$.
+  \item \textbf{Recursive Definitions:} A way to define sets, sequences, or functions in terms of themselves.
+  \item \textbf{Structural Induction:} A generalization used for recursively defined structures like trees or expressions.
+\end{itemize}
+
+\section{Why This Matters}
+
+Induction teaches us to trust the domino effect: if one falls and the rule is consistent, they all fall. Recursion lets us \emph{build the dominoes} themselves.
+
+They are the grammar and logic behind everything from factorial functions to sorting algorithms to proofs of algorithmic correctness.
+
+\section{Example: The Factorial Function}
+
+The factorial of $n$, written $n!$, is defined recursively:
+\[
+  n! = 
+  \begin{cases}
+    1, & n = 0 \\
+    n \cdot (n-1)!, & n > 0
+  \end{cases}
+\]
+
+We can prove by induction that $n! \ge 2^{n-1}$ for all $n \ge 1$.
+
+\textbf{Proof (sketch):}
+\begin{itemize}
+  \item \textbf{Base case:} When $n = 1$, we have $1! = 1 \ge 2^{0} = 1$\,\checkmark
+  \item \textbf{Inductive step:} Assume $k! \ge 2^{k-1}$ for some integer $k \ge 1$. Then
+  \[
+      (k+1)! = (k+1)\,k! \ge (k+1)2^{k-1} \ge 2^{k}.
+  \]
+  Therefore, the inequality holds for $k + 1$, completing the induction.
+\end{itemize}
+
+\section{A Student Challenge}
+
+\begin{quote}
+“Induction is not a leap of faith — it’s a method of climbing an infinite ladder, one rung at a time.”
+\end{quote}
+
+\textbf{Challenge:} Write your own recursive function in Python that computes $n!$, and then write a proof by induction showing why it works for all $n \ge 0$.
+
+\section{Checkpoint Questions}
+\begin{enumerate}
+  \item What are the two main steps of a proof by induction?
+  \item How is recursion related to induction?
+  \item Give a real-world example of a recursive process.
+  \item Can every recursive definition be proven correct using induction?
+\end{enumerate}
+

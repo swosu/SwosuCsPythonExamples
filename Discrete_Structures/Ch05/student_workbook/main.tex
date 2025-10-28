@@ -1,0 +1,56 @@
+\documentclass[12pt]{book}
+
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{xcolor}
+\usepackage{newunicodechar}
+\newunicodechar{✓}{\checkmark}
+\setlength{\headheight}{15pt} % silences fancyhdr warning
+\usepackage{tikz}
+
+\geometry{margin=1in}
+\onehalfspacing
+
+% Fancy headers
+\pagestyle{fancy}
+\setlength{\headheight}{15pt}
+\addtolength{\topmargin}{-2pt}
+\fancyhf{}
+\fancyhead[L]{COMSC 2043: Induction and Recursion}
+\fancyhead[R]{\thepage}
+
+% Chapter style
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries\Huge\color{blue!60!black}}
+  {\chaptername\ \thechapter}{20pt}{\Huge}
+
+\title{
+  \vspace{2cm}
+  \textbf{COMSC 2043}\\
+  \textbf{Induction and Recursion}\\[1em]
+  \Large Student Workbook
+  \vspace{1cm}
+}
+
+\author{Jeremy Evert \\ Southwestern Oklahoma State University}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+\clearpage
+
+\input{chapters/ch01_overview.tex}
+% Later:
+\input{chapters/ch02_recursive_algorithms.tex}
+% \input{chapters/ch03_fibonacci.tex}
+% \input{chapters/ch04_examples.tex}
+% \input{chapters/ch05_merge_sort.tex}
+
+\end{document}
+

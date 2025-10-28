@@ -1,0 +1,135 @@
+\chapter{Recursive Algorithms}
+
+Recursion is the heartbeat of algorithmic thinking.  
+It allows us to describe a complex process in terms of smaller, self-similar pieces.  
+In this chapter, we’ll explore how to turn recursive definitions into recursive algorithms.
+
+\section{From Definition to Algorithm}
+
+A recursive algorithm solves a problem by reducing it to smaller instances of the same problem.
+Every recursive algorithm must include:
+
+\begin{enumerate}
+  \item \textbf{Base Case:} a simple situation that can be solved directly.
+  \item \textbf{Recursive Case:} a rule for breaking the problem into smaller subproblems.
+  \item \textbf{Convergence:} assurance that each recursive call moves toward the base case.
+\end{enumerate}
+
+\section{Example: Summation}
+
+Let us define a function that computes the sum of the first $n$ natural numbers:
+
+\[
+S(n) =
+\begin{cases}
+0, & n = 0 \\
+n + S(n-1), & n > 0
+\end{cases}
+\]
+
+\noindent
+\textbf{Recursive Algorithm (Python style):}
+
+\begin{verbatim}
+def sum_to_n(n):
+    if n == 0:
+        return 0
+    else:
+        return n + sum_to_n(n - 1)
+\end{verbatim}
+
+Each recursive call reduces $n$ by one until it reaches the base case $n = 0$.
+This process mirrors the inductive definition of summation.
+
+\section{Example: Factorial Function}
+
+We can express $n!$ recursively as:
+\[
+n! =
+\begin{cases}
+1, & n = 0,\\
+n \cdot (n-1)!, & n > 0.
+\end{cases}
+\]
+
+\noindent
+\textbf{Recursive Algorithm:}
+\begin{verbatim}
+def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n - 1)
+\end{verbatim}
+
+Each call creates a new stack frame that holds the current value of $n$ until the base case is reached.
+When the recursion unwinds, the frames multiply their stored $n$ values in reverse order.
+
+\section{Example: Fibonacci Sequence}
+
+The Fibonacci sequence is defined by
+\[
+F(n) =
+\begin{cases}
+0, & n = 0,\\
+1, & n = 1,\\
+F(n-1) + F(n-2), & n > 1.
+\end{cases}
+\]
+
+\noindent
+\textbf{Recursive Algorithm:}
+\begin{verbatim}
+def fib(n):
+    if n <= 1:
+        return n
+    else:
+        return fib(n - 1) + fib(n - 2)
+\end{verbatim}
+
+This version is beautifully simple but computationally explosive—each call spawns two more.
+For large $n$, this algorithm grows exponentially in time.
+We will later optimize it using \textbf{memoization} and \textbf{iteration}.
+
+\section{Tracing a Recursive Call}
+
+Let us trace the computation of \texttt{sum\_to\_n(4)}:
+
+\[
+S(4) = 4 + S(3) = 4 + (3 + S(2)) = 4 + 3 + 2 + 1 + S(0) = 10
+\]
+
+\noindent
+During recursion, a \emph{call stack} forms:
+\[
+S(4) \rightarrow S(3) \rightarrow S(2) \rightarrow S(1) \rightarrow S(0)
+\]
+and then unwinds back in the reverse order as results return upward.
+
+\section{Analyzing Recursive Cost}
+
+The cost of recursion depends on the number of calls and the work per call.
+For the factorial function, the recurrence relation is:
+\[
+T(n) = T(n-1) + O(1),
+\]
+which resolves to $O(n)$.
+For Fibonacci, the recurrence
+\[
+T(n) = T(n-1) + T(n-2) + O(1)
+\]
+yields $O(2^n)$ — a dramatic difference.
+
+\section{Challenge Problems}
+
+\begin{enumerate}
+  \item Write a recursive algorithm for computing the sum of digits of an integer.
+  \item Modify the Fibonacci algorithm to use memoization.  
+  \item Trace the recursion tree of \texttt{fib(5)} and count the total number of calls.
+  \item Prove by induction that your optimized Fibonacci algorithm runs in $O(n)$ time.
+\end{enumerate}
+
+\begin{quote}
+``A recursive algorithm is not just a loop—it is a story told backward and forward at the same time.''
+\end{quote}
+
