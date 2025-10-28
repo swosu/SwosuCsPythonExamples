@@ -34,6 +34,31 @@ T(n)=T(n-1)+O(1), \quad \text{amortized over } n \text{ distinct subproblems} \R
 \]
 Space is $O(n)$ for the table/stack (top-down) or just $O(n)$ array (bottom-up). The iterative two-variable version achieves $O(1)$ extra space.
 
+
+
+
+\section{Teaching Edge: Memoization as Memory of the Mind}
+
+\begin{quote}
+Memoization is the art of remembering your past. When a recursive
+function revisits a subproblem it has already solved, it wastes
+effort—like a forgetful mathematician re-deriving $2+2$ each time.
+By storing results in a dictionary (Python’s built-in memory palace),
+each distinct input is computed exactly once:
+\[
+T(n) = T(n-1) + O(1) \quad \Rightarrow \quad T(n) = O(n)
+\]
+The recursion tree collapses from an exponential bush into a single,
+graceful vine.
+\end{quote}
+
+This small conceptual leap—\textit{remember instead of repeat}—is a
+cornerstone of efficient thinking, in code and in life.
+
+
+
+
+
 \section{Visual: Exponential vs Linear}
 Figure~\ref{fig:bigocurves} plots $2^n$ against $n$. The lines start friendly, then $2^n$ rockets away like a bottle rocket with a PhD.
 \begin{figure}[htbp]
