@@ -1,0 +1,103 @@
+\chapter{Recursion Beyond Fibonacci — The Art of Self-Similarity}
+\label{ch:recursion-beyond-fibonacci-solution}
+
+\section*{Overview for Instructors}
+By now, your students have seen recursion count, measure, and remember.
+Chapter 9 widens the lens: recursion not just as computation, but as creation.
+Here we explore fractals, trees, and self-similar structures that grow by
+imitating their own shape.  This is where mathematical recursion meets visual poetry.
+
+\section{Pedagogical Goals}
+\begin{itemize}
+  \item Deepen students’ intuition for \emph{structural recursion}.
+  \item Connect recursion in functions to recursion in data (lists, trees, geometry).
+  \item Use graphical or generative art examples to make self-similarity tangible.
+  \item Prepare students for induction on structures (coming in Ch.~10).
+\end{itemize}
+
+\section{Scene 1 — From Numbers to Shapes}
+Begin class with a simple question:  
+\textit{What if Fibonacci could draw?}
+
+Show a spiral, a binary tree, or a Sierpiński triangle.
+Explain that each of these emerges from one rule repeated on itself:
+a function that calls itself in space rather than in arithmetic.
+
+\begin{lstlisting}[language=Python,caption={Recursive tree drawing with Turtle}]
+import turtle
+def branch(length, depth):
+    if depth == 0:
+        return
+    turtle.forward(length)
+    turtle.left(30)
+    branch(length * 0.7, depth - 1)
+    turtle.right(60)
+    branch(length * 0.7, depth - 1)
+    turtle.left(30)
+    turtle.backward(length)
+\end{lstlisting}
+
+Ask: where is the base case? where is the self-reference?
+Students who answer these can already write recursive proofs.
+
+\section{Scene 2 — Structural Recursion in Data}
+Transition from drawing to data.  
+Remind them: lists and trees are fractals of information.
+
+\begin{lstlisting}[language=Python,caption={Recursive traversal of a binary tree}]
+class Node:
+    def __init__(self, value, left=None, right=None):
+        self.value, self.left, self.right = value, left, right
+
+def inorder(node):
+    if node is None: 
+        return []
+    return inorder(node.left) + [node.value] + inorder(node.right)
+\end{lstlisting}
+
+Teacher note:
+\begin{itemize}
+  \item Emphasize \textbf{shape mirrors logic}—the recursive call follows the tree’s limbs.
+  \item Ask students to count how many calls occur for a tree of $n$ nodes.
+  \item Then connect back: $T(n)=T(n_L)+T(n_R)+O(1)$.
+\end{itemize}
+
+\section{Scene 3 — Fractals as Proofs that Grow}
+Display the Sierpiński triangle or Koch curve.
+Each iteration is both an algorithm and an inductive proof:
+if the pattern holds for one segment, then replicating it preserves the rule.
+
+Pedagogical link:
+\begin{quote}
+Recursion defines a universe; induction proves that universe stays consistent
+as it expands.
+\end{quote}
+
+\section{Scene 4 — Classroom Activities}
+\begin{enumerate}
+  \item \textbf{Art Lab.} Let students modify the \texttt{branch()} function
+        to change angle or scaling ratio.  
+        Discuss which parameters cause divergence (no convergence $\Rightarrow$ no termination).
+  \item \textbf{Data Lab.} Build a small tree and instrument it with a call counter.
+        Compare growth rate with Fibonacci’s.
+  \item \textbf{Proof Lab.} Write a structural-induction proof
+        that an inorder traversal visits every node exactly once.
+\end{enumerate}
+
+\section{Reflection Prompts}
+\begin{itemize}
+  \item What is the base case of a mountain?
+  \item How does nature “cache” its patterns?
+  \item Where else do we see recursion that remembers (DNA, music, architecture)?
+\end{itemize}
+
+\section{Instructor Reflection}
+Recursion began as a whisper in Fibonacci’s numbers;
+by now it has become a chorus of forms.  
+Students who can see recursion in trees and spirals are ready for structural induction,
+graph traversal, and algorithmic elegance.
+
+\begin{center}
+\emph{“Every fractal is a proof written in geometry.”}
+\end{center}
+
