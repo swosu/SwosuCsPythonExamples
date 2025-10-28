@@ -1,7 +1,167 @@
-\chapter{ch02 recursive algorithms solution}
-\label{ch02_recursive_algorithms_solution}
+\chapter{Recursive Algorithms — Teacher’s Commentary}
+\label{ch:recursive-algorithms-solution}
 
-This is a placeholder for \texttt{ch02_recursive_algorithms_solution.tex}.
+\section{Overview and Pedagogical Goals}
+This chapter invites students to think recursively, not just to code recursively. 
+Our primary teaching objective is to help them \emph{see} recursion as a pattern of thought:
+a problem divided into smaller, self-similar pieces that collectively build a solution.
+We emphasize three ingredients:
+\begin{enumerate}
+  \item a clear \textbf{base case}, which guarantees termination,
+  \item a \textbf{recursive step} that simplifies the problem,
+  \item and a sense of \textbf{trust} in the recursion’s correctness, usually grounded in induction.
+\end{enumerate}
 
-% TODO: Add teacher notes, solutions, and discussion guidance here.
+When students conflate recursion with loops, it helps to remind them that recursion 
+\emph{is not just repetition} — it’s \textbf{definition by self-reference}.
+
+\section{Discussion of Key Examples}
+
+\subsection{Summation}
+The student text defines
+\[
+S(n) =
+\begin{cases}
+0, & n = 0, \\
+n + S(n-1), & n > 0.
+\end{cases}
+\]
+and the Python version mirrors this logic:
+\begin{lstlisting}[language=Python]
+def sum_to_n(n):
+    if n == 0:
+        return 0
+    else:
+        return n + sum_to_n(n - 1)
+\end{lstlisting}
+
+\paragraph{Teacher Notes.}
+Encourage students to mentally trace $S(4)$:
+\[
+S(4) = 4 + S(3) = 4 + 3 + S(2) = 4 + 3 + 2 + S(1) = 4 + 3 + 2 + 1 + S(0).
+\]
+Highlight the idea of a \textit{call stack}. Each call waits for its child to finish.
+This visualization builds intuition for later discussions of stack depth and resource use.
+
+A useful classroom exercise is to draw this as a tree or stack diagram on the board, 
+then trace its unwinding phase as results return upward.
+
+\subsection{Factorial}
+Students are already familiar with factorial from Chapter 1’s induction proof, so this 
+is a good place to reinforce the bridge between \textbf{inductive reasoning} and 
+\textbf{recursive computation}. Both use a base case and an inductive/recursive step.
+
+\begin{lstlisting}[language=Python]
+def factorial(n):
+    if n == 0:
+        return 1
+    else:
+        return n * factorial(n - 1)
+\end{lstlisting}
+
+\paragraph{Common Student Pitfalls.}
+\begin{itemize}
+  \item Forgetting to include a base case, which causes infinite recursion.
+  \item Using subtraction in the wrong direction, e.g., \texttt{factorial(n + 1)}.
+  \item Confusing where the multiplication occurs (in the recursion or after).
+\end{itemize}
+Demonstrate visually: show how each call multiplies by $n$ as the stack unwinds.
+
+\subsection{Fibonacci}
+Here, beauty meets cost. The simple recursive definition:
+\[
+F(n) =
+\begin{cases}
+0, & n = 0,\\
+1, & n = 1,\\
+F(n-1) + F(n-2), & n > 1
+\end{cases}
+\]
+translates directly into Python:
+\begin{lstlisting}[language=Python]
+def fib(n):
+    if n <= 1:
+        return n
+    else:
+        return fib(n - 1) + fib(n - 2)
+\end{lstlisting}
+
+\paragraph{Teacher Notes.}
+Use this example to illustrate the exponential explosion of calls.
+Ask the class: “How many calls occur when computing \texttt{fib(5)}?”
+Let them discover the repeating subcalls: \texttt{fib(3)} appears multiple times.
+This repetition sets up the motivation for \textbf{memoization} in later chapters.
+
+\paragraph{Extension Activity.}
+Have students modify the function to count calls:
+\begin{lstlisting}[language=Python]
+count = 0
+def fib_count(n):
+    global count
+    count += 1
+    if n <= 1:
+        return n
+    return fib_count(n - 1) + fib_count(n - 2)
+\end{lstlisting}
+Then run \texttt{fib_count(10)} and discuss how fast the count grows.
+
+\section{Tracing Recursion and Cost Analysis}
+
+\paragraph{Tracing Exercise.}
+Trace $S(4)$ and $fib(5)$ by hand or with Python’s call visualization tools 
+(e.g., \texttt{pycallgraph} or a simple print statement).
+
+\paragraph{Analyzing Recursive Cost.}
+The factorial’s recurrence $T(n) = T(n-1) + O(1)$ resolves to $O(n)$,
+while Fibonacci’s $T(n) = T(n-1) + T(n-2) + O(1)$ grows as $O(2^n)$.
+
+Ask students to identify where each new call is spawned and how much redundant work occurs.
+
+\section{Challenge Problem Solutions and Commentary}
+
+\begin{enumerate}
+  \item \textbf{Sum of digits.}
+  \begin{lstlisting}[language=Python]
+def sum_digits(n):
+    if n < 10:
+        return n
+    else:
+        return n % 10 + sum_digits(n // 10)
+  \end{lstlisting}
+  This teaches recursive decomposition on numeric structures.
+
+  \item \textbf{Memoized Fibonacci.}
+  \begin{lstlisting}[language=Python]
+def fib_memo(n, memo=None):
+    if memo is None:
+        memo = {}
+    if n in memo:
+        return memo[n]
+    if n <= 1:
+        memo[n] = n
+        return n
+    memo[n] = fib_memo(n-1, memo) + fib_memo(n-2, memo)
+    return memo[n]
+  \end{lstlisting}
+  Explain how the recursion tree collapses into a line—each distinct input is computed once.
+
+  \item \textbf{Trace \texttt{fib(5)}.}
+  The recursion tree has 15 calls in total. Have students label each call and result.
+  Visualizing overlapping subproblems reinforces why memoization works.
+
+  \item \textbf{Prove $O(n)$ runtime of memoized Fibonacci.}
+  Each integer from 0 to $n$ is evaluated once, with $O(1)$ work per call.
+  Therefore, $T(n) = O(n)$.
+\end{enumerate}
+
+\section{Teaching Reflections}
+Students often oscillate between fascination and frustration with recursion.
+Invite them to use analogies:
+\begin{itemize}
+  \item Recursion as storytelling—each call writes a paragraph, then returns to complete the chapter.
+  \item The call stack as memory of unfinished business.
+  \item Induction as the “legal proof” that justifies recursion’s correctness.
+\end{itemize}
+Ending thought: once students grasp recursion, they begin to think like the computer—
+and like a mathematician.
 
