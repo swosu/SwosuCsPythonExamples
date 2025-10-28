@@ -1,14 +1,14 @@
 \chapter{Class Constructors}
 \label{ch:class_constructors}
 
-\section*{9.6 Overview}
+\section{9.6 Overview}
 A class constructor is a special method that defines how new objects are created and initialized.
 In Python, the constructor method is named \texttt{\_\_init\_\_()}.
 Constructors are used to set up instance attributes and can accept parameters to configure each new object.
 
 ---
 
-\section*{Adding Parameters to a Constructor}
+\section{Adding Parameters to a Constructor}
 
 \begin{lstlisting}[language=Python, caption={A simple constructor with parameters.}]
 class RaceTime:
@@ -28,7 +28,7 @@ This is more powerful than setting everything to zero — each instance can have
 
 ---
 
-\section*{Complete RaceTime Example}
+\section{Complete RaceTime Example}
 
 \begin{lstlisting}[language=Python, caption={RaceTime class with methods.}]
 class RaceTime:
@@ -68,7 +68,7 @@ race_time.print_pace()
 
 ---
 
-\section*{Default Constructor Parameters}
+\section{Default Constructor Parameters}
 
 Constructors can also include default values for convenience.  
 This reduces repetition and helps when typical defaults are common.
@@ -93,7 +93,7 @@ for e in employees:
 
 ---
 
-\section*{Constructors in Practice: Student Example}
+\section{Constructors in Practice: Student Example}
 
 \begin{lstlisting}[language=Python, caption={Constructor with several defaults.}]
 class Student:
@@ -112,7 +112,7 @@ print(f"{tommy.name}: grade {tommy.grade}, athletics={tommy.athletics}")
 
 ---
 
-\section*{Constructor Exercises}
+\section{Constructor Exercises}
 
 \begin{enumerate}
     \item Modify \texttt{Employee} so that it tracks yearly pay in addition to hourly.
