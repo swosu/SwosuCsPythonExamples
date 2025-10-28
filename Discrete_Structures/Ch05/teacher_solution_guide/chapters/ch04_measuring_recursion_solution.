@@ -1,0 +1,88 @@
+\chapter{Measuring Recursion — Teacher’s Commentary}
+\label{ch:measuring-recursion-solution}
+
+\section{Overview and Instructor Framing}
+This chapter transforms abstract growth rates into something the class can \emph{feel}.
+When students watch their laptops labor under the naive Fibonacci,
+they discover that mathematics is not just proof—it is prediction.
+
+Encourage them to see every slowdown as data.
+The computer is performing a physical experiment in time complexity.
+
+\section{Pedagogical Objectives}
+\begin{itemize}
+    \item Connect Big--O intuition to real measurements.
+    \item Reinforce the idea that recursion consumes both time and space.
+    \item Introduce the notion of a \texttt{Tracker} class as an experimental probe.
+    \item Compare empirical curves with theoretical expectations.
+\end{itemize}
+
+\section{Discussion Setup}
+Begin class with an open question:
+
+\textit{“If recursion doubles its work with every call, what will happen by the time we reach $n = 30$?”}
+
+Let predictions fill the board.
+Then run the script \texttt{fib\_bench.py} and show the terminal’s gentle panic.
+
+Students will laugh when the fans spin up.
+That laughter is a learning moment—it means the concept has become tangible.
+
+\section{Understanding the Tracker}
+Emphasize the tracker’s role:
+\begin{itemize}
+    \item \texttt{calls}: how many total function invocations occurred.
+    \item \texttt{adds}: counts arithmetic work.
+    \item \texttt{assigns}: estimates memory and bookkeeping cost.
+\end{itemize}
+
+These are our \emph{operational proxies} for algorithmic cost.
+Invite advanced students to add a \texttt{depth} field or trace recursion tree height.
+
+\section{Instructor Commentary}
+When plotting the CSV, point out:
+\begin{enumerate}
+    \item The recursive curve grows exponentially—each step nearly doubles.
+    \item The iterative curve grows linearly, like a calm heartbeat.
+    \item Between them lies memoization, the middle path—fast yet still elegant.
+\end{enumerate}
+
+Use logarithmic axes to reveal hidden linearity.
+Discuss why even exponential functions look straight on a log--scale.
+
+\section{Bridging Theory and Reality}
+Ask:
+\begin{quote}
+    “Does Big--O lie?”
+\end{quote}
+Answer together:
+Big--O tells the truth about shape, not about scale.
+Constants, cache, and CPU quirks all bend the line,
+but asymptotics remain faithful guides.
+
+\section{Activity: Predict--Then--Run}
+\begin{enumerate}
+    \item Have students estimate when recursion becomes impractical.
+    \item Let them run \texttt{fib\_recursive(35)} on their own machines.
+    \item Compare results—whose laptop survived longest?
+\end{enumerate}
+
+Encourage journal reflection:
+“How did it feel to watch exponential growth happen before your eyes?”
+
+\section{Transition to Big--O Analysis}
+Conclude with a gentle invitation:
+\begin{quote}
+    “Next chapter, we’ll name the monster we just met.
+     Its name is $\mathcal{O}(2^n)$,
+     and memoization will be our spell of protection.”
+\end{quote}
+
+\section{Instructor Reflection}
+In this experiment,
+the computer became the laboratory,
+and students became scientists of complexity.
+The best outcome is not perfect plots—it is the \emph{moment of empathy}
+when a learner says,
+“I finally understand why efficiency matters.”
+
