@@ -1,88 +1,59 @@
-\chapter{Measuring Recursion — Teacher’s Commentary}
-\label{ch:measuring-recursion-solution}
+\chapter{Measuring the Cost of Recursion --- Teacher's Commentary}
 
-\section{Overview and Instructor Framing}
-This chapter transforms abstract growth rates into something the class can \emph{feel}.
-When students watch their laptops labor under the naive Fibonacci,
-they discover that mathematics is not just proof—it is prediction.
+\section{Teaching Overview}
+This chapter moves from wonder to measurement. Students have seen recursion bloom; now they must quantify its cost. As an instructor, your role is to turn curiosity into data.
 
-Encourage them to see every slowdown as data.
-The computer is performing a physical experiment in time complexity.
+Key goal: help students feel the \textit{weight} of recursion. The Tracker class turns invisible stack frames into visible numbers.
 
-\section{Pedagogical Objectives}
+\section{Pedagogical Setup}
+Before class:
 \begin{itemize}
-    \item Connect Big--O intuition to real measurements.
-    \item Reinforce the idea that recursion consumes both time and space.
-    \item Introduce the notion of a \texttt{Tracker} class as an experimental probe.
-    \item Compare empirical curves with theoretical expectations.
+  \item Have students run the code \texttt{measure\_fibonacci()} from Chapter 4 of the student workbook.
+  \item Ask them to predict: which will grow faster, calls or additions? Which chart will be exponential?
+  \item Display the recursive vs. iterative plots side by side.
 \end{itemize}
 
-\section{Discussion Setup}
-Begin class with an open question:
+Teaching tip: Pause at each plot. Ask: \textit{What does the shape tell you? What story does this data whisper?}
 
-\textit{“If recursion doubles its work with every call, what will happen by the time we reach $n = 30$?”}
-
-Let predictions fill the board.
-Then run the script \texttt{fib\_bench.py} and show the terminal’s gentle panic.
-
-Students will laugh when the fans spin up.
-That laughter is a learning moment—it means the concept has become tangible.
-
-\section{Understanding the Tracker}
-Emphasize the tracker’s role:
+\section{Instructor Notes on Code}
+The \texttt{DataTracker} class is not about performance optimization; it’s about cognitive visibility.
+Encourage students to:
 \begin{itemize}
-    \item \texttt{calls}: how many total function invocations occurred.
-    \item \texttt{adds}: counts arithmetic work.
-    \item \texttt{assigns}: estimates memory and bookkeeping cost.
+  \item Trace which lines increment counters.
+  \item Modify it to count multiplications or return depths.
+  \item Compare run-to-run variation.
 \end{itemize}
 
-These are our \emph{operational proxies} for algorithmic cost.
-Invite advanced students to add a \texttt{depth} field or trace recursion tree height.
+Then connect the dots to Big-O notation — it’s not abstract now; it’s empirical.
 
-\section{Instructor Commentary}
-When plotting the CSV, point out:
-\begin{enumerate}
-    \item The recursive curve grows exponentially—each step nearly doubles.
-    \item The iterative curve grows linearly, like a calm heartbeat.
-    \item Between them lies memoization, the middle path—fast yet still elegant.
-\end{enumerate}
+\section{Common Pitfalls}
+\begin{itemize}
+  \item Students forget to reset counters between runs.
+  \item They compare recursive vs iterative without realizing base cases differ.
+  \item They confuse stack growth with data growth — emphasize call count vs. memory use.
+\end{itemize}
 
-Use logarithmic axes to reveal hidden linearity.
-Discuss why even exponential functions look straight on a log--scale.
+\section{Extension Ideas}
+\begin{itemize}
+  \item Challenge them to add memoization and measure again.
+  \item Introduce timing for each $n$ and graph log-scale axes to reveal asymptotic behavior.
+  \item Ask: “How could we verify this with induction?”
+\end{itemize}
 
-\section{Bridging Theory and Reality}
-Ask:
+\section{Reflection Prompts}
 \begin{quote}
-    “Does Big--O lie?”
+Recursion is the art of calling yourself until you learn something new each time.
 \end{quote}
-Answer together:
-Big--O tells the truth about shape, not about scale.
-Constants, cache, and CPU quirks all bend the line,
-but asymptotics remain faithful guides.
 
-\section{Activity: Predict--Then--Run}
-\begin{enumerate}
-    \item Have students estimate when recursion becomes impractical.
-    \item Let them run \texttt{fib\_recursive(35)} on their own machines.
-    \item Compare results—whose laptop survived longest?
-\end{enumerate}
-
-Encourage journal reflection:
-“How did it feel to watch exponential growth happen before your eyes?”
-
-\section{Transition to Big--O Analysis}
-Conclude with a gentle invitation:
-\begin{quote}
-    “Next chapter, we’ll name the monster we just met.
-     Its name is $\mathcal{O}(2^n)$,
-     and memoization will be our spell of protection.”
-\end{quote}
+\begin{itemize}
+  \item What does the graph of recursion \emph{feel} like?
+  \item When does elegance become inefficiency?
+  \item Can you love a slow algorithm if it teaches you something fast?
+\end{itemize}
 
 \section{Instructor Reflection}
-In this experiment,
-the computer became the laboratory,
-and students became scientists of complexity.
-The best outcome is not perfect plots—it is the \emph{moment of empathy}
-when a learner says,
-“I finally understand why efficiency matters.”
+This chapter transforms recursion from poetry into physics. By measuring time, calls, and assignments, you bridge emotion and evidence.
+
+Encourage students to end the session by answering one final question:
+\textit{If your code were a living thing, what would it remember between calls?}
 
