@@ -7,6 +7,7 @@ Design notes:
 - Provides: Card, new_deck(), sort_hand(), deal_hands()
 """
 
+from typing import List, Optional
 from dataclasses import dataclass
 from functools import total_ordering
 from typing import List, Iterable
@@ -58,7 +59,8 @@ def sort_hand(cards: Iterable[Card]) -> List[Card]:
     """Return a new list of cards sorted by game strength (3..2), then suit."""
     return sorted(cards)
 
-def deal_hands(num_players: int, rng: random.Random | None = None) -> List[List[Card]]:
+
+def deal_hands(num_players: int, rng: Optional[random.Random] = None) -> List[List[Card]]:
     """
     Deal the entire deck one card at a time, clockwise.
     Some players may get one extra card when 52 % num_players != 0.

@@ -3,6 +3,7 @@
 omit =
     cli_demo.py
     check_env.py
+    experiments/*
     tools/*
     tests/*
     cov_html/*

@@ -1,11 +1,8 @@
 #!/usr/bin/env python3
 import time, argparse, random
 from engine import new_round
-from strategy import generate_options, best_move
+from strategy import generate_options
 from bots import choose_bot_play
-
-touch tools/__init__.py
-touch tools/bench/__init__.py
 
 def run_round(n_players, bot_type, seed):
     rnd = new_round(n_players, seed=seed)
@@ -31,7 +28,7 @@ def main():
     for _ in range(args.rounds):
         run_round(args.players, args.bot, rng.randrange(1<<30))
     dt = time.perf_counter() - t0
-    rps = args.rounds/dt
+    rps = args.rounds / dt
     print(f"Rounds: {args.rounds} | Players: {args.players} | Bot: {args.bot}")
     print(f"Time: {dt:.3f}s | {rps:.1f} rounds/sec")
 
