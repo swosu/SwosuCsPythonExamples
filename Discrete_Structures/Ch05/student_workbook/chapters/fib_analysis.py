@@ -7,6 +7,7 @@ class DataTracker:
     def __init__(self):
         self.calls = 0
         self.adds = 0
+        self.comparisons = 0
         self.assigns = 0
         self.times = {}
     
@@ -15,6 +16,7 @@ class DataTracker:
             "value": value,
             "time": t1 - t0,
             "calls": self.calls,
+            "comparisons": 0,
             "adds": self.adds,
             "assigns": self.assigns
         }
@@ -22,10 +24,13 @@ class DataTracker:
     def reset(self):
         self.calls = 0
         self.adds = 0
+        self.comparisons = 0
         self.assigns = 0
 
 def fib_recursive(n, tracker):
     tracker.calls += 1
+
+    tracker.comparisons += 1
     if n <= 1:
         tracker.assigns += 1
         return n
@@ -40,6 +45,7 @@ def fib_iterative(n, tracker):
         tracker.adds += 1
         a, b = b, a + b
         tracker.assigns += 2
+    tracker.comparisons += 1
     return b if n else a
 
 def measure_fibonacci(max_n=30):
