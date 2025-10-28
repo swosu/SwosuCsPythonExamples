@@ -1,0 +1,30 @@
+\chapter{Code Appendix – Fibonacci Source Files}
+
+\section{Overview}
+This appendix provides a complete snapshot of the Python source code used in this workbook. 
+Each time you rebuild the book, the latest version of the code is automatically included — 
+ensuring this text remains a living record of our experiments.
+
+\section{Fibonacci Analysis Script}
+
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{blue},
+  stringstyle=\color{orange},
+  commentstyle=\color{gray},
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  frame=single,
+  breaklines=true,
+  showstringspaces=false,
+  tabsize=4,
+  captionpos=b
+}
+
+\lstinputlisting[
+  caption={\texttt{fib\_analysis.py} — A fully instrumented Fibonacci analysis with timing and operation counts.},
+  label={lst:fib_analysis_full}
+]{chapters/fib_analysis.py}
+
