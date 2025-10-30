@@ -1,6 +1,8 @@
 import time
 from collections import deque
 import os
+import sys
+sys.setrecursionlimit(10000)
 
 def print_board(board_size, knight_pos, target_pos):
     """Draw the board with the knight (K) and target (T)."""
