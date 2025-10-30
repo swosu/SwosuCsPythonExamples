@@ -1,0 +1,3 @@
+algorithm,batch_size,run,adds,subs,comps,reads,writes,func_calls,time
+bubble_sort,100,1,0,0,4950,9900,5012,1,0.003507852554321289
+merge_sort,100,1,645,0,546,1092,546,298,0.0006966590881347656
