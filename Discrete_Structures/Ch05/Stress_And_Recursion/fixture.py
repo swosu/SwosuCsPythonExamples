@@ -5,8 +5,14 @@ from merge_sort_alg import merge_sort
 from parallel_merge_sort_alg import parallel_merge_sort
 from builtin_sorts import builtin_sort, parallel_builtin_sort
 
+import platform, socket
+HOSTNAME = socket.gethostname().lower()
+RESULT_FILE = f"results_{HOSTNAME}.csv"
+
+
+
 def run_experiment(sizes, runs_per_size=2, outfile="results.csv"):
-    with open(outfile, "w", newline="") as f:
+    with open(RESULT_FILE, "w", newline="") as f:
         writer = csv.writer(f)
         writer.writerow(["algorithm","batch_size","run",
                          "adds","subs","comps","reads","writes",
