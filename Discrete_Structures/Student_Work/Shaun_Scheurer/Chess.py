@@ -41,7 +41,7 @@ def find_knight_path(board_size, target_row, target_col):
                 if (new_row, new_col) not in visited:
                     visited.add((new_row, new_col))
                     queue.append(((new_row, new_col), path + [(new_row, new_col)]))
-    return None  # No path found (shouldn't happen)
+    return None  # No path found
 
 
 def knight_travel_animation():
@@ -49,6 +49,9 @@ def knight_travel_animation():
     board_size = int(input("Enter board size (e.g. 8 for 8x8): "))
     target_row = int(input(f"Enter target row (0–{board_size-1}): "))
     target_col = int(input(f"Enter target column (0–{board_size-1}): "))
+    
+    # --- Start timer ---
+    start_time = time.time()
     
     # --- Find the path ---
     path = find_knight_path(board_size, target_row, target_col)
@@ -61,20 +64,14 @@ def knight_travel_animation():
         print_board(board_size, position, (target_row, target_col))
         time.sleep(0.3)  # Delay between moves
     
+    # --- End timer ---
+    end_time = time.time()
+    elapsed_time = end_time - start_time
+    
     print(f"✅ Knight reached target at {path[-1]} in {len(path)-1} moves!")
+    print(f"⏱️ Time taken: {elapsed_time:.2f} seconds")
 
 
 # Run it!
 knight_travel_animation()
-#timer start and ends
-# Start timer, run the animation, then print end time and elapsed duration
-start_ts = time.time()
-start_perf = time.perf_counter()
-print("Start:", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(start_ts)))
-
-knight_travel_animation()
-
-end_ts = time.time()
-end_perf = time.perf_counter()
-print("End:  ", time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(end_ts)))
-print(f"Elapsed: {end_perf - start_perf:.2f} seconds")
+# --- IGNORE ---
