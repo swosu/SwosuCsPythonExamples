@@ -1,0 +1,10 @@
+\frametitle{Basic Commands}
+\begin{verbatim}
+git init
+git add .
+git commit -m "Initial commit"
+git branch feature1
+git checkout feature1
+git merge feature1
+git push origin main
+\end{verbatim}
