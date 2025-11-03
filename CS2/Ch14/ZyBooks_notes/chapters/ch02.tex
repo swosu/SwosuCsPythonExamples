@@ -1,0 +1,143 @@
+\chapter{Recursive Functions}
+
+\section*{The Heartbeat of Recursion}
+A \textbf{recursive function} is one that calls itself.  
+That sounds almost mischievous at first --- but recursion is not about infinite loops.  
+It’s about teaching a function how to do one small piece of a problem and then trusting it to repeat itself until the work is done.
+
+Every recursive function has two essential parts:
+\begin{enumerate}
+    \item \textbf{Base Case} --- When the function stops calling itself.  
+          (This prevents infinite recursion.)
+    \item \textbf{Recursive Case} --- Where the function calls itself with a smaller or simpler version of the problem.
+\end{enumerate}
+
+\section{The Countdown Example}
+Here’s a simple example, like the one from your ZyBook, rewritten for clarity.
+
+\begin{lstlisting}[language=Python, caption={Recursive countdown example}]
+def count_down(count):
+    if count == 0:
+        print("Go!")
+    else:
+        print(count)
+        count_down(count - 1)
+
+count_down(3)
+\end{lstlisting}
+
+\noindent
+**Output:**
+\begin{verbatim}
+3
+2
+1
+Go!
+\end{verbatim}
+
+Each time \texttt{count\_down()} calls itself, Python pauses the current function, creates a new \textit{stack frame} (a little memory box for local variables), and starts again.  
+When the base case (\texttt{count == 0}) is reached, the call stack begins to unwind --- printing each result in reverse order of completion.
+
+\begin{center}
+\textit{Recursion isn’t looping forward --- it’s diving down and climbing back up.}
+\end{center}
+
+\section{A Simple Mathematical Example: Sum of Numbers}
+Here’s another warm-up, summing all numbers from 1 to \texttt{n}.
+
+\begin{lstlisting}[language=Python, caption={Recursive summation example}]
+def sum_to_n(n):
+    if n == 0:
+        return 0
+    else:
+        return n + sum_to_n(n - 1)
+
+print(sum_to_n(5))
+\end{lstlisting}
+
+\noindent
+**Call trace:**
+\begin{verbatim}
+sum_to_n(5)
+  = 5 + sum_to_n(4)
+    = 5 + 4 + sum_to_n(3)
+      = 5 + 4 + 3 + sum_to_n(2)
+        = 5 + 4 + 3 + 2 + sum_to_n(1)
+          = 5 + 4 + 3 + 2 + 1 + sum_to_n(0)
+          = 15
+\end{verbatim}
+
+\noindent
+You can see the recursive chain shrink by one each time until it bottoms out at 0.
+
+\section{A String Example: Spelling Backward}
+Recursion can work on strings too.
+
+\begin{lstlisting}[language=Python, caption={Recursive string reversal example}]
+def reverse_word(word):
+    if len(word) <= 1:
+        return word
+    else:
+        return reverse_word(word[1:]) + word[0]
+
+print(reverse_word("hello"))
+\end{lstlisting}
+
+\noindent
+**Output:** \texttt{olleh}
+
+Each call peels off the first letter, waits for the smaller word to be reversed, and then adds its letter to the end.  
+It’s like stacking pancakes, then flipping them one by one as you climb back up the stack.
+
+\section{A Creative Example: Nested Echo}
+Let’s make recursion a little more human.
+
+\begin{lstlisting}[language=Python, caption={Recursive echo example}]
+def echo(message, depth):
+    if depth == 0:
+        print("...silence.")
+    else:
+        print("Echo:", message)
+        echo(message, depth - 1)
+
+echo("Is anyone there?", 3)
+\end{lstlisting}
+
+\noindent
+**Output:**
+\begin{verbatim}
+Echo: Is anyone there?
+Echo: Is anyone there?
+Echo: Is anyone there?
+...silence.
+\end{verbatim}
+
+This illustrates the recursive pattern beautifully:
+\[
+\text{Do something small} \rightarrow \text{Shrink the problem} \rightarrow \text{Trust the function.}
+\]
+
+\section{Tracing a Recursive Call Stack}
+Every recursive call pauses the previous one.  
+In your mind, picture a stack of plates:
+\begin{enumerate}
+    \item Each new call adds a plate.
+    \item The base case stops adding plates.
+    \item As the calls return, you take the plates back off one at a time.
+\end{enumerate}
+
+\noindent
+This “stack of plates” is literally called the \textbf{call stack}.  
+You’ll use this same concept when debugging recursion, searching trees, or walking directory structures.
+
+\section{Student Practice}
+Try writing your own recursive function for these challenges:
+\begin{enumerate}
+    \item Print all even numbers from \texttt{n} down to 0.
+    \item Print each letter of a word on its own line, starting from the end.
+    \item Create a recursive function \texttt{count\_vowels(word)} that returns the number of vowels in a string.
+\end{enumerate}
+
+\noindent
+In the next chapter, we’ll use recursion to solve problems that \textit{loops can’t easily reach} — recursive search and pattern exploration.
+

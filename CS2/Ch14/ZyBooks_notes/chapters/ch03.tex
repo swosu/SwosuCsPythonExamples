@@ -1,0 +1,153 @@
+\chapter{Recursive Algorithm: Search}
+
+\section*{From Repetition to Strategy}
+Loops and recursion both repeat work—but recursion lets us do it *intelligently*.  
+Instead of plowing through every item one by one, a recursive algorithm can **divide and conquer**.
+
+A recursive algorithm breaks a problem into smaller, self-similar versions of itself until the smallest case (the *base case*) can be solved directly.
+
+\section{A Familiar Analogy: The Guessing Game}
+Imagine your friend thinks of a number between 0 and 100.  
+Each time you guess, your friend says "higher" or "lower."  
+
+If you always guess halfway between the possible range, you’ll find the number in about $\log_2(100) \approx 7$ guesses.
+
+That’s **binary search**—recursion in action.
+
+\begin{lstlisting}[language=Python, caption={Recursive binary search for a number}]
+def binary_search(low, high, target):
+    if low > high:
+        print("Not found!")
+        return
+    mid = (low + high) // 2
+    print(f"Searching {low}..{high} (mid={mid})")
+    if mid == target:
+        print("Found it!")
+    elif target < mid:
+        binary_search(low, mid - 1, target)
+    else:
+        binary_search(mid + 1, high, target)
+
+binary_search(0, 100, 32)
+\end{lstlisting}
+
+\noindent
+This algorithm is recursive because it calls itself on smaller subranges each time.  
+When the range collapses (\texttt{low > high}), the function ends.
+
+\begin{quote}
+Every recursive algorithm is a conversation with smaller versions of itself.
+\end{quote}
+
+\section{Recursive Search in a Sorted List}
+Now let’s find a name in a list that’s alphabetically sorted.  
+This is a textual version of binary search.
+
+\begin{lstlisting}[language=Python, caption={Recursive search in a sorted list}]
+def find(lst, item, low, high):
+    if low > high:
+        return -1  # Not found
+    mid = (low + high) // 2
+    if lst[mid] == item:
+        return mid
+    elif item < lst[mid]:
+        return find(lst, item, low, mid - 1)
+    else:
+        return find(lst, item, mid + 1, high)
+
+names = ["Adams, Mary", "Carver, Michael", "Domer, Hugo",
+         "Fredericks, Carlo", "Liu, Jie"]
+
+person = input("Enter last, first: ")
+pos = find(names, person, 0, len(names) - 1)
+if pos >= 0:
+    print(f"Found {person} at index {pos}")
+else:
+    print("Not found.")
+\end{lstlisting}
+
+\noindent
+Notice how the search range shrinks by half each time.  
+Recursive binary search is powerful because it eliminates half the data at every step.
+
+\section{Thinking Recursively}
+A recursive algorithm always has these three traits:
+\begin{enumerate}
+    \item \textbf{A clear goal:} What are we trying to find?
+    \item \textbf{A base case:} When do we stop searching?
+    \item \textbf{A recursive case:} How do we break the problem into smaller ones?
+\end{enumerate}
+
+You’ll see this pattern everywhere—from sorting algorithms (quicksort, mergesort)  
+to tree traversal and directory searches.
+
+\section{Visualizing the Divide-and-Conquer Pattern}
+Each recursive call creates a branch in the "decision tree."  
+Here’s the mental image:
+
+\begin{verbatim}
+Search [0..100]
+ |- Guess 50 -> too high -> Search [0..49]
+ |   |- Guess 25 -> too low -> Search [26..49]
+ |   |   |- Guess 37 -> too high -> Search [26..36]
+ |   |   |   |- Guess 31 -> too low -> Search [32..36]
+ |   |   |   |   |- Guess 34 -> Found!
+\end{verbatim}
+
+\noindent
+Each level of recursion focuses on a smaller search space.  
+The call stack keeps track of where you came from.
+
+\section{Tracing the Call Stack}
+When recursion runs, Python keeps track of every unfinished call in the *call stack*.  
+Think of it as a trail of sticky notes—each one says, “Come back to me when you’re done.”
+
+\begin{verbatim}
+binary_search(0, 100, 32)
+  ├── binary_search(0, 49, 32)
+  ├── binary_search(25, 49, 32)
+  ├── binary_search(32, 36, 32)
+  └── Found!
+\end{verbatim}
+
+Each time the recursive call returns, Python pops one frame off the stack.  
+When the base case is reached, the stack empties gracefully.  
+If you forget your base case—well, Python keeps stacking until it crashes! 😅
+
+\section{Try It Yourself}
+Write your own recursive search for these problems:
+\begin{enumerate}
+    \item Search for a letter in a string, returning its index.
+    \item Search for the smallest number in a sorted list (without using \texttt{min()}).
+    \item Modify \texttt{find()} to print the number of recursive calls made.
+\end{enumerate}
+
+\section*{Challenge: Recursive Word Finder}
+For extra fun, try writing a recursive function that searches through nested lists:
+\begin{lstlisting}[language=Python, caption={Recursive word finder challenge}]
+def find_word(nested_list, word):
+    for item in nested_list:
+        if isinstance(item, list):
+            if find_word(item, word):
+                return True
+        elif item == word:
+            return True
+    return False
+
+data = [["dog", ["cat", "fish"]], ["hamster", ["parrot", "snake"]]]
+print(find_word(data, "snake"))  # True
+print(find_word(data, "whale"))  # False
+\end{lstlisting}
+
+\noindent
+This shows recursion applied to hierarchical data—a natural fit when structures contain smaller versions of themselves.
+
+\section*{Closing Thought}
+Recursive search is not just faster—it’s smarter.  
+It doesn’t look at everything; it looks *strategically*.  
+That’s what separates **repetition** from **recursion**—and **recursion** from **algorithmic thinking**.
+
+\begin{center}
+\textit{Next: Debugging recursive calls — the art of seeing the invisible stack.}
+\end{center}
+
