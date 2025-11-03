@@ -1,0 +1,125 @@
+\chapter{Adding Output Statements for Debugging}
+
+\section*{Why Debugging Recursion Feels Weird}
+When loops misbehave, we can print a single counter and know exactly where we are.  
+When recursion misbehaves, it’s like yelling down a canyon and getting ten voices back at once.  
+
+Recursion errors can hide in the call stack, so debugging means learning to *see the depth* of the function calls.
+
+\begin{quote}
+Each recursive call is like a new mirror added to a hall of reflections.  
+If you can see the pattern of echoes, you can find the bug.
+\end{quote}
+
+\section{Adding Output for Insight}
+One of the best debugging tools is a simple \texttt{print()} statement.  
+By printing the current range or step, and indenting based on recursion depth, we can visualize what’s happening.
+
+\begin{lstlisting}[language=Python, caption={Recursive search with indentation for debugging}]
+def find(lst, item, low, high, indent=""):
+    """Finds index of item in a sorted list, else returns -1."""
+    print(f"{indent}Searching {low}..{high}")
+
+    # Base case: Not found
+    if low > high:
+        print(f"{indent}Not found.")
+        return -1
+
+    mid = (low + high) // 2
+    print(f"{indent}Checking index {mid}: {lst[mid]}")
+
+    # Base case: Found
+    if lst[mid] == item:
+        print(f"{indent}Found {item} at index {mid}")
+        return mid
+
+    # Recursive case: Search smaller half
+    elif item < lst[mid]:
+        return find(lst, item, low, mid - 1, indent + "   ")
+
+    # Recursive case: Search larger half
+    else:
+        return find(lst, item, mid + 1, high, indent + "   ")
+
+# Example usage
+names = ["Adams, Mary", "Carver, Michael", "Domer, Hugo",
+         "Fredericks, Carlo", "Liu, Jie"]
+
+print("Running debug search for 'Carver, Michael'...\n")
+find(names, "Carver, Michael", 0, len(names) - 1)
+\end{lstlisting}
+
+\noindent
+Notice how the indentation grows deeper with each recursive call.  
+The result is a visual "map" of the recursion depth — a living breadcrumb trail.
+
+\begin{quote}
+Indentation isn’t just about code style — it can become a debugging superpower.
+\end{quote}
+
+\section{What the Output Teaches Us}
+When you run this, you’ll see the function’s “journey”:
+
+\begin{verbatim}
+Searching 0..4
+Checking index 2: Domer, Hugo
+   Searching 0..1
+   Checking index 0: Adams, Mary
+      Searching 1..1
+      Checking index 1: Carver, Michael
+      Found Carver, Michael at index 1
+\end{verbatim}
+
+\noindent
+We can instantly see:
+\begin{itemize}
+    \item The recursive narrowing of the search range.
+    \item Which values are checked each time.
+    \item How indentation reflects call depth.
+\end{itemize}
+
+\section{Common Pitfalls to Watch For}
+Recursion is a mirror that shows both clarity and chaos.  
+Here are the usual suspects that break your reflection:
+
+\begin{enumerate}
+    \item \textbf{No Base Case:} The recursion never ends, causing a stack overflow.
+    \item \textbf{No Return on Recursive Call:} The answer is found, but lost on the way back up.
+    \item \textbf{Misplaced Print:} Messages print at the wrong depth, confusing the trace.
+\end{enumerate}
+
+\begin{quote}
+A well-placed print can save an hour of staring at the screen.
+\end{quote}
+
+\section{Try It Yourself}
+\begin{enumerate}
+    \item Modify \texttt{find()} to count how many recursive calls were made.
+    \item Write a recursive function that prints a pyramid of indentation up to depth 5.
+    \item Create a recursive version of \texttt{sum()} that prints its partial results on the way up and down.
+    \item Comment out each print one at a time to see which ones are most useful for debugging.
+\end{enumerate}
+
+\section{Bonus Challenge: The “Echo Locator”}
+Write a recursive function called \texttt{echo()} that takes a message and depth:
+\begin{lstlisting}[language=Python]
+def echo(message, depth):
+    if depth == 0:
+        print(message)
+    else:
+        print(" " * depth + f"Echoing ({depth})...")
+        echo(message, depth - 1)
+        print(" " * depth + "Returning.")
+\end{lstlisting}
+
+\noindent
+Run \texttt{echo("Recursion rocks!", 4)} and watch the indentation reveal how recursion dives and returns.
+
+\section*{Closing Thought}
+Debugging recursion is about listening to the rhythm of the calls.  
+Add prints, indent the echoes, and soon you’ll be able to \emph{see} your program think.
+
+\begin{center}
+\textit{Next: Creating Recursive Functions — from reflection to design.}
+\end{center}
+

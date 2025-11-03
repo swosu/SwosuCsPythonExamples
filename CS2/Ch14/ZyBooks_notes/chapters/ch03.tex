@@ -83,7 +83,7 @@ to tree traversal and directory searches.
 
 \section{Visualizing the Divide-and-Conquer Pattern}
 Each recursive call creates a branch in the "decision tree."  
-Here’s the mental image:
+Here’s the mental image (now ASCII-safe):
 
 \begin{verbatim}
 Search [0..100]
@@ -104,15 +104,15 @@ Think of it as a trail of sticky notes—each one says, “Come back to me when 
 
 \begin{verbatim}
 binary_search(0, 100, 32)
-  ├── binary_search(0, 49, 32)
-  ├── binary_search(25, 49, 32)
-  ├── binary_search(32, 36, 32)
-  └── Found!
+ |-- binary_search(0, 49, 32)
+ |-- binary_search(25, 49, 32)
+ |-- binary_search(32, 36, 32)
+ |-- Found!
 \end{verbatim}
 
 Each time the recursive call returns, Python pops one frame off the stack.  
 When the base case is reached, the stack empties gracefully.  
-If you forget your base case—well, Python keeps stacking until it crashes! 😅
+If you forget your base case—Python keeps stacking until it crashes! (Infinite recursion alert!)
 
 \section{Try It Yourself}
 Write your own recursive search for these problems:
