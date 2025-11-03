@@ -1,69 +1,79 @@
 \documentclass[12pt]{book}
 
-% ===========================
-% Packages
-% ===========================
-\usepackage[utf8]{inputenc}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
-\usepackage{geometry}
-\usepackage{graphicx}
-\usepackage{hyperref}
-\usepackage{amsmath, amssymb}
-\usepackage{listings}
-\usepackage{xcolor}
-\usepackage{titlesec}
+% ==========================
+% PACKAGES
+% ==========================
+\usepackage[a4paper, margin=1in]{geometry}
 \usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
 \usepackage{setspace}
+\usepackage{listings}
+\usepackage{caption}
 
-% ===========================
-% Page Layout
-% ===========================
-\geometry{letterpaper, margin=1in}
-\setstretch{1.15}
-
-% ===========================
-% Code Listings
-% ===========================
-\definecolor{codegray}{gray}{0.95}
-\lstset{
-    backgroundcolor=\color{codegray},
-    basicstyle=\ttfamily\small,
-    frame=single,
-    breaklines=true,
-    showstringspaces=false,
-    tabsize=4,
-    captionpos=b
-}
-
-% ===========================
-% Header & Footer
-% ===========================
+% ==========================
+% HEADER / FOOTER
+% ==========================
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{CS2 Recursion Workbook}
-\fancyhead[R]{\thepage}
-\fancyfoot[C]{Southwestern Oklahoma State University}
+\fancyhead[R]{\leftmark}
+\fancyfoot[C]{\thepage}
 
-% ===========================
-% Document
-% ===========================
+% ==========================
+% CODE STYLE
+% ==========================
+\lstset{
+  basicstyle=\ttfamily\footnotesize,
+  backgroundcolor=\color{gray!10},
+  frame=single,
+  breaklines=true,
+  postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{orange}
+}
+
+% ==========================
+% SECTION STYLE
+% ==========================
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries\Huge}
+  {\filleft\thechapter}
+  {1ex}
+  {\titlerule\vspace{1ex}\filright}
+
+% ==========================
+% DOCUMENT START
+% ==========================
 \begin{document}
 
-\title{\textbf{CS2 Recursion Workbook}\\
-\large A Practical Guide for Exploring Recursive Thinking}
+\frontmatter
+\title{Recursion Workbook for CS 2}
 \author{Jeremy Evert}
 \date{\today}
-
 \maketitle
+
 \tableofcontents
 \newpage
 
-% ===========================
-% Include Chapters
-% ===========================
+\mainmatter
+
 \include{chapters\ch01}
-% Future chapters: ch02 (Classic Recursive Labs), ch03 (Recursive Patterns), etc.
+
+% future chapters:
+% \include{chapters\ch02}
+% \include{chapters\ch03}
+% \include{chapters\lab_fibonacci}
+% \include{chapters\lab_permutations}
+
+\backmatter
+\chapter*{Notes}
+Use this space for your own discoveries and recursive experiments.
 
 \end{document}
 
