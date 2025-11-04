@@ -1,0 +1,78 @@
+\documentclass[12pt]{book}
+
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{titlesec}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{xcolor}
+\usepackage{newunicodechar}
+\newunicodechar{✓}{\checkmark}
+\setlength{\headheight}{15pt} % silences fancyhdr warning
+\usepackage{tikz}
+\usepackage{listings}
+\usepackage{float} % For [H] figures
+\usepackage{hyperref}
+
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!70!black,
+  urlcolor=blue!60!black,
+  citecolor=blue!50!black
+}
+
+
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  breakatwhitespace=true,
+  columns=fullflexible,
+  inputencoding=utf8,
+  extendedchars=true,
+  literate={✓}{{\checkmark}}1 {✅}{{\checkmark}}1
+}
+
+
+\geometry{margin=1in}
+\onehalfspacing
+
+% Fancy headers
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{COMSC 2043: Counting}
+\fancyhead[R]{\thepage}
+
+% Chapter style
+\titleformat{\chapter}[display]
+  {\normalfont\bfseries\Huge\color{blue!60!black}}
+  {\chaptername\ \thechapter}{20pt}{\Huge}
+
+\title{\textbf{COMSC 2043}\\[0.5em]
+\textbf{Counting}\\[1em]
+\Large Student Workbook}
+
+\author{Jeremy Evert \\ Southwestern Oklahoma State University}
+\date{\today}
+
+\begin{document}
+\begin{titlepage}
+  \centering
+  \vspace*{3cm}
+  {\Huge \textbf{COMSC 2043}}\\[0.5em]
+  {\LARGE \textbf{Counting}}\\[1em]
+  {\Large Student Workbook}\\[2cm]
+  {\large Jeremy Evert\\Southwestern Oklahoma State University}\\[1cm]
+  {\large \today}
+  \vfill
+\end{titlepage}
+\tableofcontents
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{2}
+\clearpage
+
+\input{chapters/ch01.tex}
+
+
+\end{document}
