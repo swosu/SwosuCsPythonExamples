@@ -1,0 +1,156 @@
+\chapter{Section 6.1 — The Basics of Counting}
+
+\section{Introduction}
+
+Suppose that a password on a computer system consists of six, seven, or eight characters. 
+Each of these characters must be a digit or a letter of the alphabet, and each password must contain at least one digit. 
+How many such passwords are there?
+
+Questions like this form the beating heart of discrete mathematics:  
+\emph{How many ways can something happen?}  
+Counting allows us to measure complexity, probability, and possibility.  
+In computer science, every algorithm that loops, branches, or searches is secretly counting something.
+
+\section{Basic Counting Principles}
+
+Two fundamental rules guide our reasoning:
+
+\begin{description}
+  \item[\textbf{The Sum Rule}]  
+  If a task can be done in $n_1$ ways \emph{or} $n_2$ ways (but not both), then it can be done in $n_1 + n_2$ ways.
+
+  \item[\textbf{The Product Rule}]  
+  If a task can be broken into two independent subtasks—first done in $n_1$ ways, then in $n_2$ ways—then the whole procedure can be done in $n_1 \times n_2$ ways.
+\end{description}
+
+\section{Worked Examples}
+
+\begin{example}[Assigning Offices]
+A new company with two employees, Sanchez and Patel, rents a floor with 12 offices.  
+How many ways are there to assign different offices to these two employees?
+
+\textbf{Solution.}  
+12 choices for Sanchez, then 11 remaining for Patel.  
+By the product rule: $12 \times 11 = 132$ possibilities.
+\end{example}
+
+\begin{example}[Labeling Auditorium Chairs]
+Each seat is labeled with one uppercase English letter followed by a positive integer not exceeding 100.  
+How many unique chair labels exist?
+
+\textbf{Solution.}  
+$26$ possible letters $\times$ $100$ integers $= 2600$ labels.
+\end{example}
+
+\begin{example}[Counting Ports in a Data Center]
+There are 32 computers, each with 24 ports.  
+How many total ports exist?
+
+\textbf{Solution.}  
+$32 \times 24 = 768$ ports.
+\end{example}
+
+\begin{example}[Challenging A: License Plate Combinations]
+A region issues license plates with 3 uppercase letters followed by 3 digits (e.g., ABC123).  
+How many distinct plates are possible if repetition is allowed?
+
+\textbf{Solution.}  
+$26^3 \times 10^3 = 175{,}760{,}000$ possible plates.
+
+If letters and digits cannot repeat, the count becomes  
+$26 \times 25 \times 24 \times 10 \times 9 \times 8 = 112{,}320{,}000$.
+\end{example}
+
+\begin{example}[Challenging B: Passwords with a Digit Requirement]
+A password must be 6, 7, or 8 characters long, each either a letter or digit, 
+and must contain at least one digit.  
+How many possible passwords exist?
+
+\textbf{Solution.}  
+Let $A$ be all possible strings of the given length (letters + digits),  
+and $B$ be those with only letters.  
+
+Then valid passwords $= A - B$.
+
+\begin{align*}
+|A_6| &= 36^6, & |B_6| &= 26^6 \\
+|A_7| &= 36^7, & |B_7| &= 26^7 \\
+|A_8| &= 36^8, & |B_8| &= 26^8 \\
+\text{Total} &= (36^6 - 26^6) + (36^7 - 26^7) + (36^8 - 26^8)
+\end{align*}
+\end{example}
+
+\section{Python Demonstrations}
+
+Below is Python code that mirrors the reasoning in these examples.  
+Each section prints both the symbolic reasoning and the computed value.  
+Students are encouraged to modify the numbers and observe how the results change.
+
+\begin{lstlisting}[language=Python, caption={Demonstrating the Product and Sum Rules in Python}]
+"""
+COMSC 2043 - Counting Demonstrations
+Author: Jeremy Evert
+This script demonstrates the basic principles of counting using Python.
+"""
+
+from math import comb, perm
+
+def example_offices():
+    n1, n2 = 12, 11
+    total = n1 * n2
+    print(f"Example 1: Assigning offices\n12 * 11 = {total}\n")
+
+def example_chairs():
+    total = 26 * 100
+    print(f"Example 2: Chair labeling\n26 * 100 = {total}\n")
+
+def example_ports():
+    total = 32 * 24
+    print(f"Example 3: Data center ports\n32 * 24 = {total}\n")
+
+def example_license_plates():
+    allow_repeat = 26**3 * 10**3
+    no_repeat = (26*25*24) * (10*9*8)
+    print("Example 4: License plates")
+    print(f"  With repetition: {allow_repeat:,}")
+    print(f"  Without repetition: {no_repeat:,}\n")
+
+def example_passwords():
+    # Helper function: A^n - B^n
+    def count_valid(length):
+        return 36**length - 26**length
+
+    total = sum(count_valid(n) for n in (6, 7, 8))
+    print("Example 5: Passwords with at least one digit")
+    print(f"  Total valid passwords: {total:,}\n")
+
+def main():
+    print("=== Counting Demonstrations ===\n")
+    example_offices()
+    example_chairs()
+    example_ports()
+    example_license_plates()
+    example_passwords()
+    print("Done!")
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+
+\section*{Discussion and Reflection}
+
+Each of these problems could be solved by intuition, but writing code forces precision.  
+Python doesn’t “believe” in the product rule—it performs it.  
+This helps students see that the abstract logic of counting translates directly into computation.
+
+Encourage students to:
+\begin{itemize}
+  \item Change numbers and verify the rules still hold.
+  \item Add print statements to trace intermediate steps.
+  \item Reflect on where independence between tasks exists—and where it doesn’t.
+\end{itemize}
+
+\section*{Next Steps}
+
+In the next section we will apply these rules to cases where choices overlap or restrict one another—  
+leading to the powerful and deceptively simple \textbf{Pigeonhole Principle}.

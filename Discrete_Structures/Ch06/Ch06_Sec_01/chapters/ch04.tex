@@ -1,0 +1,204 @@
+\chapter{Section 6.1 — Product Rule in Action}
+
+\section{Real-World Applications of the Product Rule}
+
+Counting problems appear everywhere—from numbering systems to programming loops and data sets.  
+The following examples show how the product rule powers many of these real-world situations.
+
+---
+
+\begin{example}[The North American Telephone Numbering Plan]
+The North American Numbering Plan (NANP) defines 10-digit phone numbers,  
+split into a three-digit area code, a three-digit office code, and a four-digit station code.  
+
+Let:
+\begin{itemize}
+  \item $N$: any digit from 2–9
+  \item $Y$: either 0 or 1
+  \item $X$: any digit 0–9
+\end{itemize}
+
+\textbf{Old Plan (NYX–NNX–XXXX):}
+\[
+\begin{aligned}
+\text{Area codes: } &8 \times 2 \times 10 = 160,\\
+\text{Office codes: } &8 \times 8 \times 10 = 640,\\
+\text{Station codes: } &10^4 = 10{,}000.
+\end{aligned}
+\]
+Total: $160 \times 640 \times 10{,}000 = 1.024\times10^9$ phone numbers.
+
+\textbf{New Plan (NXX–NXX–XXXX):}
+\[
+\begin{aligned}
+\text{Area codes: } &8 \times 10 \times 10 = 800,\\
+\text{Office codes: } &8 \times 10 \times 10 = 800,\\
+\text{Station codes: } &10^4 = 10{,}000.
+\end{aligned}
+\]
+Total: $800 \times 800 \times 10{,}000 = 6.4\times10^9$ phone numbers.
+\end{example}
+
+\begin{solution}
+The new plan increases capacity by a factor of about six.  
+A small change in one rule leads to billions more combinations—combinatorics in action.
+\end{solution}
+
+---
+
+\subsection*{Practice Problems}
+
+\textbf{1. Easier:}  
+A small town uses 7-digit numbers in the format NXX–XXX,  
+where $N$ is from 2–9 and $X$ is from 0–9.  
+How many phone numbers can be issued?
+
+\newpage
+\textbf{Solution:}  
+\[
+8 \times 10^5 = 8{,}000{,}000.
+\]
+
+\textbf{2. Moderate:}  
+If the first two digits must be odd (1, 3, 5, 7, 9), how many numbers exist?
+
+\newpage
+\textbf{Solution:}  
+\[
+5 \times 5 \times 10^5 = 2{,}500{,}000.
+\]
+
+\textbf{3. Stretch:}  
+If each number begins with one of 26 region letters (A–Z),  
+how many distinct identifiers exist?
+
+\newpage
+\textbf{Solution:}  
+\[
+26 \times 8{,}000{,}000 = 208{,}000{,}000.
+\]
+
+---
+
+\begin{example}[Counting Nested Loops]
+Consider the pseudocode:
+
+\begin{lstlisting}[language=Python]
+k = 0
+for i1 in range(1, n1+1):
+    for i2 in range(1, n2+1):
+        ...
+        for im in range(1, nm+1):
+            k += 1
+\end{lstlisting}
+
+Each loop represents one “task” $T_i$ with $n_i$ iterations.  
+By the product rule, the innermost statement executes
+\[
+n_1 \times n_2 \times \cdots \times n_m
+\]
+times, so the final value of $k$ is exactly that product.
+\end{example}
+
+---
+
+\subsection*{Practice Problems}
+
+\textbf{1. Easier:}  
+If the outer loop runs 5 times and the inner loop 4 times, how many increments occur?  
+\[
+5 \times 4 = 20.
+\]
+
+\textbf{2. Moderate:}  
+For three nested loops running 3, 4, and 2 times respectively:  
+\[
+3 \times 4 \times 2 = 24.
+\]
+
+\textbf{3. Stretch:}  
+Write a Python function that computes $k$ automatically for any $(n_1,n_2,\ldots,n_m)$.
+
+\begin{lstlisting}[language=Python]
+from math import prod
+def nested_loops(*sizes):
+    return prod(sizes)
+print(nested_loops(3, 4, 2))  # Output: 24
+\end{lstlisting}
+
+---
+
+\begin{example}[Counting Subsets of a Finite Set]
+Use the product rule to show that a set $S$ with $|S|=n$ has $2^n$ subsets.
+
+\textbf{Solution.}  
+For each element of $S$, decide whether to:
+\begin{enumerate}
+  \item include it in the subset, or
+  \item exclude it.
+\end{enumerate}
+Two independent choices per element yield $2^n$ total subsets.
+Each subset corresponds to a unique bit string of length $n$.
+\end{example}
+
+---
+
+\subsection*{Practice Problems}
+
+\textbf{1. Easier:}  
+How many subsets does $\{a,b,c\}$ have?  
+\[
+2^3 = 8.
+\]
+
+\textbf{2. Moderate:}  
+If $|S| = 10$, how many subsets contain at least one element?  
+\[
+2^{10} - 1 = 1023.
+\]
+
+\textbf{3. Stretch:}  
+How many subsets of a set with $n$ elements have exactly $k$ members?  
+\[
+\binom{n}{k}.
+\]
+
+---
+
+\section{Python Demonstrations}
+
+\begin{lstlisting}[language=Python, caption={Counting with Loops and Sets}]
+from itertools import product, chain, combinations
+from math import prod
+
+# Telephone numbering comparison
+def phone_numbers(area, office, station):
+    return area * office * station
+
+print("Old plan:", phone_numbers(160, 640, 10_000))
+print("New plan:", phone_numbers(800, 800, 10_000))
+
+# Nested loop counter
+def nested_count(*sizes):
+    return prod(sizes)
+
+print("Nested loop 3x4x2:", nested_count(3,4,2))
+
+# Subsets demonstration
+S = {'a', 'b', 'c'}
+power_set = list(chain.from_iterable(combinations(S, r) for r in range(len(S)+1)))
+print("Subsets of {a,b,c}:", power_set)
+print("Count:", len(power_set))
+\end{lstlisting}
+
+---
+
+\section*{Reflection}
+
+These three themes—telephone numbers, nested loops, and subsets—share one idea:
+\[
+\text{Total outcomes} = \prod_i (\text{ways to complete task } i).
+\]
+Whenever choices multiply, the product rule is at work.  
+Computer scientists live inside this principle every day:  
+loops, data encodings, and branching logic all trace their roots to simple multiplication of possibilities.

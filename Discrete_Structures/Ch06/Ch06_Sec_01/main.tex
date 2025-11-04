@@ -1,29 +1,32 @@
 \documentclass[12pt]{book}
 
-\usepackage[utf8]{inputenc}
+% ---------- Encoding & Math Packages ----------
+\usepackage[utf8]{inputenc}    % Handle UTF-8 input safely
+\usepackage[T1]{fontenc}       % Proper font encoding for PDF output
 \usepackage{amsmath, amssymb, amsthm}
+
+% ---------- Theorem Environments ----------
+\newtheorem{example}{Example}[chapter]
+\newenvironment{solution}{\paragraph{Solution.}}{\hfill$\blacktriangleleft$}
+
+% ---------- Graphics, Layout, and Style ----------
 \usepackage{graphicx}
 \usepackage{fancyhdr}
 \usepackage{titlesec}
 \usepackage{geometry}
 \usepackage{setspace}
 \usepackage{xcolor}
+\usepackage{float}
+\usepackage{tikz}
+
+% ---------- Unicode Handling ----------
 \usepackage{newunicodechar}
 \newunicodechar{✓}{\checkmark}
-\setlength{\headheight}{15pt} % silences fancyhdr warning
-\usepackage{tikz}
+\newunicodechar{–}{--} % en-dash fix
+\newunicodechar{—}{---} % em-dash fix
+
+% ---------- Code Listings ----------
 \usepackage{listings}
-\usepackage{float} % For [H] figures
-\usepackage{hyperref}
-
-\hypersetup{
-  colorlinks=true,
-  linkcolor=blue!70!black,
-  urlcolor=blue!60!black,
-  citecolor=blue!50!black
-}
-
-
 \lstset{
   basicstyle=\ttfamily\small,
   breaklines=true,
@@ -31,32 +34,63 @@
   columns=fullflexible,
   inputencoding=utf8,
   extendedchars=true,
-  literate={✓}{{\checkmark}}1 {✅}{{\checkmark}}1
+  frame=single,
+  rulecolor=\color{gray!40},
+  backgroundcolor=\color{gray!5},
+  numbers=left,
+  numberstyle=\tiny\color{gray!70},
+  literate=
+    {→}{{$\to$}}1
+    {✓}{{\checkmark}}1
+    {✅}{{\checkmark}}1
+    {≤}{{$\leq$}}1
+    {≥}{{$\geq$}}1
+    {×}{{$\times$}}1
 }
 
-
+% ---------- Geometry & Spacing ----------
 \geometry{margin=1in}
 \onehalfspacing
 
-% Fancy headers
+% ---------- Fancy Headers ----------
 \pagestyle{fancy}
 \fancyhf{}
 \fancyhead[L]{COMSC 2043: Counting}
 \fancyhead[R]{\thepage}
+\setlength{\headheight}{15pt}
 
-% Chapter style
+% ---------- Chapter Title Style ----------
 \titleformat{\chapter}[display]
   {\normalfont\bfseries\Huge\color{blue!60!black}}
   {\chaptername\ \thechapter}{20pt}{\Huge}
 
-\title{\textbf{COMSC 2043}\\[0.5em]
-\textbf{Counting}\\[1em]
-\Large Student Workbook}
+% ---------- Hyperlinks ----------
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue!70!black,
+  urlcolor=blue!60!black,
+  citecolor=blue!50!black,
+  pdftitle={COMSC 2043 Counting Workbook},
+  pdfauthor={Jeremy Evert},
+  pdfsubject={Discrete Structures - Counting},
+  pdfkeywords={Counting, Discrete Math, Product Rule, Python, COMSC 2043}
+}
 
+% ---------- Title Page ----------
+\title{
+  \vspace{2cm}
+  \textbf{COMSC 2043}\\[0.5em]
+  \textbf{Counting}\\[1em]
+  \Large Student Workbook
+  \vspace{1cm}
+}
 \author{Jeremy Evert \\ Southwestern Oklahoma State University}
 \date{\today}
 
+% ---------- Document Begins ----------
 \begin{document}
+
 \begin{titlepage}
   \centering
   \vspace*{3cm}
@@ -67,12 +101,16 @@
   {\large \today}
   \vfill
 \end{titlepage}
+
 \tableofcontents
 \setcounter{tocdepth}{2}
 \setcounter{secnumdepth}{2}
 \clearpage
 
+% ---------- Chapter Inputs ----------
 \input{chapters/ch01.tex}
-
+\input{chapters/ch02.tex}
+\input{chapters/ch03.tex}
+\input{chapters/ch04.tex}
 
 \end{document}
