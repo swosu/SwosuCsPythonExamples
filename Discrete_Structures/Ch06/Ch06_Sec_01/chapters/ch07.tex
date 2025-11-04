@@ -1,0 +1,142 @@
+\chapter{Section 6.1.3 — More Complex Counting Problems}
+
+\section*{Why this section matters}
+Up to now, we’ve used the product rule (choices multiply) and the sum rule (disjoint options add). Many real problems mix both ideas and add constraints (like “must begin with a letter” or “must include at least one digit”). Today’s patterns: (i) break by \emph{length} and \emph{first‐character rules}, (ii) count with the product rule, and (iii) subtract forbidden cases (complements and inclusion–exclusion).
+
+\section{Worked Example A — Short variable names with reserved words}
+\begin{example}
+A toy language allows variable names of length 1 or 2. Characters are alphanumeric (letters/digits) but \emph{the first character must be a letter}. Upper/lowercase are treated the same. Additionally, \emph{five specific two-character strings are reserved} and therefore not allowed as variable names. How many valid variable names exist?
+\end{example}
+
+\begin{solution}
+Let $V$ be the number of valid names. Split by length:
+
+\textbf{Length 1.} First character must be a letter $\Rightarrow 26$ possibilities.
+
+\textbf{Length 2.} First char: $26$ choices (letter). Second char: $36$ choices (letter or digit). So
+\[
+26\cdot 36 = 936\ \text{raw two-character strings.}
+\]
+But five of these two-character strings are reserved. Exclude them:
+\[
+V_2 = 936 - 5 = 931.
+\]
+\textbf{Total.} $V = V_1 + V_2 = 26 + 931 = \boxed{957}$.
+
+\medskip
+\noindent\textbf{Sanity checks.}
+(1) The “first is a letter” constraint is applied to both lengths. (2) The $-5$ only hits two-character names (not the length-1 pool). (3) We didn’t accidentally double-subtract: reserved items are disjoint from the length-1 set.
+\medskip
+
+\noindent\textbf{Python quick check.}
+\begin{lstlisting}[language=Python]
+import string
+letters = string.ascii_uppercase  # treat case-insensitive
+alnum   = string.ascii_uppercase + string.digits
+
+reserved = {"IF", "DO", "TO", "ON", "GO"}  # example 5
+V1 = len(letters)
+V2 = sum(1 for a in letters for b in alnum if (a+b) not in reserved)
+print(V1 + V2)  # 957
+\end{lstlisting}
+\end{solution}
+
+\section{Worked Example B — 6–8 char passwords, at least one digit}
+\begin{example}
+A password is 6, 7, or 8 characters long. Each character is an uppercase letter or a digit. A password is valid only if it includes \emph{at least one digit}. How many valid passwords are there in total?
+\end{example}
+
+\begin{solution}
+For a fixed length $n$, count all strings over $\{A\ldots Z,0\ldots9\}$ and subtract the “all letters” strings:
+\[
+P_n \;=\; 36^n - 26^n.
+\]
+Sum over $n\in\{6,7,8\}$:
+\[
+P \;=\; (36^6 - 26^6) + (36^7 - 26^7) + (36^8 - 26^8).
+\]
+Numerically,
+\[
+\begin{aligned}
+36^6 - 26^6 &= 2{,}176{,}782{,}336 - 308{,}915{,}776 = 1{,}867{,}866{,}560,\\
+36^7 - 26^7 &= 78{,}364{,}164{,}096 - 8{,}031{,}810{,}176 = 70{,}332{,}353{,}920,\\
+36^8 - 26^8 &= 2{,}821{,}109{,}907{,}456 - 208{,}827{,}064{,}576 = 2{,}612{,}282{,}842{,}880.
+\end{aligned}
+\]
+Therefore
+\[
+\boxed{P = 2{,}684{,}483{,}063{,}360}.
+\]
+
+\noindent\textbf{Common gotchas.} (1) The complement must match the exact constraint (“at least one digit” $\Rightarrow$ complement is “no digits”). (2) Don’t multiply by 3 lengths; you \emph{add} across mutually exclusive lengths (sum rule). (3) No double-counting across lengths because 6/7/8 are disjoint cases.
+
+\medskip
+\noindent\textbf{Python spot-check.}
+\begin{lstlisting}[language=Python]
+def valid(n): return 36**n - 26**n
+total = sum(valid(n) for n in (6,7,8))
+print(f"{total:,}")  # 2,684,483,063,360
+\end{lstlisting}
+\end{solution}
+
+\section{Try It — Easier (solution on the next page)}
+A promo code is either \emph{four} or \emph{five} characters long. Each character is a letter or digit, and every promo code must contain \emph{at least one letter}. How many promo codes are possible?
+
+\clearpage
+\subsection*{Solution (Easier)}
+Let $Q_n$ be the count for fixed length $n$. Use a complement again: “at least one letter” $\Rightarrow$ subtract “no letters” (i.e., \emph{all digits}).
+\[
+Q_n = 36^n - 10^n.
+\]
+Sum for $n\in\{4,5\}$:
+\[
+\boxed{Q \;=\; (36^4 - 10^4) + (36^5 - 10^5) = 1{,}679{,}616 - 10{,}000 + 60{,}466{,}176 - 100{,}000 = 62{,}035{,}792.}
+\]
+
+\clearpage
+\section{Challenge — Harder (solution on the next page)}
+Passwords are still 6–8 characters using letters/digits, but now add two constraints:
+\begin{enumerate}
+  \item The \textbf{first character must be a letter}, and
+  \item The password must contain \textbf{at least two digits} overall.
+\end{enumerate}
+How many valid passwords exist?
+
+\clearpage
+\subsection*{Solution (Harder)}
+Fix a length $n\in\{6,7,8\}$. Force the first character to be a letter ($26$ ways). The remaining $n-1$ positions each have $36$ choices. We need \emph{at least two digits across those $n-1$ trailing positions}. Count by complement on the tail:
+
+For the last $n-1$ positions:
+\[
+\#(\text{at least 2 digits}) = 36^{\,n-1} - \underbrace{26^{\,n-1}}_{\text{0 digits}} - \underbrace{\binom{n-1}{1}\cdot 10 \cdot 26^{\,n-2}}_{\text{exactly 1 digit}}.
+\]
+Multiply by $26$ for the first letter:
+\[
+H_n \;=\; 26\left(36^{\,n-1} - 26^{\,n-1} - (n-1)\cdot 10 \cdot 26^{\,n-2}\right).
+\]
+Compute each $n$ and sum:
+\[
+\begin{aligned}
+H_6 &= 26\big(36^5 - 26^5 - 5\cdot 10\cdot 26^4\big) = \boxed{669{,}136{,}000},\\
+H_7 &= 26\big(36^6 - 26^6 - 6\cdot 10\cdot 26^5\big) = \boxed{30{,}029{,}584{,}000},\\
+H_8 &= 26\big(36^7 - 26^7 - 7\cdot 10\cdot 26^6\big) = \boxed{1{,}266{,}414{,}489{,}600}.
+\end{aligned}
+\]
+Therefore,
+\[
+\boxed{H \;=\; H_6 + H_7 + H_8 \;=\; 1{,}297{,}113{,}209{,}600.}
+\]
+
+\noindent\textbf{Why inclusion–exclusion?} “At least two digits” means we must remove both the 0-digit and 1-digit cases from the tail. Exactly-one-digit strings on the tail: choose the position ($n-1$ ways), choose the digit (10), and fill others with letters ($26^{\,n-2}$).
+\medskip
+
+\noindent\textbf{Python verification.}
+\begin{lstlisting}[language=Python]
+def count_at_least_two_with_first_letter(n):
+    from math import comb
+    tail = 36**(n-1) - 26**(n-1) - comb(n-1,1)*10*26**(n-2)
+    return 26 * tail
+
+print(sum(count_at_least_two_with_first_letter(n) for n in (6,7,8)))
+# 1,297,113,209,600
+\end{lstlisting}

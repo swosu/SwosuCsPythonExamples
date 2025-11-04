@@ -1,0 +1,142 @@
+\chapter{Section 6.1.4 — The Subtraction Rule (Avoiding Double Counting)}
+
+\section{Introduction: When Counting Goes Wrong}
+
+By now, we’ve seen how to count outcomes using the \textbf{Product Rule} (for “and”) and the \textbf{Sum Rule} (for “or”).  
+But what if we count the same thing twice?  
+
+That’s where the \textbf{Subtraction Rule} comes in. It tells us how to avoid double-counting when two sets overlap.
+
+\begin{definition}[Subtraction Rule]
+If a task can be done in $n_1$ ways or in $n_2$ ways, but some outcomes are counted twice because they can be done both ways (there are $n_{1,2}$ overlaps), then the correct total is:
+\[
+n_1 + n_2 - n_{1,2}.
+\]
+\end{definition}
+
+\noindent
+This simple idea is foundational in combinatorics and probability — and a secret weapon against overcounting errors.
+
+---
+
+\section{Example 1: Bit Strings with Conditions (Rosen Example 18)}
+
+\begin{example}[Counting Bit Strings of Length 8]
+How many bit strings of length 8 start with a 1 \emph{or} end with the two bits 00?
+
+\textbf{Solution Outline:}
+\begin{itemize}
+  \item Let $A$ = set of 8-bit strings that start with a 1.
+  \item Let $B$ = set of 8-bit strings that end with 00.
+  \item We want $|A \cup B| = |A| + |B| - |A \cap B|$.
+\end{itemize}
+
+\textbf{Step 1: Count $|A|$.}  
+If the first bit is fixed as 1, there are $7$ free bits left:  
+\[
+|A| = 2^7 = 128.
+\]
+
+\textbf{Step 2: Count $|B|$.}  
+If the last two bits are fixed as 00, there are $6$ free bits:  
+\[
+|B| = 2^6 = 64.
+\]
+
+\textbf{Step 3: Count the overlap $|A \cap B|$.}  
+If a string both starts with 1 \emph{and} ends with 00, that leaves $5$ free bits in the middle:  
+\[
+|A \cap B| = 2^5 = 32.
+\]
+
+\textbf{Step 4: Apply the Subtraction Rule.}  
+\[
+|A \cup B| = 128 + 64 - 32 = 160.
+\]
+\end{example}
+
+\begin{solution}
+So, there are $\boxed{160}$ bit strings of length 8 that start with 1 or end with 00.
+
+\medskip
+\noindent
+\textbf{Key Idea:}  
+The subtraction corrects for overlap — things counted twice. Without it, you’d have $128 + 64 = 192$, which overcounts by the 32 strings that fit both patterns.
+\end{solution}
+
+---
+
+\section*{Practice Problems — Subtraction Rule in Action}
+
+\textbf{1. Easier Problem:}  
+How many 5-bit strings start with 0 or end with 1?
+
+\newpage
+\textbf{Solution:}
+\[
+|A| = 2^4 = 16, \quad |B| = 2^4 = 16, \quad |A \cap B| = 2^3 = 8.
+\]
+\[
+|A \cup B| = 16 + 16 - 8 = 24.
+\]
+\textbf{Answer:} 24 such bit strings exist.
+
+---
+
+\textbf{2. Stretch Problem:}  
+How many 10-bit strings start with “11” or end with “000”?
+
+\newpage
+\textbf{Solution:}  
+\begin{itemize}
+  \item $|A|$: Starts with 11 $\Rightarrow$ $2^8 = 256$.
+  \item $|B|$: Ends with 000 $\Rightarrow$ $2^7 = 128$.
+  \item $|A \cap B|$: Starts with 11 and ends with 000 $\Rightarrow$ $2^5 = 32$.
+\end{itemize}
+
+\[
+|A \cup B| = 256 + 128 - 32 = 352.
+\]
+\textbf{Answer:} 352 such bit strings exist.
+
+---
+
+\section{Python Demonstration}
+
+\begin{lstlisting}[language=Python, caption={Demonstrating the Subtraction Rule with Bit Strings}]
+"""
+COMSC 2043 - Subtraction Rule Examples
+Author: Jeremy Evert
+"""
+
+def count_subtraction_rule(n1, n2, overlap):
+    """Apply the subtraction rule."""
+    return n1 + n2 - overlap
+
+# Example 1: 8-bit strings starting with 1 or ending with 00
+A = 2**7   # starts with 1
+B = 2**6   # ends with 00
+overlap = 2**5  # both conditions
+print("8-bit strings:", count_subtraction_rule(A, B, overlap))
+
+# Practice check: 10-bit version
+A, B, overlap = 2**8, 2**7, 2**5
+print("10-bit strings:", count_subtraction_rule(A, B, overlap))
+\end{lstlisting}
+
+---
+
+\section*{Reflection}
+
+The subtraction rule protects us from our own enthusiasm — we tend to count everything, including repeats!  
+Mathematically, it’s the bridge from simple counting to true combinatorial reasoning.  
+
+It also underlies many powerful ideas in computer science:  
+\begin{itemize}
+  \item detecting overlaps in sets (databases and queries),
+  \item correcting for double-counted results in logic and probability,
+  \item and later — the \textbf{Inclusion–Exclusion Principle}, which generalizes this very rule.
+\end{itemize}
+
+The moral?  
+When two paths overlap, you must subtract the crossroads.

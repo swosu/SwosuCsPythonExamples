@@ -9,16 +9,11 @@
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[chapter]
 \newtheorem{example}{Example}[chapter]
-\newtheorem{solution}{Solution}[chapter]
+\newtheorem*{solution}{Solution}  % starred = unnumbered
 
-% Optional: a few extras you might want later
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{lemma}{Lemma}[chapter]
-
-% ---------- Theorem Environments ----------
-\newtheorem{example}{Example}[chapter]
-\newenvironment{solution}{\paragraph{Solution.}}{\hfill$\blacktriangleleft$}
 
 % ---------- Graphics, Layout, and Style ----------
 \usepackage{graphicx}
@@ -124,5 +119,9 @@
 \input{chapters/ch03.tex}
 \input{chapters/ch04.tex}
 \input{chapters/ch05.tex}
+\input{chapters/ch06.tex}
+\input{chapters/ch07.tex}
+\input{chapters/ch08.tex}
+
 
 \end{document}

@@ -1,0 +1,168 @@
+\chapter{Section 6.3 — Permutations and Combinations}
+
+\section{Counting Arrangements and Selections}
+
+When counting, we often face two big questions:
+
+\begin{enumerate}
+  \item Does \emph{order} matter?
+  \item Can we \emph{reuse} elements?
+\end{enumerate}
+
+If order matters, we are dealing with \textbf{permutations}.  
+If order does not matter, we are counting \textbf{combinations}.  
+Let’s unpack each idea carefully.
+
+---
+
+\begin{example}[Permutations — When Order Matters]
+Suppose you have three different books and you want to know how many ways
+they can be arranged on a shelf.
+
+\textbf{Reasoning.}
+\begin{itemize}
+  \item 3 choices for the first position.
+  \item 2 choices for the second position.
+  \item 1 choice for the last position.
+\end{itemize}
+
+By the product rule:
+\[
+3 \times 2 \times 1 = 6.
+\]
+
+We call this $3!$ (“three factorial”).  
+In general, $n! = n \times (n - 1) \times \cdots \times 1$.
+
+\end{example}
+
+\begin{solution}
+If you label the books A, B, and C, the six permutations are:
+\[
+\text{ABC, ACB, BAC, BCA, CAB, CBA.}
+\]
+Factorials grow explosively—$10! = 3{,}628{,}800$—so a few extra items
+make a huge difference!
+\end{solution}
+
+---
+
+\begin{example}[Permutations of Subsets]
+How many ways can you arrange 4 of 10 distinct students in a line?
+
+\textbf{Reasoning.}
+You are selecting 4 \emph{different} people, and the order matters.
+\[
+P(10, 4) = \frac{10!}{(10 - 4)!} = \frac{10!}{6!} = 10 \times 9 \times 8 \times 7 = 5040.
+\]
+\end{example}
+
+\begin{solution}
+$P(n, r)$ counts the number of ways to arrange $r$ objects from a set of $n$.
+Python’s \texttt{math.perm(n, r)} computes this directly.
+\end{solution}
+
+---
+
+\section{Combinations — When Order Does Not Matter}
+
+When order no longer matters, we divide out the repeated arrangements
+that represent the same group.
+
+\begin{example}[Combinations Formula]
+From 10 students, how many groups of 4 can you form?
+
+\textbf{Reasoning.}
+\[
+C(10, 4) = \frac{10!}{4! \times (10 - 4)!} = \frac{10!}{4! \, 6!} = 210.
+\]
+\end{example}
+
+\begin{solution}
+In Python, use \texttt{math.comb(10, 4)} to get the same answer.
+Combinations appear in probability, lotteries, and team selections.
+\end{solution}
+
+---
+
+\subsection*{Practice Problems — Permutations and Combinations}
+
+\textbf{1. Easier:}  
+How many ways can 5 different books be arranged on a shelf?
+
+\newpage
+\textbf{Solution:}  
+\[
+5! = 5 \times 4 \times 3 \times 2 \times 1 = 120.
+\]
+
+---
+
+\textbf{2. Moderate:}  
+From a group of 8 students, how many teams of 3 can be formed?
+
+\newpage
+\textbf{Solution:}  
+\[
+C(8, 3) = \frac{8!}{3! \, 5!} = 56.
+\]
+
+---
+
+\textbf{3. Stretch:}  
+How many 4-digit PINs can be formed using digits 0–9 if:
+\begin{enumerate}
+  \item Digits cannot repeat.
+  \item Digits may repeat.
+\end{enumerate}
+
+\newpage
+\textbf{Solution:}  
+\[
+\text{(a) No repeats: } P(10, 4) = \frac{10!}{6!} = 5040.
+\]
+\[
+\text{(b) Repeats allowed: } 10^4 = 10{,}000.
+\]
+This comparison highlights how reuse (repetition) increases the count dramatically.
+
+---
+
+\section{Python Demonstrations}
+
+\begin{lstlisting}[language=Python, caption={Exploring permutations and combinations in Python}]
+"""
+COMSC 2043 - Section 6.3: Permutations & Combinations
+"""
+
+import math
+
+# 1. Factorials
+print("5! =", math.factorial(5))
+
+# 2. Permutations (order matters)
+print("Permutations of 10 choose 4:", math.perm(10, 4))
+
+# 3. Combinations (order does not matter)
+print("Combinations of 10 choose 4:", math.comb(10, 4))
+
+# 4. Comparing repetition
+no_repeats = math.perm(10, 4)
+with_repeats = 10**4
+print(f"No repeats: {no_repeats}, With repeats: {with_repeats}")
+\end{lstlisting}
+
+---
+
+\section*{Reflection}
+
+Permutations and combinations represent the heart of counting theory.
+They explain why adding order multiplies possibilities—and why ignoring it divides them out.  
+When students grasp this duality, they start to see connections
+between probability, coding loops, and even DNA patterns.
+
+Remember:  
+\[
+\text{Permutations: } P(n, r) = \frac{n!}{(n - r)!}, \qquad
+\text{Combinations: } C(n, r) = \frac{n!}{r!(n - r)!}.
+\]
