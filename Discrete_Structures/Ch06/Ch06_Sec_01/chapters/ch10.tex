@@ -1,0 +1,132 @@
+\chapter{Section 6.1.6 — Tree Diagrams}
+
+\section*{Why this section matters}
+When a counting problem starts to branch—when every choice opens new sub-choices—our mental arithmetic hits its limits.  
+Tree diagrams visualize those branching worlds.  
+Each path from the root to a leaf represents one distinct outcome, and the total number of leaves tells us how many possibilities exist.  
+In computer science, these trees reappear as recursion traces, decision trees, and game trees—every “if → else” path you’ve ever coded.
+
+\section{Tree Diagrams}
+
+\begin{definition}[Tree Diagram]
+A \textbf{tree diagram} is a branching structure that represents sequential choices.
+Each vertex (node) shows a decision point, and each edge (branch) corresponds to an outcome of that decision.
+Every path from the root to a leaf represents one complete sequence of choices.
+\end{definition}
+
+\noindent
+Tree diagrams make the invisible visible:
+\begin{itemize}
+  \item Each branch multiplies choices (Product Rule).
+  \item Each split visualizes conditional logic (“if/else” in code).
+  \item The number of leaves equals the total number of possible outcomes.
+\end{itemize}
+
+\section{Worked Examples}
+
+\begin{example}[Bit strings without consecutive 1s (Rosen Example 22)]
+How many bit strings of length 4 contain no two consecutive 1s?
+\end{example}
+
+\begin{solution}
+Draw a tree where each level adds one bit (0 or 1).  
+When a 1 is chosen, the next level cannot start with another 1.  
+This yields the valid strings:
+\[
+0000,\;0001,\;0010,\;0100,\;0101,\;1000,\;1001,\;1010.
+\]
+Hence, 8 valid bit strings in total.
+\end{solution}
+
+\begin{example}[Playoff possibilities (Rosen Example 23)]
+A playoff between two teams consists of at most five games.
+The first team to win three games wins the playoff.
+How many different ways can the playoff unfold?
+\end{example}
+
+\begin{solution}
+Each game outcome is either W (win) or L (loss).  
+The series stops as soon as one team reaches 3 wins.  
+Enumerating all branches that terminate at “3 wins” yields 20 distinct series paths.  
+Thus, there are 20 ways the playoff can occur.
+\end{solution}
+
+\begin{example}[T-shirt varieties (Rosen Example 24)]
+Suppose a souvenir shop sells “I ♥ New Jersey” T-shirts in five sizes (S, M, L, XL, XXL) and three colors (white, red, black).  
+How many distinct shirts must be stocked?
+\end{example}
+
+\begin{solution}
+Each shirt is determined by one choice of size and one choice of color.
+The tree’s first branch: five sizes.  
+Each size branch splits into three color options.  
+By the Product Rule:
+\[
+5\times3 = 15
+\]
+distinct shirts must be stocked.
+\end{solution}
+
+\section{Try It — Easier (solution on the next page)}
+A restaurant offers 3 appetizers, 4 main courses, and 2 desserts.  
+How many full three-course meals can be made if you choose one of each?
+
+\newpage
+\begin{solution}
+Each appetizer branch splits into 4 main courses, each of which splits into 2 desserts:
+\[
+3\times4\times2 = 24.
+\]
+Hence, 24 possible full meals.
+\end{solution}
+
+\section{Challenge — Harder (solution on the next page)}
+A security code is three characters long.
+Each character is a letter (A–Z) or a digit (0–9).  
+However, a code may not contain two consecutive digits.
+How many valid codes exist?
+
+\newpage
+\begin{solution}
+We use a branching tree or recursive reasoning.
+
+Let $L_n$ = codes of length $n$ ending with a letter,  
+and $D_n$ = codes of length $n$ ending with a digit.  
+
+Recurrence:
+\[
+L_n = 26(L_{n-1}+D_{n-1}), \qquad D_n = 10L_{n-1}.
+\]
+Base case: $L_1=26$, $D_1=10$.
+
+Compute:
+\[
+\begin{aligned}
+L_2 &= 26(26+10)=936, & D_2 &= 10(26)=260,\\
+L_3 &= 26(936+260)=31{,}096, & D_3 &= 10(936)=9{,}360.
+\end{aligned}
+\]
+Total = $L_3+D_3=40{,}456$ valid codes.
+\end{solution}
+
+\section{Python Demonstration}
+
+\begin{lstlisting}[language=Python,caption={Tree diagram counting via recursion}]
+def codes(n):
+    """Count length-n codes with no consecutive digits."""
+    if n == 1:
+        return 26, 10  # (end-with-letter, end-with-digit)
+    L_prev, D_prev = codes(n-1)
+    L = 26 * (L_prev + D_prev)
+    D = 10 * L_prev
+    return L, D
+
+L3, D3 = codes(3)
+print("Valid 3-char codes:", L3 + D3)
+\end{lstlisting}
+
+\section*{Reflection}
+Tree diagrams transform abstract multiplication and subtraction rules into visual reasoning.
+They help debug logic—each branch exposes a case that might otherwise hide in algebra.
+For programmers, they mirror recursive call trees and state machines.
+When you can see the structure, you can count the structure.

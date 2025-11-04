@@ -1,5 +1,5 @@
 # Fdb version 4
-["pdflatex"] 1762288784.5825 "c:/Users/evertj/git/SwosuCsPythonExamples/Discrete_Structures/Ch06/Ch06_Sec_01/main.tex" "main.pdf" "main" 1762288786.38727 0
+["pdflatex"] 1762290590.32562 "c:/Users/evertj/git/SwosuCsPythonExamples/Discrete_Structures/Ch06/Ch06_Sec_01/main.tex" "main.pdf" "main" 1762290592.25144 2
   "C:/Users/evertj/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map" 1762278755.81808 80909 eab91d9745dd2edfd62a31d53cd5fe15 ""
   "C:/Users/evertj/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1200.pk" 1760982482.15613 31952 94978154a9aedd9f22e5638792564176 ""
   "C:/Users/evertj/AppData/Local/MiKTeX/fonts/pk/ljfour/jknappen/ec/dpi600/ecbx1440.pk" 1762279696.77559 40136 df25e17882f7e86f0fe6568305b867e8 ""
@@ -190,7 +190,7 @@
   "C:/Users/evertj/AppData/Local/Programs/MiKTeX/tex/latex/titlesec/titlesec.sty" 1736608268 48766 87a17a4ef312a39cd43896e34a679a56 ""
   "C:/Users/evertj/AppData/Local/Programs/MiKTeX/tex/latex/url/url.sty" 1388490452 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "C:/Users/evertj/AppData/Local/Programs/MiKTeX/tex/latex/xcolor/xcolor.sty" 1729265222 55384 b454dec21c2d9f45ec0b793f0995b992 ""
-  "c:/Users/evertj/git/SwosuCsPythonExamples/Discrete_Structures/Ch06/Ch06_Sec_01/main.tex" 1762288749.87559 3255 ba50ba182c564155bd053931747e1a89 ""
+  "c:/Users/evertj/git/SwosuCsPythonExamples/Discrete_Structures/Ch06/Ch06_Sec_01/main.tex" 1762290581.58798 3309 e9e087b3a908f7830910ba862ec387ba ""
   "chapters/ch01.tex" 1762278513.60964 4094 8367a83308b3385e02463af97d501854 ""
   "chapters/ch02.tex" 1762279327.03388 5533 8219a9fa46de861682538492099f7cd7 ""
   "chapters/ch03.tex" 1762279757.72879 5696 26b5f032f86d1f45c9474c99a5a18476 ""
@@ -199,9 +199,11 @@
   "chapters/ch06.tex" 1762287085.75428 4247 4eedd93fe79ea7dfdad9ac1538087aed ""
   "chapters/ch07.tex" 1762287964.76799 6381 00365512b9b165ddb7c7dd786e0b97b2 ""
   "chapters/ch08.tex" 1762288773.19664 4333 658d7388277942aff87c613ef9369bc2 ""
-  "main.aux" 1762288785.92783 5863 f98acbe641fb913b9884451eea9d3ab5 "pdflatex"
-  "main.out" 1762288785.93012 7343 80dd22f85dddd8c2a7009c70a525af60 "pdflatex"
-  "main.toc" 1762288785.93244 2936 e7698b902a331cb34da399f7c0cd4af0 "pdflatex"
+  "chapters/ch09.tex" 1762290416.88305 6015 c11623d76e2d06a4623fe0a7e3cbeb11 ""
+  "chapters/ch10.tex" 1762290574.37551 4685 df2e11f518cb9383e6f5192694914dcc ""
+  "main.aux" 1762290591.74826 7878 96fb385dc1d6b0eb7cd40118307494d9 "pdflatex"
+  "main.out" 1762290591.74826 9877 bbf31195ef029e0a1652383e85fee503 "pdflatex"
+  "main.toc" 1762290591.77568 4025 1ddeefb0c0bf322ae9cccf239916f507 "pdflatex"
   (generated)
   "main.aux"
   "main.log"

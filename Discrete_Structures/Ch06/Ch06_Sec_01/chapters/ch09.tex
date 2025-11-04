@@ -1,0 +1,114 @@
+\chapter{Section 6.1.5 — The Division Rule}
+
+\section*{Why this section matters}
+Sometimes we accidentally count the same outcome multiple ways on purpose (e.g., by labeling or rotating) and then need to ``quotient out'' that symmetry. The \emph{Division Rule} formalizes exactly when you can divide a big count by a constant number of equivalent descriptions to get the number of truly different outcomes.
+
+\section{The Division Rule}
+\begin{definition}[Division Rule]
+If each distinct outcome of a task is represented by exactly $d$ different descriptions (i.e., there is a $d$-to-$1$ mapping from descriptions to outcomes), and there are $n$ total descriptions, then the number of outcomes is $n/d$.
+\end{definition}
+
+\noindent
+\textbf{Set/function viewpoint.} If $A$ is the set of descriptions and $B$ the set of outcomes, and $f\!:\!A\to B$ is onto with the property that every $b\in B$ has exactly $d$ preimages in $A$, then $|B| = |A|/d$.
+
+\medskip
+\noindent
+\textbf{Sanity checks / gotchas.}
+\begin{itemize}
+  \item The rule only works when \emph{every} outcome has the \emph{same} number $d$ of representations.
+  \item ``Equivalent'' should be an \emph{equivalence relation} (reflexive, symmetric, transitive) so that $A$ splits neatly into equal-sized buckets.
+  \item If different outcomes have different numbers of representations, you cannot use a single division—this is where more advanced tools (e.g., Burnside’s Lemma / orbit–stabilizer) live.
+\end{itemize}
+
+\section{Worked Examples}
+
+\begin{example}[Counting cows from legs (Rosen-flavored)]
+An automated system counts exactly $572$ cow legs in a pasture. Assuming only cows are present and each cow has four legs, how many cows are in the pasture?
+\end{example}
+\begin{solution}
+Descriptions $A$: individual \emph{legs} ($n=572$). Outcomes $B$: individual \emph{cows} (what we want).
+Each cow contributes $d=4$ leg-descriptions, so $|B| = 572/4 = 143$ cows.
+\end{solution}
+
+\begin{example}[Circular seatings by rotation]
+How many distinct seatings of four distinct people around a circular table are there, if seatings that differ by a rotation are considered the same?
+\end{example}
+\begin{solution}
+Start with linear seatings: $4!$ descriptions. A rotation of the circle does not change the ``shape'' of the seating and there are $d=4$ rotations. Each circular seating has exactly $4$ linear representatives, so the number of distinct circular seatings is $\dfrac{4!}{4} = 3! = 6$.
+\end{solution}
+
+\begin{example}[Unordered pairs from ordered pairs]
+How many undirected edges (unordered pairs) are there on $n$ labeled vertices?
+\end{example}
+\begin{solution}
+Ordered pairs of distinct vertices: $n(n-1)$. Each undirected edge $\{u,v\}$ corresponds to exactly $d=2$ ordered descriptions $(u,v)$ and $(v,u)$. Hence $\binom{n}{2} = \dfrac{n(n-1)}{2}$ edges.
+\end{solution}
+
+\begin{example}[Anagrams with repeated letters]
+How many distinct anagrams does the word \texttt{BALLOON} have?
+\end{example}
+\begin{solution}
+Treat the $7$ positions as labeled: $7!$ descriptions. But swapping indistinguishable $L$’s ($2!$), $O$’s ($2!$) does not change the anagram, so each outcome has $d=2!\cdot2!$ equivalent descriptions. Thus
+\[
+\frac{7!}{2!\,2!} = \frac{5040}{4} = 1260.
+\]
+\end{solution}
+
+\section{Try It — Easier (solution on the next page)}
+A warehouse robot counts $1{,}140$ wheels on identical cargo carts. Each cart has exactly six wheels. Assuming nothing else with wheels is present, how many carts are there?
+
+\newpage
+\begin{solution}
+Each cart contributes $d=6$ wheel-descriptions, and there are $n=1{,}140$ wheel-descriptions. By the Division Rule:
+\[
+\frac{1{,}140}{6} = 190 \text{ carts.}
+\]
+\end{solution}
+
+\section{Challenge — Harder (solution on the next page)}
+Seven distinct programmers sit around a round table. Two seatings are considered the same if one can be rotated to obtain the other (left/right neighbors must match). How many distinct seatings are there? Then generalize to $n$ people.
+
+\newpage
+\begin{solution}
+Linear arrangements: $7!$. Every circular seating has exactly $d=7$ rotational representatives. Therefore
+\[
+\frac{7!}{7} = 6! = 720.
+\]
+In general, with $n$ distinct people and rotation-equivalence only, the count is
+\[
+\frac{n!}{n} = (n-1)!.
+\]
+\emph{Gotcha:} If reflections are also considered the same (e.g., necklace with a flip), you must divide by $2$ again when $n>2$ and the action truly has that symmetry.
+\end{solution}
+
+\section{Python Demonstrations}
+\noindent
+The quick script below mirrors the reasoning. It computes circular seatings by dividing by $n$ and checks the unordered-pair formula $n(n-1)/2$.
+
+\begin{lstlisting}[language=Python,caption={Division Rule demos in Python}]
+from math import factorial
+
+def circular_seatings(n):
+    """Count seatings up to rotation: n!/n = (n-1)!"""
+    return factorial(n) // n
+
+def unordered_pairs(n):
+    """Count unordered pairs {u,v}: n(n-1)/2"""
+    return n*(n-1)//2
+
+print("Circular seatings for 4:", circular_seatings(4))   # 6
+print("Circular seatings for 7:", circular_seatings(7))   # 720
+for n in [5, 10, 100]:
+    print(f"K_{n} has", unordered_pairs(n), "edges")
+\end{lstlisting}
+
+\section*{Checklist: When can I divide?}
+\begin{itemize}
+  \item I counted \emph{descriptions} first (easy to enumerate).
+  \item I identified an equivalence relation that groups descriptions into outcomes.
+  \item Each outcome has the \emph{same} number $d$ of descriptions.
+  \item Therefore, \(\text{outcomes} = \dfrac{\text{descriptions}}{d}\).
+\end{itemize}
+
+\section*{Reflection}
+The Product Rule multiplies independent choices; the Subtraction Rule fixes double counting; the Division Rule quotients away symmetry when every bucket is the same size. Together they power most of our early counting problems—and they show up constantly in CS (hash buckets, graph edges, canonical forms, seating/rotation symmetries).
