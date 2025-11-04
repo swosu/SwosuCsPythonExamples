@@ -1,0 +1,237 @@
+\chapter{Section 6.2 — DNA, Genomes, and the Sum Rule}
+
+\section{DNA and Combinatorics}
+
+DNA (deoxyribonucleic acid) and RNA (ribonucleic acid) encode the very instructions of life.  
+Each strand of DNA consists of \emph{nucleotides}, with four possible bases:
+\[
+\text{A (adenine)}, \quad \text{C (cytosine)}, \quad \text{G (guanine)}, \quad \text{T (thymine)}.
+\]
+In RNA, thymine (T) is replaced by uracil (U).  
+These bases form long chains whose order determines genes and, ultimately, the proteins that define an organism.
+
+\medskip
+From a combinatorial perspective, each base position can be filled in one of four ways.  
+Hence, a DNA strand with $n$ bases corresponds to $4^n$ possible sequences — the \textbf{product rule} in biological disguise.
+
+---
+
+\begin{example}[Encoding Amino Acids]
+Proteins are built from amino acids. Humans use 22 essential amino acids, and each amino acid is encoded by a \emph{codon} — a short sequence of bases.
+
+\textbf{Reasoning:}
+\begin{itemize}
+  \item One base: $4^1 = 4$ possibilities (not enough).
+  \item Two bases: $4^2 = 16 < 22$ (still too few).
+  \item Three bases: $4^3 = 64$ (more than enough).
+\end{itemize}
+
+Therefore, a codon must consist of three bases, providing $64$ distinct triplets to encode 22 amino acids.  
+This redundancy helps prevent catastrophic errors from single-base mutations.
+\end{example}
+
+\begin{solution}
+Nature, like a clever coder, includes redundancy and error recovery in its data encoding.  
+The product rule explains why three-base codons are the smallest possible unit that can represent all amino acids.
+\end{solution}
+
+---
+
+\begin{example}[Counting DNA Sequences]
+DNA length varies dramatically among organisms:
+\begin{itemize}
+  \item Simple organisms (e.g., bacteria): $10^5$–$10^7$ bases.
+  \item Complex organisms (e.g., mammals): $10^8$–$10^{10}$ bases.
+\end{itemize}
+
+By the product rule, a DNA molecule of length $n$ has $4^n$ possible base sequences:
+\[
+4^{10^5} \quad \text{for bacteria}, \qquad 4^{10^8} \quad \text{for mammals.}
+\]
+These quantities are astronomically large, illustrating why genetic diversity is effectively limitless.
+\end{example}
+
+\begin{solution}
+Even though DNA uses just four symbols, its combinatorial potential is enormous.  
+This exponential explosion of possible sequences ensures endless biological variety — one reason every living thing is unique.
+\end{solution}
+
+---
+
+\subsection*{Practice Problems — DNA and Counting}
+
+\textbf{1. Easier:}  
+How many distinct RNA sequences of length four are possible?
+
+\newpage
+\textbf{Solution:}  
+Each position has four choices (A, C, G, U):
+\[
+4^4 = 256 \text{ possible sequences.}
+\]
+
+---
+
+\textbf{2. Moderate:}  
+A gene contains 12 bases. How many unique base sequences can it have?
+
+\newpage
+\textbf{Solution:}  
+\[
+4^{12} = 16{,}777{,}216.
+\]
+Even a short gene can produce over sixteen million variations.
+
+---
+
+\textbf{3. Stretch:}  
+A virus has a genome with 30,000 bases. Estimate $4^{30{,}000}$ in powers of ten.
+
+\newpage
+\textbf{Solution:}  
+\[
+4^{30{,}000} = (2^2)^{30{,}000} = 2^{60{,}000} \approx 10^{18{,}000}.
+\]
+That’s a one followed by eighteen thousand zeros — a vast genetic universe.
+
+
+---
+
+\section{Introducing the Sum Rule}
+
+So far, our counting used multiplication — combining independent choices.  
+But what if we have \emph{mutually exclusive} options, and we must choose exactly one?  
+That’s where the \textbf{sum rule} comes in.
+
+\begin{definition}[Sum Rule]
+If a task can be done in $n_1$ ways or in $n_2$ ways, where the sets of outcomes are disjoint (no overlap),  
+then the total number of ways is:
+\[
+n_1 + n_2.
+\]
+\end{definition}
+
+---
+
+\begin{example}[Faculty or Student Representative]
+Suppose either a member of the mathematics faculty or a mathematics major is chosen to serve on a university committee.
+
+\textbf{Given:}
+\[
+37 \text{ faculty members,} \qquad 83 \text{ students.}
+\]
+
+Since no one is both faculty and student, the total number of possible representatives is:
+\[
+37 + 83 = 120.
+\]
+\end{example}
+
+\begin{solution}
+The sum rule models disjoint alternatives — you choose one group or the other, not both.  
+In programming, this parallels an \texttt{if/else} decision branch.
+\end{solution}
+
+---
+
+\begin{example}[Choosing from Multiple Project Lists]
+A student can pick one project from any of three lists containing 23, 15, and 19 options, respectively.  
+No project appears on more than one list.
+
+\textbf{Solution:}
+\[
+23 + 15 + 19 = 57
+\]
+possible projects in total.
+\end{example}
+
+\begin{solution}
+Each list represents a distinct pool of choices — separate “doors” leading to different sets of outcomes.  
+Adding their sizes counts all unique possibilities.
+\end{solution}
+
+---
+
+\subsection*{Practice Problems — Applying the Sum Rule}
+
+\textbf{1. Easier:}  
+You can adopt either a cat (6 breeds) or a dog (9 breeds) from the shelter.  
+How many total options are there?
+
+\newpage
+\textbf{Solution:}  
+\[
+6 + 9 = 15.
+\]
+
+---
+
+\textbf{2. Moderate:}  
+A restaurant offers 12 vegetarian entrées and 8 meat dishes.  
+If you can choose only one, how many possible meals are there?
+
+\newpage
+\textbf{Solution:}  
+\[
+12 + 8 = 20.
+\]
+
+---
+
+\textbf{3. Stretch:}  
+A student can take one course chosen from:
+\begin{itemize}
+  \item 5 online classes,
+  \item 3 hybrid classes, or
+  \item 4 in-person classes.
+\end{itemize}
+No course appears in more than one category.  
+How many total courses are available?
+
+\newpage
+\textbf{Solution:}  
+\[
+5 + 3 + 4 = 12.
+\]
+This illustrates the extended sum rule:
+\[
+n_1 + n_2 + \cdots + n_m.
+\]
+
+---
+
+\section{Python Demonstrations}
+
+\begin{lstlisting}[language=Python, caption={DNA and Sum Rule Demonstrations}]
+"""
+COMSC 2043 - DNA and Sum Rule Examples
+Author: Jeremy Evert
+"""
+
+from math import pow
+
+# DNA combinatorics
+def dna_sequences(length):
+    """Returns the number of possible DNA (or RNA) sequences of given length."""
+    return int(pow(4, length))
+
+# Sum rule demonstrations
+faculty, students = 37, 83
+project_lists = [23, 15, 19]
+
+print("=== DNA and Sum Rule Examples ===\n")
+print(f"DNA sequences of length 4: {dna_sequences(4)}")
+print(f"DNA sequences of length 12: {dna_sequences(12):,}")
+print(f"Committee choices (faculty or students): {faculty + students}")
+print(f"Total projects across lists: {sum(project_lists)}")
+print("\nDone!")
+\end{lstlisting}
+
+---
+
+\section*{Reflection}
+
+The \textbf{product rule} multiplies possibilities; the \textbf{sum rule} adds alternatives.  
+Together they are the foundation of all combinatorics — and of all computation.  
+Loops represent multiplication (repetition of actions), while conditional branches represent addition (choosing between paths).  
+From DNA sequences to decision trees, counting principles are the quiet mathematics behind every system of order — living or digital.
