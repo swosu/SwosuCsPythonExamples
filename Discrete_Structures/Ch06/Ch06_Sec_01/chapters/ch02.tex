@@ -13,7 +13,7 @@ In computer science, every algorithm that loops, branches, or searches is secret
 
 \section{Basic Counting Principles}
 
-Two fundamental rules guide our reasoning:
+These two ideas—sum and product—form the foundation of all combinatorial reasoning.
 
 \begin{description}
   \item[\textbf{The Sum Rule}]  
@@ -51,7 +51,7 @@ $32 \times 24 = 768$ ports.
 \end{example}
 
 \begin{example}[Challenging A: License Plate Combinations]
-A region issues license plates with 3 uppercase letters followed by 3 digits (e.g., ABC123).  
+A region issues license plates with three uppercase letters followed by three digits (e.g., ABC123).  
 How many distinct plates are possible if repetition is allowed?
 
 \textbf{Solution.}  
@@ -67,21 +67,19 @@ and must contain at least one digit.
 How many possible passwords exist?
 
 \textbf{Solution.}  
-Let $A$ be all possible strings of the given length (letters + digits),  
-and $B$ be those with only letters.  
-
-Then valid passwords $= A - B$.
-
-\begin{align*}
-|A_6| &= 36^6, & |B_6| &= 26^6 \\
-|A_7| &= 36^7, & |B_7| &= 26^7 \\
-|A_8| &= 36^8, & |B_8| &= 26^8 \\
-\text{Total} &= (36^6 - 26^6) + (36^7 - 26^7) + (36^8 - 26^8)
-\end{align*}
+For each length $n$, count all strings ($36^n$) and subtract those with only letters ($26^n$):
+\[
+P_n = 36^n - 26^n
+\]
+Summing across the three allowed lengths:
+\[
+\text{Total} = P_6 + P_7 + P_8 = (36^6 - 26^6) + (36^7 - 26^7) + (36^8 - 26^8)
+\]
 \end{example}
 
 \section{Python Demonstrations}
 
+Let's translate these counting ideas into executable logic.  
 Below is Python code that mirrors the reasoning in these examples.  
 Each section prints both the symbolic reasoning and the computed value.  
 Students are encouraged to modify the numbers and observe how the results change.
@@ -140,7 +138,7 @@ if __name__ == "__main__":
 \section*{Discussion and Reflection}
 
 Each of these problems could be solved by intuition, but writing code forces precision.  
-Python doesn’t “believe” in the product rule—it performs it.  
+Python doesn’t “believe” in the product rule—it \emph{performs} it.  
 This helps students see that the abstract logic of counting translates directly into computation.
 
 Encourage students to:
@@ -150,7 +148,13 @@ Encourage students to:
   \item Reflect on where independence between tasks exists—and where it doesn’t.
 \end{itemize}
 
+\paragraph{Key Takeaway.}
+Every counting problem begins with one question:  
+Are the choices independent or exclusive?  
+From that single distinction, the sum and product rules unfold.
+
 \section*{Next Steps}
 
 In the next section we will apply these rules to cases where choices overlap or restrict one another—  
 leading to the powerful and deceptively simple \textbf{Pigeonhole Principle}.
+
