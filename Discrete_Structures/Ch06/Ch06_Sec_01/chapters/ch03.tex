@@ -11,51 +11,54 @@ Then the entire procedure can be performed in
 n_1 \times n_2 \times \cdots \times n_m.
 \]
 
-This can be proven formally by mathematical induction on the number of tasks—an idea that connects back beautifully to Chapter~5 on induction and recursion.
+This generalization is called the \textbf{Extended Product Rule}.  
+It can even be proven formally using mathematical induction on the number of tasks—an idea that connects beautifully to Chapter~5 on induction and recursion.
+
+\bigskip
+In essence, when tasks are independent and sequential, the total number of possible outcomes is the product of the possibilities for each step.
 
 \section{Worked Examples}
+
+The following examples illustrate how the extended product rule applies in both mathematics and computer science.
 
 \begin{example}[Bit Strings of Length Seven]
 How many different bit strings of length seven are there?
 
-\begin{solution}
+\textbf{Solution.}  
 Each of the seven bits can be chosen in two ways—either 0 or 1.  
 By the product rule, the total number of bit strings is:
 \[
 2^7 = 128.
 \]
-\end{solution}
 \end{example}
 
 \begin{example}[License Plates]
 How many different license plates can be made if each contains three uppercase English letters followed by three digits?
 
-\begin{solution}
+\textbf{Solution.}  
 There are $26$ choices for each of the three letters and $10$ choices for each of the three digits:
 \[
 26^3 \times 10^3 = 17{,}576{,}000.
 \]
 So there are $17{,}576{,}000$ possible license plates.
-\end{solution}
 \end{example}
 
 \begin{example}[Counting Functions]
 How many functions exist from a set with $m$ elements to a set with $n$ elements?
 
-\begin{solution}
+\textbf{Solution.}  
 Each element of the domain can be mapped to any of the $n$ elements in the codomain.  
 Thus, by the product rule:
 \[
 n^m \text{ functions.}
 \]
 For instance, there are $5^3 = 125$ functions from a three-element set to a five-element set.
-\end{solution}
 \end{example}
 
 \begin{example}[Counting One-to-One Functions]
 How many one-to-one (injective) functions exist from a set with $m$ elements to a set with $n$ elements?
 
-\begin{solution}
+\textbf{Solution.}  
 If $m>n$, none exist.  
 When $m \leq n$, the first element can map to any of $n$ values,  
 the next to $(n-1)$ remaining values, and so on, giving:
@@ -66,17 +69,18 @@ For example, from a three-element set to a five-element set:
 \[
 5\times4\times3 = 60.
 \]
-\end{solution}
 \end{example}
 
 \section{Apply It Yourself}
+
+Try these practice problems to reinforce the rule.  
+Each one extends the pattern of independent sequential choices.
 
 \subsection*{Warm-Up Problem}
 
 How many different bit strings of length eight are there?
 
-\newpage
-\textbf{Solution:}  
+\textbf{Solution.}  
 Each bit can be either 0 or 1, so there are $2^8 = 256$ possible bit strings.
 
 \bigskip
@@ -85,8 +89,7 @@ Each bit can be either 0 or 1, so there are $2^8 = 256$ possible bit strings.
 
 How many license plates can be made if each plate has two uppercase English letters followed by two digits?
 
-\newpage
-\textbf{Solution:}  
+\textbf{Solution.}  
 Each of the two letters has 26 possibilities, and each digit has 10:
 \[
 26^2 \times 10^2 = 67{,}600.
@@ -99,8 +102,7 @@ Thus, there are $67{,}600$ unique plates.
 
 How many one-to-one functions are there from a set with four elements to a set with six elements?
 
-\newpage
-\textbf{Solution:}  
+\textbf{Solution.}  
 \[
 6 \times 5 \times 4 \times 3 = 360.
 \]
@@ -113,8 +115,7 @@ There are $360$ one-to-one functions.
 How many functions exist from a set with $m=10$ elements to a set with $n=3$ elements?  
 How many of these are one-to-one?
 
-\newpage
-\textbf{Solution:}  
+\textbf{Solution.}  
 \begin{itemize}
   \item Total functions: $3^{10} = 59{,}049$.
   \item One-to-one functions: none, since $m>n$.
@@ -124,12 +125,12 @@ How many of these are one-to-one?
 
 \subsection*{Practice Problem 4 — Stretch Challenge}
 
-A company issues employee IDs consisting of:  
-two uppercase letters, followed by one of five department codes (A–E), followed by a 3-digit number (000–999).  
+A company issues employee IDs consisting of two uppercase letters,  
+followed by one of five department codes (A–E),  
+followed by a 3-digit number (000–999).  
 How many possible IDs can be created?
 
-\newpage
-\textbf{Solution:}  
+\textbf{Solution.}  
 \[
 26^2 \times 5 \times 1000 = 3{,}380{,}000.
 \]
@@ -137,8 +138,8 @@ So there are $3{,}380{,}000$ unique ID numbers possible.
 
 \section{Python Demonstrations}
 
-Below is Python code that illustrates these calculations.  
-It emphasizes how the product rule scales as more tasks are added.
+Let's express the same reasoning in Python.  
+The following script illustrates how the extended product rule scales as the number of independent tasks grows.
 
 \begin{lstlisting}[language=Python, caption={Extended Product Rule Examples}]
 """
@@ -183,5 +184,17 @@ if __name__ == "__main__":
 \section*{Reflection}
 
 The extended product rule shows how independence and sequence multiply possibilities.  
-The pattern $n_1n_2\cdots n_m$ appears everywhere—from network addressing and password generation to database schema design and combinatorial search.  
-Every time we build loops or nested conditionals in code, we are implicitly applying the same principle.
+The pattern $n_1 n_2 \cdots n_m$ appears everywhere—from network addressing and password generation  
+to database schema design and combinatorial search.  
+Every time we build loops or nested conditionals in code, we are implicitly applying this same principle.
+
+\paragraph{Key Takeaway.}
+Each new layer of choice multiplies the universe of outcomes.  
+Recognizing independence is the key to mastering both counting and algorithmic reasoning.
+
+\section*{Next Steps}
+
+In the next chapter, we’ll watch the product rule come alive in real systems—  
+from telephone numbers and nested loops to subsets and combinatorial trees—  
+as we explore \textbf{The Product Rule in Action}.
+
