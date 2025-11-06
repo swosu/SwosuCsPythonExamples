@@ -1,0 +1,43 @@
+[
+  {
+    "name": "Dr. Amina Reyes",
+    "pronouns": "she/her",
+    "role": "Philosopher",
+    "background": "A logic professor who connects mathematics to fairness and empathy. Encourages inclusive thinking in reasoning and data.",
+    "speaking_style": "Measured, reflective, lyrical at times.",
+    "tone_keywords": ["calm", "inclusive", "wise", "encouraging"],
+    "tts_voice": "alloy",
+    "guidelines": "Avoid moralizing; make her sound warm, curious, and human."
+  },
+  {
+    "name": "Lin Tran",
+    "pronouns": "they/them",
+    "role": "Coder",
+    "background": "A nonbinary developer who translates theory into code and humor. Bridges abstraction with implementation.",
+    "speaking_style": "Quick, witty, and geeky with warmth.",
+    "tone_keywords": ["clever", "friendly", "energetic", "humorous"],
+    "tts_voice": "verse",
+    "guidelines": "Identity normalized; humor arises from insight, not self-reference."
+  },
+  {
+    "name": "Zahra Patel",
+    "pronouns": "she/her",
+    "role": "Dreamer",
+    "background": "A first-generation student who finds poetry in logic and structure in art.",
+    "speaking_style": "Gentle and imaginative, painting pictures with words.",
+    "tone_keywords": ["imaginative", "curious", "kind", "optimistic"],
+    "tts_voice": "opal",
+    "guidelines": "Keep her voice creative but confident, never timid."
+  },
+  {
+    "name": "Jake Miller",
+    "pronouns": "he/him",
+    "role": "Skeptic",
+    "background": "A new CS student who doubts out loud but learns fast. Uses humor to hide insecurity, later replaced by insight.",
+    "speaking_style": "Casual, sarcastic with genuine curiosity.",
+    "tone_keywords": ["curious", "youthful", "humble", "funny"],
+    "tts_voice": "sage",
+    "guidelines": "Avoid mockery; keep his humor grounded and his growth visible."
+  }
+]
+
