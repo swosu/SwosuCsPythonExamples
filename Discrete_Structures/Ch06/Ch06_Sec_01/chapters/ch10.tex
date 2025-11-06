@@ -36,6 +36,41 @@ This yields the valid strings:
 0000,\;0001,\;0010,\;0100,\;0101,\;1000,\;1001,\;1010.
 \]
 Hence, 8 valid bit strings in total.
+
+\medskip
+\noindent\textbf{Visual Tree Representation:}
+
+\begin{center}
+\begin{tikzpicture}[
+  level distance=1.3cm,
+  every node/.style={circle,draw,minimum size=7pt,inner sep=1pt},
+  level 1/.style={sibling distance=40mm},
+  level 2/.style={sibling distance=20mm},
+  level 3/.style={sibling distance=10mm},
+  level 4/.style={sibling distance=6mm}
+]
+\node[label=above:{Start}] {}
+  child {node[label=below:{$0$}] {}
+    child {node[label=below:{$0$}] {}
+      child {node[label=below:{$0$}] {}}
+      child {node[label=below:{$1$}] {}}
+    }
+    child {node[label=below:{$1$}] {}
+      child {node[label=below:{$0$}] {}}
+    }
+  }
+  child {node[label=below:{$1$}] {}
+    child {node[label=below:{$0$}] {}
+      child {node[label=below:{$0$}] {}}
+      child {node[label=below:{$1$}] {}}
+    }
+  };
+\end{tikzpicture}
+\end{center}
+
+\noindent
+Each branch shows a legal continuation.  
+Every leaf (bottom node) corresponds to a valid 4-bit string without consecutive 1s.
 \end{solution}
 
 \begin{example}[Playoff possibilities (Rosen Example 23)]
@@ -130,3 +165,21 @@ Tree diagrams transform abstract multiplication and subtraction rules into visua
 They help debug logic—each branch exposes a case that might otherwise hide in algebra.
 For programmers, they mirror recursive call trees and state machines.
 When you can see the structure, you can count the structure.
+
+\clearpage
+\appendix
+\section*{Counting Toolkit Summary}
+\begin{itemize}
+  \item \textbf{Sum Rule:} If choices are disjoint, total = $n_1 + n_2$.
+  \item \textbf{Product Rule:} For sequential decisions, total = $n_1 \times n_2$.
+  \item \textbf{Subtraction Rule:} If overlap exists, total = $n_1 + n_2 - n_{1,2}$.
+  \item \textbf{Complement Rule:} Count “total – forbidden.”
+  \item \textbf{Permutation:} Ordered selection of $r$ from $n$: $P(n,r)=\dfrac{n!}{(n-r)!}$.
+  \item \textbf{Combination:} Unordered selection of $r$ from $n$: $C(n,r)=\dfrac{n!}{r!(n-r)!}$.
+  \item \textbf{Tree Diagrams:} Visualize sequential branching; total outcomes = number of leaves.
+\end{itemize}
+
+\begin{center}
+\textit{Counting is reasoning. Each rule is a way to avoid double-counting and to see structure in the infinite forest of possibilities. 🌲}
+\end{center}
+
