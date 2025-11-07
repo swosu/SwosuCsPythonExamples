@@ -1,0 +1,188 @@
+[
+  {
+    "speaker": "Amina",
+    "role": "Philosopher",
+    "text": "Hello, friends — and welcome to today’s",
+    "tts_voice": "default"
+  },
+  {
+    "speaker": "Amina",
+    "role": "Unknown",
+    "text": "We’ve got Lin Tran, our resident coder and problem-solver from California — always ready to turn theory into Python.",
+    "tts_voice": "default"
+  },
+  {
+    "speaker": "Lin",
+    "role": "Coder",
+    "text": "Hey, everyone! I brought code, coffee, and way too many parentheses.",
+    "tts_voice": "verse"
+  },
+  {
+    "speaker": "Amina",
+    "role": "Unknown",
+    "text": "Next, the dreamer of our group — Zahra Patel, who sees logic like poetry.",
+    "tts_voice": "default"
+  },
+  {
+    "speaker": "Zahra",
+    "role": "Dreamer",
+    "text": "Hi, friends. I see counting as choreography — numbers dancing in patterns we can learn to follow.",
+    "tts_voice": "opal"
+  },
+  {
+    "speaker": "Amina",
+    "role": "Unknown",
+    "text": "And of course, we couldn’t do this without our brave skeptic, Jake Miller — a first-year student who keeps us honest.",
+    "tts_voice": "default"
+  },
+  {
+    "speaker": "Jake",
+    "role": "Skeptic",
+    "text": "“Brave” or “confused,” depending on the day — but I’m here and caffeinated. ---",
+    "tts_voice": "sage"
+  },
+  {
+    "speaker": "Amina",
+    "role": "Unknown",
+    "text": "So, team — let’s start with a simple question. Why do we count?",
+    "tts_voice": "default"
+  },
+  {
+    "speaker": "Jake",
+    "role": "Skeptic",
+    "text": "Because math professors make us?",
+    "tts_voice": "sage"
+  },
+  {
+    "speaker": "Lin",
+    "role": "Coder",
+    "text": "(laughing) That’s fair. But also — because we want to",
+    "tts_voice": "verse"
+  },
+  {
+    "speaker": "Zahra",
+    "role": "Dreamer",
+    "text": "It’s like peeking into parallel universes — each choice we make branches into another possible outcome.",
+    "tts_voice": "opal"
+  },
+  {
+    "speaker": "Amina",
+    "role": "Unknown",
+    "text": "Beautifully said. Mathematicians call that the",
+    "tts_voice": "default"
+  },
+  {
+    "speaker": "Jake",
+    "role": "Skeptic",
+    "text": "Okay, but what if I wear both pairs of pants at once? Asking for a friend.",
+    "tts_voice": "sage"
+  },
+  {
+    "speaker": "Lin",
+    "role": "Coder",
+    "text": "Then you’ve entered a new dimension of fashion — and combinatorics. ---",
+    "tts_voice": "verse"
+  },
+  {
+    "speaker": "Amina",
+    "role": "Unknown",
+    "text": "Now, sometimes we count by adding instead of multiplying — that’s the",
+    "tts_voice": "default"
+  },
+  {
+    "speaker": "Zahra",
+    "role": "Dreamer",
+    "text": "It reminds me of choosing between two adventures. Either one is exciting — you just can’t live both at once.",
+    "tts_voice": "opal"
+  },
+  {
+    "speaker": "Jake",
+    "role": "Skeptic",
+    "text": "So multiplying is “this",
+    "tts_voice": "sage"
+  },
+  {
+    "speaker": "Lin",
+    "role": "Coder",
+    "text": "Exactly! You’re getting it. And when you mix those ideas — “this and that or maybe that too” — you get trees, networks, recursion… basically, everything you’ll ever debug at 2 AM.",
+    "tts_voice": "verse"
+  },
+  {
+    "speaker": "Amina",
+    "role": "Unknown",
+    "text": "(laughing) Spoken like a true coder. ---",
+    "tts_voice": "default"
+  },
+  {
+    "speaker": "Amina",
+    "role": "Unknown",
+    "text": "But what happens when our counts overlap — when some possibilities get counted twice?",
+    "tts_voice": "default"
+  },
+  {
+    "speaker": "Jake",
+    "role": "Skeptic",
+    "text": "Oh, like when you RSVP for the same party on two apps?",
+    "tts_voice": "sage"
+  },
+  {
+    "speaker": "Amina",
+    "role": "Unknown",
+    "text": "Exactly. That’s when we use the",
+    "tts_voice": "default"
+  },
+  {
+    "speaker": "Zahra",
+    "role": "Dreamer",
+    "text": "A little mathematical honesty — no double-dipping in the data.",
+    "tts_voice": "opal"
+  },
+  {
+    "speaker": "Lin",
+    "role": "Coder",
+    "text": "I like to think of it as de-bugging reality.",
+    "tts_voice": "verse"
+  },
+  {
+    "speaker": "Amina",
+    "role": "Unknown",
+    "text": "And from there, we climb higher — to permutations, combinations, and probability. Counting is the seed of it all. ---",
+    "tts_voice": "default"
+  },
+  {
+    "speaker": "Amina",
+    "role": "Unknown",
+    "text": "Before we wrap up, I’d love a closing thought from each of you.",
+    "tts_voice": "default"
+  },
+  {
+    "speaker": "Lin",
+    "role": "Coder",
+    "text": "Counting shows that every little choice — every “if” in a line of code — matters.",
+    "tts_voice": "verse"
+  },
+  {
+    "speaker": "Zahra",
+    "role": "Dreamer",
+    "text": "To me, counting is comfort. It tells us that even in complexity, patterns exist — and they’re beautiful.",
+    "tts_voice": "opal"
+  },
+  {
+    "speaker": "Jake",
+    "role": "Skeptic",
+    "text": "I’ll admit it — counting’s cooler than I thought. Especially when it keeps me from writing 40 test cases by hand.",
+    "tts_voice": "sage"
+  },
+  {
+    "speaker": "Amina",
+    "role": "Unknown",
+    "text": "(laughing) Progress! Well, thank you all — Lin, Zahra, and Jake — for making math a little more human today. And to our listeners: whether you’re a dreamer, a coder, or a skeptic yourself — remember, counting isn’t about numbers. It’s about noticing possibility.",
+    "tts_voice": "default"
+  },
+  {
+    "speaker": "Amina",
+    "role": "softly",
+    "text": "Until next time, keep wondering, keep counting, and keep being kind to your brain.",
+    "tts_voice": "default"
+  }
+]
