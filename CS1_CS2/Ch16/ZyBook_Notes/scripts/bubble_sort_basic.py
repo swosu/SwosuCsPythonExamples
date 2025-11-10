@@ -25,31 +25,41 @@ def bubble_sort_with_trace(data):
 
     pass_number = 0 is the initial state before any passes.
     """
-    arr = data[:]  # copy so we don't mutate the original list
-    n = len(arr)
+    # Work on a copy so we don't mutate the original list
+    working_list = data[:]
+    list_length = len(working_list)
+
     trace = []
 
     # Record the initial (unsorted) state
-    trace.append((0, arr[:]))
+    trace.append((0, working_list[:]))
 
-    for i in range(n):
-        swapped = False
+    # Each loop over pass_index is one full "bubble pass"
+    for pass_index in range(list_length):
+        did_swap_on_this_pass = False
 
-        # One "bubble pass"
-        for j in range(0, n - i - 1):
-            if arr[j] > arr[j + 1]:
-                # Swap out-of-order neighbors
-                arr[j], arr[j + 1] = arr[j + 1], arr[j]
-                swapped = True
+        # Walk through the list up to the last unsorted position
+        for compare_index in range(0, list_length - pass_index - 1):
+            left_value = working_list[compare_index]
+            right_value = working_list[compare_index + 1]
+
+            # If neighbors are out of order, swap them
+            if left_value > right_value:
+                working_list[compare_index], working_list[compare_index + 1] = (
+                    right_value,
+                    left_value,
+                )
+                did_swap_on_this_pass = True
 
         # Record the state of the list *after* this pass
-        trace.append((i + 1, arr[:]))
+        pass_number = pass_index + 1
+        trace.append((pass_number, working_list[:]))
 
         # If no swaps were made, the list is already sorted
-        if not swapped:
+        if not did_swap_on_this_pass:
             break
 
-    return arr, trace
+    return working_list, trace
 
 
 def print_trace(trace):
@@ -78,14 +88,14 @@ def append_trace_to_csv(trace, csv_path: Path):
     """
     csv_path.parent.mkdir(parents=True, exist_ok=True)
 
-    file_exists = csv_path.exists()
+    file_already_exists = csv_path.exists()
     run_timestamp = datetime.now().isoformat(timespec="seconds")
 
     with csv_path.open("a", newline="") as f:
         writer = csv.writer(f)
 
         # Write header only if this is a new file
-        if not file_exists:
+        if not file_already_exists:
             writer.writerow(["timestamp", "pass_number", "state_list"])
 
         for pass_number, state in trace:
