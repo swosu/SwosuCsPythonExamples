@@ -1,52 +1,394 @@
 \chapter{Usernames, License Plates, and Other Noisy Strings}
 
 \section{Story Hook: Launch Day Username Panic}
-% - Story:
-%   * New online game: we must choose a username rule for millions of players.
-%   * Question: “Is our rule going to run out of names?”
-% - Example formats:
-%   * 4 letters: LLLL
-%   * Letter-letter-digit-digit: LLDD
-%   * 3-digit PINs for a door lock.
+
+It is launch day.
+
+The new game \emph{DragonMath Online} goes live at midnight. Amina, Lin, Zahra, and Jake all smash the ``Create Account'' button at the same time.
+
+Amina types \texttt{Amina}.
+
+\medskip
+
+\noindent\textbf{System:} \emph{Sorry, that username is already taken.}
+
+\medskip
+
+No big deal. She tries \texttt{Amina1}. Taken. \texttt{Amina01}. Taken. \texttt{RealAmina}. Taken.
+
+Meanwhile, Jake proudly types \texttt{xXJakeXx}.
+
+\medskip
+
+\noindent\textbf{System:} \emph{Sorry, that username is already taken.}
+
+\medskip
+
+After five minutes, they are not battling dragons. They are battling the username system.
+
+\medskip
+
+The developers are nervous for a different reason: they picked a very simple username rule.
+
+\begin{quote}
+Usernames must be exactly four characters long, and each character must be a capital letter A--Z.
+\end{quote}
+
+Someone finally asks the real question:
+
+\begin{center}
+\emph{``Are there actually enough usernames for all our players?''}
+\end{center}
+
+This chapter is about turning that kind of panic into calm arithmetic.
+
+We will:
+
+\begin{itemize}
+  \item Treat usernames, license plates, and PIN codes as \emph{strings} built from an \emph{alphabet}.
+  \item Use the \textbf{product principle}: when you make a sequence of independent choices, you \emph{multiply} the number of options.
+  \item See how tiny changes to the rules can explode (or shrink) the size of the username universe.
+  \item Use Python to explore small universes and sanity check our formulas.
+\end{itemize}
+
+By the end, you should feel comfortable looking at a string format and thinking, almost automatically,
+
+\begin{center}
+\emph{``Okay, that is $k^n$ possibilities.''}
+\end{center}
 
 \section{Counting Strings with Repetition}
-% - Model strings as positions filled from an alphabet:
-%   * Letters, digits, or mixed sets.
-% - Product principle:
-%   * Each position = independent choice => total = product of options.
-% - Examples:
-%   * 26^4 usernames with 4 uppercase letters.
-%   * 10^3 PINs.
-%   * (26 \cdot 10^3) for LDDD.
-% - Discuss:
-%   * Adding more characters increases search space dramatically.
-%   * Simple tie-in to password strength (without going full crypto).
+
+We will be very systematic.
+
+\subsection*{Strings, alphabets, and formats}
+
+A \textbf{string} is just an ordered list of characters. The characters come from some \textbf{alphabet}:
+
+\begin{itemize}
+  \item $26$ uppercase letters: $A,B,\dots,Z$,
+  \item $10$ digits: $0,1,\dots,9$,
+  \item or maybe letters + digits + a few symbols.
+\end{itemize}
+
+A \textbf{format} is a pattern for strings. For example:
+
+\begin{itemize}
+  \item \textbf{LLLL}: four letters (like \texttt{ABCD} or \texttt{GAME}).
+  \item \textbf{LLDD}: two letters followed by two digits (like \texttt{CS19}).
+  \item \textbf{DDD}: three-digit PINs (like \texttt{042}).
+\end{itemize}
+
+The key combinatorial question:
+
+\begin{quote}
+\emph{Given a format, how many possible strings follow that format?}
+\end{quote}
+
+\subsection*{The product principle in disguise}
+
+The \textbf{product principle} says:
+
+\begin{quote}
+If you make a sequence of independent choices, and
+\begin{itemize}
+  \item the first choice can be made in $a_1$ ways,
+  \item the second choice can be made in $a_2$ ways,
+  \item \dots
+  \item the $n$-th choice can be made in $a_n$ ways,
+\end{itemize}
+then the total number of possible outcome sequences is
+\[
+a_1 \cdot a_2 \cdot \dots \cdot a_n.
+\]
+\end{quote}
+
+A string of length $n$ is just $n$ choices in a row: one character for each position.
+
+\subsubsection*{Example: four-letter usernames}
+
+Suppose the rule is:
+
+\begin{quote}
+Usernames must be exactly four uppercase letters.
+\end{quote}
+
+How many usernames are possible?
+
+Each position can be any of $26$ letters. The four choices are independent, so
+
+\[
+\underbrace{26}_{\text{first letter}}
+\cdot
+\underbrace{26}_{\text{second}}
+\cdot
+\underbrace{26}_{\text{third}}
+\cdot
+\underbrace{26}_{\text{fourth}}
+= 26^4.
+\]
+
+So there are $26^4$ possible usernames. That is $456{,}976$ names. Not infinite --- but definitely enough to keep the first few thousand players happy.
+
+\subsubsection*{Example: license plates (letters then digits)}
+
+Now consider a classic license-plate style format:
+
+\begin{quote}
+Three letters followed by three digits: LLLDDD.
+\end{quote}
+
+For each plate:
+
+\begin{itemize}
+  \item First character: $26$ choices (any letter).
+  \item Second character: $26$ choices.
+  \item Third character: $26$ choices.
+  \item Fourth character: $10$ choices (any digit).
+  \item Fifth character: $10$ choices.
+  \item Sixth character: $10$ choices.
+\end{itemize}
+
+By the product principle,
+
+\[
+26 \cdot 26 \cdot 26 \cdot 10 \cdot 10 \cdot 10 = 26^3 \cdot 10^3.
+\]
+
+If we actually computed this number, it would be big, but the structure is what matters: \emph{one factor for each position}.:contentReference[oaicite:0]{index=0}
+
+\subsubsection*{Example: strings from a mixed alphabet}
+
+Suppose a website allows usernames that are six characters long, and each character can be
+
+\begin{itemize}
+  \item an uppercase letter ($26$ options), or
+  \item a digit ($10$ options).
+\end{itemize}
+
+That is $26 + 10 = 36$ choices for each of the six positions.
+
+The total number of usernames is
+
+\[
+36^6.
+\]
+
+We do not even need to expand it. The point is that the universe of names scales like ``alphabet size to the power of length.''
+
+\subsection*{Adding mild drama: constraints on strings}
+
+Real systems often add rules:
+
+\begin{itemize}
+  \item ``Must contain at least one digit.''
+  \item ``Cannot start with a digit.''
+  \item ``No banned substrings like \texttt{BAD} or \texttt{XXX}.''
+\end{itemize}
+
+These constraints are where the product principle teams up with other ideas, like the \textbf{sum principle} and \textbf{complements} (``count everything, subtract the bad'').
+
+We will practice a few of these designs in the exercises, but for now the main idea is:
+
+\begin{center}
+\emph{As long as each position is a choice, and we understand which choices are allowed,\\
+the product principle is our go-to tool for counting strings.}
+\end{center}
 
 \section{Python Lab: Exploring the Username Space}
-% - Script sketch (usernames.py):
-%   * Define alphabets: letters, digits, maybe “safe symbols”.
-%   * For small toy alphabets:
-%       - Use itertools.product to generate and list all strings.
-%   * For realistic alphabets:
-%       - Just count combinations by formula, maybe sample a few at random.
-%   * Optional filters:
-%       - At least one digit.
-%       - No “banned” characters or substrings.
+
+We will now turn Python into our username telescope. For tiny alphabets, we can literally list every possible name. For realistic alphabets, we let Python compute the counts and sample a few candidates.
+
+\subsection*{Step 1: A toy universe}
+
+We start with a small alphabet so that we can enumerate everything.
+
+\begin{lstlisting}[language=Python, caption={Toy username universe with tiny alphabets}]
+import itertools
+
+# A tiny alphabet so we can actually list everything
+letters = ["A", "B", "C"]
+digits  = ["0", "1"]
+
+def all_usernames_LLLL():
+    """All usernames of format LLLL over {A,B,C}."""
+    return ["".join(p) for p in itertools.product(letters, repeat=4)]
+
+def all_usernames_LLDD():
+    """All usernames of format LLDD over {A,B,C} and {0,1}."""
+    return [
+        "".join(p)
+        for p in itertools.product(letters, letters, digits, digits)
+    ]
+
+names_LLLL = all_usernames_LLLL()
+names_LLDD = all_usernames_LLDD()
+
+print("LLLL count (Python):", len(names_LLLL))
+print("LLLL count (formula):", len(letters) ** 4)
+
+print("LLDD count (Python):", len(names_LLDD))
+print("LLDD count (formula):", len(letters) ** 2 * len(digits) ** 2)
+\end{lstlisting}
+
+For this toy world,
+
+\begin{itemize}
+  \item there should be $3^4 = 81$ four-letter usernames, and
+  \item $3^2 \cdot 2^2 = 36$ usernames of the form LLDD.
+\end{itemize}
+
+Your script should confirm these counts exactly.
+
+\subsection*{Step 2: Scaling up to realistic alphabets}
+
+Once we trust the pattern in the toy world, we can move to full alphabets without listing millions of strings.
+
+\begin{lstlisting}[language=Python, caption={Counting real-world username formats}]
+import string
+
+letters = string.ascii_uppercase          # 26 letters
+digits  = string.digits                   # 10 digits
+
+def count_LLLL():
+    return len(letters) ** 4              # 26^4
+
+def count_LLDD():
+    return len(letters) ** 2 * len(digits) ** 2  # 26^2 * 10^2
+
+def count_mixed(length):
+    """Usernames of given length using letters+digits."""
+    alphabet_size = len(letters) + len(digits)
+    return alphabet_size ** length
+
+print("LLLL usernames:", count_LLLL())
+print("LLDD usernames:", count_LLDD())
+print("8-char mixed usernames:", count_mixed(8))
+\end{lstlisting}
+
+Here, Python is acting as a calculator with really good vibes:
+
+\begin{itemize}
+  \item You write down the combinatorial expression ($36^8$, etc.).
+  \item Python evaluates it cleanly and correctly.
+  \item You can change the length or alphabet and see how fast the universe explodes.
+\end{itemize}
+
+\subsection*{Step 3: Checking simple constraints}
+
+We can also ask Python to explore basic constraints, like ``must contain at least one digit.'' On full alphabets we use formulas, but on toy alphabets we can inspect every string.
+
+\begin{lstlisting}[language=Python, caption={Toy constraint: at least one digit}]
+import itertools
+
+letters = ["A", "B", "C"]
+digits  = ["0", "1"]
+
+alphabet = letters + digits
+
+def all_strings_of_length(n):
+    return ["".join(p) for p in itertools.product(alphabet, repeat=n)]
+
+def has_digit(s):
+    return any(ch in digits for ch in s)
+
+def count_with_at_least_one_digit(n):
+    strings = all_strings_of_length(n)
+    good = [s for s in strings if has_digit(s)]
+    return len(good)
+
+n = 3
+print("Total strings:", len(alphabet) ** n)
+print("With at least one digit (Python):", count_with_at_least_one_digit(n))
+\end{lstlisting}
+
+This is a great place to connect code back to math:
+
+\begin{itemize}
+  \item Total number of strings: $|\text{alphabet}|^n$.
+  \item Strings with no digit: $|\text{letters}|^n$.
+  \item Strings with at least one digit:
+  \[
+  |\text{alphabet}|^n - |\text{letters}|^n.
+  \]
+\end{itemize}
+
+Python lets you \emph{see} the difference on small $n$ before trusting the formula for large $n$.
 
 \section{Practice and Design Questions}
-% - Exercises:
-%   * Compute number of usernames under different policies.
-%   * Compare policies by total count: which is “bigger” and why?
-%   * Design a username rule that:
-%       - Feels simple to users,
-%       - But has at least N possible usernames.
-% - Quick writing prompts:
-%   * Explain in words how the product rule is hiding in these examples.
+
+Here are some practice problems and design prompts you might use after this chapter.
+
+\subsection*{Basic practice}
+
+\begin{enumerate}
+  \item A username rule says: ``exactly five uppercase letters.'' How many usernames are possible?
+
+  \item A door lock uses a $4$-digit PIN from $0000$ to $9999$.
+  \begin{enumerate}[label=(\alph*)]
+    \item How many PINs are there in total?
+    \item How many PINs start with a $0$?
+  \end{enumerate}
+
+  \item In your own words, explain how the product principle appears in the format LLDD.
+\end{enumerate}
+
+\subsection*{Medium spice}
+
+\begin{enumerate}
+  \item A website uses the rule: ``usernames are of the form LLLDD, where L is a letter and D is a digit.''
+  \begin{enumerate}[label=(\alph*)]
+    \item How many usernames are possible?
+    \item How many usernames start with the letter \texttt{A}?
+    \item How many usernames start with either \texttt{A} or \texttt{B}?
+  \end{enumerate}
+
+  \item A game uses $6$-character usernames made from uppercase letters and digits.
+  \begin{enumerate}[label=(\alph*)]
+    \item How many usernames are possible in total?
+    \item How many have no digits at all (letters only)?
+    \item Use your answer from (a) and (b) to count how many have \emph{at least one} digit.
+  \end{enumerate}
+
+  \item A state is considering a license plate format: two letters, three digits, then one letter (LLDDDL). How many plates are possible?
+\end{enumerate}
+
+\subsection*{Extra spicy (optional)}
+
+\begin{enumerate}
+  \item A chat app allows usernames of length $8$ where each character can be
+  \begin{itemize}
+    \item an uppercase letter,
+    \item a lowercase letter,
+    \item or a digit.
+  \end{itemize}
+  Write a product-principle expression (you do not have to multiply it out) for the total number of usernames.
+
+  \item The rule now says: ``Usernames must be length $6$ and must contain \emph{at least one} digit and \emph{at least one} letter.'' Describe two different strategies to count such usernames:
+  \begin{itemize}
+    \item Using complements (subtracting the all-letter and all-digit cases).
+    \item Using a case split (``exactly one digit,'' ``exactly two digits,'' etc.) and the sum principle.
+  \end{itemize}
+  You do not need to carry out all the algebra; focus on the \emph{structure} of the counting.
+\end{enumerate}
 
 \section*{Podcast: Episode 2 -- Name Yourself Wisely}
-% - Recap script notes:
-%   * Characters try to register their favorite names and hit “name already taken”.
-%   * They experiment with stricter/looser rules.
-%   * Joke about bad passwords vs good passwords.
-%   * Tease sundaes and resource distribution coming up.
+
+At the end of this chapter, you might record a short podcast episode. A possible outline:
+
+\begin{itemize}
+  \item The characters are on voice chat trying to claim their dream usernames before the servers fill up.
+  \item They keep seeing ``that name is taken'' and start wondering how many names the system actually allows.
+  \item One character explains the product principle using toy examples (two-letter words, simple PINs).
+  \item They compare different username rules:
+  \begin{itemize}
+    \item all letters vs.\ letters+digits,
+    \item fixed length vs.\ variable length.
+  \end{itemize}
+  \item They joke about terrible password choices like \texttt{PASSWORD} and \texttt{123456}, and connect the size of the search space to security.
+  \item They end with a teaser:
+  \begin{quote}
+  ``If we can count usernames, can we count ice cream sundaes? Next time: stars, bars, and way too many toppings.''
+  \end{quote}
+\end{itemize}
 
