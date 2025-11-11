@@ -1,0 +1,331 @@
+\chapter{Merge Sort: Faster Sorting, Same Experiment}
+
+In the first two chapters we met linear search and bubble sort, and we saw
+how bubble sort's running time grows roughly like $n^2$ when we time it on
+larger and larger inputs.\footnote{See Chapters~1 and~2 for the full code
+and plots connecting bubble sort to its $\mathcal{O}(n^2)$ behavior.} Now it
+is time to bring in a faster sorting algorithm: \emph{merge sort}. Unlike
+bubble sort, merge sort is both \emph{recursive} and \emph{asymptotically
+faster}: its running time grows on the order of $n \log n$ instead of $n^2$. :contentReference[oaicite:0]{index=0}
+
+Our plan in this chapter mirrors what we did for bubble sort:
+
+\begin{enumerate}
+  \item understand the algorithm at a high level,
+  \item study a small, traceable implementation on a toy list, and
+  \item time the algorithm on large random lists, then fit a curve to the
+        data and compare it to the $\mathcal{O}(n \log n)$ story.
+\end{enumerate}
+
+\section{A Recursive Strategy for Sorting}
+
+Bubble sort works locally: it looks at neighboring pairs and swaps them
+until the list is in order. Merge sort takes a very different approach:
+
+\begin{enumerate}
+  \item If the list has length $0$ or $1$, it is already sorted.
+  \item Otherwise, split the list into two halves: a left half and a right
+        half.
+  \item Recursively sort the left half.
+  \item Recursively sort the right half.
+  \item Merge the two sorted halves into a single sorted list.
+\end{enumerate}
+
+The key idea is that it is very easy to merge two \emph{already sorted}
+lists: you repeatedly pick the smaller of the two front elements and append
+it to a new list. The recursion does the heavy lifting of breaking the big
+problem (sorting $n$ items) into smaller subproblems.
+
+A high-level picture:
+
+\[
+[9,\ 3,\ 7,\ 2,\ 10]
+\;\;\longrightarrow\;\;
+[9,\ 3] \ \text{and}\ [7,\ 2,\ 10]
+\]
+
+Then:
+
+\[
+[9,\ 3] \longrightarrow [9] \text{ and } [3] \longrightarrow [3,\ 9],
+\]
+
+\[
+[7,\ 2,\ 10] \longrightarrow [7] \text{ and } [2,\ 10]
+              \longrightarrow [2] \text{ and } [10]
+              \longrightarrow [2,\ 10],
+\]
+
+and finally we merge $[3,\ 9]$ and $[2,\ 7,\ 10]$ into a fully sorted list
+$[2,\ 3,\ 7,\ 9,\ 10]$.
+
+Just as with bubble sort, we want to connect this description to real
+code and real data.
+
+\section{Merge Sort With a Recursive Trace}
+
+To make the recursion visible, we wrote a small script
+\texttt{scripts/merge\_sort\_basic.py}. It sorts the list
+\texttt{[9, 3, 7, 2, 10]} using merge sort and records a trace of the
+recursive calls and merges.
+
+Listing~\ref{lst:merge-sort-basic} shows the code.
+
+\lstinputlisting[
+  language=Python,
+  caption={Merge sort with a recursive trace, stored in \texttt{scripts/merge\_sort\_basic.py}.},
+  label={lst:merge-sort-basic}
+]{scripts/merge_sort_basic.py}
+
+This script does a few important things for us:
+
+\begin{itemize}
+  \item The function \texttt{merge\_sort\_with\_trace} returns both the
+        sorted list and a trace of the recursion.
+  \item Each trace entry records:
+        \begin{itemize}
+          \item a step number,
+          \item the recursion depth,
+          \item whether we are at a ``call'' or a ``merged'' state, and
+          \item the current subarray.
+        \end{itemize}
+  \item The trace is printed in a human-readable form so we can follow how
+        the list is split and then merged back together.
+  \item The same trace is appended to a CSV file
+        \texttt{data/merge\_sort\_basic\_trace.csv}, so that we can load it
+        into a spreadsheet or refer to it later in the book.
+\end{itemize}
+
+Conceptually, this is the merge sort analog of the bubble sort trace script
+from Chapter~1: instead of watching values ``bubble'' to the end, we watch
+subarrays split and then merge as the recursion unwinds.
+
+\section{Timing Merge Sort}
+
+Just as we did with bubble sort in Chapter~2, we now turn merge sort into a
+timing experiment. The idea is the same:
+
+\begin{itemize}
+  \item choose a list size $n$ (for example, $100$, $200$, $400$, \dots),
+  \item generate a random list of $n$ integers,
+  \item sort it with merge sort, and
+  \item measure the elapsed time.
+\end{itemize}
+
+We repeat this process for a range of input sizes and several trials per
+size, then store the results in a CSV file.
+
+Listing~\ref{lst:merge-sort-timing} shows the timing script
+\texttt{scripts/merge\_sort\_timing.py}.
+
+\lstinputlisting[
+  language=Python,
+  caption={Timing merge sort on growing input sizes.},
+  label={lst:merge-sort-timing}
+]{scripts/merge_sort_timing.py}
+
+A few parallels with the bubble sort timing script:
+
+\begin{itemize}
+  \item \texttt{merge\_sort} is a clean, recursive implementation of merge
+        sort with no extra printing or tracing.
+  \item \texttt{time\_merge\_sort(n)} generates a random list of length $n$,
+        sorts it, and returns the elapsed wall-clock time.
+  \item \texttt{append\_result} appends a row to
+        \texttt{data/merge\_sort\_timing.csv} with the timestamp, the input
+        size, and the elapsed time in seconds.
+  \item The \texttt{main()} function loops over the same list sizes used for
+        bubble sort (100, 200, 400, \dots, 40\,000) and runs several trials
+        per size.
+\end{itemize}
+
+At this point, we have two timing engines:
+
+\begin{itemize}
+  \item \texttt{bubble\_sort\_timing.py} producing
+        \texttt{data/bubble\_sort\_timing.csv}, and
+  \item \texttt{merge\_sort\_timing.py} producing
+        \texttt{data/merge\_sort\_timing.csv}.
+\end{itemize}
+
+The next step is to analyze the merge sort timing data and connect it to
+the theoretical $\mathcal{O}(n \log n)$ behavior.
+
+\section{Big-O Intuition for Merge Sort}
+
+Recall that bubble sort's running time grows like $n^2$ because it performs
+on the order of $n^2$ neighbor comparisons. Merge sort behaves very
+differently.
+
+At each level of recursion:
+
+\begin{itemize}
+  \item we split the list into two halves, and
+  \item we merge those halves back together.
+\end{itemize}
+
+If you imagine the recursion as a tree:
+
+\begin{itemize}
+  \item the root represents the original problem of size $n$,
+  \item the next level has two subproblems of size roughly $n/2$,
+  \item the next has four subproblems of size roughly $n/4$, and so on.
+\end{itemize}
+
+The height of this recursion tree is about $\log_2 n$, because each level
+cuts the size of the subproblems in half.
+
+At each level, the total amount of work done by all merges combined is
+proportional to $n$:
+
+\begin{itemize}
+  \item at the top level we merge one list of size $n$,
+  \item at the next level we merge two lists of size about $n/2$ each
+        (still about $n$ total elements),
+  \item at the next level we merge four lists of size about $n/4$ each
+        (again about $n$ total), and so on.
+\end{itemize}
+
+So we have about $\log_2 n$ levels, each costing about $c n$ work for some
+constant $c$. The total work is therefore on the order of
+
+\[
+T(n) \approx c n \log_2 n,
+\]
+
+which is what we summarize by saying:
+
+\[
+T(n) \in \mathcal{O}(n \log n).
+\]
+
+The timing script gives us a way to check this story against reality.
+
+\section{Fitting an \texorpdfstring{$n \log n$}{n log n} Curve}
+
+To make the connection quantitative, we wrote an analysis script
+\texttt{scripts/merge\_sort\_analyze.py}. It reads
+\texttt{data/merge\_sort\_timing.csv}, groups the data by input size, and
+computes the average time for each $n$. Then it fits a curve of the form
+
+\[
+T(n) \approx a \, n \log_2 n + b
+\]
+
+to the data and also builds an ``ideal'' $\mathcal{O}(n \log n)$ curve
+$k \, n \log_2 n$ scaled to match the smallest data point.
+
+Listing~\ref{lst:merge-sort-analyze} shows the analysis script.
+
+\lstinputlisting[
+  language=Python,
+  caption={Analyzing and plotting merge sort timing data.},
+  label={lst:merge-sort-analyze}
+]{scripts/merge_sort_analyze.py}
+
+When you run this script, it produces a figure file named
+\texttt{figures/merge\_sort\_timing\_nlogn.png}. Just like in the bubble
+sort chapter, the figure reflects the timing data you have collected so far:
+if you rerun \texttt{merge\_sort\_timing.py} to gather more data, then
+rerun \texttt{merge\_sort\_analyze.py}, the plot will update.
+
+\section{The Plot: Merge Sort vs.\ \texorpdfstring{$n \log n$}{n log n}}
+
+Figure~\ref{fig:merge-sort-timing} shows the result of timing merge sort
+across a range of input sizes and then plotting the average times using
+\texttt{merge\_sort\_analyze.py}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/merge_sort_timing_nlogn.png}
+  \caption{Measured merge sort times vs.\ input size, along with a fitted
+           $a n \log_2 n + b$ curve and an ideal $\mathcal{O}(n \log n)$
+           curve.}
+  \label{fig:merge-sort-timing}
+\end{figure}
+
+As with bubble sort, the dots in the figure represent the measured average
+time for each input size $n$. The solid line is the fitted curve
+$a n \log_2 n + b$, and the dashed line is the ideal curve $k n \log_2 n$.
+
+What we see:
+
+\begin{itemize}
+  \item The measured times line up very closely with an $n \log n$ shaped
+        curve once $n$ is moderately large.
+  \item Doubling $n$ no longer multiplies the running time by a factor of
+        four (as with $n^2$); instead, the growth is much gentler.
+  \item As before, the exact constants $a$, $b$, and $k$ depend on your
+        machine and environment, but the \emph{shape} of the curve is
+        consistently $n \log n$.
+\end{itemize}
+
+\section{Bubble Sort vs.\ Merge Sort}
+
+We now have timing plots for two sorting algorithms:
+
+\begin{itemize}
+  \item bubble sort, with an $\mathcal{O}(n^2)$ curve
+        (Figure~\ref{fig:bubble-sort-timing}), and
+  \item merge sort, with an $\mathcal{O}(n \log n)$ curve
+        (Figure~\ref{fig:merge-sort-timing}).
+\end{itemize}
+
+On small inputs, the two algorithms may appear to have similar running
+times. In fact, for very tiny lists, bubble sort can sometimes be competitive
+because it is simple and has low constant overhead.
+
+However, as $n$ grows:
+
+\begin{itemize}
+  \item the bubble sort curve bends sharply upward, reflecting its $n^2$
+        growth, while
+  \item the merge sort curve rises much more slowly, tracking $n \log n$.
+\end{itemize}
+
+If you imagine pushing $n$ to ten times, a hundred times, or a thousand
+times its current size, the difference becomes dramatic. An algorithm that
+takes time proportional to $n^2$ will eventually become painfully slow,
+while an $n \log n$ algorithm like merge sort remains practical for much
+larger data sets.
+
+This is the payoff of Big-O analysis:
+
+\begin{itemize}
+  \item We can reason on paper about how the running time should scale.
+  \item We can then design experiments, collect data, and fit curves to
+        see whether reality matches our theory.
+  \item When the math and the measurements agree, we get strong
+        evidence that we understand the algorithm's behavior.
+\end{itemize}
+
+\section{Looking Ahead}
+
+At this point, we have:
+
+\begin{itemize}
+  \item traced bubble sort and merge sort on small lists to understand
+        how they work,
+  \item timed bubble sort and seen an $\mathcal{O}(n^2)$ curve emerge
+        from real data,
+  \item timed merge sort and seen an $\mathcal{O}(n \log n)$ curve emerge,
+  \item and compared the two curves to build intuition about why
+        asymptotically faster algorithms matter.
+\end{itemize}
+
+In the chapters that follow, we will:
+
+\begin{itemize}
+  \item explore other sorting algorithms (such as quicksort and insertion
+        sort) and place them on the same timing plots,
+  \item connect these sorting ideas back to searching, including binary
+        search on sorted data, and
+  \item practice reading and writing Big-O notation until it feels like a
+        natural language for describing algorithmic behavior.
+\end{itemize}
+
+The more you run these experiments yourself---modifying list sizes, adding
+more trials, or trying different machines---the stronger your intuition will
+be. The goal is not just to memorize which algorithms are ``fast,'' but to
+understand how and why their running times grow the way they do.
+
