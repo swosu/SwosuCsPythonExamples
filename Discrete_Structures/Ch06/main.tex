@@ -1,0 +1,68 @@
+% main.tex  (wrapper for the Counting mini-book)
+
+\documentclass[11pt]{book}
+
+% Basic packages
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{geometry}
+\geometry{margin=1in}
+
+% Python listings (for later code examples)
+\usepackage{listings}
+\lstdefinelanguage{Python}{
+  keywords={def, return, if, elif, else, for, while, break, continue, in,
+            import, from, as, pass, True, False, None, class},
+  keywordstyle=\color{blue}\bfseries,
+  ndkeywords={self},
+  ndkeywordstyle=\color{teal}\bfseries,
+  sensitive=true,
+  comment=[l]{\#},
+  commentstyle=\color{gray},
+  stringstyle=\color{violet},
+  morestring=[b]',
+  morestring=[b]"
+}
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\small,
+  showstringspaces=false,
+  frame=single,
+  xleftmargin=1em,
+  xrightmargin=1em,
+  aboveskip=1em,
+  belowskip=1em,
+  columns=flexible
+}
+
+\title{Counting Worlds:\\
+  From Usernames to Universes}
+\author{Jeremy Evert}
+\date{\today}
+
+\begin{document}
+
+\frontmatter
+\maketitle
+\tableofcontents
+
+\mainmatter
+
+% Intro + five chapters
+\include{chapters/ch00_introduction}
+\include{chapters/ch01_seating}
+\include{chapters/ch02_usernames}
+\include{chapters/ch03_sundaes}
+\include{chapters/ch04_montecarlo}
+\include{chapters/ch05_capstone}
+
+\backmatter
+% (Room for index or appendices later)
+
+\end{document}
+

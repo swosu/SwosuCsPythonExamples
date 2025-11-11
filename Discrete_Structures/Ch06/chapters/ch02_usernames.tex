@@ -1,0 +1,52 @@
+\chapter{Usernames, License Plates, and Other Noisy Strings}
+
+\section{Story Hook: Launch Day Username Panic}
+% - Story:
+%   * New online game: we must choose a username rule for millions of players.
+%   * Question: “Is our rule going to run out of names?”
+% - Example formats:
+%   * 4 letters: LLLL
+%   * Letter-letter-digit-digit: LLDD
+%   * 3-digit PINs for a door lock.
+
+\section{Counting Strings with Repetition}
+% - Model strings as positions filled from an alphabet:
+%   * Letters, digits, or mixed sets.
+% - Product principle:
+%   * Each position = independent choice => total = product of options.
+% - Examples:
+%   * 26^4 usernames with 4 uppercase letters.
+%   * 10^3 PINs.
+%   * (26 \cdot 10^3) for LDDD.
+% - Discuss:
+%   * Adding more characters increases search space dramatically.
+%   * Simple tie-in to password strength (without going full crypto).
+
+\section{Python Lab: Exploring the Username Space}
+% - Script sketch (usernames.py):
+%   * Define alphabets: letters, digits, maybe “safe symbols”.
+%   * For small toy alphabets:
+%       - Use itertools.product to generate and list all strings.
+%   * For realistic alphabets:
+%       - Just count combinations by formula, maybe sample a few at random.
+%   * Optional filters:
+%       - At least one digit.
+%       - No “banned” characters or substrings.
+
+\section{Practice and Design Questions}
+% - Exercises:
+%   * Compute number of usernames under different policies.
+%   * Compare policies by total count: which is “bigger” and why?
+%   * Design a username rule that:
+%       - Feels simple to users,
+%       - But has at least N possible usernames.
+% - Quick writing prompts:
+%   * Explain in words how the product rule is hiding in these examples.
+
+\section*{Podcast: Episode 2 -- Name Yourself Wisely}
+% - Recap script notes:
+%   * Characters try to register their favorite names and hit “name already taken”.
+%   * They experiment with stricter/looser rules.
+%   * Joke about bad passwords vs good passwords.
+%   * Tease sundaes and resource distribution coming up.
+

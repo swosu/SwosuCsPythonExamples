@@ -1,0 +1,308 @@
+\chapter{Seating the Party at the Round Table}
+
+\section{Story Hook: Dinner Disaster}
+
+You are in charge of a big group dinner.
+
+There are six friends and six chairs in a row. Everyone has Opinions:
+\begin{itemize}
+  \item Amina \emph{must} sit on an end.
+  \item Jake refuses to sit next to Zahra.
+  \item Lin and Zahra are best friends and want to sit together.
+\end{itemize}
+
+The host asks you a simple question:
+
+\begin{quote}
+  ``How many different seating charts are possible?''
+\end{quote}
+
+At first, this seems like a small thing. But as the number of people grows, the
+number of possible seatings explodes. By the end of this chapter you will know:
+\begin{itemize}
+  \item how to count all possible seatings when everyone is distinct;
+  \item how to handle simple constraints (must sit together / apart / on an end);
+  \item how to use Python to \emph{check} your counting on small examples.
+\end{itemize}
+
+
+\section{Warm-Up: Listing All Seatings for Three Friends}
+
+Let us start very small. Suppose we only have three people:
+Amina (A), Lin (L), and Jake (J), and three chairs in a row.
+
+\subsection*{Try it yourself}
+
+\begin{enumerate}
+  \item Draw three boxes to represent the chairs.
+  \item List every possible way to place A, L, and J into those chairs.
+\end{enumerate}
+
+If you do this carefully, you should find these six arrangements:
+\[
+  \text{ALJ},\ \text{AJL},\ \text{LAJ},\ \text{LJA},\ \text{JAL},\ \text{JLA}.
+\]
+
+There are $6$ different seatings. This is already a lot for just three people!
+Soon we will see how this connects to the factorial function and why three
+people give six seatings, four people give twenty-four seatings, and so on.
+
+
+\section{Core Ideas: Factorials and Linear Permutations}
+
+\subsection{The factorial function}
+
+The \emph{factorial} of a positive integer $n$ is written $n!$ and defined as
+\[
+  n! = n \cdot (n-1) \cdot (n-2) \cdots 3 \cdot 2 \cdot 1,
+\]
+with the special convention that $0! = 1$.
+
+Some small values:
+\[
+  1! = 1,\quad
+  2! = 2,\quad
+  3! = 6,\quad
+  4! = 24,\quad
+  5! = 120.
+\]
+
+\subsection{Factorials as seatings}
+
+We can interpret $n!$ as the number of ways to seat $n$ distinct people in $n$
+distinct chairs in a row.
+
+Why?
+
+\begin{itemize}
+  \item For the first chair, we can choose any of the $n$ people.
+  \item For the second chair, we have $n-1$ people left.
+  \item For the third chair, we have $n-2$ people left.
+  \item \dots
+  \item For the last chair, we have $1$ person left.
+\end{itemize}
+
+By the \emph{product principle},
+the total number of seatings is
+\[
+  n \cdot (n-1) \cdot (n-2) \cdots 2 \cdot 1 = n!.
+\]
+
+This explains why:
+\begin{itemize}
+  \item $3! = 6$ seatings for A, L, J (which we listed),
+  \item $4! = 24$ seatings for four distinct people,
+  \item $6! = 720$ seatings for six distinct people.
+\end{itemize}
+
+Already at six people, $720$ is a lot of possible seating charts. No human
+host is going to check all of those by hand.
+
+
+\subsection{Permutations of a set}
+
+If we have a set $S$ of $n$ distinct elements, any ordering of the elements of
+$S$ in a row is called a \emph{permutation} of $S$. The discussion above says:
+
+\begin{quote}
+  The number of permutations of a set of size $n$ is $n!$.
+\end{quote}
+
+This is one of the most basic counting facts in discrete mathematics: whenever
+you are arranging $n$ distinct things in a line and every order is allowed,
+the answer is $n!$.
+
+
+\section{Restricted Seatings: Adding Drama}
+
+Real dinners have rules. Let us see how a few common restrictions change the
+counting. Throughout this section, think of six seats in a row and six friends:
+Amina (A), Lin (L), Zahra (Z), Jake (J), plus two more friends, M and N.
+
+\subsection{Example 1: One person in a fixed seat}
+
+Suppose Amina \emph{must} sit in the first chair.
+
+\begin{itemize}
+  \item We no longer have a choice for the first chair: it is always A.
+  \item For the remaining five chairs, we can seat the other five friends in any order.
+\end{itemize}
+
+So the total number of seatings is simply
+\[
+  5!
+\]
+because we are only permuting the remaining five people.
+
+In general, if one person has a fixed location and the others are free, the
+number of seatings is $(n-1)!$.
+
+\subsection{Example 2: Two people sit together as a block}
+
+Now suppose Lin and Zahra insist on sitting next to each other.
+
+A standard trick is to treat the pair (LZ) as a single ``block.''
+
+\begin{itemize}
+  \item First, create a new list of ``objects'': the block (LZ) plus the
+        other four people A, J, M, N. That gives 5 objects to arrange.
+  \item The number of ways to arrange these 5 objects is $5!$.
+  \item Inside the block, Lin and Zahra can sit in two orders: LZ or ZL.
+\end{itemize}
+
+By the product principle:
+\[
+  \text{number of seatings with L,Z together} = 5! \cdot 2.
+\]
+
+This idea appears over and over: when some group must stay together, we often
+treat that group as a single unit, count arrangements of the units, then
+multiply by the internal arrangements of each unit.
+
+\subsection{Example 3: Two people must not sit together}
+
+Now suppose Jake and Zahra \emph{refuse} to sit next to each other. How many
+seatings avoid J and Z being adjacent?
+
+A common strategy is:
+\begin{enumerate}
+  \item Count all possible seatings with no restriction: $6!$.
+  \item Count how many seatings have J and Z together (as a block).
+  \item Subtract: (all seatings) $-$ (bad seatings).
+\end{enumerate}
+
+We already know from the previous example that the number of seatings with J
+and Z together is $5! \cdot 2$ (treat JZ as a block, and swap inside the
+block). Therefore:
+\[
+  \text{seatings with J and Z not adjacent} = 6! - 5! \cdot 2.
+\]
+
+This pattern---\emph{count everything, then subtract the bad cases}---is a very
+powerful idea in counting. We will see it again later in the unit with more
+complicated sets of ``bad'' outcomes.
+
+
+\section{Python Lab: Brute-Forcing the Seating}
+
+Mathematics gives us formulas, but Python lets us \emph{test} those formulas
+on small examples and explore different constraints without doing all the
+bookkeeping by hand.
+
+In this lab you will write or modify a script (for example,
+\texttt{round\_table.py}) with the following goals.
+
+\subsection*{Step 1: Generate all seatings}
+
+\begin{enumerate}
+  \item Create a list of names, such as
+        \texttt{["Amina", "Lin", "Zahra", "Jake"]}.
+  \item Use \texttt{itertools.permutations} to generate all possible orderings
+        of the list.
+  \item Confirm that the number of permutations matches $n!$ for your $n$.
+\end{enumerate}
+
+\noindent
+A short code sketch might look like this:
+
+\begin{lstlisting}
+import itertools
+import math
+
+friends = ["A", "L", "Z", "J"]
+perms = list(itertools.permutations(friends))
+
+print("Number of permutations:", len(perms))
+print("Should be:", math.factorial(len(friends)))
+\end{lstlisting}
+
+\subsection*{Step 2: Count seatings with a fixed person at one end}
+
+Modify your code so that it counts only those permutations where Amina sits in
+the first chair.
+
+\begin{itemize}
+  \item Compare the Python count to the formula $(n-1)!$.
+  \item Try both ends (first or last) and see what happens.
+\end{itemize}
+
+\subsection*{Step 3: Count seatings where two friends sit together}
+
+Choose two friends (for example, Lin and Zahra) and:
+
+\begin{itemize}
+  \item count how many permutations have them sitting in adjacent seats;
+  \item compare to the ``block'' formula $5! \cdot 2$ (for $n=6$);
+  \item experiment with different values of $n$ and positions.
+\end{itemize}
+
+\subsection*{Step 4: Count seatings where two friends do \emph{not} sit together}
+
+Finally, let Python estimate how many permutations avoid J and Z being
+neighbors.
+
+\begin{itemize}
+  \item Compute the number directly by checking every permutation.
+  \item Compare with the subtraction formula $6! - 5! \cdot 2$.
+  \item Try other pairs of friends and see if the pattern holds.
+\end{itemize}
+
+The goal is not to write huge programs, but to use short scripts as mirrors
+that reflect the combinatorial structure we discovered on paper.
+
+
+\section{Practice and Extensions}
+
+Here are some practice problems you might see after reading this chapter.
+
+\subsection*{Basic practice}
+
+\begin{enumerate}
+  \item Explain in words what $5!$ means in the context of seating five
+        distinct friends in five chairs.
+  \item Compute $6!$ and describe a real-life scenario where $6!$ is the
+        correct answer.
+\end{enumerate}
+
+\subsection*{Medium spice}
+
+\begin{enumerate}
+  \item Six friends are to be seated in a row. Two of them insist on sitting
+        together. How many seatings are possible?
+  \item Six friends are to be seated in a row. Two of them refuse to sit next
+        to each other. How many seatings are possible?
+\end{enumerate}
+
+\subsection*{Extra spicy (optional)}
+
+\begin{enumerate}
+  \item Circular table variation: six friends sit around a round table. Two
+        seatings that can be rotated into each other are considered the same.
+        How many distinct seatings are possible?
+  \item Modify your Python script to treat rotations as identical and test
+        your answer on small values of $n$.
+\end{enumerate}
+
+
+\section*{Podcast: Episode 1 --- The Seating Chart}
+
+At the end of this chapter, there is a short podcast episode. A possible
+outline for the episode:
+
+\begin{itemize}
+  \item The characters are trying to organize a group dinner.
+  \item They first try to list out seatings for a small group and quickly get
+        overwhelmed as the group grows.
+  \item Someone introduces the idea of $n!$ and the ``product of choices''
+        story: first seat, second seat, and so on.
+  \item They play with the idea of treating two friends as a ``block'' and
+        of subtracting the bad arrangements.
+  \item They mention that Python helped them check their answers by
+        generating all seatings for small examples.
+  \item They end with a teaser:
+        \begin{quote}
+          ``If we can count seatings, can we also count usernames?  
+          Next time: gamer tags, license plates, and the size of the internet.''
+        \end{quote}
+\end{itemize}
+

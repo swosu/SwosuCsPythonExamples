@@ -1,0 +1,44 @@
+\chapter{Roll the Dice, Check the Math}
+
+\section{Story Hook: Can We Trust Our Formulas?}
+% - Scenario:
+%   * We’ve counted some combinatorial objects and claimed probabilities.
+%   * Now we want to see if reality (simulated) matches the theory.
+% - Simple example:
+%   * Probability of exactly 3 heads in 5 flips.
+%   * Probability of rolling at least one “6” in 4 dice.
+
+\section{From Counting to Probability}
+% - Recall:
+%   * Probability = (# favorable outcomes) / (# total outcomes),
+%     when all outcomes are equally likely.
+% - Connect shapes:
+%   * binomial coefficients (coin flips),
+%   * combinations (card hands),
+%   * permutations (order-sensitive events),
+%   * stars-and-bars (distributions of outcomes).
+
+\section{Python Lab: Monte Carlo vs Exact}
+% - Script sketch (monte_dice.py or monte_coins.py):
+%   * Ask students to:
+%       1. Compute an exact probability using counting + algebra.
+%       2. Simulate the experiment N times using random or numpy.
+%       3. Track how the estimated probability changes as N grows.
+%   * Examples:
+%       - Dice patterns (like “exactly two sixes”, “at least one six”).
+%       - Coin flips, specified number of heads.
+%       - Random usernames matching a simple pattern.
+
+\section{Interpreting the Results}
+% - Discussion prompts:
+%   * Why do simulated probabilities bounce around for small N?
+%   * How do we know when N is “large enough” for a decent approximation?
+%   * When is simulation easier than exact counting, and when is it the reverse?
+
+\section*{Podcast: Episode 4 -- The Dice Don’t Lie (Much)}
+% - Recap script notes:
+%   * Characters argue whether math or “luck” is right.
+%   * They run a bunch of simulated experiments.
+%   * They discover the law of large numbers in a friendly way.
+%   * Tease the final universe-design capstone.
+

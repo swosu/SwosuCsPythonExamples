@@ -1,0 +1,234 @@
+\chapter{Welcome to \emph{Counting Worlds}}
+
+\section{A Story About Too Many Possibilities}
+
+Imagine this:
+
+\begin{itemize}
+  \item You open a new game.
+  \item You have to choose a character: race, class, hairstyle, outfit, special skill.
+  \item Five minutes later, you are still on the character creation screen.
+\end{itemize}
+
+It feels like there are \emph{infinitely many} options. In reality, there is a
+large but finite \emph{universe of possibilities}. This chapter---and this whole
+mini-unit---is about learning how to \emph{count} those universes.
+
+We are going to ask questions like:
+
+\begin{itemize}
+  \item How many ways can we seat six friends in a row of chairs?
+  \item How many usernames can a website support under a given naming rule?
+  \item How many sundaes can we build from a limited supply of scoops and flavors?
+  \item How often should a particular dice pattern show up if our math is right?
+  \item How big is the universe of characters, decks, or skill builds in a game?
+\end{itemize}
+
+Instead of guessing, we will use discrete mathematics and a bit of Python to get
+real answers. Along the way, we will see that:
+
+\begin{quote}
+  \emph{Counting is how we tame spaces that feel infinite.}
+\end{quote}
+
+
+\section{What You Will Be Able to Do}
+
+By the end of this counting unit, you should be able to:
+
+\subsection*{Mathematical skills}
+
+\begin{itemize}
+  \item Use the product principle (``AND'' means multiply) and the sum principle
+        (``either/or'' means add, when choices are disjoint) in real problems.
+  \item Work with \emph{permutations} (where order matters) using factorials.
+  \item Work with \emph{combinations} (where order does not matter) using
+        binomial coefficients $\binom{n}{k}$.
+  \item Use the \emph{stars and bars} technique to count ways of distributing
+        identical items (like scoops, points, or coins) into bins.
+  \item Connect counting to \emph{probability} in simple finite situations.
+\end{itemize}
+
+\subsection*{Computational skills}
+
+\begin{itemize}
+  \item Use Python as an ``experimental math lab'':
+        \begin{itemize}
+          \item generate all outcomes for small cases;
+          \item check whether a formula seems to be right;
+          \item estimate probabilities via Monte Carlo simulation.
+        \end{itemize}
+  \item Translate informal stories (about games, food, or chaos) into:
+        \begin{itemize}
+          \item precise combinatorial models, and
+          \item short, readable Python scripts.
+        \end{itemize}
+\end{itemize}
+
+\subsection*{Design and creativity}
+
+\begin{itemize}
+  \item Design your own small ``universe'' (a game, system, or scenario).
+  \item Identify where permutations, combinations, and stars-and-bars appear
+        inside that universe.
+  \item Justify your counting formulas in words, not just symbols.
+\end{itemize}
+
+
+\section{How This Mini-Book Works}
+
+Each chapter follows the same basic rhythm:
+
+\begin{enumerate}[label=\arabic*.]
+  \item \textbf{Start with a story.}  
+        We begin with something that feels familiar: seating friends, building
+        sundaes, creating usernames, rolling dice, or designing a game world.
+
+  \item \textbf{Extract the structure.}  
+        We strip away the flavor and look at the underlying combinatorial
+        skeleton: choices, constraints, order vs.\ no order, repetition vs.\
+        no repetition.
+
+  \item \textbf{Do the math.}  
+        We use the tools of discrete mathematics to turn the story into
+        symbols and formulas and compute exact counts.
+
+  \item \textbf{Check or explore with Python.}  
+        For small versions of the problem, we let a Python script:
+        \begin{itemize}
+          \item generate the whole universe explicitly,
+          \item count how many outcomes have a certain property,
+          \item approximate probabilities with random trials.
+        \end{itemize}
+
+  \item \textbf{Reflect and remix.}  
+        At the end of the chapter, we check understanding with short
+        exercises and a brief ``podcast'' conversation that ties the ideas
+        back to the story.
+\end{enumerate}
+
+You do \emph{not} need to be a Python expert. The code will be short and
+focused, and you can treat it as executable pseudocode if you are still
+learning the language.
+
+
+\section{Python as Our Counting Laboratory}
+
+Here is roughly how Python shows up throughout this unit:
+
+\begin{itemize}
+  \item We use \texttt{itertools} to generate permutations, combinations,
+        and simple products (like all possible usernames of a given form).
+  \item We use the \texttt{math} module for things like \texttt{math.factorial}
+        and \texttt{math.comb}.
+  \item We use the \texttt{random} module to simulate coin flips, dice rolls,
+        and other random experiments.
+\end{itemize}
+
+Most scripts will follow this template:
+
+\begin{enumerate}[label=\arabic*.]
+  \item Set up a small, concrete version of the problem.
+  \item Compute a theoretical count or probability using a formula.
+  \item Use Python to:
+        \begin{itemize}
+          \item either enumerate all possibilities, or
+          \item run a large number of random trials.
+        \end{itemize}
+  \item Compare the result from Python with the formula.
+\end{enumerate}
+
+You will be encouraged to modify the scripts:
+change parameters, add constraints, or invent your own stories that use the
+same combinatorial ideas.
+
+
+\section{Roadmap for the Five Chapters}
+
+Here is the plan for the rest of this counting unit:
+
+\subsection*{Chapter 1: Seating the Party at the Round Table}
+
+We start with \emph{factorials} and \emph{permutations}. You will:
+
+\begin{itemize}
+  \item Count the number of ways to seat people in a row.
+  \item Handle restrictions (must sit together, must not sit together, fixed seats).
+  \item Use Python to brute-force small seating problems and check your formulas.
+\end{itemize}
+
+\subsection*{Chapter 2: Usernames, License Plates, and Other Noisy Strings}
+
+We move to \emph{strings with repetition}. You will:
+
+\begin{itemize}
+  \item Model usernames, license plates, and PINs as strings from an alphabet.
+  \item Use the product principle to count how many such strings exist.
+  \item Compare different username rules and discuss which ones create larger
+        (or smaller) universes of names.
+\end{itemize}
+
+\subsection*{Chapter 3: How Many Sundaes Can We Build?}
+
+We introduce \emph{stars and bars}. You will:
+
+\begin{itemize}
+  \item Count ways to distribute scoops among flavors or points among skills.
+  \item Visualize stars-and-bars as a picture and connect it to a formula.
+  \item Use Python to generate all small distributions and verify your counts.
+\end{itemize}
+
+\subsection*{Chapter 4: Roll the Dice, Check the Math}
+
+We tie counting to \emph{probability} and \emph{simulation}. You will:
+
+\begin{itemize}
+  \item Compute exact probabilities using combinatorial reasoning.
+  \item Run Monte Carlo simulations in Python to estimate those probabilities.
+  \item Watch simulated frequencies drift toward theoretical values as
+        the number of trials increases.
+\end{itemize}
+
+\subsection*{Chapter 5: Design Your Own Universe}
+
+Finally, you become the world-builder. You will:
+
+\begin{itemize}
+  \item Design a small universe of your choice (game, system, or scenario).
+  \item Identify at least one permutation, one combination, and one
+        stars-and-bars situation inside it.
+  \item Analyze your universe with formulas \emph{and} Python, then present
+        your findings.
+\end{itemize}
+
+
+\section*{Podcast: Episode 0 --- Trailer for the Counting Worlds}
+
+At the end of this intro, there is a short podcast episode that you can
+listen to while walking, commuting, or setting up your Python environment.
+The episode can follow this rough script:
+
+\begin{itemize}
+  \item Introduce the ``cast'' of the unit (for example, recurring student
+        characters or narrators).
+  \item Share one real-life story where counting matters
+        (picking teams, building a schedule, designing a game).
+  \item Tease each chapter in one sentence:
+        \begin{itemize}
+          \item ``First, we figure out how many ways to seat a chaotic friend group.''
+          \item ``Then, we see how many usernames and license plates fit in the system.''
+          \item ``Next, we over-engineer sundae bars and skill trees.''
+          \item ``After that, we roll dice to see if our math holds up.''
+          \item ``Finally, \emph{you} design your own universe and count it.''
+        \end{itemize}
+  \item Close with a simple challenge:
+        \begin{quote}
+          Before Chapter 1, try to guess:  
+          \emph{How many different outfits can you build from your own closet?}
+        \end{quote}
+\end{itemize}
+
+This podcast is not graded; it is here to set the tone, tell stories, and
+give you a human voice walking you into the math.
+
+

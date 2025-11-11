@@ -1,0 +1,46 @@
+\chapter{How Many Sundaes Can We Build?}
+
+\section{Story Hook: Infinite Ice Cream Bar}
+% - Sundae bar (or magic points / skill points) narrative:
+%   * You have n scoops to distribute among k flavors.
+%   * Scoops of the same flavor are indistinguishable.
+% - Small concrete example:
+%   * 4 scoops, 3 flavors => list all possibilities by hand.
+
+\section{Stars and Bars: Distributing Identical Objects}
+% - Translate to integer solutions:
+%   * x_1 + x_2 + ... + x_k = n,  x_i >= 0.
+% - Picture method:
+%   * Stars for scoops, bars for dividers between flavors.
+%   * Example diagrams with actual stars and bars.
+% - Derive the formula:
+%   * Number of solutions = C(n + k - 1, k - 1).
+
+\section{Variants: Minimums and Caps}
+% - x_i >= 1 (everyone gets at least one scoop/point):
+%   * Use substitution: y_i = x_i - 1.
+% - Caps / maximum constraints as challenge problems:
+%   * At most 3 scoops of any single flavor.
+%   * Some flavors forbidden entirely.
+
+\section{Python Lab: Enumerating Sundaes}
+% - Script sketch (sundaes.py):
+%   * For small n and k, generate all integer k-tuples summing to n.
+%   * Count them and compare to C(n + k - 1, k - 1) using math.comb.
+%   * Optionally:
+%       - Filter by min or max bounds.
+%       - Print a few example tuples and map to flavor names.
+
+\section{Practice: Scoops, Spells, and Skill Trees}
+% - Exercises:
+%   * Classic: distribute candies among kids, coins in piggy banks, etc.
+%   * Game-themed: distribute ability points across stats (STR/DEX/INT...).
+%   * Ask students to write “story → equation → stars-and-bars formula”.
+
+\section*{Podcast: Episode 3 -- Sundae Architect}
+% - Recap script notes:
+%   * Characters over-build ridiculous sundaes / skill builds.
+%   * Talk through stars-and-bars in informal language.
+%   * Mention where stars-and-bars shows up in games and resource allocation.
+%   * Tease dice, probabilities, and simulations next.
+
