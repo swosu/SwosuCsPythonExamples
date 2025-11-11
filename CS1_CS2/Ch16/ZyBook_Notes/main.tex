@@ -8,12 +8,8 @@
 \usepackage{amsmath, amssymb}
 \usepackage{hyperref}
 \usepackage{xcolor}
+\usepackage{graphicx} % <-- for figures
 \usepackage{listings}
-
-\lstdefinelanguage{Text}{
-  morecomment=[l]{\#},
-}
-
 
 % --- Listings setup for Python code ---
 \lstdefinelanguage{Python}{
@@ -23,8 +19,11 @@
   morestring=[b]"
 }
 
+\lstdefinelanguage{Text}{
+  morecomment=[l]{\#},
+}
+
 \lstset{
-  language=Python,
   basicstyle=\ttfamily\small,
   keywordstyle=\color{blue},
   commentstyle=\color{teal},
@@ -44,12 +43,12 @@
 
 \begin{document}
 
-
 \frontmatter
 \maketitle
 \tableofcontents
 
 \mainmatter
 \include{chapters/ch01_intro}
+\include{chapters/ch02_bubble_sort_analysis}
 
 \end{document}

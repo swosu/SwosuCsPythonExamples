@@ -1,0 +1,192 @@
+\chapter{Bubble Sort in the Wild: Timing and Big-O}
+
+In Chapter~\ref{lst:bubble-sort-basic} we met bubble sort as a simple,
+easy-to-read sorting algorithm. In this chapter we turn it loose on larger
+inputs and watch how its running time grows.
+
+Our goal is to connect three things:
+
+\begin{enumerate}
+  \item the \emph{code} that performs bubble sort and measures its running time,
+  \item the \emph{data} we collect in a CSV file, and
+  \item the \emph{Big-O} story that explains why the graph of time vs.\ input
+        size curves upward like an $n^2$ function.
+\end{enumerate}
+
+\section{From Algorithm to Experiment}
+
+The bubble sort algorithm itself has not changed. What we are doing now is
+treating it like a lab experiment:
+
+\begin{itemize}
+  \item pick a list size $n$ (for example, 100, 200, 400, \dots),
+  \item generate a random list of $n$ integers,
+  \item sort that list using bubble sort, and
+  \item measure how long the sort took.
+\end{itemize}
+
+We repeat this for several sizes $n$ and several trials per size. Each run
+produces one data point: \emph{``sorting $n$ items took $t$ seconds.''} Those
+data points are written to a CSV file so that we can analyze and plot them
+later.
+
+\section{Timing Bubble Sort}
+
+Listing~\ref{lst:bubble-sort-timing} shows the script
+\texttt{scripts/bubble\_sort\_timing.py}. This code focuses on running bubble
+sort as fast as it reasonably can and recording the total wall-clock time.
+
+\lstinputlisting[
+  language=Python,
+  caption={Timing bubble sort on growing input sizes.},
+  label={lst:bubble-sort-timing}
+]{scripts/bubble_sort_timing.py}
+
+
+A few key points about this script:
+
+\begin{itemize}
+  \item The function \texttt{bubble\_sort} implements the same algorithm you saw
+        in Chapter~1, but without any extra printing or tracing.
+  \item The function \texttt{time\_bubble\_sort(n)} generates a random list of
+        length $n$, sorts it, and returns the elapsed time.
+  \item The \texttt{append\_result} function adds a new row to
+        \texttt{data/bubble\_sort\_timing.csv} with three fields:
+        timestamp, number of items, and elapsed time in seconds.
+  \item The \texttt{main()} function loops over a range of input sizes (100,
+        200, 400, \dots) and runs several trials for each size.
+\end{itemize}
+
+This script is our experimental engine. Every time we run it, we append more
+timing data to the same CSV file.
+
+\section{Big-O Intuition for Bubble Sort}
+
+Before looking at the plot, let us reason about the shape we expect to see.
+
+Bubble sort works by repeatedly sweeping through the list and comparing neighbor
+pairs:
+
+\begin{itemize}
+  \item On the first pass, it may compare positions $(0,1)$, $(1,2)$, \dots,
+        up to $(n-2,n-1)$.
+  \item On the second pass, it does almost as many comparisons, and so on.
+\end{itemize}
+
+If you imagine counting comparisons, the total number of neighbor comparisons is
+roughly:
+
+\[
+(n-1) + (n-2) + (n-3) + \dots + 1
+\]
+
+This is a classic triangular sum. Its exact value is $\frac{n(n-1)}{2}$, which
+behaves like $\tfrac{1}{2} n^2$ for large $n$. In Big-O notation we say:
+
+\[
+T(n) \in \mathcal{O}(n^2)
+\]
+
+because, up to constant factors, the running time grows like $n^2$.
+
+So if we double $n$, we should expect the running time to grow by about a factor
+of four:
+
+\[
+T(2n) \approx 4 \, T(n).
+\]
+
+Our CSV data from \texttt{bubble\_sort\_timing.py} lets us see whether the
+actual wall-clock time behaves the way this $n^2$ theory predicts.
+
+\section{Fitting an \texorpdfstring{$n^2$}{n-squared} Curve}
+
+To make the connection concrete, we wrote a second script that reads the CSV
+file, groups runs by input size, and computes the average time for each $n$.
+Then it fits a curve of the form
+
+\[
+T(n) \approx a n^2 + b
+\]
+
+to the data, and also builds an ``ideal'' $\mathcal{O}(n^2)$ curve $k n^2$ that
+passes through the smallest data point.
+
+Listing~\ref{lst:bubble-sort-analyze} shows
+\texttt{scripts/bubble\_sort\_analyze.py}.
+
+\lstinputlisting[
+  language=Python,
+  caption={Analyzing and plotting bubble sort timing data.},
+  label={lst:bubble-sort-analyze}
+]{scripts/bubble_sort_analyze.py}
+
+
+When you run this script, it reads
+\texttt{data/bubble\_sort\_timing.csv} and produces a figure file named
+\texttt{figures/bubble\_sort\_timing\_n2.png}. That file is a snapshot of the
+current state of your experiment: whatever timing data you have collected so
+far is what gets plotted.
+
+\section{The Plot: Data vs.\ Big-O}
+
+Figure~\ref{fig:bubble-sort-timing} shows the result of running
+\texttt{bubble\_sort\_timing.py} for a range of input sizes and then plotting
+the average times using \texttt{bubble\_sort\_analyze.py}.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.8\textwidth]{figures/bubble_sort_timing_n2.png}
+  \caption{Measured bubble sort times vs.\ input size, along with a fitted
+           quadratic curve and an ideal $\mathcal{O}(n^2)$ curve.}
+  \label{fig:bubble-sort-timing}
+\end{figure}
+
+The dots represent the measured average time for each input size $n$. The solid
+line is the fitted curve $a n^2 + b$, and the dashed line is the ideal curve
+$k n^2$ scaled to match the smallest data point.
+
+What we see:
+
+\begin{itemize}
+  \item The data points hug an $n^2$-shaped curve very closely once $n$ is
+        moderately large.
+  \item Doubling $n$ tends to multiply the running time by a factor close to
+        four, especially for larger lists where timing noise is smaller.
+  \item The exact constants $a$, $b$, and $k$ depend on your machine, your
+        Python version, and how busy your computer is, but the \emph{shape} of
+        the curve is consistently quadratic.
+\end{itemize}
+
+This is the heart of Big-O analysis: we ignore the messy, system-dependent
+details and focus on how the running time scales as $n$ grows. Bubble sort is
+simple enough that we can both \emph{prove} the $\mathcal{O}(n^2)$ behavior on
+paper and \emph{see} it in real timing data.
+
+\section{Looking Ahead}
+
+In this chapter we:
+
+\begin{itemize}
+  \item turned bubble sort into an experiment by timing it on random lists of
+        increasing size,
+  \item stored those results in a CSV file and analyzed them with a short
+        Python script, and
+  \item saw that the timing data follows an $\mathcal{O}(n^2)$ curve very
+        closely.
+\end{itemize}
+
+In the next chapters we will:
+
+\begin{itemize}
+  \item compare bubble sort with faster sorting algorithms such as merge sort
+        and quicksort,
+  \item visualize how their timing curves differ, and
+  \item deepen our understanding of Big-O notation by looking at other growth
+        rates like $\mathcal{O}(n \log n)$ and $\mathcal{O}(n)$.
+\end{itemize}
+
+By the time we are done, you will be able to look at a timing plot and say,
+with some confidence, ``that algorithm is behaving like $n^2$'' or
+``that one looks closer to $n \log n$.'' And you will know how to build the
+experiments to justify your claim.
