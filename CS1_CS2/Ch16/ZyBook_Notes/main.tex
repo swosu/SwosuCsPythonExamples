@@ -1,0 +1,55 @@
+\documentclass[11pt]{book}
+
+% --- Basic setup ---
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\usepackage{amsmath, amssymb}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\lstdefinelanguage{Text}{
+  morecomment=[l]{\#},
+}
+
+
+% --- Listings setup for Python code ---
+\lstdefinelanguage{Python}{
+  morekeywords={def,return,for,in,if,else,elif,while,break,continue,True,False,None},
+  sensitive=true,
+  morecomment=[l]{\#},
+  morestring=[b]"
+}
+
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  commentstyle=\color{teal},
+  stringstyle=\color{red!60!black},
+  showstringspaces=false,
+  tabsize=4,
+  frame=single,
+  breaklines=true,
+  numbers=left,
+  numberstyle=\tiny,
+  stepnumber=1
+}
+
+\title{Sorting and Searching\\[0.5em]\large A Gentle Introduction}
+\author{Jeremy Evert}
+\date{\today}
+
+\begin{document}
+
+
+\frontmatter
+\maketitle
+\tableofcontents
+
+\mainmatter
+\include{chapters/ch01_intro}
+
+\end{document}

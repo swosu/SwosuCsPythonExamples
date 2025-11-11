@@ -1,0 +1,212 @@
+\chapter{Introduction}
+
+\section{Why Sorting and Searching Matter}
+
+Hey friends! In this book we are going to explore two of the most common jobs
+we ask computers to do:
+
+\begin{itemize}
+  \item \textbf{Searching}: ``Is this value in my data? If so, where?''
+  \item \textbf{Sorting}: ``Please put this data in order.''
+\end{itemize}
+
+At first glance, both tasks sound simple. You have a bunch of numbers, and you
+either want to find one of them or line them up from smallest to largest.
+Easy, right?
+
+The fun begins when we realize there are many different ways to search and
+sort, and some of those ways are dramatically faster than others as our data
+sets grow. That is where ideas like:
+
+\begin{itemize}
+  \item \textbf{Big-O notation},
+  \item \textbf{algorithmic complexity}, and
+  \item \textbf{careful performance analysis}
+\end{itemize}
+
+start to matter. By the end of this book, you will not only know how to write
+sorting and searching code, but also how to reason about \emph{why} one
+approach is better than another.
+
+In this first chapter, we will keep things very simple. We will:
+
+\begin{enumerate}
+  \item write a basic \textbf{linear search} algorithm that looks for a number
+        in a list of numbers (without sorting first), and
+  \item write a classic \textbf{bubble sort} algorithm that reorders a list so
+        that later searching can be more structured.
+\end{enumerate}
+
+We will gently hint at runtime complexity, but save the deeper Big-O discussion
+for later chapters.
+
+\section{A First Search: Linear Search}
+
+Imagine you have a small list of numbers on a sticky note:
+
+\[
+[9,\ 3,\ 7,\ 2,\ 10]
+\]
+
+and you want to know whether the number $7$ is in the list. One straightforward
+strategy is:
+
+\begin{enumerate}
+  \item Start at the first number.
+  \item Compare it to $7$.
+  \item If it matches, you are done.
+  \item If it does not, move one step to the right and repeat.
+\end{enumerate}
+
+You keep walking through the list \emph{linearly}, one element at a time. This
+strategy is called \textbf{linear search}.
+
+Here is a simple Python implementation:
+
+\begin{lstlisting}[caption={A simple linear search in Python.}]
+def linear_search(data, target):
+    """
+    Return the index of 'target' in the list 'data',
+    or -1 if the target is not found.
+    """
+    for index, value in enumerate(data):
+        if value == target:
+            return index
+    return -1
+
+
+if __name__ == "__main__":
+    numbers = [9, 3, 7, 2, 10]
+    target = 7
+
+    position = linear_search(numbers, target)
+    if position != -1:
+        print(f"Found {target} at index {position}.")
+    else:
+        print(f"{target} was not found.")
+\end{lstlisting}
+
+A few quick observations (we will formalize these ideas later):
+
+\begin{itemize}
+  \item In the \emph{best} case, the target is at the first position,
+        so we only do one comparison.
+  \item In the \emph{worst} case, the target is at the very end of the list
+        or not present at all, so we check every element.
+  \item As the list gets longer, the number of checks grows roughly in
+        proportion to the length of the list.
+\end{itemize}
+
+That ``grows in proportion to the length'' idea is the heart of what we will
+later call \emph{linear time}, or \(\mathcal{O}(n)\) time.
+
+\section{Sorting to Help Searching}
+
+Linear search works on any list, even if the elements are in a completely
+random order. The downside is that it can be slow for very large lists,
+because we may have to check every single element.
+
+If, however, we put the data into \emph{sorted order} first, we can sometimes
+use much faster searching techniques. For example, binary search (which we
+will meet soon) can find values in a sorted list in a way that scales much
+more efficiently than linear search.
+
+So there is a trade-off:
+
+\begin{itemize}
+  \item Sorting the data takes extra work up front.
+  \item After sorting, searching can become much faster.
+\end{itemize}
+
+In this chapter, we will not yet optimize that trade-off. Instead, we will
+simply learn a very basic way to sort: bubble sort.
+
+\section{Our First Sort: Bubble Sort}
+
+Bubble sort is one of the simplest sorting algorithms to understand and
+implement, even though it is \emph{not} the most efficient choice for large
+data sets. We study it because it gives us a clear, concrete example of how a
+sorting algorithm works.
+
+The idea:
+
+\begin{enumerate}
+  \item Look at neighboring pairs of elements in the list.
+  \item If a pair is out of order, swap them.
+  \item Keep sweeping through the list, pushing larger values toward the end,
+        like bubbles rising to the surface.
+  \item Repeat these passes until no more swaps are needed.
+\end{enumerate}
+
+Instead of writing the full code directly in this chapter, we store it in a
+separate Python file inside a \texttt{scripts} folder. This keeps our project
+organized and makes it easier to rerun experiments or change the code later.
+
+Listing~\ref{lst:bubble-sort-basic} shows the contents of
+\texttt{scripts/bubble\_sort\_basic.py}. This version of bubble sort does two
+important things for us:
+
+\begin{itemize}
+  \item It prints the list after each full ``bubble pass'' so that we can see
+        how the numbers move over time.
+  \item It writes the same information to a CSV file
+        (\texttt{data/bubble\_sort\_basic\_trace.csv}) so that we can load it
+        into a spreadsheet, plot graphs, or quote the exact output later in
+        this book.
+\end{itemize}
+
+\lstinputlisting[
+  caption={Bubble sort with a pass-by-pass trace, stored in \texttt{scripts/bubble\_sort\_basic.py}.},
+  label={lst:bubble-sort-basic}
+]{scripts/bubble_sort_basic.py}
+
+\section{Quoting the Data: Bubble Sort Trace CSV}
+
+Because the script writes its trace to a CSV file in the \texttt{data}
+directory, we can include that data directly in our book. This makes the book
+feel more like a living lab notebook: the text, the code, and the data all
+match each other.
+
+Listing~\ref{lst:bubble-sort-trace} is taken directly from
+\texttt{data/bubble\_sort\_basic\_trace.csv} and shows how the list changes
+after each pass of bubble sort.
+
+\lstinputlisting[
+  language=Text,
+  caption={Trace data produced by \texttt{bubble\_sort\_basic.py}, stored in \texttt{data/bubble\_sort\_basic\_trace.csv}.},
+  label={lst:bubble-sort-trace}
+]{data/bubble_sort_basic_trace.csv}
+
+Some early complexity intuition:
+
+\begin{itemize}
+  \item In the worst case, bubble sort compares many pairs of elements over
+        and over.
+  \item As the number of elements \(n\) grows, the number of comparisons grows
+        roughly like \(n^2\).
+  \item Later we will describe this more formally as \(\mathcal{O}(n^2)\) time.
+\end{itemize}
+
+\section{Where We Are Going Next}
+
+In this chapter we have:
+
+\begin{itemize}
+  \item introduced the basic ideas of searching and sorting,
+  \item written a simple linear search that works on unsorted data,
+  \item implemented bubble sort to put data into order, and
+  \item connected the code to actual trace data stored in a CSV file.
+\end{itemize}
+
+Next, we will:
+
+\begin{itemize}
+  \item dig deeper into \textbf{Big-O notation} and what it means to say an
+        algorithm runs in \(\mathcal{O}(n)\) or \(\mathcal{O}(n^2)\) time,
+  \item compare different sorting algorithms, and
+  \item explore faster search strategies that take advantage of sorted data.
+\end{itemize}
+
+For now, make sure you can trace both the linear search and the bubble sort by
+hand on a small list. Being able to follow each step is the first move toward
+truly understanding algorithmic complexity.
