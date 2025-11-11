@@ -1,44 +1,331 @@
 \chapter{Roll the Dice, Check the Math}
 
 \section{Story Hook: Can We Trust Our Formulas?}
-% - Scenario:
-%   * We’ve counted some combinatorial objects and claimed probabilities.
-%   * Now we want to see if reality (simulated) matches the theory.
-% - Simple example:
-%   * Probability of exactly 3 heads in 5 flips.
-%   * Probability of rolling at least one “6” in 4 dice.
+
+The group is back at the game table.
+
+Amina has done the math and is absolutely convinced:
+\begin{quote}
+``The chance of seeing at least one 6 in four rolls of a fair die is about \(\frac{2}{3}\). I computed it with counting, and math never lies.''
+\end{quote}
+
+Jake, of course, does not believe in anything that isn’t shiny and empirical:
+\begin{quote}
+``Cool story. Hand me the dice. If your formula is right, we should \emph{see} it in the data, right?’’
+\end{quote}
+
+Lin is halfway between them:
+\begin{quote}
+``I trust the math, but I also know we can make mistakes. Let’s use the computer as a referee.’’
+\end{quote}
+
+Zahra is just here for the drama:
+\begin{quote}
+``So if the dice don’t match the formula, do we get to flame Amina’s notebook?’’
+\end{quote}
+
+\medskip
+
+This chapter is about that tension:
+
+\begin{itemize}
+  \item We already know how to count outcomes using permutations, combinations, and stars \& bars.
+  \item Now we tie that counting to \emph{probability}.
+  \item Then we let Python run huge numbers of random experiments to see whether reality agrees with our formulas.
+\end{itemize}
+
+The slogan for the chapter:
+
+\begin{center}
+\emph{Counting gives us exact answers. Simulation lets us test and explore them.}
+\end{center}
+
 
 \section{From Counting to Probability}
-% - Recall:
-%   * Probability = (# favorable outcomes) / (# total outcomes),
-%     when all outcomes are equally likely.
-% - Connect shapes:
-%   * binomial coefficients (coin flips),
-%   * combinations (card hands),
-%   * permutations (order-sensitive events),
-%   * stars-and-bars (distributions of outcomes).
+
+We start with a very simple but powerful idea.
+
+\subsection*{Definition: Equally Likely Outcomes}
+
+Suppose an experiment (like rolling dice, flipping coins, or drawing a random username)
+has a finite set \(\Omega\) of outcomes, and we assume each outcome is equally likely.
+If \(E \subseteq \Omega\) is an event (the set of ``good'' outcomes), then
+\[
+  P(E) = \frac{\lvert E \rvert}{\lvert \Omega \rvert}.
+\]
+
+So every time we say ``What is the probability that\ldots,'' we are really asking:
+
+\begin{quote}
+\emph{How many outcomes make this thing happen, divided by how many outcomes are possible at all?}
+\end{quote}
+
+\subsection*{Example: Exactly 3 Heads in 5 Flips}
+
+Flip a fair coin 5 times.
+
+\begin{itemize}
+  \item Each outcome is a string like HHTHT.
+  \item There are 2 choices (H or T) for each of the 5 positions.
+  \item By the product principle, 
+  \[
+    \lvert \Omega \rvert = 2^5 = 32.
+  \]
+\end{itemize}
+
+Let \(E\) be the event ``exactly 3 of the 5 flips are heads.'' To choose such an outcome:
+
+\begin{itemize}
+  \item Choose which 3 of the 5 positions are H.
+  \item The remaining 2 positions are automatically T.
+\end{itemize}
+
+So the number of favorable outcomes is
+\[
+  \lvert E \rvert = \binom{5}{3} = 10,
+\]
+and
+\[
+  P(E) = \frac{\lvert E \rvert}{\lvert \Omega \rvert} = \frac{10}{32} = \frac{5}{16} \approx 0.3125.
+\]
+
+Amina would write this down calmly. Jake would start flipping coins.
+
+\subsection*{Example: At Least One Six in Four Rolls}
+
+Roll a fair six-sided die 4 times.
+
+\begin{itemize}
+  \item Each outcome is a sequence like (2, 6, 3, 6).
+  \item Each roll has 6 options, so
+  \[
+    \lvert \Omega \rvert = 6^4.
+  \]
+\end{itemize}
+
+We want the event \(E\): ``at least one 6 appears.''
+
+It is often easier to count the complement:
+\begin{itemize}
+  \item Let \(E^c\) be ``no sixes at all.''
+  \item A roll with no six has only 5 possible values: 1, 2, 3, 4, 5.
+  \item So
+  \[
+    \lvert E^c \rvert = 5^4.
+  \]
+\end{itemize}
+
+Thus
+\[
+  P(E) = 1 - P(E^c) = 1 - \frac{\lvert E^c \rvert}{\lvert \Omega \rvert}
+       = 1 - \frac{5^4}{6^4}.
+\]
+
+If you like numbers,
+\[
+  \frac{5^4}{6^4} = \frac{625}{1296} \approx 0.482\quad\text{so}\quad
+  P(E) \approx 1 - 0.482 = 0.518.
+\]
+
+So in four rolls, it is a little more likely than not that we see at least one 6, but far
+from guaranteed. Perfect fodder for an argument at the table.
+
+\subsection*{Connecting Back to Counting Worlds}
+
+Notice how this uses everything we’ve been doing:
+
+\begin{itemize}
+  \item Counting all possible strings of coin flips or dice rolls (product principle).
+  \item Counting subsets of positions (combinations).
+  \item Sometimes using complements to avoid messy direct counting.
+\end{itemize}
+
+Once we can count, the jump to probability is literally one division step:
+\[
+  \text{probability} = \frac{\text{good outcomes}}{\text{all outcomes}}.
+\]
+
+The formulas are beautiful. Now we ask: \emph{does reality agree?}
+
 
 \section{Python Lab: Monte Carlo vs Exact}
-% - Script sketch (monte_dice.py or monte_coins.py):
-%   * Ask students to:
-%       1. Compute an exact probability using counting + algebra.
-%       2. Simulate the experiment N times using random or numpy.
-%       3. Track how the estimated probability changes as N grows.
-%   * Examples:
-%       - Dice patterns (like “exactly two sixes”, “at least one six”).
-%       - Coin flips, specified number of heads.
-%       - Random usernames matching a simple pattern.
+
+In this lab, Python plays the role of a moody universe simulator.
+
+We will:
+
+\begin{enumerate}
+  \item Compute an exact probability using counting, as above.
+  \item Use Python to run the experiment many times at random.
+  \item Compare the theoretical probability to the simulated frequency.
+\end{enumerate}
+
+\subsection*{Simulating Coin Flips}
+
+Let’s revisit ``exactly 3 heads in 5 flips.’’ The exact probability is \(\frac{5}{16}\).
+
+Here is a simple simulation:
+
+\begin{lstlisting}[language=Python,caption={Monte Carlo for exactly 3 heads in 5 flips}]
+import random
+
+def flip_coin():
+    """Return 'H' or 'T' with equal probability."""
+    return 'H' if random.random() < 0.5 else 'T'
+
+def run_trial():
+    """Simulate 5 flips and return True if we see exactly 3 heads."""
+    flips = [flip_coin() for _ in range(5)]
+    num_heads = flips.count('H')
+    return (num_heads == 3)
+
+def estimate_probability(num_trials):
+    """Run many trials and estimate the probability."""
+    successes = 0
+    for _ in range(num_trials):
+        if run_trial():
+            successes += 1
+    return successes / num_trials
+
+for N in [10, 100, 1000, 10000]:
+    print(N, estimate_probability(N))
+\end{lstlisting}
+
+What you should see:
+
+\begin{itemize}
+  \item For \(N = 10\): the estimate might be something wild like \(0.2\) or \(0.4\).
+  \item For \(N = 100\): usually closer, maybe around \(0.31\).
+  \item For \(N = 10{,}000\): often very close to \(0.3125\).
+\end{itemize}
+
+The code does not know any math. It just flips coins over and over and keeps score.
+
+\subsection*{Simulating Dice: At Least One Six}
+
+Now let’s simulate ``at least one 6 in four rolls'' and compare to
+\[
+  P(\text{at least one 6}) = 1 - \frac{5^4}{6^4} \approx 0.518.
+\]
+
+\begin{lstlisting}[language=Python,caption={Monte Carlo for at least one 6 in 4 rolls}]
+import random
+
+def roll_die():
+    """Return an integer from 1 to 6."""
+    return random.randint(1, 6)
+
+def at_least_one_six():
+    """Roll a die 4 times and check if at least one roll is 6."""
+    rolls = [roll_die() for _ in range(4)]
+    return 6 in rolls
+
+def estimate_probability(num_trials):
+    successes = 0
+    for _ in range(num_trials):
+        if at_least_one_six():
+            successes += 1
+    return successes / num_trials
+
+for N in [10, 100, 1000, 10000, 100000]:
+    print(N, estimate_probability(N))
+\end{lstlisting}
+
+Again, for large \(N\), the printed estimates should hover close to the theoretical value.
+
+\subsection*{Your Turn: Custom Experiments}
+
+Here are some variations students can try:
+
+\begin{itemize}
+  \item Exactly two 6's in 8 rolls.
+  \item No repeated value in 4 rolls (all distinct results).
+  \item A simple username rule: randomly generate usernames and estimate the probability
+        that a random username contains at least one digit.
+\end{itemize}
+
+For each variation, the workflow is:
+
+\begin{enumerate}
+  \item Write down the combinatorial model: what is the sample space? what counts as a success?
+  \item Compute the theoretical probability using counting techniques.
+  \item Write or adapt a Python simulation to estimate that probability.
+  \item Compare and discuss.
+\end{enumerate}
+
 
 \section{Interpreting the Results}
-% - Discussion prompts:
-%   * Why do simulated probabilities bounce around for small N?
-%   * How do we know when N is “large enough” for a decent approximation?
-%   * When is simulation easier than exact counting, and when is it the reverse?
+
+Simulation outputs \emph{numbers}. We want to turn those numbers into \emph{understanding}.
+
+\subsection*{Why Does the Estimate Bounce Around?}
+
+When you run a simulation with a small number of trials (say \(N = 10\)), the estimate
+can be pretty far off. This is not the universe ``breaking'' math; it is just randomness.
+
+\begin{itemize}
+  \item Each run of the experiment produces random results.
+  \item With only a few trials, the random noise dominates the signal.
+  \item As \(N\) grows, the average smooths out the randomness.
+\end{itemize}
+
+This is an informal peek at the \emph{law of large numbers}: with many independent trials,
+the simulated frequency tends to drift toward the true probability.
+
+\subsection*{When is Simulation Easier Than Counting?}
+
+Counting can get hard quickly:
+
+\begin{itemize}
+  \item Complicated constraints (``no two sixes next to each other and total sum at least 15'').
+  \item Huge sample spaces where it’s painful to reason about every type of outcome.
+\end{itemize}
+
+Simulation, on the other hand:
+
+\begin{itemize}
+  \item Only needs us to know how to generate random outcomes and check a condition.
+  \item Can handle weird, messy, real-world rules.
+  \item Gives approximate answers that improve as we increase the number of trials.
+\end{itemize}
+
+However, simulation \emph{never} proves that a formula is correct. It only gives evidence.
+Exact counting is still the gold standard when it is feasible.
+
+\subsection*{Math, Code, and Reality}
+
+In this chapter, students should come away with three overlapping perspectives:
+
+\begin{enumerate}
+  \item \textbf{Theoretical:} counting-based formulas for probabilities.
+  \item \textbf{Computational:} Monte Carlo simulations that test those formulas.
+  \item \textbf{Conceptual:} understanding why large samples give better estimates.
+\end{enumerate}
+
+The best questions to ask in class:
+
+\begin{itemize}
+  \item ``What did we assume when we did the counting?’’
+  \item ``Does our simulation actually match those assumptions?’’
+  \item ``If they disagree, is it the formula, the code, or our interpretation that is wrong?’’
+\end{itemize}
+
 
 \section*{Podcast: Episode 4 -- The Dice Don’t Lie (Much)}
-% - Recap script notes:
-%   * Characters argue whether math or “luck” is right.
-%   * They run a bunch of simulated experiments.
-%   * They discover the law of large numbers in a friendly way.
-%   * Tease the final universe-design capstone.
+
+\noindent\textbf{Cast:} Amina (math brain), Jake (simulation gremlin), Lin (mediator), Zahra (agent of chaos).
+
+\medskip
+
+Possible beats for the episode:
+
+\begin{itemize}
+  \item Cold open: Jake rolling dice loudly while Amina complains that the sample size is too small.
+  \item A quick recap that probability is ``good outcomes over all outcomes'' when things are equally likely.
+  \item Amina presents a careful calculation; Jake counters with some early simulation results that look very different.
+  \item Lin forces them to increase the number of trials; the estimates start drifting toward the theoretical value.
+  \item Zahra suggests a wild, messy scenario (weird house rules, custom dice, or cursed usernames) where counting is hard but simulation is easy.
+  \item Closing reflection: math gives us a map; simulation lets us walk around and see if the map fits the territory.
+  \item Teaser for the capstone: ``If we can simulate dice, what about whole universes?’’
+\end{itemize}
 

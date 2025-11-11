@@ -1,53 +1,330 @@
 \chapter{Design Your Own Universe}
 
 \section{Project Brief}
-% - Students design a small universe of possibilities:
-%   * Card game, RPG, character builder, resource distribution system, etc.
-% - Requirements:
-%   * At least one permutation-based situation (order matters).
-%   * At least one combination-based situation (order doesn’t).
-%   * At least one stars-and-bars style distribution.
-%   * At least one probability that can be computed from counts.
+
+By this point in the course, we have seen permutations, combinations,
+stars-and-bars distributions, and probabilities built from counting.
+We have also touched Python scripts that help us explore and verify
+our work. In this capstone you will flip the script:
+
+\medskip
+
+\noindent\textbf{Your mission:} design a small ``universe of possibilities'' that
+you actually care about, and then analyze it with the tools from this
+chapter.
+
+\medskip
+
+Your universe might be
+
+\begin{itemize}
+  \item a card game or deck-building game,
+  \item an RPG character builder or loadout system,
+  \item a resource distribution system (skill points, credits, crafting mats),
+  \item or anything else where there are many possible outcomes and choices.
+\end{itemize}
+
+To keep the project focused, your universe must include at least:
+
+\begin{itemize}
+  \item \textbf{One permutation-based situation} where order matters
+        (for example, initiative order, turn order, or a queue).
+  \item \textbf{One combination-based situation} where order does not matter
+        (such as choosing a team, a hand of cards, or a set of items).
+  \item \textbf{One stars-and-bars style distribution} of identical things into
+        distinct buckets (for example, skill points into stats, scoops into
+        flavors, or coins into piggy banks).
+  \item \textbf{At least one probability} that you can compute exactly from
+        counts (for example, the probability of drawing a certain hand, or
+        getting a certain type of build).
+\end{itemize}
+
+Your final deliverable will be a blend of story and math: a short write-up
+explaining your universe, a set of clearly stated counting questions, their
+solutions, and a small Python component that checks at least one of your
+answers by brute force or simulation.
+
 
 \section{Planning the Universe}
-% - Prompts:
-%   * Who/what exists in your universe? (characters, items, skills, etc.)
-%   * What are the choices the player/system makes?
-%   * Which of those choices are best modeled by permutations, combinations,
-%     or stars-and-bars?
-% - Encourage sketches, diagrams, and tables.
+
+Before you rush into formulas, spend time making your universe fun and
+coherent. Use these questions as planning prompts; sketch answers in words
+or pictures before turning anything into symbols.
+
+\subsection*{Who and what lives in your universe?}
+
+Describe the basic ingredients:
+
+\begin{itemize}
+  \item \textbf{Characters or agents:} players, heroes, monsters, robots,
+        students, NPCs, \dots
+  \item \textbf{Items or resources:} cards, weapons, spells, skill points,
+        coins, tokens, \dots
+  \item \textbf{Actions or choices:} drawing a hand, choosing a team,
+        allocating points, rolling dice, selecting a username, \dots
+\end{itemize}
+
+Write this part so that someone who has \emph{not} taken the class could
+still understand the story.
+
+\subsection*{What are the important decisions?}
+
+Think about where combinatorics naturally appears. For each core decision
+in your universe, ask:
+
+\begin{itemize}
+  \item What is being chosen or arranged?
+  \item Are the objects \emph{distinct} (like named players or unique cards)
+        or \emph{identical} (like generic coins or hit points)?
+  \item Does the \emph{order} of the choice matter?
+  \item Are there any constraints? (At least one wizard, no more than
+        two legendaries, exactly three scoops, \dots)
+\end{itemize}
+
+Jot each decision down in a little table such as:
+
+\medskip
+\noindent
+\begin{tabular}{|l|l|l|l|}
+\hline
+Decision & Distinct/Identical? & Order? & Constraints? \\
+\hline
+\hline
+Team of heroes & distinct & order doesn't matter & at least one healer \\
+\hline
+Turn order & distinct & order matters & all heroes used once \\
+\hline
+Mana points & identical & N/A & total of 10 points \\
+\hline
+\end{tabular}
+\medskip
+
+\subsection*{Matching decisions to counting tools}
+
+Now connect each decision to a counting method:
+
+\begin{itemize}
+  \item \textbf{Permutations} for order-sensitive arrangements of distinct objects.
+  \item \textbf{Combinations} for order-insensitive selections of distinct objects.
+  \item \textbf{Stars and bars} for distributing identical objects into labeled boxes.
+  \item \textbf{Product rule} and \textbf{sum rule} to glue simpler counts together.
+\end{itemize}
+
+You do not need to cram \emph{every} topic into \emph{every} decision. It is
+better to have a few well-chosen situations that clearly fit one or two
+methods than a giant tangle of formulas that no one (including you) enjoys.
+
 
 \section{Mathematical Analysis}
-% - Students:
-%   * State each counting problem clearly in symbols.
-%   * Show the relevant formula and brief justification.
-%   * Compute a few concrete examples.
-% - Optional stretch:
-%   * Relate two different formulas that give the same count.
-%   * Explain why they must agree.
+
+Once your universe is sketched, it is time to zoom in on the math. Choose a
+small number of core questions (three to five is typical) and analyze them in
+detail. For each question:
+
+\subsection*{1. State the problem clearly}
+
+Write a short, precise statement that connects story language to math.
+For example:
+
+\begin{quote}
+  ``In my card game there are 12 different spell cards and 8 different
+  item cards. At the start of the game, each player gets a hand of
+  5 cards drawn without replacement from the 20-card deck. How many
+  different 5-card hands are possible?''
+\end{quote}
+
+Then translate this into pure math language, for example:
+
+\begin{quote}
+  ``We are choosing a 5-element subset from a 20-element set, so we
+  want \(\binom{20}{5}\).''
+\end{quote}
+
+\subsection*{2. Choose and justify a method}
+
+For each problem, name the method you are using and justify briefly:
+
+\begin{itemize}
+  \item ``We use \emph{permutations} because the order of the players in
+        the initiative track matters.''
+  \item ``We use \emph{combinations} because only which heroes you pick
+        matters, not the order we list them.''
+  \item ``We use \emph{stars and bars} because we are distributing identical
+        points into labeled stats.''
+\end{itemize}
+
+This does not need to be a full formal proof, but it should show that you
+know why your formula is appropriate.
+
+\subsection*{3. Compute concrete answers}
+
+Give actual numbers, not just formulas. If the numbers are enormous, it is
+fine to use Python or a calculator, but:
+
+\begin{itemize}
+  \item show the combinatorial expression (like \(\binom{20}{5}\) or
+        \(6! / 2!\)),
+  \item then give the numerical value (like \(15{,}504\)).
+\end{itemize}
+
+If two different methods give the same count, say so, and briefly explain
+why they must agree.
+
+\subsection*{4. Build at least one probability}
+
+Pick at least one event in your universe and compute its probability
+using the formula
+\[
+  P(E) = \frac{\lvert E \rvert}{\lvert \Omega \rvert},
+\]
+where \(\Omega\) is the set of all equally likely outcomes and \(E\) is the
+event you care about.
+
+Examples:
+
+\begin{itemize}
+  \item Probability a random hand has exactly two healers,
+  \item Probability a randomly generated character has total strength
+        at least 10,
+  \item Probability a randomly formed team includes a specific character.
+\end{itemize}
+
+Whenever possible, say in words what your answer means:
+``So there is roughly an 18\% chance that a random hand has at least one
+legendary card.''
+
 
 \section{Python Component}
-% - Requirements:
-%   * A Python script (or small set of scripts) that:
-%       - Computes one or more counts using formulas (math.comb, factorial, etc.).
-%       - Verifies at least one result by brute force or simulation.
-%       - Prints a short, human-readable summary of results.
-% - Nice-to-have:
-%   * Parameterized universe (change number of players, items, etc.).
-%   * Random generator: create random teams, loadouts, or scenarios.
+
+The Python part of the project lets you check that your formulas match
+reality (or at least simulated reality). It does not need to be long or fancy,
+but it does need to be \emph{connected} to your universe.
+
+\subsection*{Minimum requirements}
+
+Your Python code should:
+
+\begin{itemize}
+  \item \textbf{Compute at least one count or probability using formulas},
+        making use of tools like \verb|math.factorial| and \verb|math.comb|
+        (or your own helper functions).
+  \item \textbf{Verify at least one result} by:
+        \begin{itemize}
+          \item brute-force listing of all possibilities (for very small cases), or
+          \item Monte Carlo simulation (randomly sample many times and
+                estimate a probability).
+        \end{itemize}
+  \item \textbf{Print a short, human-readable summary} such as
+        \begin{quote}
+          \small
+          \verb|Exact probability: 0.1826| \\
+          \verb|Simulated probability after 100000 trials: 0.1819|
+        \end{quote}
+\end{itemize}
+
+You are encouraged to recycle patterns from earlier labs:
+
+\begin{itemize}
+  \item Using \verb|itertools.permutations| and \verb|itertools.combinations|
+        for exact counts,
+  \item Using loops and the \verb|random| module for Monte Carlo experiments,
+  \item Structuring your code into small functions so your main script reads
+        like a story of what you are doing.
+\end{itemize}
+
+\subsection*{Nice-to-have features}
+
+If you have time and interest, you might:
+
+\begin{itemize}
+  \item allow the number of players, cards, or points to be parameters,
+  \item add a function that generates a random valid team, loadout, or hand,
+  \item print a few example outcomes so readers can see what a typical
+        random result looks like.
+\end{itemize}
+
+Keep in mind that the goal is not to build a video game---it is to
+\emph{show off the math} with a bit of computational support.
+
 
 \section{Presentations and Reflection}
-% - What students share:
-%   * Story summary of their universe.
-%   * Key counting challenges and their solutions.
-%   * One surprising thing they discovered when coding or simulating.
-% - Reflection prompts:
-%   * Where did combinatorics make your life easier?
-%   * Where did it get messy? How did you manage that complexity?
+
+At the end of the project, you will share your universe with others. The
+format may be a short written report, a brief in-class talk, a poster, or some
+combination, depending on your instructor.
+
+\subsection*{What to share}
+
+Your presentation should include:
+
+\begin{itemize}
+  \item \textbf{A story summary} of your universe in plain language.
+  \item \textbf{Your key counting challenges} and how you solved them:
+        what was being counted, what method you used, and what you found.
+  \item \textbf{At least one probability} and a brief explanation of how
+        you got it.
+  \item \textbf{One surprising or interesting discovery} from coding or
+        simulating. For example:
+        \begin{itemize}
+          \item the simulated probability took a long time to stabilize,
+          \item a built-in intuition (``this almost never happens'') turned
+                out to be wrong,
+          \item two different-looking formulas gave exactly the same number.
+        \end{itemize}
+\end{itemize}
+
+\subsection*{Reflection prompts}
+
+To wrap up, write a short reflection (a few paragraphs) addressing questions
+like:
+
+\begin{itemize}
+  \item Where did combinatorics make your life easier?
+  \item Where did it get messy? How did you manage that complexity?
+  \item If you were to extend your universe, what new counting or probability
+        questions would appear?
+  \item How might someone in game design, security, data science, or another
+        field use similar counting ideas in the real world?
+\end{itemize}
+
+Honest reflections (including ``this part was surprisingly hard'') are more
+valuable than pretending that every step was smooth and obvious.
+
 
 \section*{Podcast: Episode 5 -- Universe Builders}
-% - Recap script notes:
-%   * Cast interviews each other about their universes.
-%   * Highlight 2–3 student-style universes and the math inside them.
-%   * Close the arc: “Counting is how we tame infinite-feeling possibility spaces.”
+
+This final episode of the podcast closes the arc of the course.
+
+\medskip
+
+\noindent\textbf{Script notes (suggested):}
+
+\begin{itemize}
+  \item The cast interviews each other about their favorite student-style
+        universes: card games, RPG worlds, security systems, classroom
+        seating chaos, and more.
+  \item Each character describes one counting challenge they faced and
+        how they solved it, in informal language: ``At first I thought I
+        had to list everything by hand, but then I realized it was just
+        a combination problem.''
+  \item They play with the idea that behind every ``simple'' game rule
+        there might be a huge invisible combinatorial space.
+  \item They revisit earlier themes:
+        \begin{itemize}
+          \item factorial explosions from seating at the round table,
+          \item username spaces and noisy strings,
+          \item sundaes and resource distributions,
+          \item dice, probabilities, and simulations.
+        \end{itemize}
+  \item The episode closes with the big-picture message:
+        counting is how we tame spaces of possibilities that feel
+        infinite, and how we design systems---games, passwords,
+        experiments, universes---on purpose rather than by accident.
+\end{itemize}
+
+\medskip
+
+You have now built and analyzed a universe of your own. The same tools
+will follow you into algorithms, data structures, probability, statistics,
+and any field where we care about what can happen, how often, and why.
 
