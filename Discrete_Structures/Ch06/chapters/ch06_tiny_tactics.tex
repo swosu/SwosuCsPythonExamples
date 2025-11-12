@@ -1,0 +1,476 @@
+\chapter{Tiny Tactics Arena: A Fully Counted Universe}
+
+\section{Story Hook: Balancing a Mini-Game}
+
+You have been hired as the \emph{official mathematician} for a tiny
+tactics game called \emph{Tiny Tactics Arena}.
+
+The game designers are worried:
+\begin{itemize}
+  \item ``Do we have enough variety, or will players see the same teams over and over?''
+  \item ``Are some builds secretly way more common than others?''
+  \item ``If we tweak a rule, how much does it shrink or grow the universe of possibilities?''
+\end{itemize}
+
+Your mission in this chapter is to \emph{fully count} a small,
+self-contained game universe:
+\begin{itemize}
+  \item who the heroes are,
+  \item how they act (turn order),
+  \item what artifacts they bring,
+  \item how they distribute skill points,
+  \item and a few simple probabilities.
+\end{itemize}
+
+Along the way, you will use:
+\begin{itemize}
+  \item permutations (order matters),
+  \item combinations (order does not),
+  \item stars-and-bars (distributing identical points),
+  \item and Python to sanity-check your math.
+\end{itemize}
+
+
+\section{The Rules of Tiny Tactics Arena}
+
+We begin with a deliberately small rule set.
+
+\subsection*{Basic ingredients}
+
+\begin{itemize}
+  \item There are exactly 3 hero classes:
+        \[
+          \text{Warrior (W)},\quad
+          \text{Mage (M)},\quad
+          \text{Rogue (R)}.
+        \]
+  \item Each team brings \emph{one hero of each class}.
+        So every team has three heroes:
+        W, M, and R.
+  \item There are 4 artifacts available:
+        \[
+          \text{Sword (S)},\quad
+          \text{Staff (T)},\quad
+          \text{Dagger (D)},\quad
+          \text{Shield (H)}.
+        \]
+        Artifacts are all distinct.
+  \item At the start of a match, the team chooses \emph{exactly 2}
+        different artifacts to bring.
+        For now, we do not care who holds which artifact.
+  \item Each hero has 5 skill points to distribute among
+        three stats:
+        \(\mathrm{STR}\) (Strength),
+        \(\mathrm{DEX}\) (Dexterity),
+        and \(\mathrm{INT}\) (Intellect).
+        Skill points are indistinguishable: they are just little pips.
+\end{itemize}
+
+\subsection*{Game state we will count}
+
+To keep things focused, define a \emph{configuration} to consist of:
+
+\begin{enumerate}
+  \item An \emph{initiative order} of the three heroes
+        (who goes first, second, third).
+  \item A \emph{set of 2 artifacts} chosen from the 4 available.
+  \item A \emph{skill build} for each hero
+        (how each hero distributes 5 points among STR, DEX, INT).
+\end{enumerate}
+
+In this chapter we will:
+
+\begin{itemize}
+  \item Count each piece separately,
+  \item Assemble them into a total count for all configurations,
+  \item Write Python code to confirm that our counting matches
+        reality for the tiny universe.
+\end{itemize}
+
+
+\section{Permutations: Initiative Order}
+
+The three heroes W, M, and R will act in some order each round.
+
+\subsection*{Counting the orders}
+
+An \emph{initiative order} is simply a permutation of the set
+\(\{W, M, R\}\).
+
+\begin{itemize}
+  \item There are 3 choices for who goes first.
+  \item Then 2 choices remain for who goes second.
+  \item Then 1 choice remains for who goes third.
+\end{itemize}
+
+By the product rule:
+\[
+  3 \cdot 2 \cdot 1 = 3! = 6
+\]
+possible initiative orders.
+
+Example orders:
+\((W, M, R)\),
+\((M, W, R)\),
+\((R, M, W)\), and so on.
+
+Here, \emph{order matters}:
+\((W, M, R)\) is not the same as \((M, W, R)\), because different heroes
+act first.
+
+
+\section{Combinations: Choosing Artifacts}
+
+The team must choose exactly 2 distinct artifacts from the 4 available:
+\(\{S, T, D, H\}\).
+
+\subsection*{Order does not matter}
+
+If we only care which two artifacts are brought, and we do not care
+which one we list first (or who holds them), this is a combinations
+problem.
+
+We are choosing 2 objects out of 4, without repetition, and without order:
+
+\[
+  \binom{4}{2}
+  = \frac{4!}{2! \cdot 2!}
+  = 6.
+\]
+
+We can even list them all:
+
+\[
+  \{S,T\},\ \{S,D\},\ \{S,H\},\ \{T,D\},\ \{T,H\},\ \{D,H\}.
+\]
+
+Each of these sets is one possible artifact loadout for the squad.
+
+
+\section{Stars and Bars: Skill Trees for a Single Hero}
+
+Now consider a single hero, for example the Mage.
+
+\subsection*{Distributing skill points}
+
+The Mage has 5 identical skill points to distribute among three stats:
+\(\mathrm{STR}\), \(\mathrm{DEX}\), \(\mathrm{INT}\).
+
+Let
+\[
+  x_{\mathrm{STR}},\quad
+  x_{\mathrm{DEX}},\quad
+  x_{\mathrm{INT}}
+\]
+be the number of points in each stat.
+
+We are looking at integer solutions to
+\[
+  x_{\mathrm{STR}} + x_{\mathrm{DEX}} + x_{\mathrm{INT}} = 5,
+\]
+with
+\[
+  x_{\mathrm{STR}}, x_{\mathrm{DEX}}, x_{\mathrm{INT}} \ge 0.
+\]
+
+This is a classic \emph{stars-and-bars} situation: we place
+5 stars into 3 bins.
+
+The number of solutions is
+\[
+  \binom{5 + 3 - 1}{3 - 1}
+  = \binom{7}{2}
+  = 21.
+\]
+
+Each solution corresponds to one skill build.  
+For example:
+\begin{itemize}
+  \item \((5,0,0)\) means full Strength,
+  \item \((3,2,0)\) means 3 STR, 2 DEX, 0 INT,
+  \item \((1,1,3)\) means 1 STR, 1 DEX, 3 INT.
+\end{itemize}
+
+\subsection*{All three heroes}
+
+In our universe, \emph{each} hero independently distributes 5 points
+among the 3 stats.
+
+So, if each hero has 21 possible skill builds, and order of heroes is
+fixed as (W, M, R) \emph{for the purpose of counting builds}, then:
+
+\[
+  \text{number of skill configurations for all 3 heroes}
+  = 21 \cdot 21 \cdot 21
+  = 21^3.
+\]
+
+We will leave the number as \(21^3\) for now,
+and multiply everything together in the next section.
+
+
+\section{Putting It All Together}
+
+We are ready to count full configurations:
+\begin{itemize}
+  \item Initiative order of the three heroes,
+  \item Set of 2 artifacts,
+  \item Skill builds for all three heroes.
+\end{itemize}
+
+\subsection*{Step-by-step product}
+
+From previous sections:
+
+\begin{itemize}
+  \item Initiative orders: \(3! = 6\).
+  \item Artifact sets: \(\binom{4}{2} = 6\).
+  \item Hero skill configurations:
+        each hero has 21 possibilities, so \(21^3\) for the trio.
+\end{itemize}
+
+Assuming all of these choices are made independently, the product rule
+tells us the total number of configurations is:
+
+\[
+  \underbrace{3!}_{\text{initiative}} \times
+  \underbrace{\binom{4}{2}}_{\text{artifacts}} \times
+  \underbrace{21^3}_{\text{skills}}
+  = 6 \times 6 \times 21^3.
+\]
+
+If you really want the raw integer:
+
+\[
+  21^2 = 441, \quad
+  21^3 = 21 \cdot 441 = 9261,
+\]
+so
+\[
+  6 \times 6 \times 9261
+  = 36 \times 9261.
+\]
+
+One way:
+\[
+  9261 \cdot 30 = 277{,}830,\quad
+  9261 \cdot 6 = 55{,}566,
+\]
+so
+\[
+  277{,}830 + 55{,}566 = 333{,}396.
+\]
+
+Thus our tiny universe already has
+\[
+  333{,}396
+\]
+different configurations!
+
+Even with only three heroes, four artifacts, and 5 skill points each,
+we are way past the point where ``just listing them all'' is pleasant.
+
+
+\section{Python Lab: Brute-Forcing the Arena}
+
+Now we will write a short Python script to:
+
+\begin{enumerate}
+  \item Generate all initiative orders,
+  \item Generate all artifact sets,
+  \item Generate all skill builds for a single hero,
+  \item Combine them and count how many full configurations we get,
+  \item Check that the count matches our formula
+        \(3! \cdot \binom{4}{2} \cdot 21^3\).
+\end{enumerate}
+
+\subsection*{Generating skill builds}
+
+We can generate the \((x_{\mathrm{STR}}, x_{\mathrm{DEX}}, x_{\mathrm{INT}})\)
+triples for a single hero using simple loops.
+
+\begin{lstlisting}[language=Python, caption={Generating all skill builds for one hero}]
+def skill_builds(points=5):
+    """Return all (STR, DEX, INT) triples that sum to `points`."""
+    builds = []
+    for str_pts in range(points + 1):
+        for dex_pts in range(points + 1 - str_pts):
+            int_pts = points - str_pts - dex_pts
+            builds.append((str_pts, dex_pts, int_pts))
+    return builds
+\end{lstlisting}
+
+You can quickly check:
+
+\begin{lstlisting}[language=Python]
+>>> len(skill_builds(5))
+21
+\end{lstlisting}
+
+which matches our stars-and-bars count.
+
+
+\subsection*{Putting the whole universe together}
+
+Here is a complete script for Tiny Tactics Arena.
+
+\begin{lstlisting}[language=Python, caption={Brute-force Tiny Tactics Arena}]
+import itertools
+from math import comb, factorial
+
+CLASSES = ["W", "M", "R"]
+ARTIFACTS = ["S", "T", "D", "H"]
+
+def skill_builds(points=5):
+    builds = []
+    for str_pts in range(points + 1):
+        for dex_pts in range(points + 1 - str_pts):
+            int_pts = points - str_pts - dex_pts
+            builds.append((str_pts, dex_pts, int_pts))
+    return builds
+
+def main():
+    # 1. Initiative orders (permutations of W, M, R)
+    initiatives = list(itertools.permutations(CLASSES))
+    print("Number of initiative orders:", len(initiatives))
+
+    # 2. Artifact sets: choose 2 out of 4 (combinations)
+    artifact_sets = list(itertools.combinations(ARTIFACTS, 2))
+    print("Number of artifact sets:", len(artifact_sets))
+
+    # 3. Skill builds for a single hero
+    hero_builds = skill_builds(points=5)
+    print("Number of builds for one hero:", len(hero_builds))
+
+    # 4. Skill configurations for all three heroes
+    triple_builds = list(itertools.product(hero_builds, repeat=3))
+    print("Number of builds for three heroes:", len(triple_builds))
+
+    # 5. Combine everything into full configurations
+    count = 0
+    for init in initiatives:
+        for artifacts in artifact_sets:
+            for builds in triple_builds:
+                # builds is a triple:
+                # (build_for_W, build_for_M, build_for_R)
+                count += 1
+
+    print("Total configurations (brute force):", count)
+
+    # 6. Compare with the formula:
+    formula = factorial(3) * comb(4, 2) * (len(hero_builds) ** 3)
+    print("Total from formula:", formula)
+
+
+    if count == formula:
+        print("Counts match! Our combinatorics is consistent.")
+    else:
+        print("Mismatch -- something is off somewhere.")
+
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+
+This script is intentionally straightforward (and not optimized).
+On a modern machine, it should happily crunch through the
+\(333{,}396\) configurations.
+
+
+\section{Probabilities in the Arena}
+
+Once we can count configurations, we can also talk about probabilities.
+
+To keep things simple, suppose:
+\begin{itemize}
+  \item Each team configuration is chosen uniformly at random
+        from the \(333{,}396\) possibilities.
+\end{itemize}
+
+We can ask questions like:
+
+\begin{itemize}
+  \item What is the probability that the Mage acts first?
+  \item What is the probability that the team brings a Shield?
+  \item What is the probability that the Rogue is ``glass cannon''
+        (0 points in STR and 0 points in DEX)?
+\end{itemize}
+
+We will do just one example here.
+
+\subsection*{Example: probability the Mage acts first}
+
+How many configurations have the Mage acting first?
+
+\begin{itemize}
+  \item Fix Mage first.
+        Then the other two heroes (W and R) can be arranged in 2 ways:
+        WR or RW.
+        So there are 2 initiative orders with Mage first.
+  \item The rest of the choices (artifact sets, skill builds) do not
+        depend on this detail.
+        For each initiative order, there are
+        \(\binom{4}{2} \cdot 21^3\) ways to choose artifacts and skills.
+\end{itemize}
+
+So the number of configurations with Mage first is
+\[
+  2 \times \binom{4}{2} \times 21^3.
+\]
+
+The probability is
+\[
+  \frac{2 \times \binom{4}{2} \times 21^3}{
+         3! \times \binom{4}{2} \times 21^3}
+  = \frac{2}{6}
+  = \frac{1}{3}.
+\]
+
+This matches our intuition: all three heroes are symmetric in the rules,
+so each should be first one-third of the time.
+
+
+\section{Design Variations and Chaos Modes}
+
+Once the basic universe is built, it is easy (and fun) to mutate it.
+
+Here are some design prompts:
+
+\begin{itemize}
+  \item \textbf{Add more heroes:}
+        What happens if you add a fourth class (Healer)?
+        How does that change the initiative permutations and
+        total configuration count?
+  \item \textbf{Artifact limits:}
+        What if the team can bring 3 artifacts instead of 2?
+        Or what if certain classes are not allowed to use some artifacts?
+  \item \textbf{Skill caps:}
+        You could require that no stat may exceed 3 points.
+        How many skill builds are left for a hero?
+        (This becomes a stars-and-bars problem with upper bounds.)
+  \item \textbf{Random generation:}
+        Write Python code that generates random valid configurations,
+        and then estimates the probability of some condition
+        (for example, ``Mage acts first and has at least 3 INT'').
+        Compare the simulated probability to the exact one.
+\end{itemize}
+
+Your challenge: take this tiny tactics universe, tweak one rule, and
+then \emph{track exactly how the counts change}.
+That is exactly what game designers, security engineers, and combinatorics
+fans do in the real world.
+
+
+\section*{Podcast: Episode 6 -- Live from the Arena}
+
+% - Recap script notes:
+%   * The cast walks through the Tiny Tactics Arena universe:
+%     heroes, artifacts, skill trees.
+%   * One character complains: "This is too many possibilities!
+%     How is anyone supposed to balance this?"
+%   * Another reveals the secret weapon: counting + Python.
+%   * They briefly simulate random teams, confirm the counts,
+%     and joke about banning the all-INT Mage build.
+%   * Final button: "Any time a game, system, or schedule feels
+%     impossibly huge, that's your cue that combinatorics is nearby."
+

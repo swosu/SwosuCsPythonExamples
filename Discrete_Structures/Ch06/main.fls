@@ -145,6 +145,9 @@ INPUT chapters/ch04_montecarlo.aux
 INPUT ./chapters/ch05_capstone.aux
 INPUT ./chapters/ch05_capstone.aux
 INPUT chapters/ch05_capstone.aux
+INPUT ./chapters/ch06_tiny_tactics.aux
+INPUT ./chapters/ch06_tiny_tactics.aux
+INPUT chapters/ch06_tiny_tactics.aux
 OUTPUT main.aux
 INPUT ./main.out
 INPUT ./main.out
@@ -277,6 +280,12 @@ OUTPUT chapters/ch05_capstone.aux
 INPUT ./chapters/ch05_capstone.tex
 INPUT ./chapters/ch05_capstone.tex
 INPUT chapters/ch05_capstone.tex
+INPUT ./chapters/ch06_tiny_tactics.tex
+INPUT ./chapters/ch06_tiny_tactics.tex
+OUTPUT chapters/ch06_tiny_tactics.aux
+INPUT ./chapters/ch06_tiny_tactics.tex
+INPUT ./chapters/ch06_tiny_tactics.tex
+INPUT chapters/ch06_tiny_tactics.tex
 INPUT main.aux
 INPUT ./chapters/ch00_introduction.aux
 INPUT ./chapters/ch00_introduction.aux
@@ -296,6 +305,9 @@ INPUT chapters/ch04_montecarlo.aux
 INPUT ./chapters/ch05_capstone.aux
 INPUT ./chapters/ch05_capstone.aux
 INPUT chapters/ch05_capstone.aux
+INPUT ./chapters/ch06_tiny_tactics.aux
+INPUT ./chapters/ch06_tiny_tactics.aux
+INPUT chapters/ch06_tiny_tactics.aux
 INPUT ./main.out
 INPUT ./main.out
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmbx10.pfb
