@@ -1,0 +1,189 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{hyperref}
+\usepackage{amssymb}
+
+\setlength{\parskip}{0.5em}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+{\LARGE Discrete Structures: Counting Worlds Capstone}\\[0.25em]
+{\large Chapter 5 Project -- Design Your Own Universe}
+
+\hrule
+
+\section*{Overview}
+
+In Chapter 5 you are asked to \emph{design a small universe} (game, system, or scenario)
+and show that you can \emph{count} what lives inside it.
+
+Your universe could be:
+
+\begin{itemize}[nosep]
+  \item a small card game or draft system,
+  \item a character builder with races, classes, and loadouts,
+  \item a squad / team builder with roles and items,
+  \item a resource or skill point distribution system,
+  \item or any other world where you make structured choices.
+\end{itemize}
+
+The core idea: you tell a story, then you expose the combinatorics behind it.
+
+\vspace{0.5em}
+\textbf{Pair programming:} You will work in pairs. Both partners are responsible
+for understanding the math and the code, and both names go on all deliverables.
+
+\section*{Project Requirements (Mathematics)}
+
+Your universe must include at least:
+
+\begin{enumerate}[label=\arabic*., leftmargin=2em]
+  \item \textbf{One permutation situation} (order matters).\\
+        Example: ordering players in a queue, arranging cards, turn order, seat order.
+
+  \item \textbf{One combination situation} (order does not matter).\\
+        Example: choosing a team of heroes, selecting a hand of cards, picking a loadout.
+
+  \item \textbf{One stars-and-bars style distribution}.\\
+        Example: distributing points among stats, skill points among abilities,
+        resources among locations, scoops among flavors.
+
+  \item \textbf{At least one probability question} that you compute from counts.\\
+        Example: probability of drawing a certain type of hand, probability that
+        a random build satisfies a constraint, etc.
+\end{enumerate}
+
+For each of these, you should:
+
+\begin{itemize}[nosep]
+  \item State the problem clearly in words.
+  \item Translate it into symbols (for example, ``choose $k$ from $n$'', or
+        ``number of integer solutions to $x_1 + \dots + x_k = n$'').
+  \item Name the relevant tool (product rule, sum rule, permutation, combination,
+        stars-and-bars).
+  \item Show the formula and at least one worked example with numbers.
+\end{itemize}
+
+\section*{Project Requirements (Python)}
+
+Write at least one short Python script (more is fine) that interacts with your universe.
+
+Minimum expectations:
+
+\begin{itemize}[nosep]
+  \item Use formulas (\texttt{math.factorial}, \texttt{math.comb}, or your own functions)
+        to compute at least one important count in your universe.
+  \item For a small version of your universe:
+        \begin{itemize}[nosep]
+          \item either \emph{enumerate} all possibilities (for example, all teams of size 3),
+          \item or run a \emph{Monte Carlo simulation} to estimate a probability.
+        \end{itemize}
+  \item Compare the Python result to your theoretical count or probability and comment
+        on whether they agree (and why they might differ for small simulations).
+\end{itemize}
+
+\textbf{Optional AI / ML extension (extra credit / enrichment):}
+
+\begin{itemize}[nosep]
+  \item Define a simple score for builds, teams, or states in your universe.
+  \item Use search or sampling to find ``good'' builds (for example, random search,
+        hill-climbing, or simple Monte Carlo rollouts).
+  \item If you are curious, you may treat builds as feature vectors and try a small
+        model that predicts which builds will be strong, but this is not required.
+\end{itemize}
+
+\section*{Deliverables Checklist}
+
+Each pair submits the following (one submission per pair):
+
+\begin{itemize}[leftmargin=2em]
+  \item[$\square$] \textbf{Universe description} (1--2 pages).  
+    Story, rules, what choices players or users make, and any constraints.
+
+  \item[$\square$] \textbf{Math writeup} (1--2 pages).  
+    For each required situation (permutation, combination, stars-and-bars, probability):
+    clearly labeled problems, formulas, and worked examples.
+
+  \item[$\square$] \textbf{Python code}.  
+    At least one script with comments, using formulas and either enumeration or simulation.
+    Include a short text summary of what you learned from running the code.
+
+  \item[$\square$] \textbf{Reflection paragraph} (about half a page).  
+    Answer prompts like:
+    \begin{itemize}[nosep]
+      \item What surprised you about the size of your universe?
+      \item Where did the counting get messy, and how did you handle that?
+      \item How might someone use counting or simple AI tools to balance or explore
+            your universe?
+    \end{itemize}
+\end{itemize}
+
+\section*{Pair Programming Guidelines}
+
+During your work sessions, you should intentionally practice pair programming.
+
+\begin{description}[leftmargin=2em]
+  \item[Driver] Has hands on the keyboard. Types the code, edits the LaTeX, and
+        narrates what they are doing.
+
+  \item[Navigator] Watches for bugs, asks ``why'' questions, and thinks ahead:
+        \begin{itemize}[nosep]
+          \item Does this match the math model?
+          \item Are we naming variables clearly?
+          \item Are we testing the interesting cases?
+        \end{itemize}
+\end{description}
+
+Good practice:
+
+\begin{itemize}[nosep]
+  \item Switch roles regularly (every 10--15 minutes, or at natural breakpoints).
+  \item Both partners must be able to explain every part of the code and the math.
+  \item If you disagree, pause and explain your reasoning in words before changing code.
+\end{itemize}
+
+I will be looking for evidence that you both contributed and that you can both
+talk about the universe, the counting, and the code.
+
+\section*{Grading Rubric (Guide)}
+
+This project will be graded using roughly the following criteria
+(example point weights in parentheses, adjust as needed):
+
+\begin{center}
+\begin{tabular}{p{0.27\textwidth}p{0.33\textwidth}p{0.33\textwidth}}
+\toprule
+\textbf{Criterion} & \textbf{Strong Performance} & \textbf{Needs Improvement} \\
+\midrule
+Universe design (0--8) &
+Universe is clear, coherent, and interesting. Rules are well specified and easy to imagine playing. &
+Universe is vague, inconsistent, or very small; rules are hard to follow or incomplete. \\
+\midrule
+Counting correctness (0--10) &
+Permutation, combination, and stars-and-bars problems are clearly stated; correct formulas and computations with explanations. &
+Frequent mistakes in identifying or applying formulas; explanations missing or unclear. \\
+\midrule
+Use of multiple tools (0--6) &
+All required structures (permutation, combination, stars-and-bars, probability) appear naturally in the universe and are well motivated. &
+One or more required structures missing, forced, or not clearly connected to the story. \\
+\midrule
+Python component (0--8) &
+Code is clean, commented, runs successfully, and clearly connects to the math; comparison between theory and experiment is explained. &
+Code is incomplete, hard to read, does not run, or has a weak connection to the math; little or no analysis of results. \\
+\midrule
+Communication and reflection (0--8) &
+Writing is organized and readable. Reflection shows genuine insight into counting, complexity, or possible AI uses. Both partners can explain the work. &
+Writing is disorganized or very brief. Reflection is superficial. It is unclear whether both partners understand the project. \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Total suggested: 40 points. I may also award small bonus credit for creative,
+well-executed AI or simulation extensions.
+
+\end{document}
+
