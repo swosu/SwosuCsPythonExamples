@@ -1,0 +1,94 @@
+\chapter{Permutation Scenario — Turn Order Math}
+
+\section*{What we’re solving (the setup)}
+We have a team of $T$ distinct heroes. A \emph{turn order} is an ordered list of those $T$ heroes from first to $T$th. Since order matters, this is a \emph{permutation} problem: sequences, not sets.
+
+\paragraph{Assignment link.}
+This chapter addresses the “Turn Order / Initiative” counting task from the assignment: count all possible orders for a team; then handle restricted variants (e.g., someone fixed first, two heroes required to be adjacent, two heroes forbidden from being adjacent), and show small concrete cases.
+
+\section{Outcome space = permutations}
+Label the heroes $\{h_1,\dots,h_T\}$. Any legal turn order is a sequence $(h_{\pi(1)},h_{\pi(2)},\dots,h_{\pi(T)})$ where $\pi$ is a permutation of $\{1,\dots,T\}$. Therefore:
+\[
+|\Omega| = T! \quad\text{(all orders equally likely in the pure-counting model).}
+\]
+
+\subsection*{Tiny worked example: $T=3$}
+Let the heroes be $A,B,C$. The $3!=6$ possible orders are
+\[
+ABC,\; ACB,\; BAC,\; BCA,\; CAB,\; CBA.
+\]
+For students: it helps to \emph{list} these once, then use the factorial rule afterwards.
+
+\section{Common restrictions (your spice rack)}
+The real fun is when we add constraints. Below are three patterns you’ll reuse all over the course.
+
+\subsection{One hero fixed first (``Tank must act first'')}
+If a specific hero is fixed in position 1, the remaining $T-1$ distinct heroes can be arranged arbitrarily:
+\[
+\# = (T-1)!.
+\]
+\emph{Check:} For $T=3$ with $A$ fixed first, the orders are $ABC, ACB$ — indeed $(3-1)!=2$.
+
+\subsection{Two heroes must be adjacent (``BFFs together'')}
+Treat the two adjacent heroes as a single \emph{block}. There are two internal orders for that block, and there are $(T-1)!$ ways to arrange the block plus the other $T-2$ solo heroes:
+\[
+\# = 2\,(T-1)!.
+\]
+\emph{Check:} For $T=4$ and BFFs $(A,B)$, valid sequences count to $2\cdot 3!=12$.
+
+\subsection{Two heroes may \emph{not} be adjacent (``keep them apart'')}
+Use complement counting.
+\[
+\#(\text{not adjacent}) \;=\; T! \;-\; \#(\text{adjacent}).
+\]
+We already know $\#(\text{adjacent})=2\,(T-1)!$, so
+\[
+\#(\text{not adjacent}) = T! - 2\,(T-1)! = (T-1)!\,(T-2).
+\]
+\emph{Check:} For $T=4$, that’s $24-12=12$.
+
+\section{Partial orders / precedence constraints (leveled-up)}
+Sometimes you’re told ``$X$ must act before $Y$'' (but not necessarily adjacent). With distinct elements, exactly half of the $T!$ permutations put $X$ before $Y$:
+\[
+\# = \frac{T!}{2}.
+\]
+For multiple constraints, you can:
+\begin{enumerate}[label=\alph*)]
+  \item collapse forced equalities (if any) into blocks and then permute, or
+  \item count linear extensions (harder in general), or
+  \item for a few constraints, use symmetry/conditioning.
+\end{enumerate}
+
+\section{Decision talk: set vs sequence (why this is permutations)}
+A quick habit: ask “Am I counting \emph{sets} or \emph{sequences}?”  
+If it’s sets, think \emph{combinations}. If it’s sequences (like initiative), think \emph{permutations}. This avoids the classic “does order matter?” trap and lines up with the quotient/product principles you’ve seen.
+
+\section{Mini-exercises (with quick answers)}
+\begin{enumerate}[label=\arabic*.]
+  \item Team size $T=5$. How many turn orders?  
+  \emph{Answer:} $5!=120$.
+
+  \item $T=5$, hero $Z$ must act first.  
+  \emph{Answer:} $(5-1)!=24$.
+
+  \item $T=5$, heroes $X$ and $Y$ must be adjacent (in either order).  
+  \emph{Answer:} $2\,(5-1)!=48$.
+
+  \item $T=5$, heroes $X$ and $Y$ may not be adjacent.  
+  \emph{Answer:} $5!-2\,(5-1)!=120-48=72$.
+
+  \item $T=6$, $A$ must act before $B$ (not necessarily adjacent).  
+  \emph{Answer:} $\frac{6!}{2}=360$.
+\end{enumerate}
+
+\section{What the code will verify (preview)}
+Later, a small script will:
+\begin{itemize}
+  \item enumerate all orders for small $T$ and dump them to \texttt{data/turn\_orders\_T\#.csv};
+  \item filter by constraints (fixed-first, adjacent/not-adjacent pairs);
+  \item print a one-line summary and save the real work to files.
+\end{itemize}
+
+\section*{Takeaway}
+Turn order is the \emph{canonical} permutation arena. Master these three moves—fix, block, and complement—and you’ll style on 90\% of initiative puzzles.
+

@@ -1,0 +1,51 @@
+\chapter{Python Experiments: Formula Checks and Simulation}
+
+\section{What We’ll Test}
+\begin{itemize}
+  \item Verify $\binom{N}{n}$ by enumerating all $n$-subsets for small $N$.
+  \item Verify $n!$ lane orders by enumerating permutations for small $n$.
+  \item Verify stars-and-bars counts via generating all integer $k$-tuples summing to $p$.
+  \item Estimate betting event probabilities by Monte Carlo and compare to theory.
+\end{itemize}
+
+\section{Sample Snippets (will live in \texttt{scripts/})}
+\subsection*{Combinations and Permutations Check}
+\begin{lstlisting}[language=Python]
+from itertools import combinations, permutations
+from math import comb, factorial
+
+N, n = 6, 3
+all_teams = list(combinations(range(N), n))
+assert len(all_teams) == comb(N, n)
+
+all_orders = list(permutations(range(n)))
+assert len(all_orders) == factorial(n)
+print("OK: comb/permutation counts match theory.")
+\end{lstlisting}
+
+\subsection*{Stars-and-Bars Enumeration (uncapped)}
+\begin{lstlisting}[language=Python]
+def stars_and_bars(p, k):
+    # yield all k-tuples of nonnegatives summing to p (small p,k only)
+    if k == 1:
+        yield (p,)
+        return
+    for x in range(p+1):
+        for rest in stars_and_bars(p-x, k-1):
+            yield (x,) + rest
+
+p, k = 5, 4
+tuples = list(stars_and_bars(p, k))
+from math import comb
+print(len(tuples), "vs", comb(p+k-1, k-1))
+\end{lstlisting}
+
+\subsection*{Monte Carlo Outline}
+\begin{lstlisting}[language=Python]
+# Pseudo-code for a betting event (e.g., racer A finishes first):
+# 1) Randomly generate lane order uniformly from permutations.
+# 2) Apply a simple performance model (e.g., score = Speed + noise).
+# 3) Sort by score to get finish order; record event.
+# 4) Repeat many times; compare frequency to theoretical estimate.
+\end{lstlisting}
+

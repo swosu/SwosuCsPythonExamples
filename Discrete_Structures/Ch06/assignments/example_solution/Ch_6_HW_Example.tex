@@ -1,0 +1,55 @@
+\documentclass[12pt]{book}
+
+% ----- Packages -----
+\usepackage[margin=1in]{geometry}
+\usepackage{lmodern}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\usepackage{graphicx}
+\usepackage{amsmath, amssymb}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{xcolor}
+
+% ----- Code Style -----
+\lstset{
+  basicstyle=\ttfamily\small,
+  breaklines=true,
+  frame=single,
+  columns=fullflexible
+}
+
+% ----- Title (be explicit & searchable) -----
+\title{%
+  \textbf{Ch 6 HW Example — DeathSpank Black-Market Horse Races}\\[4pt]
+  \large Discrete Structures: Permutations, Combinations, Stars\&Bars, and Probability\\
+  \normalsize (a cheeky caper in the \emph{Thongs of Virtue} universe)
+}
+\author{Student: \underline{\hspace{6cm}} \and Partner: \underline{\hspace{6cm}}}
+\date{\today}
+
+\begin{document}
+\maketitle
+\tableofcontents
+
+% Instructor handout alignment note (kept tiny but searchable):
+\noindent\textit{\footnotesize This writeup follows the Universe/Counting/Python/Probability/Reflection structure from the Chapter project brief.} :contentReference[oaicite:0]{index=0}
+
+\frontmatter
+\chapter*{How to Read This}
+This document is the main entry point (\texttt{Ch\_6\_HW\_Example.tex}). Each chapter lives under \texttt{chapters/}. Build with \texttt{make}. 
+We keep the title verbose so future-us never opens the wrong PDF at 3\,AM.
+
+\mainmatter
+\include{chapters/ch01_core_story}
+\include{chapters/ch02_counting_toolkit}
+\include{chapters/ch03_python_experiments}
+\include{chapters/ch04_probability}
+\include{chapters/ch05_reflection}
+\appendix
+\include{chapters/ch06_appendix_rules}
+
+\backmatter
+\end{document}
+

@@ -1,0 +1,108 @@
+\chapter{Permutation Scenario — Turn Order Code (Question 1)}
+
+\section{Purpose and Big Picture}
+This is the code-focused companion to the turn-order mathematics. We turn
+the factorial idea ($T!$ permutations for a team of size $T$) into a small,
+replicable pipeline:
+\begin{enumerate}[label=\arabic*.]
+  \item \textbf{Inputs} (team size, names, constraints).
+  \item \textbf{Compute/Enumerate} permutations and filter by constraints.
+  \item \textbf{Write outputs} to stable files (CSV, summary, and an optional figure).
+  \item \textbf{Document} everything here so the analysis is reproducible.
+\end{enumerate}
+
+\section{Script Overview}
+The script lives at \texttt{scripts/turn\_orders.py}. It supports:
+\begin{itemize}
+  \item \texttt{-T / --team-size} (required),
+  \item \texttt{--names} (comma-separated; defaults to \texttt{A,B,C,\dots}),
+  \item \texttt{--list-small} (enumerate only when $T\le 8$; otherwise just report $T!$),
+  \item \texttt{--must-before} (e.g.\ \texttt{A>B,B>C} means $A$ acts before $B$, $B$ before $C$),
+  \item \texttt{--together} (groups that must be contiguous, e.g.\ \texttt{C+D} or \texttt{C+D+E}),
+  \item \texttt{--apart} (groups that must \emph{not} appear adjacent, e.g.\ \texttt{A+B}).
+\end{itemize}
+
+\paragraph{Outputs (files).}
+\begin{itemize}
+  \item \texttt{data/turn\_orders\_T\{T\}.csv} — when enumerating. Columns:
+        \texttt{order\_id}, \texttt{order}, \texttt{valid\_must\_before}, \texttt{valid\_together}, \texttt{valid\_apart}, \texttt{valid\_all}.
+  \item \texttt{files/turn\_orders\_summary.txt} — always written; parameters and counts.
+  \item \texttt{figures/turn\_orders\_lead\_freq\_T\{T\}.png} — optional bar chart if \texttt{matplotlib} is available and we enumerated.
+\end{itemize}
+
+\section{How to Run (examples)}
+\begin{verbatim}
+# Tiny team: enumerate all
+python scripts/turn_orders.py -T 3 --list-small
+
+# Named heroes, precedence + block constraints, and enumerate
+python scripts/turn_orders.py -T 4 \
+  --names A,B,C,D \
+  --must-before A>B,B>D \
+  --together C+D \
+  --list-small
+
+# Larger T (no full enumeration): just report T!
+python scripts/turn_orders.py -T 8
+\end{verbatim}
+
+The console prints a single, quiet summary line. The real artifacts live in
+\texttt{data/}, \texttt{files/}, and \texttt{figures/} so students can re-use results later.
+
+\section{Design Choices (why this way?)}
+\begin{itemize}
+  \item \textbf{Separation of concerns.} The console stays minimal for demonstration,
+        while durable results are written to files for grading, plotting, or sharing.
+  \item \textbf{Safety for big $T$.} Full enumeration scales as $T!$; we cap enumeration
+        to $T\le 8$ unless you explicitly force it. Larger $T$ uses the clean formula $T!$.
+  \item \textbf{Composable constraints.} Precedence (\texttt{must-before}), adjacency
+        (\texttt{together}), and non-adjacency (\texttt{apart}) cover many natural
+        “house rules” in turn-based systems.
+\end{itemize}
+
+\section{The Code (current version)}
+\lstinputlisting[language=Python,caption={\texttt{scripts/turn\_orders.py}}]{scripts/turn_orders.py}
+
+\section{Generated Data (conditionally included)}
+If you ran the script, the following artifacts are pulled into this PDF (when present).
+
+\subsection*{Summary (text)}
+\IfFileExists{files/turn_orders_summary.txt}{%
+\verbatiminput{files/turn_orders_summary.txt}
+}{%
+\noindent\emph{Run the script to generate \texttt{files/turn\_orders\_summary.txt}, then recompile.}
+}
+
+\subsection*{Lead-slot Frequency Figure}
+\IfFileExists{figures/turn_orders_lead_freq_T3.png}{%
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.7\linewidth]{figures/turn_orders_lead_freq_T3.png}
+  \caption{Lead-slot frequency among valid orders (example with $T=3$).}
+\end{figure}
+}{%
+\noindent\emph{If you enumerate (e.g.\ \texttt{-T 3 --list-small}) and have \texttt{matplotlib}, a figure will appear here.}
+}
+
+\subsection*{CSV (head preview)}
+For big CSVs we don’t typeset the whole file in the PDF. Students should open
+\texttt{data/turn\_orders\_T\{T\}.csv} in a spreadsheet to explore rows and filters.
+
+\section{Checks Against the Math}
+Without constraints, the count is $T!$.
+With constraints, this chapter’s script \emph{filters} the enumerated permutations
+and reports the valid count in the summary. This lets students compare the
+\emph{computed} valid count to small-case hand proofs from the math chapter.
+
+\section{Rubric Alignment}
+This chapter produces:
+\begin{itemize}
+  \item \textbf{Code} (\texttt{scripts/turn\_orders.py}) with clear flags and comments,
+  \item \textbf{Data} (\texttt{data/turn\_orders\_T\{T\}.csv}) for small $T$,
+  \item \textbf{Report} (\texttt{files/turn\_orders\_summary.txt}) suitable for quoting in the writeup,
+  \item \textbf{Optional Figure} (\texttt{figures/*.png}) if plotting is available.
+\end{itemize}
+These map cleanly to the assignment’s code + outputs deliverables. Pair partners
+can split responsibilities (driver = coding; navigator = test cases/constraints and
+report checking) and swap midway.
+

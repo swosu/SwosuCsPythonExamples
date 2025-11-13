@@ -1,0 +1,21 @@
+\chapter{Probability: From Counts to Odds (with Flavor)}
+
+\section{Exacta (Pick 1st and 2nd in Order)}
+\textbf{All outcomes:} $n!$.\\
+\textbf{Favorable (specific pair in exact order):} Fix 1st, fix 2nd, permute rest $(n-2)!$.\\
+\[
+\mathsf{Prob}(\text{Exacta on (A,B)})=\frac{(n-2)!}{n!}=\frac{1}{n(n-1)}.
+\]
+
+\section{Trifecta (Pick 1st, 2nd, 3rd in Order)}
+\[
+\mathsf{Prob}(\text{Trifecta (A,B,C)})=\frac{(n-3)!}{n!}=\frac{1}{n(n-1)(n-2)}.
+\]
+
+\section{Build With Mods: Capped Stars\&Bars Example}
+Let $k=4$ stats, $p$ points, per-stat cap $c$. Number of assignments:
+\[
+\sum_{j=0}^{\lfloor p/(c+1)\rfloor} (-1)^j \binom{k}{j}\binom{p - j(c+1) + k - 1}{k - 1}.
+\]
+We’ll confirm small cases in Python.
+

@@ -1,0 +1,144 @@
+\documentclass[11pt,oneside]{book}
+
+% -----------------------------
+% Packages
+% -----------------------------
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{pdfpages}
+
+
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{enumitem}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{hyperref}
+
+% -----------------------------
+% Hyperref setup
+% -----------------------------
+\hypersetup{
+  colorlinks = true,
+  linkcolor  = blue!60!black,
+  urlcolor   = blue!60!black,
+  citecolor  = blue!60!black,
+  pdfauthor  = {Example Solution},
+  pdftitle   = {Counting Worlds: Example Universe Project Solution}
+}
+
+% -----------------------------
+% Listings setup (Python focus)
+% -----------------------------
+\lstdefinelanguage{Python}{
+  morekeywords={
+    def,return,if,elif,else,for,while,in,import,from,as,with,
+    class,try,except,finally,break,continue,pass,lambda,True,False,None
+  },
+  sensitive=true,
+  morecomment=[l]\#,
+  morestring=[b]"
+}
+
+\lstset{
+  language=Python,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\bfseries\color{blue!70!black},
+  commentstyle=\itshape\color{gray!70!black},
+  stringstyle=\color{green!40!black},
+  showstringspaces=false,
+  frame=single,
+  rulecolor=\color{black!40},
+  columns=fullflexible,
+  breaklines=true,
+  tabsize=4,
+  captionpos=b,
+}
+
+% Make listings tolerate common UTF-8 punctuation
+\lstset{
+  inputencoding=utf8,
+  extendedchars=true,
+  literate=
+    {–}{-}1
+    {—}{-}1
+    {“}{"}1
+    {”}{"}1
+    {’}{'}1
+    {…}{...}1
+    {✔}{OK}1
+}
+
+
+% -----------------------------
+% Theorem-like environments
+% -----------------------------
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{example}{Example}[chapter]
+\newtheorem{theorem}{Theorem}[chapter]
+
+% -----------------------------
+% Handy math macros
+% -----------------------------
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Prob}{\mathbb{P}}
+\newcommand{\E}{\mathbb{E}}
+
+% -----------------------------
+% Document metadata
+% -----------------------------
+\title{Counting Worlds\\[0.5em]
+       \large Example Solution: Universe Design Project}
+\author{Instructor Example}
+\date{\today}
+
+% ============================================================
+\begin{document}
+% ============================================================
+
+\maketitle
+\tableofcontents
+
+% ----- Chapter 00: Assignment sheet (PDF) -----
+\chapter*{Chapter 00: Universe Project Assignment}
+\addcontentsline{toc}{chapter}{Chapter 00: Universe Project Assignment}
+\includepdf[pages=-,pagecommand={},fitpaper=true]{../assignments/ch05_universe_project.pdf}
+
+
+
+% ------------------------------------------------------------
+% NOTE TO FUTURE YOU:
+% Create each of these chapter files in chapters/
+% as simple stubs first, e.g.:
+%   \chapter{Title}
+%   (Outline / TODO)
+% or comment out chapters you’re not ready to build yet.
+% ------------------------------------------------------------
+
+\include{chapters/ch01_universe_overview}
+\include{chapters/ch02_turn_order}
+\include{chapters/ch03_turn_order_code}
+
+
+%\include{chapters/ch02_universe_spec}
+%\include{chapters/ch03_permutations_and_combinations}
+%\include{chapters/ch04_stars_and_bars}
+%\include{chapters/ch05_probability_and_events}
+%\include{chapters/ch06_code_design}
+%\include{chapters/ch07_enumeration_outputs}
+%\include{chapters/ch08_simulation_outputs}
+%\include{chapters/ch09_reporting_and_files}
+%\include{chapters/ch10_ai_and_ml_extension}
+
+% ============================================================
+\end{document}
+% ============================================================
+

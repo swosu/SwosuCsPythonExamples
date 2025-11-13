@@ -1,0 +1,32 @@
+\chapter{Core Story: Black-Market Horse Racing in DeathSpank’s World}
+
+In the smoky back-alleys of Spanktopia, the \emph{Bureau of Questionable Athletics} runs
+unsanctioned races featuring dubious “horses”: skeleton steeds, thonged unicorns, and a
+mysterious two-coconut contraption named \emph{Sir Clip-Clop}. Bettors whisper in code,
+merchants haggle over ethically ambiguous oats, and the odds are set by an enchanted abacus
+with a drinking problem.
+
+\section{Playable Loop }
+\begin{enumerate}[label=\textbf{Step \arabic*:}, leftmargin=2.2em]
+  \item \textbf{Choose a race card:} a set of $n$ entrants from a stable of $N$ creatures.
+  \item \textbf{Assign lanes and start order:} who lines up where (order matters).
+  \item \textbf{Distribute upgrade points:} illegal mods (glitter horseshoes, turbo thongs) across $k$ stats.
+  \item \textbf{Place a bet:} pick winners, exactas, or “chaos trifecta.”
+  \item \textbf{Run the race:} outcomes are sampled; payouts depend on combinatorics-based odds.
+\end{enumerate}
+
+\section{Entities}
+\begin{itemize}
+  \item \textbf{Stable:} $N$ entrants. Example archetypes: Bone Pony, Thongicorn, Greased Donkey, Sir Clip-Clop.
+  \item \textbf{Race Card Size:} $n$ selected to race.
+  \item \textbf{Stats:} Speed, Skullduggery, Stamina, Sparkle ($k=4$ stats).
+  \item \textbf{Illegal Mod Points:} $p$ points distributed across the $k$ stats (with or without caps).
+\end{itemize}
+
+\section{Constraints (examples we’ll count later)}
+\begin{itemize}
+  \item Exactly $n$ of $N$ entrants race (order does not matter for selection).
+  \item Lanes are a permutation of the chosen $n$ (order matters).
+  \item Mod points: stars-and-bars across $k$ stats, optionally with per-stat caps.
+\end{itemize}
+

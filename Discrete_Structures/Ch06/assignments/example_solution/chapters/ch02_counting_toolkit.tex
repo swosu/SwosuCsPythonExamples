@@ -1,0 +1,22 @@
+\chapter{Counting Toolkit: Where the Math Meets the Mayhem}
+
+\section{Combination: Choosing the Race Card}
+\textbf{Problem:} From $N$ creatures, pick $n$ to race (order does not matter).\\
+\textbf{Model:} $\binom{N}{n}$ (combination).\\
+\textbf{Example:} If $N=10$ and $n=4$, then $\binom{10}{4}=210$.
+
+\section{Permutation: Assigning Start Order/Lanes}
+\textbf{Problem:} Arrange the $n$ chosen racers on the track.\\
+\textbf{Model:} $n!$ (permutation of $n$ distinct entrants).\\
+\textbf{Example:} For $n=4$, there are $4!=24$ lane orders.
+
+\section{Stars and Bars: Distributing Mod Points}
+\textbf{Problem:} Distribute $p$ identical mod points among $k$ stats.\\
+\textbf{Uncapped Model:} Number of solutions to $x_1+\cdots+x_k=p$ in nonnegatives is $\binom{p+k-1}{k-1}$.\\
+\textbf{Example:} $p=6$, $k=4$ $\Rightarrow \binom{9}{3}=84$.\\
+\textbf{With per-stat cap $c$:} Use inclusion–exclusion or casework (we’ll demo both).
+
+\section{Probability From Counts}
+\textbf{Template:} $\displaystyle \mathsf{Prob}(\text{event})=\dfrac{\#\{\text{favorable}\}}{\#\{\text{all equally likely}\}}$.\\
+We will compute event sizes with the tools above, then verify via Python.
+
