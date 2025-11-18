@@ -1,34 +1,181 @@
-\chapter{Getting Started}
-\label{chap:getting_started}
+\chapter{Universe Description: \textit{Presidents of Virtue} in the DeathSpank World}
+\label{chap:UniverseDescription}
 
-\section{Overview}
-This chapter introduces the project, its goals, and how the rest of the book is organized.
+\section{Setting: SpankTopia in Political Chaos}
 
-You can briefly explain:
+SpankTopia has never exactly been a bastion of calm, but things have gotten especially weird.
+
+After recovering the mysterious Artifact and doing battle over the six legendary Thongs of Virtue, the heroic DeathSpank has accidentally destabilized the entire realm.\cite{wiki:deathspank,wiki:thongs} Each time a Thong changes hands, the balance of power shifts: mayors become peasants, peasants become tyrants, and somewhere in the shadows the AntiSpank grins behind a curtain of sizzling bacon.\cite{wiki:baconing}
+
+To keep the world from collapsing into full-scale ridiculousness, the Council of Virtue has adopted a new, highly official, completely serious system of governance:\footnote{It is neither official nor serious.} a card-driven political contest known as \emph{Presidents of Virtue}. Every round of the game reshuffles the hierarchy of SpankTopia. Heroes rise, villains fall, and whoever empties their hand first becomes the new leader of the land---at least until the next round of chaos.\cite{wiki:president}
+
+\subsection{Core Inspiration}
+
+\emph{Presidents of Virtue} is a narrative reskin and mechanical variant of the shedding-type card game commonly known as \emph{President}, \emph{Scum}, or \emph{Asshole}, in which players race to shed all of their cards to claim the top social rank for the next round.\cite{wiki:president}  
+
+The universe skin, titles and card powers are inspired by the action role-playing series \emph{DeathSpank}, \emph{DeathSpank: Thongs of Virtue}, and \emph{The Baconing}, where DeathSpank dispenses justice, hunts for mystical underwear, and eventually confronts his evil counterpart, the AntiSpank.\cite{wiki:deathspank,wiki:thongs,wiki:baconing}
+
+\subsection{Cast of Roles}
+
+Each round, the players earn in-world titles based on the order in which they empty their hands. In the canonical four-player version, the titles are:
+
 \begin{itemize}
-    \item Who this material is for.
-    \item What background (if any) is expected.
-    \item How the chapters fit together.
+  \item \textbf{Hero of SpankTopia} (President): first to go out. Wields the greatest power between rounds.
+  \item \textbf{Deputy of Justice} (Vice-President): second to go out. Still powerful, but slightly less sparkly.
+  \item \textbf{Adventurers} (Citizens): any middle positions. They are the working heroes of the realm.
+  \item \textbf{Minion of AntiSpank} (High-Scum): next-to-last; clearly one bad decision away from full villainy.
+  \item \textbf{AntiSpank} (Scum): last player with cards. They represent the forces of corruption and are treated accordingly.
 \end{itemize}
 
-\section{How to Use This Book}
-\label{sec:how_to_use}
-Here you can describe how readers should work through the material. For example:
+With five or more players, multiple \emph{Adventurer} ranks may exist; with six or more, tables may insert extra titles such as \emph{Clerk of Bacon}, \emph{Thong Custodian}, or \emph{Intern of Mildly Evil Paperwork} as desired. Titles matter because they determine trading privileges and turn order in the next round.
+
+\section{Rules of Play}
+
+\subsection{Components and Objective}
+
 \begin{itemize}
-    \item Recommended order for reading chapters.
-    \item Whether there are exercises, code, or external resources.
-    \item Any conventions used (notation, terminology, etc.).
+  \item Standard French deck of 52 cards; add up to 2 jokers if desired.
+  \item Recommended player count: 3--6 (more players may use multiple decks).
+  \item Default rank order (low to high): 3, 4, 5, 6, 7, 8, 9, 10, J, Q, K, A, 2; jokers (if used) are higher than 2 and act as special bombs.\cite{wiki:president}
 \end{itemize}
 
-\section{Notation and Conventions}
-\label{sec:notation}
-Define:
+\noindent
+\textbf{Objective:} Be the first to play all the cards in your hand. The relative finishing order determines titles for the next round.
+
+\subsection{Dealing and Initial Titles}
+
+For the very first round, all players are treated as \emph{Adventurers}. Choose a dealer randomly. The dealer shuffles and deals all cards face-down, one at a time, clockwise. Slightly uneven hand sizes are permitted.
+
+For subsequent rounds, the \textbf{Hero of SpankTopia} (President) deals. Seating is arranged in title order, clockwise, starting from the Hero and going down the hierarchy. This reinforces the social ladder both in fiction and in gameplay, similar to the original \emph{President}.\cite{wiki:president}
+
+\subsection{Between-Round Trading: Thongs of Virtue}
+
+After the cards are dealt (except in the first round), a structured trading phase occurs:
+
 \begin{itemize}
-    \item Symbols you will use frequently.
-    \item Formatting conventions (e.g., \texttt{code}, \emph{emphasis}).
+  \item The \textbf{AntiSpank} must give their \emph{two highest} cards to the \textbf{Hero of SpankTopia}.
+  \item The \textbf{Hero of SpankTopia} returns any \emph{two} cards of their choice (often weak cards, nicknamed ``Cursed Thongs'').
+  \item The \textbf{Minion of AntiSpank} gives their single highest card to the \textbf{Deputy of Justice}, who returns one card of their choice.
 \end{itemize}
 
-% You can copy this file to create more chapters:
-% cp chapters/ch01.tex chapters/ch02.tex
-% ...and then update the \chapter{...} title and labels.
+With more players and extra intermediate ranks, this can be extended (for example, the lowest two ranks might each owe tribute to the top two, parallel to the richer multi-title variants of \emph{President}\cite{wiki:president}). The theme is clear: virtue flows up, junk flows down.
+
+Optional variant (\emph{Communal Bacon}): the Hero may declare ``Thongs for the People'' and reverse the direction of generosity: the Hero gives two best cards to the AntiSpank and receives two worst cards in return, mirroring the ``Communism'' variants of the original game.\cite{wiki:president} This is usually triggered as an act of mercy, chaos, or comedy.
+
+\subsection{Turn Structure: Quests and Justice Bursts}
+
+Play proceeds clockwise. The first leader of the first round is the player holding the 3 of Clubs (or another agreed-upon lowest card). In later rounds, the Hero of SpankTopia leads the first trick.
+
+\begin{enumerate}
+  \item \textbf{Lead a Quest.} On your turn, you may start a new \emph{quest} by playing a group of cards of the same rank:
+  \begin{itemize}
+    \item Single (one card), pair (two of a kind), triple, or four-of-a-kind.
+    \item Optional rule: longer sequences (runs) of consecutive ranks of the same length may be allowed, e.g., 5-6-7 vs 9-10-J.\cite{wiki:president}
+  \end{itemize}
+  \item \textbf{Respond or Pass.} Each subsequent player may:
+  \begin{itemize}
+    \item Play the \emph{same number} of cards of a \emph{higher rank}, or
+    \item Pass and sit out the rest of that quest (trick), unless using a special revolution option.
+  \end{itemize}
+  \item \textbf{Ending the Quest.} When all players in sequence pass, the last player to successfully play a set wins the quest. They collect the pile into a ``won'' stack (for flavor, not scoring), and then lead the next quest with any legal group from their hand.
+\end{enumerate}
+
+\subsection{Justice Bursts and Bacon Revolutions}
+
+To reinforce the DeathSpank feel, several special rules layer on top of the standard climbing structure:
+
+\begin{description}
+  \item[Justice Burst (2s and Jokers).]  
+  Twos (and jokers if used) are ultra-powerful cards. They can be played only \emph{in pattern}: a single 2 over a single card, two 2s over a pair, etc. A Justice Burst immediately clears the table; the player who triggered it wins the quest and leads the next one. Players may \emph{never} lead a quest with a 2 or joker.
+  
+  Ending the round by playing a Justice Burst is dangerous: if your last card is a 2 or joker, you \emph{automatically become the AntiSpank} for the next round, even if you technically finished first. This mirrors harsh variants where ending on a bomb card forces a player into last place.\cite{wiki:president}
+  
+  \item[Bacon Revolution (Four-of-a-Kind).]  
+  If a player ever plays four of a kind in one move (either as a lead or as a legal response), a \emph{Bacon Revolution} triggers. From that moment until the end of the current round, the rank order is completely reversed: 2 becomes the weakest card and 3 becomes the strongest, or vice versa depending on table convention. This is adapted from ``revolution'' variants in \emph{President} and is thematically tied to DeathSpank's universe-scale silliness and the consequences of wearing too many Thongs of Virtue.\cite{wiki:president,wiki:thongs,wiki:baconing}
+\end{description}
+
+\subsection{End of Round and Campaign Play}
+
+When a player plays their last card, they immediately claim the highest remaining title (e.g., Hero, Deputy, Adventurer, Minion, AntiSpank). Play continues among the remaining players until all titles are assigned or until only one player still holds cards.
+
+A \emph{campaign} of \emph{Presidents of Virtue} is simply a sequence of rounds with evolving titles. Tables may:
+
+\begin{itemize}
+  \item Score each round (e.g., Hero earns $+3$, Deputy $+2$, Adventurer $+1$, Minion $0$, AntiSpank $-1$).
+  \item Track long-term achievements (e.g., ``Most Times as Hero'', ``Most Times Accidentally AntiSpank'', ``Longest Bacon Revolution Streak'').
+  \item Introduce narrative events between rounds, such as side quests inspired by locations and NPCs from the \emph{DeathSpank} games.\cite{wiki:deathspank,wiki:thongs,wiki:baconing}
+\end{itemize}
+
+\section{Player and User Choices}
+
+\subsection{Choices for Players Around the Table}
+
+Players face several meaningful decisions every round:
+
+\begin{itemize}
+  \item \textbf{Risk vs.\ Safety in Leading.}  
+  Do you lead small, conservative singles to gently drain your hand, or unleash pairs and triples to try to seize control early?
+  \item \textbf{Timing of Justice Bursts.}  
+  Do you burn powerful 2s and jokers early to escape a bad position, or hoard them to swing a late-game quest?
+  \item \textbf{Embracing or Avoiding the AntiSpank Role.}  
+  Some players may intentionally drift toward the bottom of the hierarchy to enjoy the drama of climbing back up in later rounds, or to exploit variants like reversed trading.
+  \item \textbf{Triggering Bacon Revolutions.}  
+  Holding four-of-a-kind, you can flip the entire power structure of the deck. Is it worth confusing everyone---including yourself---to rescue a weak hand?
+  \item \textbf{Social Bluffing and Table Talk.}  
+  The DeathSpank universe almost demands ridiculous in-character banter. Players may negotiate, taunt, or role-play their titles, adding emergent narrative on top of the core card play.
+\end{itemize}
+
+\subsection{Choices for Users of a Digital or Classroom Version}
+
+If \emph{Presidents of Virtue} is implemented as a digital or classroom activity, non-tabletop ``users'' (students, designers, or players interacting with a UI) have additional configuration choices:
+
+\begin{itemize}
+  \item Toggle optional rules: Bacon Revolutions, Communal Bacon (reversed trading), runs/straights, or special Justice Burst constraints.
+  \item Configure scoring models for a course: number of rounds, how titles map onto participation points or bonuses.
+  \item Decide whether roles carry minor special powers (e.g., the Hero can declare one rule toggle per round, the AntiSpank always leads the very first quest, the Minion may look at one opponent's hand once per round, etc.).
+  \item Adjust deck size and player caps for accessibility (e.g., limit to single deck for smaller groups, enable multi-deck chaos for large events).
+\end{itemize}
+
+These choices allow instructors or designers to tune the experience: fast and light for icebreakers, or strategic and campaign-based for longer narrative sessions.
+
+\section{Constraints and Design Goals}
+
+\subsection{Mechanical Constraints}
+
+\begin{itemize}
+  \item \textbf{Player Count:} The base rules assume 3--6 players. More players require additional decks and possibly simplified role ladders to keep the between-round trading manageable.\cite{wiki:president}
+  \item \textbf{Card Visibility:} Hands are private; only played cards and discarded piles are public. Any ``table talk'' or information sharing is optional and stylistic rather than mechanical.
+  \item \textbf{Pacing:} The shedding core keeps each round relatively short (5--15 minutes), matching both the original \emph{President} and the bite-sized feel of the \emph{DeathSpank} games.\cite{wiki:president,wiki:deathspank}
+  \item \textbf{Complexity Ceiling:} Optional rules (runs, revolutions, special bombs) are modular. Groups can add or remove them to match their experience level.
+\end{itemize}
+
+\subsection{Thematic and Pedagogical Constraints}
+
+\begin{itemize}
+  \item \textbf{Tone:} The tone aims to echo DeathSpank's blend of heroic fantasy and self-aware absurdity without requiring prior knowledge of the games.\cite{wiki:deathspank,wiki:thongs,wiki:baconing}
+  \item \textbf{Narrative Flexibility:} The roles and titles are deliberately loose so they can be adapted for storytelling, classroom activities, or light role-playing.
+  \item \textbf{Reusability:} Because the underlying mechanics closely track a well-known card game, \emph{Presidents of Virtue} can slide neatly into contexts where \emph{President} is already familiar, adding theme without reinventing the rules from scratch.
+\end{itemize}
+
+Overall, \emph{Presidents of Virtue} wraps a familiar shedding game in the heroic nonsense of the DeathSpank universe: players climb a social ladder built from Thongs of Virtue, bursts of justice, and the occasional bacon-fueled revolution.
+
+\begin{thebibliography}{9}
+
+\bibitem{wiki:president}
+\emph{President (card game)}. Wikipedia, The Free Encyclopedia.\\
+\url{https://en.wikipedia.org/wiki/President_(card_game)}.
+
+\bibitem{wiki:deathspank}
+\emph{DeathSpank}. Wikipedia, The Free Encyclopedia.\\
+\url{https://en.wikipedia.org/wiki/DeathSpank}.
+
+\bibitem{wiki:baconing}
+\emph{The Baconing}. Wikipedia, The Free Encyclopedia.\\
+\url{https://en.wikipedia.org/wiki/The_Baconing}.
+
+\bibitem{wiki:thongs}
+\emph{DeathSpank: Thongs of Virtue}. Wikipedia, The Free Encyclopedia.\\
+\url{https://en.wikipedia.org/wiki/DeathSpank:_Thongs_of_Virtue}.
+
+\end{thebibliography}
 

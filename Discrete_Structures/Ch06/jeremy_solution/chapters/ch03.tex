@@ -1,0 +1,355 @@
+\chapter{Math Writeup: Counting Presidents of Virtue}
+
+This chapter connects the story and rules of \emph{Presidents of Virtue} to four core
+counting ideas from discrete mathematics:
+
+\begin{itemize}
+    \item permutations (when order matters),
+    \item combinations (when order does not matter),
+    \item stars-and-bars (distributing identical things into labeled boxes),
+    \item and probability (using counts to measure how likely an event is).
+\end{itemize}
+
+Each section below includes a clearly labeled \textbf{Problem}, the relevant
+\textbf{Formula}, and a fully \textbf{Worked Example} in the DeathSpank / Presidents
+of Virtue universe.
+
+\section{Permutations: Ordering the Chain of Command}
+
+In each round of \emph{Presidents of Virtue}, players race to empty their hands.
+The order in which they finish determines the social ladder for the next round:
+Hero of SpankTopia, Deputy of Justice, Adventurers, Minion of AntiSpank, and
+finally the AntiSpank.
+
+\subsection*{Problem (Permutations)}
+
+Suppose there are $n$ distinct players at the table. At the end of a round, all
+titles are assigned by finishing order: first place becomes Hero of SpankTopia,
+second becomes Deputy of Justice, and so on, down to the AntiSpank in last
+place.
+
+\begin{quote}
+\textbf{Question.} How many different ways can the titles be assigned after one
+round, assuming every finishing order is possible?
+\end{quote}
+
+\subsection*{Formula (Permutations)}
+
+A \emph{permutation} of $n$ distinct objects is any ordering of them in a line.
+The number of permutations of $n$ distinct objects is
+\[
+n! = n \cdot (n-1) \cdot (n-2) \cdots 3 \cdot 2 \cdot 1,
+\]
+with the special convention that $0! = 1$.
+
+In words: for the first position we have $n$ choices; for the second, $n-1$
+choices; and so on, until only one choice remains. By the product principle, we
+multiply these choices together to get $n!$ possible orders.
+
+\subsection*{Worked Example}
+
+Let $n=5$ players sit down to play: DeathSpank, Sparkles, Steve, a Random
+Adventurer, and the Mysterious Clerk of Bacon.
+
+At the end of the round, the finishing order determines:
+
+\begin{center}
+\begin{tabular}{cl}
+1st & Hero of SpankTopia \\
+2nd & Deputy of Justice \\
+3rd & Adventurer \\
+4th & Minion of AntiSpank \\
+5th & AntiSpank \\
+\end{tabular}
+\end{center}
+
+\noindent
+\textbf{How many possible ways can these titles be assigned?}
+
+Because all five characters are distinct, this is just the number of permutations
+of $5$ distinct players:
+\[
+5! = 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1 = 120.
+\]
+
+So there are $120$ different ways the round could end in terms of titles. Even
+with only five players, the space of possible ``political timelines'' for
+SpankTopia is already quite large.
+
+\vspace{1em}
+\noindent
+\textbf{Design note.} If a designer wanted to guarantee that some specific
+character (say, DeathSpank) \emph{never} becomes AntiSpank, they would be
+forbidding all permutations with that character in last place. That is a
+structural change to the game, and permutations give us a precise language for
+describing it.
+
+\section{Combinations: Choosing Sets of Thongs of Virtue}
+
+Between rounds, the Hero of SpankTopia may be allowed to equip special artifacts
+or Thongs of Virtue that grant small advantages (extra card trades, one-time
+Justice Bursts, or fancy decorative glow).
+
+In many situations, it is the set of artifacts that matters, not the order in
+which they are chosen.
+
+\subsection*{Problem (Combinations)}
+
+Suppose there are $n$ distinct Thongs of Virtue stored in the Sacred Drawer of
+Laundry. At the start of a campaign night, the Hero is allowed to choose $k$ of
+them as their \emph{loadout} for the evening.
+
+\begin{quote}
+\textbf{Question.} How many different loadouts of $k$ Thongs can the Hero
+choose, if the order of selection does not matter?
+\end{quote}
+
+\subsection*{Formula (Combinations)}
+
+A \emph{combination} answers the question: ``In how many ways can we choose $k$
+objects from $n$ distinct objects when order does not matter?''
+
+The number of such combinations is
+\[
+\binom{n}{k}
+= \frac{n!}{k!(n-k)!},
+\]
+read as ``$n$ choose $k$.''
+
+The denominator divides out over-counting, since each \emph{set} of $k$ objects
+can be listed in $k!$ different orders.
+
+\subsection*{Worked Example}
+
+Assume there are $n=7$ distinct Thongs of Virtue:
+
+\begin{center}
+Justice, Stealth, Bacon, Looting, Mana, Friendship, and Mildly Confusing Glow.
+\end{center}
+
+Before the first round, the Hero may choose $k=3$ of these to wear (in a safe,
+family-friendly way). Only the set matters; wearing Justice--Bacon--Mana is the
+same loadout as Mana--Justice--Bacon.
+
+The number of possible loadouts is
+\[
+\binom{7}{3}
+= \frac{7!}{3!\,4!}
+= \frac{7 \cdot 6 \cdot 5}{3 \cdot 2 \cdot 1}
+= 35.
+\]
+
+So there are $35$ distinct sets of three Thongs the Hero could bring into the
+session. If you later tweak the balance by adding more artifacts, you can use
+the same combination formula to see how quickly the loadout universe grows.
+
+\section{Stars-and-Bars: Distributing Justice Points}
+
+Many role-playing games let a character spread points across several abilities.
+In \emph{Presidents of Virtue}, we might imagine DeathSpank distributing
+\emph{Justice Points} among different powers before the game starts.
+
+\subsection*{Problem (Stars-and-Bars)}
+
+DeathSpank has $J$ Justice Points to allocate among $k$ special powers:
+
+\begin{itemize}
+    \item Smite of Righteousness,
+    \item Flaming Bacon Shield,
+    \item and Loot Sense.
+\end{itemize}
+
+Let $x_1, x_2, x_3$ be the number of points assigned to these three powers,
+respectively.
+
+\begin{quote}
+\textbf{Question A.} If $J = 6$ and $k=3$, and each power may receive any
+nonnegative number of points (including zero), how many different allocations
+$(x_1, x_2, x_3)$ are possible?
+
+\textbf{Question B.} Answer the same question, but now require that every power
+must receive at least one point.
+\end{quote}
+
+\subsection*{Formula (Stars-and-Bars)}
+
+We are counting the number of nonnegative integer solutions to
+\[
+x_1 + x_2 + \cdots + x_k = J
+\]
+with $x_i \ge 0$.
+
+The classic stars-and-bars result says that the number of such solutions is
+\[
+\binom{J + k - 1}{k - 1}.
+\]
+
+If instead every power must receive at least one point, we set $y_i = x_i - 1$
+so $y_i \ge 0$ and
+\[
+y_1 + y_2 + \cdots + y_k = J - k.
+\]
+Then the number of solutions with $x_i \ge 1$ is
+\[
+\binom{(J - k) + k - 1}{k - 1}
+= \binom{J - 1}{k - 1}.
+\]
+
+\subsection*{Worked Example}
+
+\paragraph{Question A: Some powers may get zero.}
+
+Here $J = 6$ and $k = 3$, so we count nonnegative integer solutions to
+\[
+x_1 + x_2 + x_3 = 6.
+\]
+By stars-and-bars, the number of allocations is
+\[
+\binom{6 + 3 - 1}{3 - 1}
+= \binom{8}{2}
+= \frac{8 \cdot 7}{2 \cdot 1}
+= 28.
+\]
+
+So there are $28$ ways for DeathSpank to distribute $6$ Justice Points among
+three powers if some powers are allowed to be left at zero.
+
+\paragraph{Question B: Every power must get at least one point.}
+
+Now we require $x_1, x_2, x_3 \ge 1$ and $x_1 + x_2 + x_3 = 6$.
+
+Set $y_i = x_i - 1$, so $y_i \ge 0$ and
+\[
+y_1 + y_2 + y_3 = 6 - 3 = 3.
+\]
+By stars-and-bars, the number of such allocations is
+\[
+\binom{3 + 3 - 1}{3 - 1}
+= \binom{5}{2}
+= \frac{5 \cdot 4}{2 \cdot 1}
+= 10.
+\]
+
+So there are $10$ allocations in which every power gets at least one Justice
+Point. In game-design language: enforcing ``no dump stats'' shrinks the build
+universe from $28$ to $10$ possibilities.
+
+\section{Probability: Justice Bursts in a Starting Hand}
+
+Counting lets us describe how \emph{big} a universe of possibilities is. Probability
+uses those counts to describe how \emph{likely} certain events are, assuming all
+hands are equally likely.
+
+\subsection*{Problem (Probability with Combinations)}
+
+In \emph{Presidents of Virtue}, the card \texttt{2} in each suit is treated as a
+\emph{Justice Burst}---a very powerful card that often clears the trick.
+
+Suppose we are using a standard $52$-card deck with four suits and four Justice
+Bursts (the four \texttt{2}s). A player is dealt a $5$-card starting hand.
+
+\begin{quote}
+\textbf{Question.} What is the probability that the player’s starting hand
+contains \emph{exactly one} Justice Burst?
+\end{quote}
+
+\subsection*{Formula (Probability from Counting)}
+
+When all $5$-card hands are equally likely, we can write
+\[
+\Pr(\text{exactly one Justice Burst})
+= \frac{\text{number of hands with exactly one 2}}{\text{number of all $5$-card hands}}.
+\]
+
+\begin{itemize}
+    \item The number of all $5$-card hands from a $52$-card deck is
+    \[
+    \binom{52}{5}.
+    \]
+    \item To have \emph{exactly one} Justice Burst:
+    \begin{itemize}
+        \item choose which one of the four \texttt{2}s appears: $\binom{4}{1}$ ways;
+        \item choose the remaining $4$ cards from the $48$ non-\texttt{2} cards:
+        $\binom{48}{4}$ ways.
+    \end{itemize}
+    So the number of favorable hands is
+    \[
+    \binom{4}{1} \binom{48}{4}.
+    \]
+\end{itemize}
+
+Therefore
+\[
+\Pr(\text{exactly one Justice Burst})
+= \frac{\binom{4}{1} \binom{48}{4}}{\binom{52}{5}}.
+\]
+
+\subsection*{Worked Example}
+
+We can either leave the answer in binomial form (which is already meaningful), or
+evaluate it numerically.
+
+First, keep it symbolic:
+\[
+\Pr(\text{exactly one Justice Burst})
+= \frac{\binom{4}{1}\binom{48}{4}}{\binom{52}{5}}.
+\]
+
+If we expand:
+\[
+\binom{4}{1} = 4,\qquad
+\binom{48}{4} = \frac{48 \cdot 47 \cdot 46 \cdot 45}{4 \cdot 3 \cdot 2 \cdot 1},\qquad
+\binom{52}{5} = \frac{52 \cdot 51 \cdot 50 \cdot 49 \cdot 48}{5 \cdot 4 \cdot 3 \cdot 2 \cdot 1}.
+\]
+
+Computing these (by hand or with a calculator) gives approximately
+\[
+\Pr(\text{exactly one Justice Burst})
+\approx 0.2995,
+\]
+or about a $30\%$ chance.
+
+In other words, if you sit down and are repeatedly dealt random $5$-card hands
+from a fresh deck, you should expect to see \emph{exactly one} Justice Burst in
+roughly $3$ out of every $10$ hands, on average.
+
+\vspace{1em}
+\noindent
+\textbf{Design note.} If you want Justice Bursts to be more common in starting
+hands, you could:
+
+\begin{itemize}
+    \item add more special cards to the deck, or
+    \item increase the starting hand size.
+\end{itemize}
+
+Either way, the combination formulas above let you recompute the exact
+probabilities and make data-informed design decisions.
+
+\section*{Summary}
+
+In this chapter we:
+
+\begin{itemize}
+    \item used \textbf{permutations} to count possible chains of command at the end of
+    a round;
+    \item used \textbf{combinations} to count how many artifact loadouts or Thong sets
+    a Hero can choose;
+    \item used \textbf{stars-and-bars} to count how many Justice Point builds are
+    possible for a character;
+    \item and used \textbf{probability} to quantify how often special cards (Justice
+    Bursts) appear in random hands.
+\end{itemize}
+
+These four tools give a mathematical backbone to the \emph{Presidents of Virtue}
+universe. They also serve as a template: any time you invent a new mini-game or
+variant, you can ask the same questions:
+
+\begin{quote}
+How many different configurations are possible, and how likely are the ones I
+care about?
+\end{quote}
+
+Answering those questions is where discrete mathematics and game design shake
+hands.
+

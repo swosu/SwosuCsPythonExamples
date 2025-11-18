@@ -1,5 +1,5 @@
-PDF_TARGET = main.pdf
-TEX_FILE = main.tex
+PDF_TARGET = PresidentDeathspank.pdf
+TEX_FILE = PresidentDeathspank.tex
 # List of auxiliary files created by pdflatex
 AUX_FILES = *.aux *.log *.toc *.lof *.lot *.out *.synctex.gz *.bbl *.blg
 
