@@ -1,0 +1,55 @@
+This chapter is about reading the CSV file presidents_of_virtue_plays.csv and asking
+questions like a data scientist:
+• Which strategies tend to finish earlier?
+• How often do players trigger a Justice Burst?
+• What happens to hand sizes over the course of a round?
+We are not trying to build a full machine learning model (yet), but we are trying to get
+comfortable with turning a log of events into structured questions and answers.
+
+
+
+C:\Users\evertj\git\SwosuCsPythonExamples\Discrete_Structures\Ch06\jeremy_solution>python scripts/pov_peek.py
+Loaded 262 actions from presidents_of_virtue_plays.csv.
+
+First 5 actions:
+round 1, trick 1, step 1: Cody (Cautious) play 3♠
+round 1, trick 1, step 2: Tyler (PairLover) play 4♠
+round 1, trick 1, step 3: Hadley (ChaosRevolutionary) play 2♦
+round 1, trick 2, step 1: Hadley (ChaosRevolutionary) play 9♦ 9♥ 9♠
+round 1, trick 2, step 2: Blake (Random) pass
+
+=== Actions per strategy ===
+Greedy            :     60 actions
+ChaosRevolutionary:     59 actions
+Random            :     56 actions
+Cautious          :     55 actions
+PairLover         :     32 actions
+
+=== Finish-position summary by strategy ===
+Cautious          : avg_finish = 3.60 over    55 actions (wins=0, top2=20)
+PairLover         : avg_finish = 1.00 over    32 actions (wins=32, top2=32)
+ChaosRevolutionary: avg_finish = 4.19 over    59 actions (wins=0, top2=16)
+Random            : avg_finish = 2.77 over    56 actions (wins=0, top2=13)
+Greedy            : avg_finish = 3.75 over    60 actions (wins=0, top2=0)
+
+=== Justice Burst (2s) usage by strategy ===
+PairLover         :    4 bursts (36.4% of all Justice Bursts)
+Random            :    3 bursts (27.3% of all Justice Bursts)
+ChaosRevolutionary:    2 bursts (18.2% of all Justice Bursts)
+Greedy            :    1 bursts (9.1% of all Justice Bursts)
+Cautious          :    1 bursts (9.1% of all Justice Bursts)
+
+C:\Users\evertj\git\SwosuCsPythonExamples\Discrete_Structures\Ch06\jeremy_solution>
+
+C:\Users\evertj\git\SwosuCsPythonExamples\Discrete_Structures\Ch06\jeremy_solution>python scripts/pov_count_actions.py
+Actions per strategy:
+Cautious: 55 actions
+ChaosRevolutionary: 59 actions
+Greedy: 60 actions
+PairLover: 32 actions
+Random: 56 actions
+
+C:\Users\evertj\git\SwosuCsPythonExamples\Discrete_Structures\Ch06\jeremy_solution>
+
+
+
