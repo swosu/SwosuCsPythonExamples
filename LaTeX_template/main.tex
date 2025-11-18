@@ -1,0 +1,58 @@
+\documentclass[12pt]{book} % Good for multi-chapter documents
+
+% ----------------------
+% Packages
+% ----------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}        % Better default font
+\usepackage{geometry}
+\geometry{margin=1in}
+
+\usepackage{amsmath, amssymb, amsfonts}
+\usepackage{graphicx}       % For images
+\usepackage{hyperref}       % Clickable refs/TOC
+\usepackage{fancyhdr}       % Optional: custom headers/footers
+
+% Paragraph formatting (tweak as you like)
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.75em}
+
+% ----------------------
+% Title Info
+% ----------------------
+\title{Project Title Goes Here}
+\author{Author Name}
+\date{\today}
+
+% ----------------------
+% Document
+% ----------------------
+\begin{document}
+
+\frontmatter
+\maketitle
+\tableofcontents
+
+\mainmatter
+
+% ----------------------
+% Chapters (add as needed)
+% ----------------------
+\include{chapters/ch01} % Intro / first chapter
+\include{chapters/ch02} % Uncomment as you create more
+% \include{chapters/ch03}
+
+\backmatter
+
+% Example of back matter structure
+\chapter*{Bibliography}
+\addcontentsline{toc}{chapter}{Bibliography}
+
+% You can switch to BibTeX later if you prefer.
+\begin{itemize}
+    \item Author, A. (Year). \textit{Title of Work}. Publisher.
+\end{itemize}
+
+\end{document}
+

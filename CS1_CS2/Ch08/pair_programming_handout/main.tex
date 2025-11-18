@@ -1,0 +1,220 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{setspace}
+\usepackage{parskip}
+\usepackage[hidelinks]{hyperref}
+
+\setstretch{1.15}
+
+\title{Pair Programming Today:\\
+Learning Dictionaries \& Learning From Each Other}
+\author{CS 1 -- In-Class Handout}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section*{Why Are We Pair Programming?}
+
+Today you are not just ``getting through'' dictionary exercises.
+You are practicing a real industry skill: \textbf{working on code with another human without driving each other crazy.}
+
+Pair programming helps you:
+\begin{itemize}
+  \item \textbf{Catch bugs early.} One person types; the other watches for logic mistakes, typos, and missing cases.
+  \item \textbf{Explain your thinking.} Saying your ideas out loud makes you understand them better (and shows you what you do not understand yet).
+  \item \textbf{Learn faster.} You pick up tricks, habits, and mental models from each other.
+  \item \textbf{Build professional habits.} Most serious software and engineering work is done in teams, not alone in a cave.
+\end{itemize}
+
+\section*{Where Does Industry Use Pair Programming?}
+
+Pair-style work shows up in many professional settings:
+
+\subsection*{Software and Computer Science Roles}
+\begin{itemize}
+  \item \textbf{Pair programming on tricky features.} Two developers sit together to design a data structure or debug a nasty bug.
+  \item \textbf{Code reviews.} One person walks through their code while another asks questions and looks for edge cases.
+  \item \textbf{Onboarding new hires.} A junior developer ``shadows'' a senior developer, working as a pair to learn the codebase.
+\end{itemize}
+
+\subsection*{Manufacturing \& Engineering Technology Roles}
+\begin{itemize}
+  \item \textbf{Programming PLCs, robots, and test equipment.} One engineer writes the program; the other verifies safety logic and test conditions.
+  \item \textbf{Configuring production systems.} Two people check that sensor names, tag names, and database fields match what is on the shop floor.
+  \item \textbf{Data collection and dashboards.} One person builds the script that reads data into dictionaries or tables; the other checks units, labels, and ranges.
+\end{itemize}
+
+In both CS and manufacturing engineering technology, \textbf{it is normal and expected} that you will:
+\begin{itemize}
+  \item talk through designs out loud,
+  \item challenge each other's assumptions respectfully, and
+  \item use another person's brain to help keep humans and systems safe.
+\end{itemize}
+
+\section*{Roles in Pair Programming}
+
+Today, you will mainly use two layers of roles:
+
+\subsection*{Driver and Navigator}
+
+\begin{description}
+  \item[Driver:] Has hands on the keyboard.
+    \begin{itemize}
+      \item Types the code.
+      \item Focuses on syntax, indentation, and getting the current idea into the editor.
+      \item Talks out loud about what they are typing.
+    \end{itemize}
+  \item[Navigator:] Eyes on the big picture.
+    \begin{itemize}
+      \item Watches for bugs, missing cases, and clarity.
+      \item Reads the problem statement and checks that the code actually solves the right problem.
+      \item Suggests test cases and edge cases to try.
+    \end{itemize}
+\end{description}
+
+\subsection*{Mentor and Learner (and How They Switch)}
+
+Sometimes one of you knows more Python or more about dictionaries right now. That is normal. For this pair:
+
+\begin{description}
+  \item[Mentor:]
+    \begin{itemize}
+      \item Explains ideas, not just answers.
+      \item Asks questions like: ``What do you think this line will do?'' instead of grabbing the keyboard.
+      \item Slows down enough that the learner can follow the reasoning.
+    \end{itemize}
+  \item[Learner:]
+    \begin{itemize}
+      \item Asks questions \emph{before} getting completely lost.
+      \item Tries to predict the output or behavior before running the code.
+      \item Summarizes what they just learned in their own words.
+    \end{itemize}
+\end{description}
+
+\textbf{Important:} These roles are not permanent labels. They should \emph{swap} during the exercise. A strong teammate can be a mentor on one problem and a learner on the next.
+
+\section*{What Should You Be Doing \emph{Today}?}
+
+You are working on Python \textbf{dictionaries}. Here are concrete habits to practice during this lab:
+
+\subsection*{Before You Type}
+
+\begin{itemize}
+  \item As a pair, read the problem \textbf{out loud}.
+  \item Identify what your dictionaries represent:
+    \begin{itemize}
+      \item What are the \textbf{keys}? (e.g., student names, part IDs, sensor names)
+      \item What are the \textbf{values}? (e.g., grades, quantities, temperature readings)
+    \end{itemize}
+  \item Decide who is Driver and who is Navigator for this problem.
+\end{itemize}
+
+\subsection*{While You Are Coding}
+
+\begin{itemize}
+  \item \textbf{Driver:}
+    \begin{itemize}
+      \item Talk as you type: 
+      ``Now I am creating an empty dictionary called \verb|grades|''.
+      \item Ask the Navigator to double-check key names and spelling.
+    \end{itemize}
+  \item \textbf{Navigator:}
+    \begin{itemize}
+      \item Watch for common dictionary mistakes:
+        \begin{itemize}
+          \item Using the wrong key name.
+          \item Confusing \verb|[]| access with \verb|get()|.
+          \item Forgetting to handle missing keys.
+        \end{itemize}
+      \item Keep connecting the code to a real-world picture:
+        ``This dictionary is like a little look-up table on the factory floor.''
+    \end{itemize}
+  \item \textbf{Both:}
+    \begin{itemize}
+      \item Suggest test cases and run them \emph{often}.
+      \item If something breaks, talk through \emph{why}, not just ``fix it fast''.
+    \end{itemize}
+\end{itemize}
+
+\subsection*{After Each Problem}
+
+\begin{itemize}
+  \item Switch Driver and Navigator roles.
+  \item Do a 30-second debrief:
+    \begin{itemize}
+      \item What did we each learn about dictionaries?
+      \item What communication habit helped us the most?
+    \end{itemize}
+\end{itemize}
+
+\section*{Connecting to Your Future Career}
+
+\subsection*{If You Are a Computer Science Major}
+
+Ask yourself:
+\begin{itemize}
+  \item Could I explain this dictionary code to a future teammate during a code review?
+  \item Would another developer be able to read my variable names and understand what they mean?
+  \item How would I feel doing this same exercise with a senior engineer watching? What would I keep the same? What would I improve?
+\end{itemize}
+
+\subsection*{If You Are in Manufacturing Engineering Technology}
+
+Think about how dictionaries show up in your world:
+\begin{itemize}
+  \item Mapping sensor IDs to readings.
+  \item Mapping station names to status flags.
+  \item Mapping part numbers to quantities or locations.
+\end{itemize}
+
+Ask yourself:
+\begin{itemize}
+  \item Could this code safely handle missing data?
+  \item If a production line was down, would my pair programming habits help us find the problem faster?
+\end{itemize}
+
+\section*{How to Get Better at Pair Programming}
+
+Here are a few skills you can deliberately practice today:
+
+\subsection*{Communication Skills}
+
+\begin{itemize}
+  \item Use phrases like:
+    \begin{itemize}
+      \item ``Can you walk me through your thinking?''
+      \item ``I am confused about this line; can we pause and talk about it?''
+      \item ``I have an idea; can I share it before we type?''
+    \end{itemize}
+  \item Be kind and specific with feedback:
+    \begin{itemize}
+      \item Instead of: ``That is wrong.''
+      \item Try: ``I think that key might not exist yet; what happens if we try it with an unknown student?''
+    \end{itemize}
+\end{itemize}
+
+\subsection*{Technical Habits}
+
+\begin{itemize}
+  \item Always know what your dictionary is supposed to represent.
+  \item Keep keys and values consistent and well-named.
+  \item Add small print statements or tests as you go to confirm what is inside your dictionaries.
+\end{itemize}
+
+\subsection*{Reflection}
+
+At the end of class, each of you should be able to answer:
+\begin{itemize}
+  \item What did I learn about dictionaries?
+  \item What did I learn about working with another person on code?
+  \item What is one habit I want to keep using next time we pair program?
+\end{itemize}
+
+\bigskip
+\noindent\textbf{Goal for Today:} 
+By the time you walk out, you should understand dictionaries better, \emph{and} be slightly more comfortable solving problems with another human. Both skills matter in the real world.
+
+\end{document}
+
