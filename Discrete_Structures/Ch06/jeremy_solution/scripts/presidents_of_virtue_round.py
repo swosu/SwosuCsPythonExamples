@@ -1,20 +1,28 @@
 """
-Presidents of Virtue: one simulated round with 5 NPCs.
+Presidents of Virtue – multi-round simulator with detailed logging.
 
-Matches the LaTeX universe description:
-- Standard 52-card deck, ranks 3 < 4 < ... < A < 2.
-- Shedding game like President.
-- Cannot lead with 2 (Justice Burst).
-- Playing 2s as a response acts as a Justice Burst: clears the table and
-  the same player leads the next quest.
-- Playing four-of-a-kind triggers a Bacon Revolution: rank order reverses
-  for the rest of the round.
-- If a player’s LAST play contains a 2, we mark them as "ended_on_bomb"
-  so they would be AntiSpank next round by the story rules.
+Features:
+- 5 NPC players with different strategies.
+- Prints:
+  - starting hands,
+  - trick-by-trick table state,
+  - plays and passes.
+- Writes a CSV file with one row per action:
+  presidents_of_virtue_plays.csv
 
-This file is the "first script": get the game running with 5 NPCs.
+Columns include:
+- round, trick, step
+- player_name, strategy
+- action ("play" or "pass")
+- cards_played
+- hand_size_before, hand_size_after
+- current_size_before, current_rank_before
+- is_lead, is_justice_burst, is_revolution_trigger, revolution_state_after
+- finish_position, ended_on_bomb
 """
 
+import csv
+import os
 import random
 from dataclasses import dataclass, field
 from typing import List, Optional, Dict
@@ -23,10 +31,9 @@ from typing import List, Optional, Dict
 # Card model
 # ---------------------------------------------------------------------------
 
-# Normal rank order: 3 lowest, 2 highest (until a Bacon Revolution flips it)
 RANKS_NORMAL = ['3', '4', '5', '6', '7', '8',
                 '9', '10', 'J', 'Q', 'K', 'A', '2']
-SUITS = ['♣', '♦', '♥', '♠']  # cosmetic only
+SUITS = ['♣', '♦', '♥', '♠']
 
 
 def rank_index(rank: str, order: List[str]) -> int:
@@ -53,7 +60,7 @@ class Player:
     hand: List[Card] = field(default_factory=list)
     finished: bool = False
     finish_position: Optional[int] = None
-    ended_on_bomb: bool = False  # True if their final play contained a 2
+    ended_on_bomb: bool = False  # True if final play contained a 2
 
     def remove_cards(self, cards: List[Card]) -> None:
         for c in cards:
@@ -61,8 +68,6 @@ class Player:
 
 
 class Strategy:
-    """Base class for NPC strategies."""
-
     def choose_play(
         self,
         player: Player,
@@ -71,33 +76,29 @@ class Strategy:
         rank_order: List[str],
         revolution: bool,
     ) -> Optional[List[Card]]:
-        """Return a list of Cards to play, or None to pass."""
         raise NotImplementedError
 
 
 class CautiousStrategy(Strategy):
-    """Plays the lowest legal set, avoids bombs (2s) if possible."""
+    """Lowest legal play, avoids 2s if possible."""
 
     def choose_play(self, player, legal_plays, can_lead, rank_order, revolution):
         if not legal_plays:
             return None
 
-        # Sort by: smaller sets first, then lower rank
         def play_key(play: List[Card]):
             ranks = [rank_index(c.rank, rank_order) for c in play]
             return (len(play), max(ranks))
 
-        legal_plays_sorted = sorted(legal_plays, key=play_key)
-
-        # Avoid 2s if possible
-        for play in legal_plays_sorted:
+        legal_sorted = sorted(legal_plays, key=play_key)
+        for play in legal_sorted:
             if all(c.rank != '2' for c in play):
                 return play
-        return legal_plays_sorted[0]
+        return legal_sorted[0]
 
 
 class GreedyStrategy(Strategy):
-    """Plays the highest legal set to try to seize control."""
+    """Highest legal play."""
 
     def choose_play(self, player, legal_plays, can_lead, rank_order, revolution):
         if not legal_plays:
@@ -111,7 +112,7 @@ class GreedyStrategy(Strategy):
 
 
 class PairLoverStrategy(Strategy):
-    """Prefers pairs or triples over singles when possible."""
+    """Prefers multi-card plays (pairs, triples, quads) over singles."""
 
     def choose_play(self, player, legal_plays, can_lead, rank_order, revolution):
         if not legal_plays:
@@ -119,7 +120,6 @@ class PairLoverStrategy(Strategy):
 
         multi = [p for p in legal_plays if len(p) >= 2]
         if multi:
-            # Among multi-card plays, prefer smaller size and lower rank
             def play_key(play: List[Card]):
                 ranks = [rank_index(c.rank, rank_order) for c in play]
                 return (len(play), max(ranks))
@@ -127,15 +127,15 @@ class PairLoverStrategy(Strategy):
             return min(multi, key=play_key)
 
         # Fallback: lowest single
-        def play_key(play: List[Card]):
+        def single_key(play: List[Card]):
             ranks = [rank_index(c.rank, rank_order) for c in play]
             return max(ranks)
 
-        return min(legal_plays, key=play_key)
+        return min(legal_plays, key=single_key)
 
 
 class ChaosRevolutionaryStrategy(Strategy):
-    """Loves bombs and revolutions: tries to play 4-of-a-kind or 2s when possible."""
+    """Loves bombs and revolutions: tries to play 4-of-a-kind or 2s."""
 
     def choose_play(self, player, legal_plays, can_lead, rank_order, revolution):
         if not legal_plays:
@@ -144,21 +144,19 @@ class ChaosRevolutionaryStrategy(Strategy):
         bombs: List[List[Card]] = []
         for play in legal_plays:
             ranks = {c.rank for c in play}
-            # Four-of-a-kind = Bacon Revolution
+            # Four-of-a-kind
             if len(play) == 4 and len(ranks) == 1:
                 bombs.append(play)
-            # Any play containing a 2 = Justice Burst
             elif any(c.rank == '2' for c in play):
                 bombs.append(play)
 
         if bombs:
-            # Larger bombs first (prefer 4-of-a-kind over just tossing a single 2)
             def bomb_key(play: List[Card]):
                 return len(play)
 
             return max(bombs, key=bomb_key)
 
-        # Otherwise behave like Greedy
+        # Otherwise greedy
         def play_key(play: List[Card]):
             ranks = [rank_index(c.rank, rank_order) for c in play]
             return (len(play), max(ranks))
@@ -167,7 +165,7 @@ class ChaosRevolutionaryStrategy(Strategy):
 
 
 class RandomStrategy(Strategy):
-    """Just vibes. Picks a random legal play."""
+    """Picks any legal play at random."""
 
     def choose_play(self, player, legal_plays, can_lead, rank_order, revolution):
         if not legal_plays:
@@ -186,6 +184,8 @@ def make_deck() -> List[Card]:
 def deal_deck(deck: List[Card], players: List[Player]) -> None:
     random.shuffle(deck)
     n_players = len(players)
+    for p in players:
+        p.hand.clear()
     for i, card in enumerate(deck):
         players[i % n_players].hand.append(card)
 
@@ -197,12 +197,7 @@ def group_by_rank(cards: List[Card]) -> Dict[str, List[Card]]:
     return grouped
 
 
-def generate_leads(hand: List[Card], rank_order: List[str]) -> List[List[Card]]:
-    """
-    All legal leading plays:
-    - One to four of the same rank.
-    - Cannot lead with rank '2' (Justice Burst cards cannot start a quest).
-    """
+def generate_leads(hand: List[Card]) -> List[List[Card]]:
     grouped = group_by_rank(hand)
     plays: List[List[Card]] = []
     for rank, cards in grouped.items():
@@ -217,13 +212,8 @@ def generate_responses(
     hand: List[Card],
     current_size: int,
     current_rank: str,
-    rank_order: List[str]
+    rank_order: List[str],
 ) -> List[List[Card]]:
-    """
-    Legal responses:
-    - Must match the current_size.
-    - Rank must be strictly higher in the current rank order.
-    """
     grouped = group_by_rank(hand)
     plays: List[List[Card]] = []
     current_idx = rank_index(current_rank, rank_order)
@@ -235,31 +225,29 @@ def generate_responses(
     return plays
 
 
+def hand_to_str(hand: List[Card], rank_order: List[str]) -> str:
+    return " ".join(str(c) for c in sorted(hand, key=lambda c: rank_index(c.rank, rank_order)))
+
+
 # ---------------------------------------------------------------------------
-# Round engine
+# Round engine (with logging)
 # ---------------------------------------------------------------------------
 
 class PresidentsOfVirtueRound:
-    """
-    Simulates a single round of Presidents of Virtue with given players.
-
-    This is *one round* in the campaign described in the LaTeX universe writeup;
-    it outputs the finishing positions and whether anyone ended on a Justice Burst.
-    """
-
-    def __init__(self, players: List[Player]):
+    def __init__(self, players: List[Player], round_index: int):
         self.players = players
+        self.round_index = round_index
         self.rank_order = list(RANKS_NORMAL)
         self.revolution = False
         self.finish_order: List[Player] = []
+        # play_log: one dict per action
+        self.play_log: List[Dict[str, object]] = []
 
     def find_starting_player_index(self) -> int:
-        """First-round rule: whoever has the 3 of Clubs leads."""
         for i, p in enumerate(self.players):
             for c in p.hand:
                 if c.rank == '3' and c.suit == '♣':
                     return i
-        # Fallback: player 0 if for some reason 3♣ is missing
         return 0
 
     def all_finished(self) -> bool:
@@ -269,38 +257,51 @@ class PresidentsOfVirtueRound:
         return [i for i, p in enumerate(self.players) if not p.finished]
 
     def run(self) -> None:
-        # Reset flags for safety
         for p in self.players:
             p.finished = False
             p.finish_position = None
             p.ended_on_bomb = False
 
         self.finish_order = []
+        self.play_log.clear()
         self.rank_order = list(RANKS_NORMAL)
         self.revolution = False
 
+        # Show starting hands
+        print(f"\n=== ROUND {self.round_index} – Starting hands ===")
+        for p in self.players:
+            print(f"{p.name:18s} ({p.strategy.__class__.__name__}): "
+                  f"{hand_to_str(p.hand, self.rank_order)}")
+
         leader_index = self.find_starting_player_index()
         next_finish_pos = 1
+        trick_id = 0
 
         while not self.all_finished():
-            # New quest (trick)
+            trick_id += 1
+            print(f"\n--- Round {self.round_index}, Trick {trick_id} "
+                  f"(leader: {self.players[leader_index].name}) ---")
+
             current_size: Optional[int] = None
             current_rank: Optional[str] = None
             last_player_to_play: Optional[int] = None
             passed = {i: False for i in self.active_players_indices()}
+            pile_cards: List[Card] = []
+            step_in_trick = 0
 
             turn_index = leader_index
 
             while True:
                 player = self.players[turn_index]
                 if player.finished:
-                    # Skip finished players
                     turn_index = (turn_index + 1) % len(self.players)
                     continue
 
-                # Determine legal plays
+                step_in_trick += 1
+                hand_before = list(player.hand)
+
                 if current_size is None:
-                    legal_plays = generate_leads(player.hand, self.rank_order)
+                    legal_plays = generate_leads(player.hand)
                     can_lead = True
                 else:
                     legal_plays = generate_responses(
@@ -308,16 +309,39 @@ class PresidentsOfVirtueRound:
                     )
                     can_lead = False
 
-                # Strategy chooses a play or pass
                 play = player.strategy.choose_play(
                     player, legal_plays, can_lead, self.rank_order, self.revolution
                 )
 
-                if play is None:
-                    # Player passes on this quest
-                    passed[turn_index] = True
+                current_size_before = current_size if current_size is not None else 0
+                current_rank_before = current_rank if current_rank is not None else ""
 
-                    # If everyone except last_player_to_play has passed, quest ends
+                if play is None:
+                    # PASS
+                    passed[turn_index] = True
+                    print(f"{player.name:18s} passes. "
+                          f"(hand: {hand_to_str(player.hand, self.rank_order)})")
+
+                    self.play_log.append({
+                        "round": self.round_index,
+                        "trick": trick_id,
+                        "step": step_in_trick,
+                        "player_name": player.name,
+                        "strategy": player.strategy.__class__.__name__,
+                        "action": "pass",
+                        "cards_played": "",
+                        "hand_size_before": len(hand_before),
+                        "hand_size_after": len(player.hand),
+                        "current_size_before": current_size_before,
+                        "current_rank_before": current_rank_before,
+                        "is_lead": can_lead,
+                        "is_justice_burst": False,
+                        "is_revolution_trigger": False,
+                        "revolution_state_after": self.revolution,
+                        "finish_position": None,        # filled after round
+                        "ended_on_bomb": None,          # filled after round
+                    })
+
                     active_idxs = self.active_players_indices()
                     if last_player_to_play is not None and all(
                         (idx == last_player_to_play)
@@ -328,89 +352,175 @@ class PresidentsOfVirtueRound:
                         leader_index = last_player_to_play
                         break
 
-                    # Otherwise, move to next player
                     turn_index = (turn_index + 1) % len(self.players)
                     continue
 
-                # Apply the play
+                # PLAY
                 player.remove_cards(play)
+                pile_cards.extend(play)
 
-                # Detect Bacon Revolution (four-of-a-kind)
-                ranks = {c.rank for c in play}
-                if len(play) == 4 and len(ranks) == 1:
-                    # Flip the rank order
+                is_revolution_trigger = False
+                ranks_set = {c.rank for c in play}
+                if len(play) == 4 and len(ranks_set) == 1:
+                    # Bacon Revolution
                     self.rank_order = list(reversed(self.rank_order))
                     self.revolution = not self.revolution
+                    is_revolution_trigger = True
+                    print(f"*** BACON REVOLUTION triggered by {player.name}! "
+                          f"Rank order reversed. ***")
 
-                # Justice Burst: any 2s played as a response (cannot lead with 2)
                 is_justice_burst = any(c.rank == '2' for c in play) and not can_lead
 
-                # Update trick state if NOT a Justice Burst
                 if not is_justice_burst:
                     current_size = len(play) if current_size is None else current_size
-                    current_rank = play[0].rank  # all cards same rank
+                    current_rank = play[0].rank
                     last_player_to_play = turn_index
+
+                table_str = " ".join(str(c) for c in pile_cards)
+                play_str = " ".join(str(c) for c in play)
+                print(f"{player.name:18s} plays: {play_str:<12s} "
+                      f" | table: {table_str}")
+
+                self.play_log.append({
+                    "round": self.round_index,
+                    "trick": trick_id,
+                    "step": step_in_trick,
+                    "player_name": player.name,
+                    "strategy": player.strategy.__class__.__name__,
+                    "action": "play",
+                    "cards_played": play_str,
+                    "hand_size_before": len(hand_before),
+                    "hand_size_after": len(player.hand),
+                    "current_size_before": current_size_before,
+                    "current_rank_before": current_rank_before,
+                    "is_lead": can_lead,
+                    "is_justice_burst": is_justice_burst,
+                    "is_revolution_trigger": is_revolution_trigger,
+                    "revolution_state_after": self.revolution,
+                    "finish_position": None,        # filled after round
+                    "ended_on_bomb": None,          # filled after round
+                })
 
                 # Did the player just go out?
                 if not player.hand and not player.finished:
                     player.finished = True
                     player.finish_position = next_finish_pos
-
-                    # If their last play contained a 2, mark them as ending on a bomb
                     if any(c.rank == '2' for c in play):
                         player.ended_on_bomb = True
-
+                    print(f"--> {player.name} is OUT and takes position "
+                          f"{next_finish_pos} "
+                          f"{'(ended on 2)' if player.ended_on_bomb else ''}")
                     self.finish_order.append(player)
                     next_finish_pos += 1
 
-                    # If only one active player remains, we can finish the round
                     if len(self.active_players_indices()) == 1:
                         last_idx = self.active_players_indices()[0]
                         last_player = self.players[last_idx]
                         last_player.finished = True
                         last_player.finish_position = next_finish_pos
+                        print(f"--> {last_player.name} is last and takes position "
+                              f"{next_finish_pos}.")
                         self.finish_order.append(last_player)
                         return
 
                 if is_justice_burst:
-                    # Quest ends immediately; this player leads the next quest
+                    print(f"*** JUSTICE BURST by {player.name}! "
+                          f"Table cleared; {player.name} leads next trick. ***")
                     leader_index = turn_index
                     break
 
-                # Otherwise, move to next player
                 turn_index = (turn_index + 1) % len(self.players)
 
 
 # ---------------------------------------------------------------------------
-# Demo / entry point
+# Game driver + CSV export
 # ---------------------------------------------------------------------------
 
-def demo_single_round(seed: int = 0) -> None:
-    random.seed(seed)
+def create_oklahoma_players() -> List[Player]:
+    # Just a fun list of names that "feel" western Oklahoma-ish
+    name_pool = [
+        "Cody", "Savannah", "Rhett", "Kaylee", "Tyler",
+        "Maggie", "Blake", "Cheyenne", "Jace", "Hadley"
+    ]
+    chosen_names = random.sample(name_pool, 5)
 
-    # Five NPCs with distinct personalities
-    players = [
-        Player("DeathSpank (Greedy)", GreedyStrategy()),
-        Player("Sparkles (Cautious)", CautiousStrategy()),
-        Player("Steve (Pair Lover)", PairLoverStrategy()),
-        Player("Clerk of Bacon (Chaos)", ChaosRevolutionaryStrategy()),
-        Player("Random Adventurer", RandomStrategy()),
+    strategies = [
+        GreedyStrategy(),
+        CautiousStrategy(),
+        PairLoverStrategy(),
+        ChaosRevolutionaryStrategy(),
+        RandomStrategy(),
     ]
 
-    deck = make_deck()
-    deal_deck(deck, players)
+    players: List[Player] = []
+    for name, strat in zip(chosen_names, strategies):
+        players.append(Player(name=name, strategy=strat))
+    return players
 
-    game = PresidentsOfVirtueRound(players)
-    game.run()
 
-    print("=== Presidents of Virtue – Round finished ===")
-    for p in sorted(players, key=lambda pl: pl.finish_position or 99):
-        bomb_note = ""
-        if p.ended_on_bomb:
-            bomb_note = "  (ended on Justice Burst → would be AntiSpank next round!)"
-        print(f"{p.finish_position}: {p.name}{bomb_note}")
+def write_play_log_csv(play_logs: List[Dict[str, object]], filename: str) -> None:
+    if not play_logs:
+        return
+
+    fieldnames = [
+        "round", "trick", "step",
+        "player_name", "strategy",
+        "action", "cards_played",
+        "hand_size_before", "hand_size_after",
+        "current_size_before", "current_rank_before",
+        "is_lead", "is_justice_burst", "is_revolution_trigger",
+        "revolution_state_after",
+        "finish_position", "ended_on_bomb",
+    ]
+
+    with open(filename, "w", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        for row in play_logs:
+            writer.writerow(row)
+
+
+def simulate_game(num_rounds: int = 3, seed: int = 0) -> None:
+    random.seed(seed)
+    players = create_oklahoma_players()
+
+    print("Players and strategies:")
+    for p in players:
+        print(f"  {p.name:18s} -> {p.strategy.__class__.__name__}")
+    print()
+
+    all_play_logs: List[Dict[str, object]] = []
+
+    for r in range(1, num_rounds + 1):
+        deck = make_deck()
+        deal_deck(deck, players)
+        round_game = PresidentsOfVirtueRound(players, round_index=r)
+        round_game.run()
+
+        # Fill in finish info for that round's logs
+        finish_map = {
+            p.name: (p.finish_position, p.ended_on_bomb)
+            for p in players
+        }
+
+        for entry in round_game.play_log:
+            name = entry["player_name"]
+            fp, bomb = finish_map.get(name, (None, None))
+            entry["finish_position"] = fp
+            entry["ended_on_bomb"] = bomb
+            all_play_logs.append(entry)
+
+        print("\nRound", r, "results:")
+        for p in sorted(players, key=lambda pl: pl.finish_position or 99):
+            bomb_note = " (ended on bomb)" if p.ended_on_bomb else ""
+            print(f"  {p.finish_position}: {p.name}{bomb_note}")
+        print("-" * 60)
+
+    csv_name = "presidents_of_virtue_plays.csv"
+    write_play_log_csv(all_play_logs, csv_name)
+    print(f"\nWrote detailed play log to {csv_name}")
 
 
 if __name__ == "__main__":
-    demo_single_round()
-
+    # Adjust num_rounds as you like
+    simulate_game(num_rounds=3, seed=42)
