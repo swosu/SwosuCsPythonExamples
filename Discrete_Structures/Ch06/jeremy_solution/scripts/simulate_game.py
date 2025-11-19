@@ -5,11 +5,13 @@ Top-level simulation script for Presidents of Virtue.
 Controls:
 - number of rounds
 - random seed
+- whether to include a human player (vs_human)
 - which players to use (via pov_players)
 - where to write CSV logs (via pov_logging)
 """
 
 import random
+import argparse
 from typing import List, Dict
 
 from presidents_engine import (
@@ -22,13 +24,18 @@ from pov_players import create_oklahoma_players, create_oklahoma_with_human
 from pov_logging import write_play_log_csv
 
 
-def simulate_game(num_rounds: int = 3, seed: int = 0, vs_human: bool = False) -> None:
+def simulate_game(
+    num_rounds: int = 3,
+    seed: int = 0,
+    vs_human: bool = False,
+) -> None:
+    """Run a full multi-round game and write logs to CSV."""
     random.seed(seed)
 
     if vs_human:
         players: List[Player] = create_oklahoma_with_human(
             human_name="Jeremy",
-            human_position=0,   # 0–4: where you sit at the table
+            human_position=0,   # 0–4: where the human sits
             use_smart_bot=True,
         )
     else:
@@ -94,10 +101,37 @@ def simulate_game(num_rounds: int = 3, seed: int = 0, vs_human: bool = False) ->
                   f"(no positions recorded?)")
 
 
-if __name__ == "__main__":
-    # AI vs AI:
-    # simulate_game(num_rounds=3, seed=42, vs_human=False)
+def main() -> None:
+    parser = argparse.ArgumentParser(
+        description="Simulate Presidents of Virtue games."
+    )
+    parser.add_argument(
+        "-r", "--rounds",
+        type=int,
+        default=3,
+        help="Number of rounds to simulate (default: 3)",
+    )
+    parser.add_argument(
+        "-s", "--seed",
+        type=int,
+        default=42,
+        help="Random seed (default: 42)",
+    )
+    parser.add_argument(
+        "--human",
+        action="store_true",
+        help="Include a human-controlled player at the table.",
+    )
 
-    # Human vs bots (you control one seat at the table):
-    simulate_game(num_rounds=3, seed=42, vs_human=True)
+    args = parser.parse_args()
+
+    simulate_game(
+        num_rounds=args.rounds,
+        seed=args.seed,
+        vs_human=args.human,
+    )
+
+
+if __name__ == "__main__":
+    main()
 
