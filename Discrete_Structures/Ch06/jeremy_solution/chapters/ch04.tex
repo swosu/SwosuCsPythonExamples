@@ -96,10 +96,10 @@ rules.
 \subsection{Cards, Ranks, and Suits}
 
 At the top of the file we fix a rank order
-\texttt{['3',\ldots,'A','2']} and a list of suits.
+\texttt{['3', \ldots, 'A', '2']} and a list of suits.
 The \texttt{Card} dataclass bundles a rank and a suit together, and defines a
 small \texttt{\_\_str\_\_} method so that cards print as things like
-\texttt{7\char`♥} or \texttt{2\char`♣} instead of raw Python objects.
+$7\heart$ or $2\club$ instead of raw Python objects.
 
 The helper function \texttt{make\_deck()} builds a full standard deck by taking
 all rank--suit pairs. The function \texttt{rank\_index} lets us compare ranks
@@ -157,7 +157,7 @@ round of the game:
         \begin{enumerate}
           \item Resets per--round state on all players.
           \item Prints a strategy overview and starting hands.
-          \item Finds the starting player (the one holding \texttt{3\char`♣}).
+          \item Finds the starting player (the one holding $3\club$).
           \item Loops over tricks until all players have finished.
         \end{enumerate}
 \end{itemize}
@@ -198,14 +198,10 @@ This design is intentionally modular:
 
 For the Chapter~5 project, you were asked to design a universe, count its
 structures (permutations, combinations, stars and bars), and then connect it to
-Python experiments.\footnote{See the Chapter~5 project brief for the universe
-requirements.} :contentReference[oaicite:2]{index=2}
-Here, we go one step further: we have a live engine that can produce large play
-logs. Those logs become training data for simple models that try to predict,
-for example, which plays lead to better positions or which strategies tend to
-win from a given state. The example homework writeup for Chapter~6 uses the
-same Universe/Counting/Python/Probability/Reflection pattern in a
-DeathSpank--themed horse racing world. :contentReference[oaicite:3]{index=3}
+Python experiments. Here, we go one step further: we have a live engine that
+can produce large play logs. Those logs become training data for simple models
+that try to predict, for example, which plays lead to better positions or which
+strategies tend to win from a given state.
 
 \section{Next Steps}
 

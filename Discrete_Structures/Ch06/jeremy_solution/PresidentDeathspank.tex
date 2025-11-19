@@ -1,21 +1,34 @@
-\documentclass[12pt]{book} % Good for multi-chapter documents
+\documentclass[12pt]{book} % Multi-chapter document
 
 % ----------------------
-% Packages
+% Encoding, fonts, layout
 % ----------------------
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{lmodern}        % Better default font
+
 \usepackage{geometry}
 \geometry{margin=1in}
 
+% ----------------------
+% Math, graphics, links
+% ----------------------
 \usepackage{amsmath, amssymb, amsfonts}
 \usepackage{graphicx}       % For images
 \usepackage{hyperref}       % Clickable refs/TOC
 \usepackage{fancyhdr}       % Optional: custom headers/footers
 
+% ----------------------
+% Code listings
+% ----------------------
+\usepackage{xcolor}
 \usepackage{listings}
-\usepackage{xcolor}  % optional but helpful for keywords
+
+% Card suit helpers for normal text
+\newcommand{\heart}{\ensuremath\heartsuit}
+\newcommand{\diamondshape}{\ensuremath\diamondsuit}
+\newcommand{\club}{\ensuremath\clubsuit}
+\newcommand{\spade}{\ensuremath\spadesuit}
 
 \lstset{
     basicstyle=\ttfamily\small,
@@ -26,17 +39,26 @@
     frame=single,
     numbers=left,
     numberstyle=\tiny,
+    columns=fullflexible,
+    % Make the Unicode card suits and en dash work inside *code*
+    literate=
+        {♥}{{\ensuremath\heartsuit}}1
+        {♦}{{\ensuremath\diamondsuit}}1
+        {♣}{{\ensuremath\clubsuit}}1
+        {♠}{{\ensuremath\spadesuit}}1
+        {–}{{-}}1
 }
 
-
-% Paragraph formatting (tweak as you like)
+% ----------------------
+% Paragraph formatting
+% ----------------------
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.75em}
 
 % ----------------------
 % Title Info
 % ----------------------
-\title{President Deathspank: A Scrum hybrid}
+\title{President Deathspank: A Scrum Hybrid}
 \author{Jeremy Evert and ChatGPT}
 \date{\today}
 
@@ -52,17 +74,16 @@
 \mainmatter
 
 % ----------------------
-% Chapters (add as needed)
+% Chapters
 % ----------------------
-\include{chapters/ch01} % Intro / first chapter
-\include{chapters/ch02} % Uncomment as you create more
+\include{chapters/ch01}
+\include{chapters/ch02}
 \include{chapters/ch03}
 \include{chapters/ch04}
 \include{chapters/ch05}
 
 \backmatter
 
-% Example of back matter structure
 \chapter*{Bibliography}
 \addcontentsline{toc}{chapter}{Bibliography}
 
@@ -72,4 +93,3 @@
 \end{itemize}
 
 \end{document}
-

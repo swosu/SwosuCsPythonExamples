@@ -52,8 +52,9 @@ the engine:
   \item \textbf{\texttt{strategy}}: the short label for that player's strategy
         (\texttt{Cautious}, \texttt{Greedy}, \texttt{PairLover}, \texttt{ChaosRevolutionary}, \texttt{Random}, etc.).
   \item \textbf{\texttt{action}}: either \texttt{play} or \texttt{pass}.
-  \item \textbf{\texttt{cards\_played}}: a space--separated string like
-        \texttt{Q♥ Q♣ Q♦} or \texttt{2♠}. This is empty for passes.
+  \item \textbf{\texttt{cards\_played}}: a space--separated string naming the
+        cards played, for example ``Q of hearts, Q of clubs, Q of diamonds'' or
+        ``2 of spades''. This is empty for passes.
   \item \textbf{\texttt{hand\_size\_before}} and \textbf{\texttt{hand\_size\_after}}:
         how many cards the player held before and after that action.
   \item \textbf{\texttt{current\_size\_before}} and
@@ -127,8 +128,8 @@ def main():
     for row in rows[:5]:
         print(
             f"round {row['round']}, trick {row['trick']}, step {row['step']}: "
-            f"{row['player_name']} ({row['strategy']}) "
-            f"{row['action']} {row['cards_played']}"
+            f\"{row['player_name']} ({row['strategy']}) "
+            f\"{row['action']} {row['cards_played']}\"
         )
 
 if __name__ == "__main__":
