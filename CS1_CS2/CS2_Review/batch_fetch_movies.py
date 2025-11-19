@@ -1,11 +1,11 @@
 """
 batch_fetch_movies.py
 
-Batch harvester for OMDb.
+Batch harvester for OMDb using 2-character search terms.
 
 Goal:
-- Systematically walk through "prefix" searches (0-9, a-z)
-- For each prefix, walk pages 1..N (up to OMDb's 100-page limit)
+- Systematically walk through "terms" like 'aa', 'ab', ..., 'zz', plus digits
+- For each term, walk pages 1..N (up to OMDb's 100-page limit)
 - For each search hit, fetch FULL details by imdbID
 - Append results to movies_batch.csv
 - Remember where we left off using batch_state.json
@@ -15,7 +15,7 @@ Usage (typical, once per day):
 
     python batch_fetch_movies.py
 
-You can also override the daily budget:
+Optionally override the daily request budget:
 
     python batch_fetch_movies.py 500
 """
@@ -28,6 +28,7 @@ from pathlib import Path
 from typing import Any
 
 import requests
+
 
 # --- CONFIG -------------------------------------------------------------
 
@@ -42,48 +43,64 @@ STATE_FILE = "batch_state.json"
 DEFAULT_DAILY_BUDGET = 800  # total HTTP requests (search + detail)
 
 # OMDb returns up to 10 results per search page, and allows pages 1..100.
-MAX_PAGES_PER_PREFIX = 100
+MAX_PAGES_PER_TERM = 100
 
-# We will iterate through these search prefixes in order.
-PREFIXES = list("0123456789abcdefghijklmnopqrstuvwxyz")
+# Characters we use to build our 2-character search terms.
+SEARCH_CHARS = "0123456789abcdefghijklmnopqrstuvwxyz"
 
+# All 2-character combinations: '00', '01', ..., '0a', ..., 'aa', 'ab', ..., 'zz'
+SEARCH_TERMS = [
+    a + b for a in SEARCH_CHARS for b in SEARCH_CHARS
+]
 
-# --- HELPERS ------------------------------------------------------------
 
 class DailyLimitReached(Exception):
     """Raised when OMDb reports a daily request limit issue."""
     pass
 
 
-def search_movies_page(query: str, page: int) -> list[dict[str, Any]]:
+# --- HELPERS ------------------------------------------------------------
+
+def search_movies_page(term: str, page: int) -> tuple[str, list[dict[str, Any]]]:
     """
     Use the OMDb 's' search parameter to get ONE PAGE of results.
-    Returns a list of basic movie dicts from the 'Search' field.
-    Raises DailyLimitReached if OMDb says we've hit a request limit.
+
+    Returns:
+        status: 'ok', 'none', or 'too_many'
+        results: list of basic movie dicts from the 'Search' field.
+
+    Raises:
+        DailyLimitReached if OMDb says we've hit a request limit.
     """
     params = {
         "apikey": API_KEY.strip(),
-        "s": query,
+        "s": term,
         "type": "movie",
         "page": page,
     }
 
-    print(f"[OMDb] Search '{query}' page {page}...")
+    print(f"[OMDb] Search '{term}' page {page}...")
     response = requests.get(BASE_URL, params=params, timeout=10)
     data = response.json()
 
     if data.get("Response") == "False":
         error_msg = (data.get("Error") or "").lower()
         print(f"[OMDb] Search error: {data.get('Error')}")
+
+        # Daily limit?
         if "limit" in error_msg and "request" in error_msg:
-            # e.g. "Request limit reached!"
             raise DailyLimitReached(data.get("Error"))
-        # Other errors: "Movie not found!", "Too many results.", etc.
-        return []
+
+        # Too many results for this term; we treat this as 'too_many'
+        if "too many results" in error_msg:
+            return "too_many", []
+
+        # Otherwise, just "Movie not found!" etc.
+        return "none", []
 
     results = data.get("Search", [])
     print(f"[OMDb] Page {page} returned {len(results)} results.")
-    return results
+    return "ok", results
 
 
 def fetch_movie_details(imdb_id: str) -> dict[str, Any] | None:
@@ -216,8 +233,8 @@ def save_movies(csv_path: Path, movies: list[dict[str, Any]]) -> None:
 def load_state(state_path: Path) -> tuple[int, int]:
     """
     Load batch state:
-        prefix_index: index into PREFIXES
-        page:         current page for that prefix
+        term_index: index into SEARCH_TERMS
+        page:       current page for that term
 
     If no state exists yet, start at (0, 1).
     """
@@ -227,25 +244,25 @@ def load_state(state_path: Path) -> tuple[int, int]:
     try:
         with state_path.open(encoding="utf-8") as f:
             data = json.load(f)
-        prefix_index = int(data.get("prefix_index", 0))
+        term_index = int(data.get("term_index", 0))
         page = int(data.get("page", 1))
-        return prefix_index, page
+        return term_index, page
     except Exception as e:
         print(f"[State] Failed to load state ({e}), starting from beginning.")
         return 0, 1
 
 
-def save_state(state_path: Path, prefix_index: int, page: int) -> None:
+def save_state(state_path: Path, term_index: int, page: int) -> None:
     """
     Save where we left off so the next run can continue.
     """
     data = {
-        "prefix_index": prefix_index,
+        "term_index": term_index,
         "page": page,
     }
     with state_path.open("w", encoding="utf-8") as f:
         json.dump(data, f, indent=2)
-    print(f"[State] Saved state: prefix_index={prefix_index}, page={page}")
+    print(f"[State] Saved state: term_index={term_index}, page={page}")
 
 
 # --- MAIN BATCH LOGIC ---------------------------------------------------
@@ -267,11 +284,11 @@ def main():
     state_path = Path(STATE_FILE)
 
     # Load state: where did we leave off last run?
-    prefix_index, page = load_state(state_path)
-    print(f"[State] Starting at prefix_index={prefix_index}, page={page}")
+    term_index, page = load_state(state_path)
+    print(f"[State] Starting at term_index={term_index}, page={page}")
 
-    if prefix_index >= len(PREFIXES):
-        print("[Info] We've already exhausted all prefixes. Nothing more to do.")
+    if term_index >= len(SEARCH_TERMS):
+        print("[Info] We've already exhausted all search terms. Nothing more to do.")
         return
 
     existing_ids = load_existing_ids(csv_path)
@@ -281,22 +298,29 @@ def main():
     detailed_movies: list[dict[str, Any]] = []
 
     try:
-        while requests_used < daily_budget and prefix_index < len(PREFIXES):
-            prefix = PREFIXES[prefix_index]
-            if page > MAX_PAGES_PER_PREFIX:
-                # Move to next prefix
-                prefix_index += 1
+        while requests_used < daily_budget and term_index < len(SEARCH_TERMS):
+            term = SEARCH_TERMS[term_index]
+
+            if page > MAX_PAGES_PER_TERM:
+                # Move to next term
+                term_index += 1
                 page = 1
                 continue
 
-            # --- Search page for current prefix ---
-            search_results = search_movies_page(prefix, page)
+            # --- Search page for current term ---
+            status, search_results = search_movies_page(term, page)
             requests_used += 1  # one HTTP request used
 
-            if not search_results:
-                # No more results for this prefix; move on.
-                print(f"[OMDb] No more results for prefix '{prefix}'.")
-                prefix_index += 1
+            if status == "too_many":
+                print(f"[OMDb] Term '{term}' is too broad. Skipping this term.")
+                term_index += 1
+                page = 1
+                continue
+
+            if status != "ok" or not search_results:
+                # No more results for this term; move on.
+                print(f"[OMDb] No more results for term '{term}'.")
+                term_index += 1
                 page = 1
                 continue
 
@@ -316,7 +340,7 @@ def main():
                     continue
 
                 print(
-                    f"[Detail] Prefix '{prefix}' page {page} "
+                    f"[Detail] Term '{term}' page {page} "
                     f"item {i}/{total_results}: {imdb_id}"
                 )
 
@@ -326,11 +350,10 @@ def main():
                 if details:
                     detailed_movies.append(details)
                     existing_ids.add(imdb_id)
-
                     # Be polite to the API
                     time.sleep(0.2)
 
-            # Move on to next page for this prefix
+            # Move on to next page for this term
             page += 1
 
     except DailyLimitReached as e:
@@ -348,7 +371,7 @@ def main():
             print("[Local] No new movies to save this run.")
 
         # Save state for next run
-        save_state(state_path, prefix_index, page)
+        save_state(state_path, term_index, page)
 
 
 if __name__ == "__main__":
