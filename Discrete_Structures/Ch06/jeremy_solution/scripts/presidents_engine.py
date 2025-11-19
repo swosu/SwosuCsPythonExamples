@@ -4,7 +4,7 @@ Core engine for the 'Presidents of Virtue' card game.
 
 Contains:
 - Card + deck utilities
-- Strategy classes (with human-readable descriptions)
+- Strategy base class (concrete strategies live in pov_strategies.py)
 - Player dataclass
 - Round engine (PresidentsOfVirtueRound) that:
   * prints table state
@@ -38,13 +38,13 @@ class Card:
 
 
 # ---------------------------------------------------------------------------
-# Player + Strategies
+# Player + Strategy base
 # ---------------------------------------------------------------------------
 
 @dataclass
 class Player:
     name: str
-    strategy: "Strategy"
+    strategy: "Strategy"   # concrete strategies come from pov_strategies
     hand: List[Card] = field(default_factory=list)
     finished: bool = False
     finish_position: Optional[int] = None
@@ -56,7 +56,7 @@ class Player:
 
 
 class Strategy:
-    """Base class for NPC strategies."""
+    """Base class that all strategies (NPC + human) should subclass."""
 
     def description(self) -> str:
         """One-line explanation for humans."""
@@ -74,121 +74,14 @@ class Strategy:
         rank_order: List[str],
         revolution: bool,
     ) -> Optional[List[Card]]:
+        """
+        Must be implemented by subclasses.
+
+        Returns:
+            - a list of Card objects to play, OR
+            - None to indicate PASS.
+        """
         raise NotImplementedError
-
-
-class CautiousStrategy(Strategy):
-    """Lowest legal play, avoids 2s if possible."""
-
-    def description(self) -> str:
-        return ("Cautious: usually plays the smallest legal set and "
-                "tries NOT to spend 2s (Justice Bursts) unless forced.")
-
-    def choose_play(self, player, legal_plays, can_lead, rank_order, revolution):
-        if not legal_plays:
-            return None
-
-        def play_key(play: List[Card]):
-            ranks = [rank_index(c.rank, rank_order) for c in play]
-            return (len(play), max(ranks))
-
-        legal_sorted = sorted(legal_plays, key=play_key)
-        # Avoid any play containing a 2 if possible
-        for play in legal_sorted:
-            if all(c.rank != '2' for c in play):
-                return play
-        return legal_sorted[0]
-
-
-class GreedyStrategy(Strategy):
-    """Highest legal play."""
-
-    def description(self) -> str:
-        return ("Greedy: tries to play the biggest, highest-ranked legal set "
-                "to seize control of the table.")
-
-    def choose_play(self, player, legal_plays, can_lead, rank_order, revolution):
-        if not legal_plays:
-            return None
-
-        def play_key(play: List[Card]):
-            ranks = [rank_index(c.rank, rank_order) for c in play]
-            return (len(play), max(ranks))
-
-        return max(legal_plays, key=play_key)
-
-
-class PairLoverStrategy(Strategy):
-    """Prefers multi-card plays (pairs, triples, quads) over singles."""
-
-    def description(self) -> str:
-        return ("PairLover: prefers to play pairs/triples/quads when possible, "
-                "even if singles could also be played.")
-
-    def choose_play(self, player, legal_plays, can_lead, rank_order, revolution):
-        if not legal_plays:
-            return None
-
-        multi = [p for p in legal_plays if len(p) >= 2]
-        if multi:
-            def play_key(play: List[Card]):
-                ranks = [rank_index(c.rank, rank_order) for c in play]
-                return (len(play), max(ranks))
-            # Smaller multi-sets, lower rank first
-            return min(multi, key=play_key)
-
-        # Fallback: lowest single
-        def single_key(play: List[Card]):
-            ranks = [rank_index(c.rank, rank_order) for c in play]
-            return max(ranks)
-
-        return min(legal_plays, key=single_key)
-
-
-class ChaosRevolutionaryStrategy(Strategy):
-    """Loves bombs and revolutions: tries to play 4-of-a-kind or 2s."""
-
-    def description(self) -> str:
-        return ("ChaosRevolutionary: actively looks for Bacon Revolutions "
-                "(four-of-a-kind) and Justice Bursts (2s) to flip the table.")
-
-    def choose_play(self, player, legal_plays, can_lead, rank_order, revolution):
-        if not legal_plays:
-            return None
-
-        bombs: List[List[Card]] = []
-        for play in legal_plays:
-            ranks = {c.rank for c in play}
-            if len(play) == 4 and len(ranks) == 1:
-                bombs.append(play)  # Bacon Revolution
-            elif any(c.rank == '2' for c in play):
-                bombs.append(play)  # Justice Burst
-
-        if bombs:
-            # Prefer bigger bombs (quads over just throwing a single 2)
-            def bomb_key(play: List[Card]):
-                return len(play)
-            return max(bombs, key=bomb_key)
-
-        # Otherwise greedy
-        def play_key(play: List[Card]):
-            ranks = [rank_index(c.rank, rank_order) for c in play]
-            return (len(play), max(ranks))
-
-        return max(legal_plays, key=play_key)
-
-
-class RandomStrategy(Strategy):
-    """Picks any legal play at random."""
-
-    def description(self) -> str:
-        return ("Random: chooses uniformly among all legal plays. "
-                "Pure chaos, no deeper plan.")
-
-    def choose_play(self, player, legal_plays, can_lead, rank_order, revolution):
-        if not legal_plays:
-            return None
-        return random.choice(legal_plays)
 
 
 # ---------------------------------------------------------------------------
@@ -216,6 +109,7 @@ def group_by_rank(cards: List[Card]) -> Dict[str, List[Card]]:
 
 
 def generate_leads(hand: List[Card]) -> List[List[Card]]:
+    """Generate all legal leading plays from a given hand."""
     grouped = group_by_rank(hand)
     plays: List[List[Card]] = []
     for rank, cards in grouped.items():
@@ -232,6 +126,7 @@ def generate_responses(
     current_rank: str,
     rank_order: List[str],
 ) -> List[List[Card]]:
+    """Generate all responses that beat the current table play."""
     grouped = group_by_rank(hand)
     plays: List[List[Card]] = []
     current_idx = rank_index(current_rank, rank_order)

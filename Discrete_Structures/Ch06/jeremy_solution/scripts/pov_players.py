@@ -1,42 +1,57 @@
 # scripts/pov_players.py
 """
-Player factory for Presidents of Virtue.
-
-Provides:
-- create_oklahoma_players(): returns a list of 5 Player objects
-  with western-Oklahoma-flavored names and different strategies.
+Player factory functions for Presidents of Virtue.
 """
 
-import random
 from typing import List
 
-from presidents_engine import (
-    Player,
-    GreedyStrategy,
+from presidents_engine import Player
+from pov_strategies import (
     CautiousStrategy,
+    GreedyStrategy,
     PairLoverStrategy,
     ChaosRevolutionaryStrategy,
     RandomStrategy,
+    SmartGreedyStrategy,
+    HumanStrategy,
 )
 
 
 def create_oklahoma_players() -> List[Player]:
-    name_pool = [
-        "Cody", "Savannah", "Rhett", "Kaylee", "Tyler",
-        "Maggie", "Blake", "Cheyenne", "Jace", "Hadley"
-    ]
-    chosen_names = random.sample(name_pool, 5)
-
-    strategies = [
-        GreedyStrategy(),
-        CautiousStrategy(),
-        PairLoverStrategy(),
-        ChaosRevolutionaryStrategy(),
-        RandomStrategy(),
+    """
+    Default AI-only table with familiar western Oklahoma names.
+    """
+    return [
+        Player("Savannah", GreedyStrategy()),
+        Player("Cody", CautiousStrategy()),
+        Player("Tyler", PairLoverStrategy()),
+        Player("Hadley", ChaosRevolutionaryStrategy()),
+        Player("Blake", RandomStrategy()),
     ]
 
-    players: List[Player] = []
-    for name, strat in zip(chosen_names, strategies):
-        players.append(Player(name=name, strategy=strat))
+
+def create_oklahoma_with_human(
+    human_name: str = "Jeremy",
+    human_position: int = 0,
+    use_smart_bot: bool = True,
+) -> List[Player]:
+    """
+    Same cast, but one of them is controlled by a human.
+
+    human_position is the index (0–4) where the human sits.
+    Optionally replaces one bot with a SmartGreedyStrategy.
+    """
+    bots = [
+        Player("Savannah", GreedyStrategy()),
+        Player("Cody", SmartGreedyStrategy() if use_smart_bot else CautiousStrategy()),
+        Player("Tyler", PairLoverStrategy()),
+        Player("Hadley", ChaosRevolutionaryStrategy()),
+        Player("Blake", RandomStrategy()),
+    ]
+
+    # Replace the chosen seat with a human
+    players = bots
+    human_player = Player(human_name, HumanStrategy())
+    players[human_position] = human_player
     return players
 
