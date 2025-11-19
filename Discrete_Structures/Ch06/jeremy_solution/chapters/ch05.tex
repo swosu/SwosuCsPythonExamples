@@ -1,0 +1,341 @@
+\chapter{Reading the Presidents of Virtue Log Like a Data Scientist}
+\label{ch:pov-data}
+
+In the previous chapters we designed the game universe, implemented the
+\texttt{PresidentsOfVirtueRound} engine, and wired up strategies and simulations.
+Now we do something deliciously modern: we treat the play log as a
+\emph{dataset}.
+
+This chapter is about reading the CSV file
+\texttt{presidents\_of\_virtue\_plays.csv} and asking questions like a
+data scientist:
+
+\begin{itemize}
+  \item Which strategies tend to finish earlier?
+  \item How often do players trigger a Justice Burst?
+  \item What happens to hand sizes over the course of a round?
+\end{itemize}
+
+We are not trying to build a full machine learning model (yet), but we \emph{are}
+trying to get comfortable with turning a log of events into structured questions
+and answers.
+
+\section{Where the CSV Comes From}
+
+When you run the simulation script,
+\begin{lstlisting}[language=bash]
+cd SwosuCsPythonExamples/Discrete_Structures/Ch06/jeremy_solution
+python scripts/simulate_game.py
+\end{lstlisting}
+it will print several rounds of game play to the console and then write a file:
+\begin{center}
+  \texttt{presidents\_of\_virtue\_plays.csv}
+\end{center}
+
+Each row in this CSV represents \emph{one action} taken by one player during one
+trick of one round. It includes both game state and labels that will be useful
+for statistics and machine learning.
+
+\section{What the Columns Mean}
+
+Here is a quick tour of the columns in the log; these names come directly from
+the engine:
+
+\begin{itemize}
+  \item \textbf{\texttt{round}}: which round of the simulation this action
+        belongs to (1, 2, 3, \dots).
+  \item \textbf{\texttt{trick}}: which trick within the round (starts at 1 each round).
+  \item \textbf{\texttt{step}}: the order of actions inside a trick
+        (1 = first action in that trick).
+  \item \textbf{\texttt{player\_name}}: the seat at the table (\texttt{Cody},
+        \texttt{Savannah}, \dots).
+  \item \textbf{\texttt{strategy}}: the short label for that player's strategy
+        (\texttt{Cautious}, \texttt{Greedy}, \texttt{PairLover}, \texttt{ChaosRevolutionary}, \texttt{Random}, etc.).
+  \item \textbf{\texttt{action}}: either \texttt{play} or \texttt{pass}.
+  \item \textbf{\texttt{cards\_played}}: a space--separated string like
+        \texttt{Q♥ Q♣ Q♦} or \texttt{2♠}. This is empty for passes.
+  \item \textbf{\texttt{hand\_size\_before}} and \textbf{\texttt{hand\_size\_after}}:
+        how many cards the player held before and after that action.
+  \item \textbf{\texttt{current\_size\_before}} and
+        \textbf{\texttt{current\_rank\_before}}: what the table looked like
+        \emph{before} this action (for example, ``there is a pair of 8s out'').
+  \item \textbf{\texttt{is\_lead}}: \texttt{True} if this action started a new
+        trick (a lead), \texttt{False} otherwise.
+  \item \textbf{\texttt{is\_justice\_burst}}: \texttt{True} if the player used a
+        2 to slam the table, clear the trick, and take back control.
+  \item \textbf{\texttt{is\_revolution\_trigger}}: \texttt{True} if this play
+        was a Bacon Revolution (four of a kind) that flipped the rank order.
+  \item \textbf{\texttt{revolution\_state\_after}}: \texttt{True} when the
+        round is currently in the ``revolution'' rank order, \texttt{False}
+        otherwise.
+  \item \textbf{\texttt{finish\_position}}: when this row was written we also
+        tagged each player with their final finishing place (1 for first, 2 for
+        second, etc.). This is constant for a given player within a given round.
+  \item \textbf{\texttt{ended\_on\_bomb}}: whether the player ended the round
+        by playing a 2 (a bomb).
+\end{itemize}
+
+The most important idea is: \textbf{each row is one event in time}. If we sort
+by \texttt{(round, trick, step)}, we see the game unfold action by action.
+
+\section{First Contact: Opening the CSV}
+
+There are two very common ways to peek at a CSV:
+
+\begin{enumerate}
+  \item In a spreadsheet program (Excel, LibreOffice, Google Sheets).
+  \item In Python, using either the built--in \texttt{csv} module or a library
+        like \texttt{pandas}.
+\end{enumerate}
+
+\subsection{Spreadsheet View}
+
+From your file manager or terminal, you can open the CSV directly in a
+spreadsheet tool. This is great for a quick visual scan:
+
+\begin{itemize}
+  \item Filter by \texttt{player\_name} to see what one player did.
+  \item Filter by \texttt{action==play} to see only plays (no passes).
+  \item Sort by \texttt{finish\_position} to see which strategies are winning.
+\end{itemize}
+
+For deeper work, though, we want code.
+
+\subsection{Python View with \texttt{csv}}
+
+Here is a small, self--contained example script that just prints the first
+few rows and counts them. Save this as \texttt{scripts/pov\_peek.py}:
+
+\begin{lstlisting}[language=Python]
+import csv
+from pathlib import Path
+
+def main():
+    # Assume we run from the jeremy_solution folder
+    csv_path = Path("presidents_of_virtue_plays.csv")
+
+    if not csv_path.exists():
+        print("CSV not found. Did you run simulate_game.py first?")
+        return
+
+    with csv_path.open(newline="", encoding="utf-8") as f:
+        reader = csv.DictReader(f)
+        rows = list(reader)
+
+    print(f"Loaded {len(rows)} actions from {csv_path}.\n")
+    print("First 5 actions:")
+    for row in rows[:5]:
+        print(
+            f"round {row['round']}, trick {row['trick']}, step {row['step']}: "
+            f"{row['player_name']} ({row['strategy']}) "
+            f"{row['action']} {row['cards_played']}"
+        )
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+
+Run it from the \texttt{jeremy\_solution} directory:
+
+\begin{lstlisting}[language=bash]
+python scripts/pov_peek.py
+\end{lstlisting}
+
+If that works, you now have a tiny analysis pipeline: simulation $\rightarrow$
+CSV $\rightarrow$ Python $\rightarrow$ printed insight.
+
+\section{Exercise 1: Warm--Up Data Slurp}
+
+\textbf{Goal:} practice reading the CSV and extracting basic stats.
+
+\subsection*{Task A: Count Actions by Strategy}
+
+Write a Python script \texttt{pov\_count\_actions.py} that:
+
+\begin{enumerate}
+  \item Reads \texttt{presidents\_of\_virtue\_plays.csv} with
+        \texttt{csv.DictReader}.
+  \item Builds a dictionary mapping:
+        \[
+        \text{strategy name} \longmapsto \text{number of actions (rows)}
+        \]
+  \item Prints each strategy and its total number of actions.
+\end{enumerate}
+
+You might see output like:
+\begin{verbatim}
+Cautious: 130 actions
+Greedy: 128 actions
+PairLover: 125 actions
+ChaosRevolutionary: 132 actions
+Random: 129 actions
+\end{verbatim}
+
+\subsection*{Task B: Count Plays vs Passes}
+
+Extend your script or write a second one that counts how many actions were
+\texttt{play} and how many were \texttt{pass}. Then break it down by strategy:
+\[
+(\text{strategy}, \text{action}) \longmapsto \text{count}.
+\]
+
+Questions to reflect on:
+
+\begin{itemize}
+  \item Which strategy passes the most?
+  \item Does this match your intuition from reading the strategy descriptions?
+\end{itemize}
+
+\section{Exercise 2: Strategy Scorecards}
+
+\textbf{Goal:} connect the \texttt{finish\_position} field to the strategies.
+
+Each player appears many times in the log during a round, but their
+\texttt{finish\_position} is the same in all those rows for that round. We can
+treat \texttt{finish\_position} as a label for that (player, round) combo.
+
+Write a Python script \texttt{pov\_strategy\_scorecard.py} that:
+
+\begin{enumerate}
+  \item Reads the CSV with \texttt{DictReader}.
+  \item Builds a mapping from:
+  \[
+    (\text{round}, \text{player\_name}) \longmapsto
+       (\text{strategy}, \text{finish\_position})
+  \]
+     The simplest way is to only record a (round, player) pair the \emph{first}
+     time you see it.
+  \item After reading all rows, build a table for each strategy:
+  \[
+     \text{strategy} \longmapsto
+     \{\text{finish positions seen}\}.
+  \]
+  \item For each strategy, compute:
+    \begin{itemize}
+      \item how many rounds it appeared in,
+      \item the average finish position
+            (lower is better: 1.0 is best),
+      \item how many times it finished first.
+    \end{itemize}
+\end{enumerate}
+
+For example, your script might print something like:
+\begin{verbatim}
+Cautious          : avg finish 2.33 over 3 rounds, 1 wins
+Greedy            : avg finish 3.00 over 3 rounds, 0 wins
+PairLover         : avg finish 1.67 over 3 rounds, 2 wins
+ChaosRevolutionary: avg finish 3.67 over 3 rounds, 0 wins
+Random            : avg finish 2.33 over 3 rounds, 1 wins
+\end{verbatim}
+
+Your numbers will depend on how many rounds you simulated.
+
+\subsection*{Reflection}
+
+\begin{itemize}
+  \item Which strategies seem strong in this small sample?
+  \item Do you trust the results yet, or do you feel like you need more data?
+  \item What would happen if you changed the strategies slightly and re-ran?
+\end{itemize}
+
+This is a tiny version of an experiment: we are estimating performance from
+sampled games, and sampling error is very real.
+
+\section{Exercise 3: Justice Bursts and Bomb Endings}
+
+\textbf{Goal:} use the special flags \texttt{is\_justice\_burst} and
+\texttt{ended\_on\_bomb} to study dramatic events in the game.
+
+\subsection*{Task A: How Often Do Strategies Trigger Justice Bursts?}
+
+Write a script \texttt{pov\_justice\_stats.py} that:
+
+\begin{enumerate}
+  \item Reads the CSV.
+  \item For each strategy, counts how many actions had
+        \texttt{is\_justice\_burst == True}.
+  \item Optionally, also compute the fraction:
+        \[
+           \frac{\text{\# Justice Bursts}}{\text{\# actions for that strategy}}.
+        \]
+\end{enumerate}
+
+Questions:
+\begin{itemize}
+  \item Does the Chaos/Revolution strategy really cause more Justice Bursts?
+  \item Do cautious players ever use them, or do they mostly avoid them?
+\end{itemize}
+
+\subsection*{Task B: Who Ends on a Bomb?}
+
+The column \texttt{ended\_on\_bomb} is associated with the \emph{final play}
+that took a player out. Since we carried that label into every row for that
+(player, round), we can still extract it from the CSV.
+
+Extend your analysis to compute, for each strategy:
+
+\begin{itemize}
+  \item how many rounds that strategy ended on a bomb, and
+  \item the fraction of its rounds that ended on a bomb.
+\end{itemize}
+
+You might discover that some strategies rarely end on bombs (they burn their 2s
+earlier) while others like to hoard them until the final punch.
+
+\section{Optional: Using \texttt{pandas}}
+
+If you are comfortable installing extra libraries, you can also use the
+\texttt{pandas} library to treat the CSV as a DataFrame. This often makes
+grouping and aggregation more concise.
+
+A minimal example (saved as \texttt{scripts/pov\_pandas\_demo.py}):
+
+\begin{lstlisting}[language=Python]
+import pandas as pd
+
+def main():
+    df = pd.read_csv("presidents_of_virtue_plays.csv")
+
+    print(df.head())  # first 5 rows
+
+    # Count actions by strategy
+    print("\nActions per strategy:")
+    print(df["strategy"].value_counts())
+
+    # Justice bursts per strategy
+    jb = df[df["is_justice_burst"] == True]
+    print("\nJustice bursts per strategy:")
+    print(jb["strategy"].value_counts())
+
+if __name__ == "__main__":
+    main()
+\end{lstlisting}
+
+If you go this route, be sure you can explain \emph{what} each line is doing in
+plain language. The point of this chapter is not to memorize pandas, but to get
+used to treating a play log as a structured, countable universe.
+
+\section{Big Picture}
+
+By this point you have:
+
+\begin{itemize}
+  \item designed a combinatorial universe (the card game rules),
+  \item implemented it as a Python engine,
+  \item generated play logs as CSV,
+  \item and started to ask quantitative questions about strategies and outcomes.
+\end{itemize}
+
+This is exactly the kind of pipeline that many real data scientists and machine
+learning engineers use:
+
+\begin{center}
+  \textbf{Universe / Rules $\rightarrow$ Simulation / Logs $\rightarrow$
+  CSV / Tables $\rightarrow$ Models / Decisions}
+\end{center}
+
+In the next steps of your journey, you can plug this data into more advanced
+models, or design entirely new universes and repeat the experiment. For now,
+enjoy the feeling that you can read a game log like a scientist, not just a
+spectator.
+

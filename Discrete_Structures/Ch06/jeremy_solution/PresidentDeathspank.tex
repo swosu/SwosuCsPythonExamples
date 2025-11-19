@@ -14,6 +14,21 @@
 \usepackage{hyperref}       % Clickable refs/TOC
 \usepackage{fancyhdr}       % Optional: custom headers/footers
 
+\usepackage{listings}
+\usepackage{xcolor}  % optional but helpful for keywords
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\bfseries,
+    commentstyle=\itshape,
+    breaklines=true,
+    showstringspaces=false,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+}
+
+
 % Paragraph formatting (tweak as you like)
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.75em}
@@ -42,6 +57,8 @@
 \include{chapters/ch01} % Intro / first chapter
 \include{chapters/ch02} % Uncomment as you create more
 \include{chapters/ch03}
+\include{chapters/ch04}
+\include{chapters/ch05}
 
 \backmatter
 

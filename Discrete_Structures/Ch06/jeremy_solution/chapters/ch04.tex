@@ -1,0 +1,229 @@
+\chapter{Presidents of Virtue: Engine, Code, and Experiments}
+\label{ch:presidents-engine}
+
+In this chapter we step behind the curtain and look at the actual Python code that
+drives the \emph{Presidents of Virtue} simulations. This is our concrete instance
+of the ``Design Your Own Universe'' project: we have a world (the card game), a set
+of rules, and a Python engine that can both \emph{play} the game and \emph{generate
+data} for later analysis or machine learning.
+
+\section{Getting the Code and Running It}
+
+The code for this chapter lives in the course Git repository under:
+\begin{center}
+\texttt{Discrete\_Structures/Ch06/jeremy\_solution/}
+\end{center}
+
+A typical workflow for a student at a terminal:
+
+\subsection*{Step 1: Clone the Repository}
+
+\begin{lstlisting}[language=bash]
+# Replace this with the URL your instructor posts on Canvas
+git clone <REPO-URL-FOR-SwosuCsPythonExamples>.git
+
+cd SwosuCsPythonExamples/Discrete_Structures/Ch06/jeremy_solution
+\end{lstlisting}
+
+\subsection*{Step 2: Build the LaTeX Book (Optional but Recommended)}
+
+\begin{lstlisting}[language=bash]
+# From the jeremy_solution directory:
+make
+# This should produce PresidentDeathspank.pdf
+\end{lstlisting}
+
+\subsection*{Step 3: Run the Python Engine}
+
+The Python scripts live in the \texttt{scripts/} subdirectory:
+
+\begin{lstlisting}[language=bash]
+cd scripts
+
+# Sanity check for the engine
+python test_presidents_engine.py
+
+# Run several rounds and write a CSV play log
+python simulate_game.py
+\end{lstlisting}
+
+If everything is wired up correctly, you should see console output describing the
+rounds and a file \texttt{presidents\_of\_virtue\_plays.csv} created in the project
+folder. This CSV can be used later for statistics, visualizations, or machine learning
+models that try to learn good play from the log data.
+
+\section{File Layout}
+
+For this chapter, the important files are:
+
+\begin{itemize}
+  \item \texttt{scripts/presidents\_engine.py} \\
+        Core card game engine: cards, players, strategies (via the base
+        class), and the \texttt{PresidentsOfVirtueRound} class that simulates a
+        single round and logs every action.
+  \item \texttt{scripts/pov\_strategies.py} \\
+        Concrete strategy classes (Cautious, Greedy, Chaos, Random, Human, \dots)
+        that subclass the common \texttt{Strategy} base.
+  \item \texttt{scripts/pov\_players.py} \\
+        Helper functions to build a table of named players with chosen strategies.
+  \item \texttt{scripts/simulate\_game.py} \\
+        Top--level script: chooses players, runs multiple rounds, prints summaries,
+        and writes the CSV play log.
+  \item \texttt{scripts/pov\_logging.py} \\
+        Utilities for turning the in--memory play log into a CSV on disk.
+\end{itemize}
+
+In this chapter we focus on \texttt{presidents\_engine.py}, because that is where the
+core combinatorial universe is defined.
+
+\section{Core Engine Listing}
+
+Below is the complete source for the engine. It is included directly from the
+course repository, so if the code changes and you rebuild the book, the PDF
+will always show the current version.
+
+\lstinputlisting[language=Python,caption={Core engine for Presidents of Virtue},
+                 label={lst:presidents-engine}]
+{scripts/presidents_engine.py}
+
+\section{Guided Tour of the Engine}
+
+This section walks through the major moving parts of
+Listing~\ref{lst:presidents-engine}. The goal is that every student can explain,
+in words, what each block of code is doing and how it connects to the game
+rules.
+
+\subsection{Cards, Ranks, and Suits}
+
+At the top of the file we fix a rank order
+\texttt{['3',\ldots,'A','2']} and a list of suits.
+The \texttt{Card} dataclass bundles a rank and a suit together, and defines a
+small \texttt{\_\_str\_\_} method so that cards print as things like
+\texttt{7\char`♥} or \texttt{2\char`♣} instead of raw Python objects.
+
+The helper function \texttt{make\_deck()} builds a full standard deck by taking
+all rank--suit pairs. The function \texttt{rank\_index} lets us compare ranks
+according to the current ordering (which flips during a ``Bacon Revolution'').
+
+\subsection{Players and the Strategy Base Class}
+
+The \texttt{Player} dataclass represents one seat at the table. It has:
+\begin{itemize}
+  \item a \textbf{name} (for readable logs),
+  \item a \textbf{strategy} object that decides what to play,
+  \item a list of \textbf{cards} in \texttt{hand},
+  \item flags for whether the player has \textbf{finished} and whether they
+        \textbf{ended on a bomb} (their last play contained a 2).
+\end{itemize}
+
+The \texttt{Strategy} base class is intentionally simple: it provides a
+human--friendly \texttt{description()} and a short label
+(\texttt{short\_label()}), and it requires subclasses to implement a single
+method:
+\begin{quote}
+\texttt{choose\_play(player, legal\_plays, can\_lead, rank\_order, revolution)}
+\end{quote}
+This method returns either a list of \texttt{Card} objects (the chosen play) or
+\texttt{None} to indicate a pass. Human strategies and bot strategies both plug
+into this same interface.
+
+\subsection{Legal Moves: Leads and Responses}
+
+Two helper functions generate all legal plays from a given hand:
+
+\begin{description}
+  \item[\texttt{generate\_leads(hand)}]
+    Used when a player is \emph{leading} a trick. It groups cards by rank and
+    then creates all singletons, pairs, triples, or quads for each rank except
+    2s (you may not lead with 2s).
+  \item[\texttt{generate\_responses(hand, current\_size, current\_rank, rank\_order)}]
+    Used when the table already has a play. It groups the hand by rank and
+    keeps only sets that (a) have the same size as the current play and (b)
+    strictly beat the current rank according to \texttt{rank\_order}.
+\end{description}
+
+This separates \emph{rules} (what is legal) from \emph{strategy}
+(which of the legal plays we choose).
+
+\subsection{The Round Engine}
+
+The class \texttt{PresidentsOfVirtueRound} encapsulates the logic for a single
+round of the game:
+
+\begin{itemize}
+  \item The constructor stores the players, the round index, and sets up the
+        initial rank order and revolution flag.
+  \item The public method \texttt{run()}:
+        \begin{enumerate}
+          \item Resets per--round state on all players.
+          \item Prints a strategy overview and starting hands.
+          \item Finds the starting player (the one holding \texttt{3\char`♣}).
+          \item Loops over tricks until all players have finished.
+        \end{enumerate}
+\end{itemize}
+
+Within each trick, the engine:
+\begin{enumerate}
+  \item Tracks whose turn it is and what the current table play looks like
+        (size and rank).
+  \item Asks the current player's strategy for a move via \texttt{choose\_play}.
+  \item Either logs a \textbf{pass} or removes cards from the player's hand and
+        adds them to the table pile.
+  \item Checks for special events:
+        \begin{itemize}
+          \item \textbf{Bacon Revolution}: a four--of--a--kind flips the rank
+                order and toggles the \texttt{revolution} flag.
+          \item \textbf{Justice Burst}: playing a 2 (without leading) clears the
+                table and gives that player the lead in the next trick.
+        \end{itemize}
+  \item Logs every action into \texttt{self.play\_log} as a dictionary with
+        fields such as round, trick, player, action, hand sizes, and flags.
+  \item Detects when a player goes out, assigns them the next finish position,
+        and records whether they ended on a bomb.
+\end{enumerate}
+
+The round ends when there is only one active player left; that last player is
+assigned the final position.
+
+\subsection{Why This Structure is Useful}
+
+This design is intentionally modular:
+
+\begin{itemize}
+  \item \textbf{Game rules} live in \texttt{presidents\_engine.py}.
+  \item \textbf{Strategies} (human or bot) live in \texttt{pov\_strategies.py}.
+  \item \textbf{Table lineups} live in \texttt{pov\_players.py}.
+  \item \textbf{Data export} lives in \texttt{pov\_logging.py}.
+\end{itemize}
+
+For the Chapter~5 project, you were asked to design a universe, count its
+structures (permutations, combinations, stars and bars), and then connect it to
+Python experiments.\footnote{See the Chapter~5 project brief for the universe
+requirements.} :contentReference[oaicite:2]{index=2}
+Here, we go one step further: we have a live engine that can produce large play
+logs. Those logs become training data for simple models that try to predict,
+for example, which plays lead to better positions or which strategies tend to
+win from a given state. The example homework writeup for Chapter~6 uses the
+same Universe/Counting/Python/Probability/Reflection pattern in a
+DeathSpank--themed horse racing world. :contentReference[oaicite:3]{index=3}
+
+\section{Next Steps}
+
+Once you are comfortable reading and running this engine, you are ready to:
+
+\begin{itemize}
+  \item Add new strategy classes (for example, a player that hoards pairs, or a
+        player that tries to avoid ending on a bomb).
+  \item Change the rules slightly and see how the distribution of finish
+        positions changes in the CSV.
+  \item Use the CSV as input to a notebook or a simple machine learning
+        experiment: can you predict the winner from a snapshot of the table?
+  \item Recreate this pattern for your own designed universes from
+        Chapter~5---a small set of rules, a clean Python engine, and an
+        experiment loop that can be checked against your combinatorics.
+\end{itemize}
+
+This chapter is your bridge from story and counting to full simulation and
+data. The more you can explain what the code is doing in plain language, the
+more powerful your future universes (and your debugging sessions) will become.
+

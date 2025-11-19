@@ -29,14 +29,19 @@ def simulate_game(
     seed: int = 0,
     vs_human: bool = False,
 ) -> None:
-    """Run a full multi-round game and write logs to CSV."""
+    """
+    Run a multi-round game and log plays to CSV.
+
+    vs_human=False  -> all NPC strategies (good for ML data generation)
+    vs_human=True   -> one human-controlled player plus NPCs
+    """
     random.seed(seed)
 
     if vs_human:
         players: List[Player] = create_oklahoma_with_human(
             human_name="Jeremy",
-            human_position=0,   # 0–4: where the human sits
-            use_smart_bot=True,
+            human_position=0,   # seat index 0–4 if you want to move the human
+            use_smart_bot=True, # keep your stronger bot in the mix
         )
     else:
         players: List[Player] = create_oklahoma_players()

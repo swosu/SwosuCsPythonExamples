@@ -109,14 +109,33 @@ def group_by_rank(cards: List[Card]) -> Dict[str, List[Card]]:
 
 
 def generate_leads(hand: List[Card]) -> List[List[Card]]:
-    """Generate all legal leading plays from a given hand."""
+    """
+    Generate all legal leading plays from a given hand.
+
+    Normal rule:
+      - You cannot lead with 2s.
+
+    Exception:
+      - If your hand consists ONLY of 2s, you ARE allowed to lead with them,
+        otherwise the game can get stuck in an infinite "everyone passes with 2s" loop.
+    """
     grouped = group_by_rank(hand)
     plays: List[List[Card]] = []
-    for rank, cards in grouped.items():
-        if rank == '2':
-            continue  # no leading with 2s
+
+    # Do we have any non-2 ranks?
+    non_two_ranks = [rank for rank in grouped.keys() if rank != '2']
+
+    if non_two_ranks:
+        ranks_to_consider = non_two_ranks
+    else:
+        # Hand is ONLY 2s -> allow leading with 2s
+        ranks_to_consider = ['2']
+
+    for rank in ranks_to_consider:
+        cards = grouped[rank]
         for size in range(1, min(4, len(cards)) + 1):
             plays.append(cards[:size])
+
     return plays
 
 
