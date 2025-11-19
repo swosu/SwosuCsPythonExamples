@@ -2,8 +2,8 @@
 """
 Strategy implementations for Presidents of Virtue.
 
-This module depends on:
-- Card, Player from presidents_engine
+Depends on:
+- Strategy, Card, Player, rank_index from presidents_engine
 """
 
 from __future__ import annotations
@@ -11,39 +11,8 @@ from __future__ import annotations
 import random
 from typing import List, Optional
 
-from presidents_engine import Card, Player
+from presidents_engine import Strategy, Card, Player, rank_index
 
-
-def rank_index(rank: str, order: List[str]) -> int:
-    """Local helper: where does this rank sit in the current rank_order?"""
-    return order.index(rank)
-
-
-class Strategy:
-    """Base class for all strategies (NPC + human)."""
-
-    def description(self) -> str:
-        """One-line explanation for humans."""
-        return "Mysterious strategy. (Probably chaos.)"
-
-    def short_label(self) -> str:
-        """Short tag to show in logs."""
-        return self.__class__.__name__.replace("Strategy", "")
-
-    def choose_play(
-        self,
-        player: Player,
-        legal_plays: List[List[Card]],
-        can_lead: bool,
-        rank_order: List[str],
-        revolution: bool,
-    ) -> Optional[List[Card]]:
-        raise NotImplementedError
-
-
-# ---------------------------------------------------------------------------
-# Existing bots
-# ---------------------------------------------------------------------------
 
 class CautiousStrategy(Strategy):
     """Lowest legal play, avoids 2s if possible."""
@@ -160,13 +129,13 @@ class RandomStrategy(Strategy):
 
 
 # ---------------------------------------------------------------------------
-# New: smarter bot
+# Smarter bot
 # ---------------------------------------------------------------------------
 
 class SmartGreedyStrategy(Strategy):
     """
     Smarter version of Greedy:
-    - Tries to win with the *smallest* winning play (conservative).
+    - Tries to win with the smallest winning play (conservative).
     - Avoids using 2s and four-of-a-kind bombs early.
     - Only spends bombs when the hand is getting short.
     """
@@ -174,6 +143,14 @@ class SmartGreedyStrategy(Strategy):
     def description(self) -> str:
         return ("SmartGreedy: wins with the smallest play that works, "
                 "saves 2s and bombs for emergencies or endgame.")
+
+    def _uses_bomb(self, play: List[Card]) -> bool:
+        ranks = {c.rank for c in play}
+        if any(c.rank == '2' for c in play):
+            return True
+        if len(play) == 4 and len(ranks) == 1:
+            return True
+        return False
 
     def choose_play(
         self,
@@ -188,17 +165,10 @@ class SmartGreedyStrategy(Strategy):
 
         hand_size = len(player.hand)
 
-        def uses_bomb(play: List[Card]) -> bool:
-            ranks = {c.rank for c in play}
-            if any(c.rank == '2' for c in play):
-                return True
-            if len(play) == 4 and len(ranks) == 1:
-                return True
-            return False
-
+        # Leading: try small non-bomb multis, then non-bomb singles, then bombs
         if can_lead:
             non_bomb_multis = [
-                p for p in legal_plays if len(p) >= 2 and not uses_bomb(p)
+                p for p in legal_plays if len(p) >= 2 and not self._uses_bomb(p)
             ]
             if non_bomb_multis:
                 def key_nb(p: List[Card]):
@@ -207,7 +177,7 @@ class SmartGreedyStrategy(Strategy):
                 return min(non_bomb_multis, key=key_nb)
 
             non_bomb_singles = [
-                p for p in legal_plays if len(p) == 1 and not uses_bomb(p)
+                p for p in legal_plays if len(p) == 1 and not self._uses_bomb(p)
             ]
             if non_bomb_singles:
                 def key_s(p: List[Card]):
@@ -215,23 +185,26 @@ class SmartGreedyStrategy(Strategy):
                     return max(ranks)
                 return min(non_bomb_singles, key=key_s)
 
-            bomb_plays = [p for p in legal_plays if uses_bomb(p)]
+            # Only spend bombs when short-handed
+            bomb_plays = [p for p in legal_plays if self._uses_bomb(p)]
+            if not bomb_plays:
+                return None
             if hand_size > 5:
-                return None  # save bombs for later
+                return None
 
             def key_b(p: List[Card]):
                 return len(p)
             return min(bomb_plays, key=key_b)
 
-        # responding (not leading)
-        non_bomb_responses = [p for p in legal_plays if not uses_bomb(p)]
+        # Responding: try non-bomb responses first, bombs only if nearly out
+        non_bomb_responses = [p for p in legal_plays if not self._uses_bomb(p)]
         if non_bomb_responses:
             def key_resp(p: List[Card]):
                 ranks = [rank_index(c.rank, rank_order) for c in p]
                 return (len(p), max(ranks))
             return min(non_bomb_responses, key=key_resp)
 
-        bomb_responses = [p for p in legal_plays if uses_bomb(p)]
+        bomb_responses = [p for p in legal_plays if self._uses_bomb(p)]
         if bomb_responses and hand_size <= 4:
             def key_b2(p: List[Card]):
                 return len(p)
@@ -241,7 +214,7 @@ class SmartGreedyStrategy(Strategy):
 
 
 # ---------------------------------------------------------------------------
-# New: human-controlled player
+# Human-controlled player
 # ---------------------------------------------------------------------------
 
 class HumanStrategy(Strategy):

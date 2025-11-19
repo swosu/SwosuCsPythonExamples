@@ -36,10 +36,10 @@ def create_oklahoma_with_human(
     use_smart_bot: bool = True,
 ) -> List[Player]:
     """
-    Same cast, but one of them is controlled by a human.
+    Same cast, but one seat is controlled by a human.
 
     human_position is the index (0–4) where the human sits.
-    Optionally replaces one bot with a SmartGreedyStrategy.
+    Optionally uses SmartGreedyStrategy for Cody.
     """
     bots = [
         Player("Savannah", GreedyStrategy()),
@@ -49,7 +49,6 @@ def create_oklahoma_with_human(
         Player("Blake", RandomStrategy()),
     ]
 
-    # Replace the chosen seat with a human
     players = bots
     human_player = Player(human_name, HumanStrategy())
     players[human_position] = human_player

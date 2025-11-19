@@ -18,13 +18,21 @@ from presidents_engine import (
     PresidentsOfVirtueRound,
     Player,
 )
-from pov_players import create_oklahoma_players
+from pov_players import create_oklahoma_players, create_oklahoma_with_human
 from pov_logging import write_play_log_csv
 
 
-def simulate_game(num_rounds: int = 3, seed: int = 0) -> None:
+def simulate_game(num_rounds: int = 3, seed: int = 0, vs_human: bool = False) -> None:
     random.seed(seed)
-    players: List[Player] = create_oklahoma_players()
+
+    if vs_human:
+        players: List[Player] = create_oklahoma_with_human(
+            human_name="Jeremy",
+            human_position=0,   # 0–4: where you sit at the table
+            use_smart_bot=True,
+        )
+    else:
+        players: List[Player] = create_oklahoma_players()
 
     print("=== SpankTopia Table ===")
     for p in players:
@@ -87,6 +95,9 @@ def simulate_game(num_rounds: int = 3, seed: int = 0) -> None:
 
 
 if __name__ == "__main__":
-    # tweak these knobs as you like
-    simulate_game(num_rounds=3, seed=42)
+    # AI vs AI:
+    # simulate_game(num_rounds=3, seed=42, vs_human=False)
+
+    # Human vs bots (you control one seat at the table):
+    simulate_game(num_rounds=3, seed=42, vs_human=True)
 
