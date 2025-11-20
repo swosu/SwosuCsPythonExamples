@@ -19,3 +19,9 @@ Thumbs.db
 *.out
 *.toc
 
+# Python virtualenvs
+.venv/
+.venv_*/
+venv/
+env/
+
