@@ -152,6 +152,25 @@ def main() -> None:
         print(f"{p.finish_position}: {p.name} ({p.strategy.short_label()})")
 
 
+# simulate_game_llm.py  (sketch!)
+
+def run_single_llm_match_for_duel(label: str, model_path: str) -> int:
+    """
+    Adapter used by simulate_game_llm_duel.py.
+
+    - Create the LLM strategy using `model_path`.
+    - Build the table (LLM player + 3 bots).
+    - Run ONE match.
+    - Return the LLM player's finishing position (1..4).
+
+    You already have 90% of this in your current main(). Just move the
+    core “run one game” logic here and have main() call it too.
+    """
+    # TODO: copy your existing setup + run code here
+    raise NotImplementedError
+
+
+
 if __name__ == "__main__":
     main()
 
