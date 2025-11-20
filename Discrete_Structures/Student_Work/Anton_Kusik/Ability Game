@@ -1,0 +1,242 @@
+import random
+import math
+
+abilities = ["Constitution", "Wisdom", "Intelligence", "Dexterity", "Strength", "Charisma"]
+assigned = {}
+
+# ------------------------------------------
+# CHEAT MODE
+# ------------------------------------------
+cheat_mode = input("Enable CHEAT MODE? (y/n): ").strip().lower() == "y"
+
+def ability_modifier(score):
+    if score <= 1:
+        return -1
+    elif score <= 3:
+        return 0
+    elif score <= 5:
+        return 1
+    elif score <= 7:
+        return 2
+    else:
+        return 3
+
+# Ability assignment
+if cheat_mode:
+    for ability in abilities:
+        assigned[ability] = random.randint(1, 8)
+else:
+    available_scores = [3, 4, 5, 6, 7, 8]
+    for ability in abilities:
+        while True:
+            print(f"Available scores: {available_scores}")
+            choice = input(f"Enter score for {ability} or 'r' for random: ").strip().lower()
+            if choice == "r":
+                score = random.choice(available_scores)
+                assigned[ability] = score
+                available_scores.remove(score)
+                break
+            elif choice.isdigit() and int(choice) in available_scores:
+                score = int(choice)
+                assigned[ability] = score
+                available_scores.remove(score)
+                break
+            else:
+                print("Invalid input, try again.")
+
+print("\n=== Final Abilities ===")
+for a, v in assigned.items():
+    print(f"{a}: {v}")
+
+# ---------------------------------------------------
+# MULTI-CHOICE EVENTS
+# ---------------------------------------------------
+events = [
+    {
+        "name": "You fall into a pit trap!",
+        "dc": 14,
+        "options": {
+            "Dexterity": {"description": "Grab the edge before you fall", "success": 0, "failure": 2},
+            "Constitution": {"description": "Brace your body for the impact", "success": 1, "failure": 3},
+            "Strength": {"description": "Try to catch yourself on a root and pull upward", "success": 0, "failure": 1}
+        }
+    },
+    {
+        "name": "You need to escape a locked room",
+        "dc": 14,
+        "options": {
+            "Wisdom": {"description": "Search the room for clues", "success": 0, "failure": 0},
+            "Intelligence": {"description": "Solve the riddle to open the door", "success": 1, "failure": 3}
+        }
+    },
+    {
+        "name": "You find a merchant on the side of the road",
+        "dc": 10,
+        "options": {
+            "Strength": {"description": "Buy a sword", "success": 1, "failure": 0},
+            "Constitution": {"description": "Buy a set of armor", "success": 1, "failure": 0}
+        }
+    },
+    {
+        "name": "You find an odd man in the alley",
+        "dc": 15,
+        "options": {
+            "Intelligence": {"description": "Gamble your intelligence", "success": 1, "failure": 1},
+            "Dexterity": {"description": "Gamble your dexterity", "success": 1, "failure": 1},
+            "Wisdom": {"description": "Walk away", "success": 1, "failure": 2}
+        }
+    },
+]
+
+# -------------------------------
+# Boss battle as multi-phase event
+# -------------------------------
+def boss_battle():
+    print("\n🔥🔥🔥 BOSS BATTLE: DRAGON 🔥🔥🔥")
+
+    phases = [
+        {
+            "description": "The dragon swipes at you",
+            "dc": 16,
+            "options": {
+                "Dexterity": {"description": "Dodge Claws", "success": 1, "failure": 1},
+                "Constitution": {"description": "Brace your body", "success": 1, "failure": 2}
+            }
+        },
+        {
+            "description": "The dragon walks towards you",
+            "dc": 15,
+            "options": {
+                "Wisdom": {"description": "Read its movements", "success": 1, "failure": 1},
+                "Charisma": {"description": "Walk towards the dragon", "success": 2, "failure": 3}
+            }
+        },
+        {
+            "description": "The dragon breathes fire",
+            "dc": 17,
+            "options": {
+                "Dexterity": {"description": "Roll out of the way", "success": 1, "failure": 2},
+                "Constitution": {"description": "Use your armor to protect yourself", "success": 1, "failure": 1}
+            }
+        },
+        {
+            "description": "The dragon prepares to tail swipe",
+            "dc": 14,
+            "options": {
+                "Intelligence": {"description": "Enter its blindspot", "success": 1, "failure": 2},
+                "Strength": {"description": "Grab the tail and hold on", "success": 1, "failure": 3}
+            }
+        }
+    ]
+
+    for i, phase in enumerate(phases, 1):
+        print(f"\nPhase {i}: {phase['description']}")
+        print(f"Difficulty (DC): {phase['dc']}\nChoose your action:")
+
+        option_list = list(phase["options"].values())
+        for idx, text in enumerate(option_list, 1):
+            print(f"{idx}. {text['description']}")
+
+        # Player choice
+        while True:
+            choice = input("Enter the number of your action: ")
+            if not choice.isdigit():
+                print("Enter a valid number.")
+                continue
+            choice = int(choice)
+            if choice < 1 or choice > len(option_list):
+                print("Invalid option.")
+                continue
+            break
+
+        selected_text = option_list[choice - 1]
+        for ability, text in phase["options"].items():
+            if selected_text == text:
+                chosen_ability = ability
+                break
+
+        roll = random.randint(1, 20)
+        modifier = ability_modifier(assigned[chosen_ability])
+        total = roll + modifier
+        print(f"\nYou rolled {roll} + modifier {modifier} = {total}")
+
+        if total >= phase["dc"]:
+            print("✔ SUCCESS!")
+            reward = phase["options"][chosen_ability]["success"]
+            print(f"You gain {reward} point(s) in {chosen_ability}")
+            assigned[chosen_ability] += reward
+        else:
+            print("✖ FAIL!")
+            penalty = phase["options"][chosen_ability]["failure"]
+            print(f"You lose {penalty} point(s) in {chosen_ability}")
+            assigned[chosen_ability] -= penalty
+
+        assigned[chosen_ability] = max(0, min(8, assigned[chosen_ability]))
+        print(f"{chosen_ability} is now {assigned[chosen_ability]}")
+
+    print("\n🎉 You survived the dragon's attacks!")
+
+# -------------------------------
+# RANDOM EVENT LOOP WITH BOSSES
+# -------------------------------
+event_counter = 0
+
+while True:
+    event_counter += 1
+
+    # Boss every 5 events
+    if event_counter % 5 == 0:
+        boss_battle()
+    else:
+        # Random normal event
+        event = random.choice(events)
+        print(f"\n--- Event {event_counter}: {event['name']} ---")
+        print(f"Difficulty (DC): {event['dc']}\nChoose your action:")
+
+        option_list = list(event["options"].values())
+        for i, text in enumerate(option_list, 1):
+            print(f"{i}. {text['description']}")
+
+        while True:
+            choice = input("Enter the number of your action: ")
+            if not choice.isdigit():
+                print("Enter a valid number.")
+                continue
+            choice = int(choice)
+            if choice < 1 or choice > len(option_list):
+                print("Invalid option.")
+                continue
+            break
+
+        selected_text = option_list[choice - 1]
+        for ability, text in event["options"].items():
+            if selected_text == text:
+                chosen_ability = ability
+                break
+
+        roll = random.randint(1, 20)
+        modifier = ability_modifier(assigned[chosen_ability])
+        total = roll + modifier
+        print(f"\nYou rolled {roll} + modifier {modifier} = {total}")
+
+        if total >= event["dc"]:
+            print("✔ SUCCESS!")
+            reward = event["options"][chosen_ability]["success"]
+            print(f"You gain {reward} point(s) in {chosen_ability}")
+            assigned[chosen_ability] += reward
+        else:
+            print("✖ FAIL!")
+            penalty = event["options"][chosen_ability]["failure"]
+            print(f"You lose {penalty} point(s) in {chosen_ability}")
+            assigned[chosen_ability] -= penalty
+
+        assigned[chosen_ability] = max(0, min(8, assigned[chosen_ability]))
+        print(f"{chosen_ability} is now {assigned[chosen_ability]}")
+
+    again = input("\nDo another event? (y/n): ").strip().lower()
+    if again != "y":
+        break
+
+print("\n=== Final Abilities ===")
+for a, v in assigned.items():
+    print(f"{a}: {v}")
