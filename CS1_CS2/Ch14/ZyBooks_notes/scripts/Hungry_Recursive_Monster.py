@@ -53,4 +53,4 @@ def demo(n=10):
 
 if __name__ == "__main__":
     # lower the count if your machine starts to gasp!
-    demo(n=25)
+    demo(n=100)
