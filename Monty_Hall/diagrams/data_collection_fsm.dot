@@ -1,57 +1,74 @@
 digraph DataCollectionFSM {
-  graph [rankdir=LR, labelloc="t", fontsize=18,
-         label="Monty Hall Data-Collection EFSM\n(what we do, what we log, and when we stop)",
-         fontname="Helvetica", pad="0.25", nodesep="0.35", ranksep="0.45"];
-  node  [shape=box, style="rounded", fontname="Helvetica", fontsize=11];
-  edge  [fontname="Helvetica", fontsize=10];
+  graph [
+    rankdir=TB,
+    splines=ortho,
+    concentrate=true,
+    labelloc="t",
+    fontsize=18,
+    fontname="Helvetica",
+    pad="0.25",
+    nodesep="0.25",
+    ranksep="0.60",
+    label="Monty Hall Data-Collection EFSM\n(what we do, what we log, and when we stop)"
+  ];
 
-  // --- Clusters to make it “pop” without becoming a rainbow disaster ---
-  subgraph cluster_setup {
-    label="Trial Setup";
-    style="rounded";
-    Start   [label="Start / Next Trial\n(action: trial_id += 1)"];
-    Seed    [label="Seed RNG (optional)\n(action: set seed)"];
-    Prize   [label="Place Prize\n(action: prize_door = rand{1,2,3}\nlog: prize_door)"];
-  }
+  node [
+    shape=box,
+    style="rounded",
+    fontname="Helvetica",
+    fontsize=10,
+    margin="0.10,0.06"
+  ];
 
-  subgraph cluster_play {
-    label="Gameplay";
-    style="rounded";
-    Pick    [label="Player Chooses Door\n(action: player_door = rand{1,2,3}\nlog: player_door)"];
-    Reveal  [label="Host Reveals Goat Door\n(action: reveal_door = legal goat door\nconstraint: reveal_door ≠ prize_door,\n            reveal_door ≠ player_door\nlog: reveal_door)"];
-    Decide  [label="Player Decision\n(action: decision = coin_toss stay/switch\nlog: decision)"];
-    Final   [label="Finalize Door\n(action: final_door = player_door if stay\n                 else remaining closed door\nlog: final_door)"];
-    Resolve [label="Resolve Outcome\n(action: win = (final_door == prize_door)\nlog: win)"];
-  }
+  edge [
+    fontname="Helvetica",
+    fontsize=9,
+    arrowsize=0.8
+  ];
 
-  subgraph cluster_log {
-    label="Logging + Aggregation";
-    style="rounded";
-    Row     [label="Write Trial Row (CSV)\n(trial_id, seed, prize_door,\n player_door, reveal_door,\n decision, final_door, win, strategy)"];
-    Agg     [label="Update Counters\nstay_win/stay_lose\nswitch_win/switch_lose\n+ distributions for doors/decision"];
-    CI      [label="Update Stopping Stats\n(action: compute p̂ and CI halfwidths\nfor stay and switch)"];
-  }
+  // ---- Nodes (labels use \l for left-justified line breaks) ----
+  Start   [label="Start / Next Trial\l(action: trial_id += 1)\l"];
+  Seed    [label="Seed RNG (optional)\l(action: set seed)\l"];
+  Prize   [label="Place Prize\l(action: prize_door = rand{1,2,3})\l(log: prize_door)\l"];
+  Pick    [label="Player Chooses Door\l(action: player_door = rand{1,2,3})\l(log: player_door)\l"];
+  Reveal  [label="Host Reveals Goat Door\l(action: reveal_door = legal goat door)\l(constraint: reveal_door ≠ prize_door, player_door)\l(log: reveal_door)\l"];
+  Decide  [label="Player Decision\l(action: decision = coin_toss stay/switch)\l(log: decision)\l"];
+  Final   [label="Finalize Door\l(action: final_door = player_door if stay\l        else remaining closed door)\l(log: final_door)\l"];
+  Resolve [label="Resolve Outcome\l(action: win = (final_door == prize_door))\l(log: win)\l"];
 
-  subgraph cluster_stop {
-    label="Stop?";
-    style="rounded";
-    Check   [label="Stopping Rule\nIF halfwidth(stay)≤ε AND\n   halfwidth(switch)≤ε\nTHEN stop\nELSE continue"];
-    Stop    [shape=doubleoctagon, style="rounded", label="Stop + Export Summary\n(action: finalize tables/plots)"];
-  }
+  Row     [label="Write Trial Row (CSV)\l(trial_id, seed, prize_door,\l player_door, reveal_door,\l decision, final_door, win, strategy)\l"];
+  Agg     [label="Update Counters\lstay_win/stay_lose\lswitch_win/switch_lose\l+ door/decision distributions\l"];
+  CI      [label="Update Stopping Stats\l(action: p̂ + CI halfwidths\lfor stay and switch)\l"];
+  Check   [label="Stopping Rule\lIF halfwidth(stay) ≤ ε AND\l   halfwidth(switch) ≤ ε\lTHEN stop ELSE continue\l"];
+  Stop    [shape=doubleoctagon, style="rounded", label="Stop + Export Summary\l(action: finalize tables/plots)\l"];
 
-  // --- Transitions ---
-  Start  -> Seed   [label="begin_trial"];
-  Seed   -> Prize  [label="rng_ready"];
-  Prize  -> Pick   [label="prize_set"];
-  Pick   -> Reveal [label="player_picked"];
-  Reveal -> Decide [label="goat_revealed"];
-  Decide -> Final  [label="decision_made"];
-  Final  -> Resolve[label="door_finalized"];
-  Resolve-> Row    [label="outcome_known"];
-  Row    -> Agg    [label="row_written"];
-  Agg    -> CI     [label="counters_updated"];
-  CI     -> Check  [label="stats_updated"];
-  Check  -> Stop   [label="stop = true"];
-  Check  -> Start  [label="stop = false"];
+  // ---- Force TWO ROWS ----
+  { rank=same; Start; Seed; Prize; Pick; Reveal; Decide; Final; Resolve; }
+  // Bottom row is left->right: Stop ... Row (so the arrows can go right->left cleanly)
+  { rank=same; Stop; Check; CI; Agg; Row; }
+
+  // ---- Top row flow (left -> right) ----
+  Start  -> Seed    [label="begin_trial"];
+  Seed   -> Prize   [label="rng_ready"];
+  Prize  -> Pick    [label="prize_set"];
+  Pick   -> Reveal  [label="player_picked"];
+  Reveal -> Decide  [label="goat_revealed"];
+  Decide -> Final   [label="decision_made"];
+  Final  -> Resolve [label="door_finalized"];
+
+  // Drop from top-right to bottom-right
+  Resolve -> Row    [label="outcome_known"];
+
+  // ---- Bottom row flow (right -> left) ----
+  Row   -> Agg      [label="row_written"];
+  Agg   -> CI       [label="counters_updated"];
+  CI    -> Check    [label="stats_updated"];
+
+  // Branches
+  Check -> Stop     [label="stop = true"];
+  Check -> Start    [label="stop = false"];
+
+  // ---- Layout helper: keep bottom row ordering (invisible guide rails) ----
+  edge [style=invis, weight=10];
+  Stop -> Check -> CI -> Agg -> Row;
 }
-
