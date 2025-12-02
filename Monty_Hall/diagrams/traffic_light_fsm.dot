@@ -1,0 +1,22 @@
+digraph TrafficLightFSM {
+  rankdir=LR;
+  labelloc="t";
+  label="Traffic Light FSM";
+  fontsize=18;
+
+  node [shape=circle, fontsize=12];
+  edge [fontsize=11];
+
+  start [shape=point];
+
+  Red   [label="RED"];
+  Green [label="GREEN"];
+  Yellow[label="YELLOW"];
+
+  start -> Red [label="power on"];
+
+  Red    -> Green  [label="timer"];
+  Green  -> Yellow [label="timer"];
+  Yellow -> Red    [label="timer"];
+}
+

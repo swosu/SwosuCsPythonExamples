@@ -1,0 +1,22 @@
+digraph TurnstileFSM {
+  rankdir=LR;
+  labelloc="t";
+  label="Turnstile FSM";
+  fontsize=18;
+
+  node [shape=circle, fontsize=12];
+  edge [fontsize=11];
+
+  start [shape=point];
+
+  Locked   [label="LOCKED"];
+  Unlocked [label="UNLOCKED"];
+
+  start -> Locked;
+
+  Locked   -> Unlocked [label="coin / unlock"];
+  Locked   -> Locked   [label="push / alarm"];
+  Unlocked -> Locked   [label="push / lock"];
+  Unlocked -> Unlocked [label="coin / thank you"];
+}
+
