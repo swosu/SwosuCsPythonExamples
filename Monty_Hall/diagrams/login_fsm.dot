@@ -1,0 +1,27 @@
+digraph LoginFSM {
+  rankdir=LR;
+  labelloc="t";
+  label="Login FSM (simplified)";
+  fontsize=18;
+
+  node [shape=circle, fontsize=12];
+  edge [fontsize=11];
+
+  start [shape=point];
+
+  LoggedOut [label="Logged Out"];
+  Auth      [label="Authenticating"];
+  LoggedIn  [label="Logged In"];
+  Locked    [shape=doublecircle, label="Locked Out"];
+
+  start -> LoggedOut;
+
+  LoggedOut -> Auth     [label="submit creds"];
+  Auth -> LoggedIn      [label="success"];
+  Auth -> LoggedOut     [label="fail"];
+  LoggedIn -> LoggedOut [label="logout / timeout"];
+
+  LoggedOut -> Locked [label="too many fails"];
+  Locked -> LoggedOut [label="cooldown / admin reset"];
+}
+
