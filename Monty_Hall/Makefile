@@ -1,29 +1,32 @@
-# Makefile
 DOC := monty_hall_fsm
 TEX := $(DOC).tex
 DOT := $(DOC).dot
-PDF := $(DOC).pdf
-SVG := $(DOC).svg
+
+DIAG_PDF := $(DOC)_diagram.pdf
+DIAG_SVG := $(DOC)_diagram.svg
 
 LATEXMK ?= latexmk
 DOTBIN  ?= dot
 
-.PHONY: all clean diagrams pdf
+.PHONY: all clean diagrams pdf view
 
 all: pdf
 
-diagrams: $(PDF) $(SVG)
+diagrams: $(DIAG_PDF) $(DIAG_SVG)
 
-$(PDF): $(DOT)
+$(DIAG_PDF): $(DOT)
 	$(DOTBIN) -Tpdf $< -o $@
 
-$(SVG): $(DOT)
+$(DIAG_SVG): $(DOT)
 	$(DOTBIN) -Tsvg $< -o $@
 
 pdf: diagrams $(TEX)
 	$(LATEXMK) -pdf -interaction=nonstopmode -halt-on-error $(TEX)
 
+view: pdf
+	xdg-open $(DOC).pdf >/dev/null 2>&1 & disown
+
 clean:
 	$(LATEXMK) -C $(TEX) || true
-	rm -f $(PDF) $(SVG)
+	rm -f $(DIAG_PDF) $(DIAG_SVG)
 
