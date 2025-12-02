@@ -1,14 +1,14 @@
-DOC := monty_hall_fsm
+DOC := monty_hall_project
 TEX := $(DOC).tex
-DOT := $(DOC).dot
 
-DIAG_PDF := $(DOC)_diagram.pdf
-DIAG_SVG := $(DOC)_diagram.svg
+DOT := diagrams/monty_hall_fsm.dot
+DIAG_PDF := diagrams/monty_hall_fsm_diagram.pdf
+DIAG_SVG := diagrams/monty_hall_fsm_diagram.svg
 
 LATEXMK ?= latexmk
 DOTBIN  ?= dot
 
-.PHONY: all clean diagrams pdf view
+.PHONY: all pdf diagrams clean view
 
 all: pdf
 
@@ -20,7 +20,7 @@ $(DIAG_PDF): $(DOT)
 $(DIAG_SVG): $(DOT)
 	$(DOTBIN) -Tsvg $< -o $@
 
-pdf: diagrams $(TEX)
+pdf: diagrams
 	$(LATEXMK) -pdf -interaction=nonstopmode -halt-on-error $(TEX)
 
 view: pdf
