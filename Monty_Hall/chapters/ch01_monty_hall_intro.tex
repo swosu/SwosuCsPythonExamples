@@ -1,0 +1,80 @@
+\chapter{Why Games Work (and Why Monty Hall Still Haunts Our Brains)}
+
+\section{Why games are fun (and strangely useful)}
+Human brains love three things: clear rules, uncertain outcomes, and fast feedback.
+Games compress decision-making into a small space where you can try a strategy, see
+what happens, and adapt. That loop makes games sticky---and it also makes them a
+powerful teaching tool.
+
+In programming, games are especially helpful because they naturally introduce:
+state (what is true right now), transitions (what changes next), and rules (what is allowed).
+That is exactly the mental model behind finite state machines, which we will use throughout
+this project.
+
+\section{Why game shows became a television superpower}
+Game shows were built for television because they are:
+(1) simple to understand mid-episode,
+(2) cheap compared to scripted drama,
+and (3) naturally friendly to advertising.
+
+Early TV leaned heavily on sponsors, and the incentives sometimes went badly:
+in the 1950s, several quiz shows were revealed to have been manipulated, which led
+to backlash, investigations, and legal changes around televised contests.\footnote{PBS,
+\textit{American Experience}, “The Aftermath of the Quiz Show Scandal.” \url{https://www.pbs.org/wgbh/americanexperience/features/quizshow-aftermath-quiz-show-scandal/}}
+
+After that era, daytime game shows increasingly emphasized transparency, repeatable formats,
+and brand-safe entertainment---a steady engine for ratings and advertising.
+
+\section{Where the money comes from (prizes, sponsors, and the network)}
+Most game shows are funded through the same basic machine:
+advertising dollars (sold by the network) pay for production, while prizes can come from
+either the show/network budget or from sponsors/advertisers as part of promotional deals.\footnote{Wrapbook,
+“How to Account for Prize Money in Your Unscripted Game Show.” \url{https://www.wrapbook.com/blog/unscripted-game-show-prize-money}}
+
+Important note: public sources rarely provide clean, audited breakdowns of \emph{profit per show}
+(e.g., “this show grossed \$X and netted \$Y profit for the station”). Networks report finances at the
+company or division level, and individual show economics are often proprietary. So we’ll focus on what
+\emph{is} well supported publicly: the business model, the ratings impact, and the fact that high-audience
+daytime programs translate into advertising revenue.
+
+\section{Monty Hall: the man behind the doors}
+Monty Hall (born Monte Halparin) was a Canadian-American broadcaster and producer best known as
+the host and co-creator of \textit{Let’s Make a Deal}. The Television Academy notes that he appeared in
+more than 4,700 episodes of the show.\footnote{Television Academy, “Monty Hall.” \url{https://www.televisionacademy.com/bios/monty-hall}}
+
+\section{\textit{Let’s Make a Deal}: the marketplace of suspense}
+\textit{Let’s Make a Deal} began as a daytime show in the 1960s and has had multiple runs and revivals
+across networks and syndication.\footnote{Television Academy, “Let’s Make a Deal” show page (channels and original run). \url{https://interviews.televisionacademy.com/shows/lets-make-a-deal}}
+Its signature magic trick is not math---it’s \emph{choice under uncertainty}.
+Contestants (“traders”) bargain small sure things for unknown outcomes behind doors, curtains, or boxes,
+sometimes winning big and sometimes getting a comedic “zonk.”
+
+Historically, the show’s popularity was valuable enough to influence network daytime strategy.
+For example, ABC’s 1968 annual report highlighted how its daytime schedule was strengthened by the
+addition of \textit{Let’s Make a Deal}.\footnote{ABC, 1968 Annual Report (via WorldRadioHistory). \url{https://www.worldradiohistory.com/Archive-Station-Albums/Networks/ABC/ABC-American-Broadcasting-1968-Annual-Report.pdf}}
+Modern commentary from the Strong National Museum of Play likewise emphasizes that the show’s
+daytime audience mattered because it connected directly to advertising revenue.\footnote{Strong National Museum of Play,
+“\textit{Let’s Make a Deal} Still a Big Deal” (Oct 27, 2023). \url{https://www.museumofplay.org/blog/lets-make-a-deal-still-a-big-deal/}}
+
+\section{The modern revival}
+A modern version of \textit{Let’s Make a Deal} has aired on CBS since 2009, hosted by Wayne Brady.\footnote{CBS show page,
+“Let’s Make a Deal.” \url{https://www.cbs.com/shows/lets_make_a_deal/}}
+
+\section{The three-door game (and the puzzle it inspired)}
+The classroom-friendly version of the game is usually told like this:
+
+\begin{enumerate}
+  \item There are three doors: behind one is a prize, behind the other two are goats.
+  \item You pick a door.
+  \item The host (who knows where the prize is) opens one of the other doors to reveal a goat.
+  \item You are offered a choice: stay with your original door or switch to the remaining closed door.
+\end{enumerate}
+
+This becomes the famous “Monty Hall problem.” Under standard assumptions, switching wins with
+probability $2/3$, while staying wins with probability $1/3$.\footnote{Encyclopaedia Britannica, “Monty Hall problem.” \url{https://www.britannica.com/topic/Monty-Hall-problem}}
+
+\section{Where we go next}
+In Chapter 2, we’ll translate the game into a finite state machine: a precise map of states
+(what stage the game is in) and transitions (what event causes the next step).
+That FSM will become the blueprint for our simulation, testing strategy, and data collection.
+
