@@ -2,7 +2,7 @@ PWD /home/jevert/Nora/git/SwosuCsPythonExamples/Monty_Hall
 INPUT /usr/local/texlive/2025/texmf.cnf
 INPUT /usr/local/texlive/2025/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2025/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT /home/jevert/Nora/git/SwosuCsPythonExamples/Monty_Hall/monty_hall_project.tex
+INPUT monty_hall_project.tex
 OUTPUT monty_hall_project.log
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/base/report.cls
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/base/report.cls
