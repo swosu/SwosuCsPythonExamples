@@ -1,31 +1,57 @@
 % monty_hall_project.tex
 \documentclass[11pt]{report}
 
+% -----------------------------
+% Packages
+% -----------------------------
 \usepackage[margin=1in]{geometry}
 \usepackage{microtype}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{caption}
-\usepackage{hyperref}
+\usepackage[hidelinks]{hyperref}
+
+% If you want nicer URL line breaks:
+\usepackage{xurl}
 
 % Keep figure paths simple
-\graphicspath{{diagrams/}}
+\graphicspath{{diagrams/}{figures/}}
 
+% -----------------------------
+% Document metadata
+% -----------------------------
 \title{Monty Hall: Finite State Machines, Simulation, and Evidence}
 \author{Jeremy Evert}
 \date{\today}
 
 \begin{document}
+
 \maketitle
+
+\pagenumbering{roman}
 \tableofcontents
 \listoffigures
+\clearpage
 
+\pagenumbering{arabic}
+
+% -----------------------------
+% Chapters
+% -----------------------------
 \include{chapters/ch01_monty_hall_intro}
 \include{chapters/ch02_fsm_basics}
 \include{chapters/ch03_data_collection_fsm}
 \include{chapters/ch04_coding_results}
 \include{chapters/ch05_summary}
 \include{chapters/ch06_transcript_and_analysis}
+
+% -----------------------------
+% Bibliography (BibTeX)
+% -----------------------------
+\clearpage
+\addcontentsline{toc}{chapter}{Bibliography}
+\bibliographystyle{plain}
+\bibliography{references}
 
 \end{document}
 
