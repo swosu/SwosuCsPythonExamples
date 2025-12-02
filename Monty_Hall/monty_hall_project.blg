@@ -3,12 +3,13 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: monty_hall_project.aux
 A level-1 auxiliary file: chapters/ch01_monty_hall_intro.aux
 A level-1 auxiliary file: chapters/ch02_fsm_basics.aux
+A level-1 auxiliary file: chapters/ch03_data_collection_fsm.aux
 A level-1 auxiliary file: chapters/ch06_transcript_and_analysis.aux
 The style file: plain.bst
 Database file #1: references.bib
 You've used 7 entries,
             2118 wiz_defined-function locations,
-            527 strings with 5016 characters,
+            528 strings with 5053 characters,
 and the built_in function-call counts, 1513 in all, are:
 = -- 147
 > -- 49
