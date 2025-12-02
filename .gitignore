@@ -19,6 +19,18 @@ Thumbs.db
 *.out
 *.toc
 
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+
+
 # Python virtualenvs
 .venv/
 .venv_*/
