@@ -180,6 +180,10 @@ INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/base/omscmr.fd
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/base/omscmr.fd
 INPUT /usr/local/texlive/2025/texmf-dist/tex/latex/base/omscmr.fd
 INPUT /usr/local/texlive/2025/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
+INPUT ./diagrams/data_collection_fsm.pdf
+INPUT ./diagrams/data_collection_fsm.pdf
+INPUT ./diagrams/data_collection_fsm.pdf
+INPUT ./diagrams/data_collection_fsm.pdf
 INPUT ./chapters/ch06_transcript_and_analysis.tex
 INPUT ./chapters/ch06_transcript_and_analysis.tex
 OUTPUT chapters/ch06_transcript_and_analysis.aux
