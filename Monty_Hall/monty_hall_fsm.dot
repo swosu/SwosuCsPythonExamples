@@ -1,0 +1,35 @@
+digraph MontyHallFSM {
+  rankdir=LR;
+  labelloc="t";
+  label="Monty Hall FSM (starter; expand as needed)";
+  fontsize=18;
+
+  node [shape=circle, fontsize=12];
+  edge [fontsize=11];
+
+  start [shape=point];
+
+  // --- Core states ---
+  Ready   [label="Ready"];
+  Pick    [label="Player Picks\n(door i)"];
+  Host    [label="Host Opens\n(goat door)"];
+  Decide  [label="Player Decides\nStay / Switch"];
+  Win     [shape=doublecircle, label="Win"];
+  Lose    [shape=doublecircle, label="Lose"];
+
+  start -> Ready;
+
+  // --- Flow ---
+  Ready  -> Pick   [label="new game"];
+  Pick   -> Host   [label="reveal step"];
+  Host   -> Decide [label="offer switch"];
+
+  // --- Outcomes (placeholder logic labels; refine with more states) ---
+  Decide -> Win  [label="(depends)"];
+  Decide -> Lose [label="(depends)"];
+
+  // --- Reset ---
+  Win  -> Ready [label="reset"];
+  Lose -> Ready [label="reset"];
+}
+
