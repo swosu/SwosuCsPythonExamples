@@ -1,15 +1,5 @@
 \begin{thebibliography}{1}
 
-\bibitem{fsm_superpowers}
-Fsm notes in this project: clarity, testability, instrumentation.
-\newblock See Chapter 2 of this report.
-\newblock Internal project reference.
-
-\bibitem{nist_ci_proportion}
-Nist/sematech e-handbook of statistical methods: Confidence intervals.
-\newblock \url{https://www.itl.nist.gov/div898/handbook/}.
-\newblock Accessed: 2025-12-01.
-
 \bibitem{cbs_lmadt}
 {CBS}.
 \newblock Let's make a deal.
@@ -20,6 +10,18 @@ Nist/sematech e-handbook of statistical methods: Confidence intervals.
 {Encyclopaedia Britannica}.
 \newblock Monty hall problem.
 \newblock \url{https://www.britannica.com/topic/Monty-Hall-problem}.
+\newblock Accessed: 2025-12-01.
+
+\bibitem{fsm_superpowers}
+{NIST}.
+\newblock Fsm notes in this project: clarity, testability, instrumentation.
+\newblock See Chapter 2 of this report.
+\newblock Internal project reference.
+
+\bibitem{nist_ci_proportion}
+{NIST}.
+\newblock Nist/sematech e-handbook of statistical methods: Confidence intervals.
+\newblock \url{https://www.itl.nist.gov/div898/handbook/}.
 \newblock Accessed: 2025-12-01.
 
 \bibitem{pbs_quizshow_after}
