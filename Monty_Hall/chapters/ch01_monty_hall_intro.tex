@@ -1,80 +1,108 @@
 \chapter{Why Games Work (and Why Monty Hall Still Haunts Our Brains)}
 
-\section{Why games are fun (and strangely useful)}
-Human brains love three things: clear rules, uncertain outcomes, and fast feedback.
-Games compress decision-making into a small space where you can try a strategy, see
-what happens, and adapt. That loop makes games sticky---and it also makes them a
-powerful teaching tool.
+\section{Games as a learning engine}
+Games are fun for a simple reason: they turn decision-making into a tight loop.
+You learn the rules, take an action, observe the outcome, and adjust. That loop is
+fast, emotional, and memorable.
 
-In programming, games are especially helpful because they naturally introduce:
-state (what is true right now), transitions (what changes next), and rules (what is allowed).
-That is exactly the mental model behind finite state machines, which we will use throughout
-this project.
+For learning programming and math, games are especially useful because they quietly
+force us to think in the same structures we use in computing:
+\begin{itemize}
+  \item \textbf{State:} what is true right now?
+  \item \textbf{Transitions:} what event causes the next step?
+  \item \textbf{Rules:} what actions are allowed at each step?
+  \item \textbf{Evidence:} how do we know our strategy is good?
+\end{itemize}
+
+This project uses a game (the Monty Hall problem) as a friendly doorway into three
+serious ideas: finite state machines, simulation-driven evidence, and testable software design.
 
 \section{Why game shows became a television superpower}
-Game shows were built for television because they are:
-(1) simple to understand mid-episode,
-(2) cheap compared to scripted drama,
-and (3) naturally friendly to advertising.
+Game shows fit television extremely well. A viewer can drop in mid-episode and still
+understand the stakes quickly. Compared to many scripted programs, game shows can also
+be produced efficiently, and their structure naturally leaves room for advertising.
 
-Early TV leaned heavily on sponsors, and the incentives sometimes went badly:
-in the 1950s, several quiz shows were revealed to have been manipulated, which led
-to backlash, investigations, and legal changes around televised contests.\footnote{PBS,
-\textit{American Experience}, “The Aftermath of the Quiz Show Scandal.” \url{https://www.pbs.org/wgbh/americanexperience/features/quizshow-aftermath-quiz-show-scandal/}}
+Television history also includes an important cautionary tale: in the 1950s, several quiz
+shows were revealed to have been manipulated, leading to public backlash and investigations.
+That period helped shape later expectations around televised contests.\cite{pbs_quizshow_after}
 
-After that era, daytime game shows increasingly emphasized transparency, repeatable formats,
-and brand-safe entertainment---a steady engine for ratings and advertising.
+Over time, successful daytime game shows leaned into formats that were simple, repeatable,
+and brand-safe. The result was programming that could attract steady audiences and therefore
+steady advertising dollars.
 
 \section{Where the money comes from (prizes, sponsors, and the network)}
-Most game shows are funded through the same basic machine:
-advertising dollars (sold by the network) pay for production, while prizes can come from
-either the show/network budget or from sponsors/advertisers as part of promotional deals.\footnote{Wrapbook,
-“How to Account for Prize Money in Your Unscripted Game Show.” \url{https://www.wrapbook.com/blog/unscripted-game-show-prize-money}}
+The financial model behind many game shows is straightforward in \emph{structure} even when the
+exact numbers are opaque in \emph{detail}:
+\begin{itemize}
+  \item Networks sell advertising time against the audience the show brings in.
+  \item Production budgets pay for staff, sets, crew, post-production, and distribution.
+  \item Prizes may be paid directly by the show/network or supplied/offset by sponsors as part
+        of promotional arrangements.\cite{wrapbook_prizemoney}
+\end{itemize}
 
-Important note: public sources rarely provide clean, audited breakdowns of \emph{profit per show}
-(e.g., “this show grossed \$X and netted \$Y profit for the station”). Networks report finances at the
-company or division level, and individual show economics are often proprietary. So we’ll focus on what
-\emph{is} well supported publicly: the business model, the ratings impact, and the fact that high-audience
-daytime programs translate into advertising revenue.
+A practical research note for students: you will often see people ask questions like
+\emph{“How much did this show gross?”} or \emph{“How much profit did the station make?”}
+Those figures are rarely reported cleanly at the single-show level. Networks and studios tend
+to report finances at the company, division, or season level. So in this chapter we focus on what
+we can support well: the business logic, the longevity of the format, and the way audience attention
+translates into revenue.
 
 \section{Monty Hall: the man behind the doors}
-Monty Hall (born Monte Halparin) was a Canadian-American broadcaster and producer best known as
-the host and co-creator of \textit{Let’s Make a Deal}. The Television Academy notes that he appeared in
-more than 4,700 episodes of the show.\footnote{Television Academy, “Monty Hall.” \url{https://www.televisionacademy.com/bios/monty-hall}}
+Monty Hall was a Canadian-American broadcaster and producer best known as the host and co-creator of
+\textit{Let’s Make a Deal}. The Television Academy notes that he appeared in more than 4,700 episodes of the
+show.\cite{emmy_monty_hall}
 
-\section{\textit{Let’s Make a Deal}: the marketplace of suspense}
-\textit{Let’s Make a Deal} began as a daytime show in the 1960s and has had multiple runs and revivals
-across networks and syndication.\footnote{Television Academy, “Let’s Make a Deal” show page (channels and original run). \url{https://interviews.televisionacademy.com/shows/lets-make-a-deal}}
-Its signature magic trick is not math---it’s \emph{choice under uncertainty}.
-Contestants (“traders”) bargain small sure things for unknown outcomes behind doors, curtains, or boxes,
-sometimes winning big and sometimes getting a comedic “zonk.”
+This matters for us because it explains why the Monty Hall puzzle became culturally sticky:
+the show was not just a one-off novelty. It was a long-running, high-visibility format that
+normalized suspenseful choice as entertainment.
 
-Historically, the show’s popularity was valuable enough to influence network daytime strategy.
-For example, ABC’s 1968 annual report highlighted how its daytime schedule was strengthened by the
-addition of \textit{Let’s Make a Deal}.\footnote{ABC, 1968 Annual Report (via WorldRadioHistory). \url{https://www.worldradiohistory.com/Archive-Station-Albums/Networks/ABC/ABC-American-Broadcasting-1968-Annual-Report.pdf}}
-Modern commentary from the Strong National Museum of Play likewise emphasizes that the show’s
-daytime audience mattered because it connected directly to advertising revenue.\footnote{Strong National Museum of Play,
-“\textit{Let’s Make a Deal} Still a Big Deal” (Oct 27, 2023). \url{https://www.museumofplay.org/blog/lets-make-a-deal-still-a-big-deal/}}
+\section{\textit{Let’s Make a Deal}: a marketplace of suspense}
+\textit{Let’s Make a Deal} is built around bargaining and uncertainty. Contestants (often called ``traders'')
+make choices between known rewards and unknown possibilities hidden behind doors, curtains, or boxes.
+Sometimes the unknown is a great prize; sometimes it is a humorous ``zonk.''
+
+The show began in the 1960s and has had multiple runs and revivals across networks and syndication.\cite{emmy_lmadt}
+One reason the format has lasted is that it is a reliable machine for emotional moments:
+anticipation, risk, regret, surprise, and celebration.
+
+Modern museum commentary emphasizes the importance of the show’s daytime audience and how that audience
+connects to advertising value.\cite{strong_lmadt_2023}
 
 \section{The modern revival}
-A modern version of \textit{Let’s Make a Deal} has aired on CBS since 2009, hosted by Wayne Brady.\footnote{CBS show page,
-“Let’s Make a Deal.” \url{https://www.cbs.com/shows/lets_make_a_deal/}}
+A modern version of \textit{Let’s Make a Deal} has aired on CBS since 2009.\cite{cbs_lmadt}
+Even as sets and hosts evolve, the core ingredient remains the same: forced choices under uncertainty.
 
 \section{The three-door game (and the puzzle it inspired)}
-The classroom-friendly version of the game is usually told like this:
+The classroom-friendly Monty Hall problem usually appears in a simplified, clean form:
 
 \begin{enumerate}
   \item There are three doors: behind one is a prize, behind the other two are goats.
   \item You pick a door.
   \item The host (who knows where the prize is) opens one of the other doors to reveal a goat.
-  \item You are offered a choice: stay with your original door or switch to the remaining closed door.
+  \item You are offered a final choice: \textbf{stay} with your original door or \textbf{switch}
+        to the remaining closed door.
 \end{enumerate}
 
-This becomes the famous “Monty Hall problem.” Under standard assumptions, switching wins with
-probability $2/3$, while staying wins with probability $1/3$.\footnote{Encyclopaedia Britannica, “Monty Hall problem.” \url{https://www.britannica.com/topic/Monty-Hall-problem}}
+This becomes the famous Monty Hall problem. Under the usual assumptions, switching wins with probability
+$2/3$, while staying wins with probability $1/3$.\cite{britannica_montyhall}
+
+Why does this puzzle matter in a computing course? Because it is a perfect example of how humans can feel
+confident and still be wrong. Our intuition tends to treat the final choice as ``50/50,'' but the process
+that produced the final two doors is not symmetrical. The host’s action carries information, and the best
+strategy depends on modeling that action correctly.
+
+\section{What we are building in this project}
+We’ll treat the Monty Hall game as an engineered system:
+\begin{itemize}
+  \item First, we specify the game precisely using a \textbf{finite state machine} (Chapter 2).
+  \item Next, we design a \textbf{data-collection FSM} that formalizes how we will simulate and record outcomes (Chapter 3).
+  \item Then we implement the simulation as clean \textbf{object-oriented code} with strong \textbf{unit test coverage},
+        and we present results with tables and plots (Chapter 4).
+  \item Finally, we summarize what we learned (Chapter 5) and include the full ChatGPT-assisted workflow
+        as a transcript with analysis (Chapter 6).
+\end{itemize}
 
 \section{Where we go next}
-In Chapter 2, we’ll translate the game into a finite state machine: a precise map of states
-(what stage the game is in) and transitions (what event causes the next step).
-That FSM will become the blueprint for our simulation, testing strategy, and data collection.
+Chapter 2 introduces finite state machines and uses an FSM diagram of Monty Hall as our blueprint.
+Once the game is written as states and transitions, it becomes much easier to implement, test, and measure.
 
