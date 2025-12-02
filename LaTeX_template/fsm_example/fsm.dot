@@ -1,0 +1,14 @@
+digraph FSM {
+  rankdir=LR;
+  node [shape=circle, fontsize=12];
+  start [shape=point];
+
+  start -> q0;
+  q2 [shape=doublecircle];
+
+  q0 -> q1 [label="a"];
+  q1 -> q2 [label="b"];
+  q2 -> q1 [label="c"];
+  q1 -> q1 [label="a"];
+}
+
