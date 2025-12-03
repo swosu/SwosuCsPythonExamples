@@ -1,11 +1,14 @@
 ```mermaid
 classDiagram
-%% Monty Hall Responsibility Map (4-class version)
+%% Monty Hall Responsibility Map (4-class + optional TrialRecord)
 
 class Game {
   +int trial_id
   +list doors
   +RNG rng
+  +int seed
+  +float confidence_level
+  +float epsilon
   +Contestant contestant
   +Data data
   +Results results
@@ -14,7 +17,7 @@ class Game {
   +place_prize() int
   +host_reveal(prize_door, player_pick) int
   +resolve(final_pick, prize_door) bool
-  +run() %% trial loop + orchestration
+  +run() %% trial loop + orchestration (until stop_rule_met)
 }
 
 class Contestant {
@@ -24,18 +27,33 @@ class Contestant {
   +final_pick(decision, player_pick, reveal_door, doors) int
 }
 
+class TrialRecord {
+  +int trial_id
+  +int prize_door
+  +int player_pick
+  +int reveal_door
+  +string decision  %% "stay"|"switch"
+  +int final_pick
+  +bool win
+  +string strategy
+}
+
 class Data {
   +int n_trials
   +int stay_win
   +int stay_lose
   +int switch_win
   +int switch_lose
-  +list records
-  +record_trial(trial_fields)
+  +float confidence_level
+  +float epsilon
+  +int min_trials
+  +list~TrialRecord~ records
+  +record_trial(record)
   +update_running_stats(record)
   +win_rate_stay() float
   +win_rate_switch() float
-  +confidence_interval(p_hat, n) tuple %% optional
+  +confidence_interval(p_hat, n) tuple
+  +ci_half_width(p_hat, n) float
   +stop_rule_met() bool
 }
 
@@ -44,7 +62,7 @@ class Results {
   +final_report(data)
   +export_csv(path)
   +export_json(path)
-  +plot_convergence(path)
+  +plot_convergence(path) %% can include CI band
   +plot_buckets(path)
 }
 
@@ -52,4 +70,5 @@ Game "1" --> "1" Contestant : delegates choices
 Game "1" --> "1" Data : writes trial records
 Game "1" --> "1" Results : displays + exports
 Results ..> Data : reads aggregated stats
+Data "1" o-- "*" TrialRecord : stores
 ```
