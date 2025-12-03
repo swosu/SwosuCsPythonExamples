@@ -1,8 +1,8 @@
-\chapter{Designing the Data-Collection FSM \\(A dataset we can trust)}
+\chapter[Designing the Data-Collection FSM]{Designing the Data-Collection FSM \\(A dataset we can trust)}
 \label{ch:data-collection}
 
 \section{Why a data-collection FSM at all?}
-Chapter~\ref{ch:fsm-basics} argued that finite state machines give us clarity, testability, and instrumentation—
+Chapter~\ref{ch:fsm-basics} argued that finite state machines give us clarity, testability, and instrumentation---
 especially the power to log clean datasets from a process that involves randomness. \cite{fsm_superpowers}
 Instrumenting a randomized process is the heart of empirical simulation:
 if we cannot exactly say when and what we recorded, we cannot trust the results.
@@ -29,8 +29,8 @@ Field & Meaning and reason to include \\
 trial\_id & Unique integer for traceability and reproducibility \\
 seed & RNG seed (optional) to reproduce a suspicious run \\
 prize\_door & Where the prize was placed (should be uniform over \{1,2,3\}) \\
-player\_door & Player’s initial choice (should be uniform over \{1,2,3\}) \\
-reveal\_door & Host’s revealed goat door (≠ prize\_door, ≠ player\_door) \\
+player\_door & Player's initial choice (should be uniform over \{1,2,3\}) \\
+reveal\_door & Host's revealed goat door ($\neq$ prize\_door, $\neq$ player\_door) \\
 decision & \texttt{stay} or \texttt{switch} (coin toss in baseline) \\
 final\_door & Door the player ends on after decision \\
 win & \texttt{1} if final\_door == prize\_door, else \texttt{0} \\
@@ -80,10 +80,9 @@ We want students to understand the difference between:
 \end{quote}
 
 To decide when to stop, we base the rule on a confidence interval for a proportion
-(the win rate).  
+(the win rate).
 Let $\hat{p}$ be the observed win rate for a strategy after $n$ trials.
-A widely used approximate margin of error, often called the halfwidth of a confidence
-interval, is:
+A widely used approximate margin of error (often called the halfwidth) is:
 
 \[
   \mathrm{halfwidth} = z \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}
@@ -101,11 +100,6 @@ Here:
     \end{itemize}
 \end{itemize}
 
-This is the normal‑approximation form for a proportion confidence interval; it is
-simple, intuitive, and commonly used for large enough samples. NIST documents this
-normal approximation among its supported methods for computing proportion confidence
-limits. :contentReference[oaicite:1]{index=1}
-
 \subsection{A practical stopping rule}
 Choose two things up front:
 \begin{itemize}
@@ -115,15 +109,15 @@ Choose two things up front:
         $\pm 1\%$ around the observed win rate.
 \end{itemize}
 
-Stop the simulation only when \textbf{both} strategies’ win‑rate halfwidths are
+Stop the simulation only when \textbf{both} strategies' win-rate halfwidths are
 no larger than $\epsilon$:
 
 \begin{itemize}
-  \item halfwidth of switch win‑rate $\le \epsilon$
-  \item halfwidth of stay win‑rate   $\le \epsilon$
+  \item halfwidth of switch win rate $\le \epsilon$
+  \item halfwidth of stay win rate   $\le \epsilon$
 \end{itemize}
 
-This makes the simulation self‑aware: it continues until the estimates are sharp
+This makes the simulation self-aware: it continues until the estimates are sharp
 enough to be worth graphing or reporting.
 
 \subsection{Why this stopping rule matters}
@@ -132,8 +126,72 @@ enough to be worth graphing or reporting.
   \item If you require very high confidence or very small tolerance, you may need
     many trials.
   \item The rule explicitly ties the stopping decision to the precision of the
-    estimate, not to an arbitrary trial count or a whim.
+    estimate, not to an arbitrary trial count.
 \end{itemize}
+
+
+% Start of new dump.
+\subsection{A warm-up: coin tosses (confidence in action)}
+A coin toss is the simplest possible version of what we are doing in Monty Hall.
+Each toss is a Bernoulli trial (success/failure). If we define:
+
+\begin{itemize}
+  \item \textbf{success} = Heads,
+  \item \textbf{failure} = Tails,
+  \item and $\hat{p}$ = the observed fraction of Heads,
+\end{itemize}
+
+then the true probability is $p=0.5$, but our estimate $\hat{p}$ starts off wildly unstable.
+After one toss, $\hat{p}$ is either $0$ or $1$. After two tosses, $\hat{p}$ can be $0$, $0.5$, or $1$.
+As $n$ grows, $\hat{p}$ tends to drift toward $0.5$ (law of large numbers), but the key idea is:
+
+\begin{quote}
+\emph{We do not just want $\hat{p}$ to be near $0.5$; we want to know how confident we are in that estimate.}
+\end{quote}
+
+The same halfwidth formula from above applies:
+
+\[
+  \mathrm{halfwidth} = z \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}
+\]
+
+Two big takeaways fall right out of this equation:
+
+\begin{enumerate}
+  \item \textbf{More trials shrink uncertainty.} Halfwidth scales like $1/\sqrt{n}$, so gains are fast early and slower later.
+  \item \textbf{Worst-case uncertainty happens near $\hat{p}=0.5$.} Because $\hat{p}(1-\hat{p})$ is maximized at $0.25$,
+        coin flips are a great “stress test” for sample size.
+\end{enumerate}
+
+In the worst case ($\hat{p}\approx 0.5$), the halfwidth is approximately:
+
+\[
+  \mathrm{halfwidth} \approx z \sqrt{\frac{0.25}{n}} = \frac{z}{2\sqrt{n}}
+\]
+
+So if we want a 95\% confidence interval with tolerance $\epsilon=0.01$ (about $\pm 1\%$),
+we solve:
+
+\[
+  \frac{z}{2\sqrt{n}} \le \epsilon
+  \quad \Rightarrow \quad
+  n \ge \frac{z^2}{4\epsilon^2}
+\]
+
+For 95\% confidence, $z \approx 1.96$, so:
+
+\[
+  n \gtrsim \frac{(1.96)^2}{4(0.01)^2} \approx 9604.
+\]
+
+That number is the whole lesson: if we only flip a coin 50 times and get 60\% Heads,
+that does \emph{not} mean the coin is biased—it usually means the sample is still small and the
+confidence interval is still wide.
+
+Figure~\ref{fig:coin-ci-demo} shows (1) the running estimate $\hat{p}$ approaching $0.5$ and
+(2) how the confidence interval “whiskers” tighten as $n$ increases.
+
+% Stop of new dump
 
 \section{Worst-case estimate of needed trials}
 Because $\hat{p}(1-\hat{p})$ is largest when $\hat{p}=0.5$, we can derive a
@@ -156,13 +214,13 @@ Example: for 99\% confidence ($z \approx 2.576$) and $\epsilon = 0.01$,
 \]
 
 This number is intentionally large to demonstrate why a few hundred trials can still
-be noisy for tight tolerances. It is a worst‑case estimate; actual needed $n$ could
+be noisy for tight tolerances. It is a worst-case estimate; actual needed $n$ could
 be smaller if the observed $\hat{p}$ is far from $0.5$, but it gives students a
 sense of scale.
 
-\section{The data‑collection FSM (EFSM style)}
+\section{The data-collection FSM (EFSM-style)}
 When we track extra variables such as \texttt{prize\_door} and \texttt{player\_choice},
-we’re really building an \emph{extended} FSM, or EFSM. Our Data-Collection FSM uses
+we're really building an \emph{extended} FSM, or EFSM. Our Data-Collection FSM uses
 the same clean state backbone as in Chapter~\ref{ch:fsm-basics}, but now annotates
 each step with:
 \begin{itemize}
@@ -180,7 +238,7 @@ each step with:
 \end{figure}
 
 \section{How this maps to code (preview of Chapter 4)}
-The FSM‑to‑code recipe from Chapter~\ref{ch:fsm-basics} still applies:
+The FSM-to-code recipe from Chapter~\ref{ch:fsm-basics} still applies:
 \begin{itemize}
   \item State enumeration,
   \item Events,
@@ -192,7 +250,7 @@ The new difference is that actions include:
 \begin{itemize}
   \item Writing a trial row to CSV,
   \item Updating running counters,
-  \item Computing confidence halfwidths and checking whether to stop.
+  \item Computing halfwidths and checking whether to stop.
 \end{itemize}
 
 Designing this chapter first makes the FSM the contract for the implementation
