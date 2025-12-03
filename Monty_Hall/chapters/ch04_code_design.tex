@@ -1,0 +1,315 @@
+\chapter[Designing the Code]{Designing the Code \\(Classes, responsibilities, and tests)}
+\label{ch:code-design}
+
+\section{Why we design the code before we write the code}
+Chapter~\ref{ch:data-collection} defined our contract:
+\begin{itemize}
+  \item one \textbf{trial row} has specific fields (Table~\ref{tab:trial-fields}),
+  \item we update \textbf{running totals} as we go,
+  \item and we \textbf{stop} only when our confidence-interval halfwidths are small enough.
+\end{itemize}
+That contract makes implementation much easier, because now every class we create has a job
+that can be tested.
+
+This chapter proposes an object-oriented design that is intentionally \emph{heavier} than strictly necessary,
+because the goal for first-year programmers is practice: \textbf{creating classes, creating objects, and testing them}.
+
+\section{Design goals (what we care about)}
+Our design has four priorities:
+
+\begin{enumerate}
+  \item \textbf{Correctness:} the simulation obeys the rules (legal reveal door, correct final door, correct win/lose).
+  \item \textbf{Traceability:} every simulated trial becomes one row with the required fields. (Table~\ref{tab:trial-fields})
+  \item \textbf{Testability:} each piece of logic is small enough to unit test in isolation.
+  \item \textbf{Reproducibility:} runs can be repeated using the same RNG seed.
+\end{enumerate}
+
+\section{Suggested module layout (keep it simple)}
+You can organize your code in a single folder without getting fancy:
+
+\begin{verbatim}
+monty_hall/
+  __init__.py
+  models.py           # TrialRecord, small enums
+  rng.py              # RNG wrapper (optional)
+  strategies.py       # DecisionStrategy + implementations
+  rules.py            # MontyHallRules (pure functions)
+  fsm.py              # DataCollectionFSM + states
+  stats.py            # OutcomeAggregator + confidence math
+  io_csv.py           # CsvTrialLogger
+  runner.py           # SimulationRunner (ties it all together)
+tests/
+  test_rules.py
+  test_strategies.py
+  test_stats.py
+  test_fsm.py
+  test_io_csv.py
+\end{verbatim}
+
+If your course setup prefers fewer files, you can merge some of these, but keep the class boundaries.
+
+\section{The core classes (what we need and why)}
+Chapter 3 tells us what a trial must record (trial\_id, seed, prize\_door, player\_door, reveal\_door, decision, final\_door, win, strategy). :contentReference[oaicite:2]{index=2}
+It also tells us we must track running outcome buckets and evaluate a stopping rule based on CI halfwidth. :contentReference[oaicite:3]{index=3}
+
+Table~\ref{tab:class-map} lists the recommended classes and their responsibilities.
+
+\begin{table}[!ht]
+\centering
+\caption{Recommended classes and responsibilities.}
+\label{tab:class-map}
+\begin{tabular}{ll}
+\toprule
+Class & Primary responsibility \\
+\midrule
+\texttt{TrialRecord} & One row of trial data (exactly the Chapter 3 fields) \\
+\texttt{DecisionStrategy} & Choose \texttt{stay} or \texttt{switch} (pluggable policies) \\
+\texttt{MontyHallRules} & Pure rule logic: place prize, legal reveal door, finalize door, win/lose \\
+\texttt{OutcomeAggregator} & Running totals: stay/switch win/lose + distribution checks \\
+\texttt{ConfidenceMath} & z-values + CI halfwidth calculation \\
+\texttt{StoppingRule} & Decide if we can stop (halfwidth(stay) and halfwidth(switch) <= epsilon) \\
+\texttt{CsvTrialLogger} & Write header + append \texttt{TrialRecord}s to CSV \\
+\texttt{DataCollectionFSM} & Execute the EFSM steps in the correct order and produce a \texttt{TrialRecord} \\
+\texttt{SimulationRunner} & Loop until stop rule, update stats, write logs, return summary \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{TrialRecord (one trial = one row)}
+\textbf{Purpose:} represent the exact trial fields from Chapter 3. :contentReference[oaicite:4]{index=4}
+
+\textbf{Suggested fields:}
+\begin{itemize}
+  \item \texttt{trial\_id: int}
+  \item \texttt{seed: Optional[int]}
+  \item \texttt{prize\_door: int}
+  \item \texttt{player\_door: int}
+  \item \texttt{reveal\_door: int}
+  \item \texttt{decision: str}  (``stay'' or ``switch'')
+  \item \texttt{final\_door: int}
+  \item \texttt{win: int}  (1 or 0)
+  \item \texttt{strategy: str}
+\end{itemize}
+
+\textbf{Suggested methods:}
+\begin{itemize}
+  \item \texttt{validate() -> None}: raises \texttt{ValueError} if fields are out of range or inconsistent.
+  \item \texttt{to\_csv\_row() -> List[str]}: stable column order for CSV writing.
+  \item \texttt{csv\_header() -> List[str]}: a single canonical header list.
+\end{itemize}
+
+\textbf{Unit tests:}
+\begin{itemize}
+  \item \texttt{test\_trialrecord\_validate\_good()}: a known-valid record passes.
+  \item \texttt{test\_trialrecord\_validate\_bad\_doors()}: door not in \{1,2,3\} fails.
+  \item \texttt{test\_trialrecord\_validate\_decision()}: decision must be ``stay'' or ``switch''.
+  \item \texttt{test\_trialrecord\_to\_csv\_row\_order()}: row matches header order exactly.
+\end{itemize}
+
+\subsection{DecisionStrategy (how the player decides)}
+\textbf{Purpose:} separate \emph{policy} from \emph{game logic}. A strategy chooses stay/switch, but does not touch doors.
+
+\textbf{Suggested base class:}
+\begin{itemize}
+  \item \texttt{choose() -> str}
+  \item \texttt{name() -> str}
+\end{itemize}
+
+\textbf{Concrete strategies:}
+\begin{itemize}
+  \item \texttt{AlwaysStay}: always returns ``stay''
+  \item \texttt{AlwaysSwitch}: always returns ``switch''
+  \item \texttt{CoinFlipStrategy}: uses RNG to choose (baseline described in Chapter 3) :contentReference[oaicite:5]{index=5}
+\end{itemize}
+
+\textbf{Unit tests:}
+\begin{itemize}
+  \item \texttt{test\_always\_stay()}: 100 calls, always ``stay''.
+  \item \texttt{test\_always\_switch()}: 100 calls, always ``switch''.
+  \item \texttt{test\_coinflip\_deterministic\_seed()}: with a fixed seed, first N decisions match expected sequence.
+  \item \texttt{test\_coinflip\_only\_two\_outputs()}: outputs are only stay/switch (no surprises).
+\end{itemize}
+
+\subsection{MontyHallRules (pure logic, easy to test)}
+\textbf{Purpose:} rules should be \emph{pure functions} whenever possible: given inputs, return outputs; no I/O.
+
+\textbf{Suggested methods:}
+\begin{itemize}
+  \item \texttt{place\_prize(rng) -> int}: returns 1..3
+  \item \texttt{player\_pick(rng) -> int}: returns 1..3
+  \item \texttt{legal\_reveal\_door(prize\_door, player\_door, rng) -> int}:
+        must not equal prize\_door or player\_door. :contentReference[oaicite:6]{index=6}
+  \item \texttt{final\_door(player\_door, reveal\_door, decision) -> int}:
+        stay keeps player\_door; switch chooses the remaining closed door. :contentReference[oaicite:7]{index=7}
+  \item \texttt{did\_win(final\_door, prize\_door) -> int}: returns 1 or 0. :contentReference[oaicite:8]{index=8}
+\end{itemize}
+
+\textbf{Unit tests (these are the big ones):}
+\begin{itemize}
+  \item \texttt{test\_legal\_reveal\_door\_never\_prize\_or\_player()}:
+        for all 9 (prize, player) combos, reveal is legal.
+  \item \texttt{test\_legal\_reveal\_door\_unique\_when\_player\_picked\_prize()}:
+        if prize==player, reveal has 2 valid goats; ensure reveal is one of them.
+  \item \texttt{test\_final\_door\_stay()}:
+        final == player\_door.
+  \item \texttt{test\_final\_door\_switch()}:
+        final is the only door not equal to player\_door or reveal\_door.
+  \item \texttt{test\_did\_win\_truth\_table()}:
+        verify win=1 iff final==prize.
+\end{itemize}
+
+\subsection{OutcomeAggregator (running totals + sanity checks)}
+\textbf{Purpose:} maintain the running counters identified in Chapter 3:
+\texttt{stay\_win}, \texttt{stay\_lose}, \texttt{switch\_win}, \texttt{switch\_lose}, plus distributions. :contentReference[oaicite:9]{index=9}
+
+\textbf{Suggested fields:}
+\begin{itemize}
+  \item outcome buckets: \texttt{stay\_win}, \texttt{stay\_lose}, \texttt{switch\_win}, \texttt{switch\_lose}
+  \item distributions: counts for prize\_door 1/2/3, player\_door 1/2/3, decision stay/switch
+\end{itemize}
+
+\textbf{Suggested methods:}
+\begin{itemize}
+  \item \texttt{update(record: TrialRecord) -> None}
+  \item \texttt{n\_stay() -> int}, \texttt{n\_switch() -> int}
+  \item \texttt{p\_stay() -> float}, \texttt{p\_switch() -> float}  (win rates)
+\end{itemize}
+
+\textbf{Unit tests:}
+\begin{itemize}
+  \item \texttt{test\_update\_bucket\_stay\_win()}: one record increments only the correct bucket.
+  \item \texttt{test\_update\_bucket\_switch\_lose()}: similarly for another bucket.
+  \item \texttt{test\_distributions\_increment()}: prize/player/decision distributions increment correctly.
+  \item \texttt{test\_p\_stay\_and\_p\_switch\_divide\_by\_zero\_safe()}: 0 trials returns 0.0 or raises a clean error (choose one policy).
+\end{itemize}
+
+\subsection{ConfidenceMath + StoppingRule (confidence, not vibes)}
+Chapter 3 defines halfwidth and uses it to stop when both strategies are precise enough. :contentReference[oaicite:10]{index=10}
+
+\textbf{ConfidenceMath methods:}
+\begin{itemize}
+  \item \texttt{z\_value(confidence: float) -> float} (90/95/99)
+  \item \texttt{halfwidth(p\_hat: float, n: int, z: float) -> float} :contentReference[oaicite:11]{index=11}
+\end{itemize}
+
+\textbf{StoppingRule fields:}
+\begin{itemize}
+  \item \texttt{confidence: float}
+  \item \texttt{epsilon: float}
+\end{itemize}
+
+\textbf{StoppingRule method:}
+\begin{itemize}
+  \item \texttt{should\_stop(stats: OutcomeAggregator) -> bool}
+  \item This implements: halfwidth(stay) <= epsilon AND halfwidth(switch) <= epsilon. :contentReference[oaicite:12]{index=12}
+\end{itemize}
+
+\textbf{Unit tests:}
+\begin{itemize}
+  \item \texttt{test\_z\_value\_known\_constants()}: 0.95 maps to about 1.96 (etc.).
+  \item \texttt{test\_halfwidth\_n\_zero()}: returns inf (or a clear policy) :contentReference[oaicite:13]{index=13}
+  \item \texttt{test\_should\_stop\_false\_early()}: small n should not stop.
+  \item \texttt{test\_should\_stop\_true\_synthetic()}: create a fake aggregator with large n and p near 0.5 so halfwidth is tiny.
+\end{itemize}
+
+\subsection{CsvTrialLogger (simple, deterministic I/O)}
+\textbf{Purpose:} write exactly one header row and then one row per trial record.
+
+\textbf{Suggested methods:}
+\begin{itemize}
+  \item \texttt{\_\_init\_\_(path: str)}
+  \item \texttt{write\_header() -> None}
+  \item \texttt{append(record: TrialRecord) -> None}
+\end{itemize}
+
+\textbf{Unit tests:}
+\begin{itemize}
+  \item \texttt{test\_writes\_header\_once()}: call twice; file still has one header row.
+  \item \texttt{test\_append\_writes\_one\_line()}: line count increments by one.
+  \item \texttt{test\_append\_column\_count()}: each row has same number of columns as header.
+\end{itemize}
+
+\subsection{DataCollectionFSM (the EFSM becomes a class)}
+Chapter 3 lists the EFSM steps (place prize, pick door, reveal, decide, finalize, resolve, log, update, stop). :contentReference[oaicite:14]{index=14}
+We can implement that flow as a class so the diagram stays the boss.
+
+\textbf{Suggested fields (context variables):}
+\begin{itemize}
+  \item \texttt{trial\_id: int}
+  \item \texttt{seed: Optional[int]}
+  \item \texttt{prize\_door: Optional[int]}
+  \item \texttt{player\_door: Optional[int]}
+  \item \texttt{reveal\_door: Optional[int]}
+  \item \texttt{decision: Optional[str]}
+  \item \texttt{final\_door: Optional[int]}
+  \item \texttt{win: Optional[int]}
+  \item \texttt{strategy\_name: str}
+\end{itemize}
+
+\textbf{Suggested methods (beginner-friendly version):}
+\begin{itemize}
+  \item \texttt{run\_one\_trial(...) -> TrialRecord}: executes the EFSM stages in order and returns a record.
+  \item If you want \emph{extra} FSM practice: \texttt{step(event) -> None} and an internal \texttt{state} enum.
+\end{itemize}
+
+\textbf{Unit tests:}
+\begin{itemize}
+  \item \texttt{test\_run\_one\_trial\_produces\_valid\_record()}: record.validate() passes.
+  \item \texttt{test\_run\_one\_trial\_reveal\_legal()}: reveal != prize and reveal != player.
+  \item \texttt{test\_run\_one\_trial\_final\_door\_legal()}: final in \{1,2,3\} and not equal to reveal when switching.
+  \item \texttt{test\_seed\_reproducibility()}: with fixed seed, the full record matches expected.
+\end{itemize}
+
+\subsection{SimulationRunner (ties everything together)}
+\textbf{Purpose:} this is the orchestration layer:
+\begin{enumerate}
+  \item run a trial,
+  \item log it,
+  \item update stats,
+  \item check stopping rule,
+  \item repeat until done.
+\end{enumerate}
+This matches the Chapter 3 ``Write Trial Row -> Update Counters -> Update Stopping Stats -> Stopping Rule'' loop. :contentReference[oaicite:15]{index=15}
+
+\textbf{Suggested methods:}
+\begin{itemize}
+  \item \texttt{run() -> dict}: returns a summary: totals, win rates, and stop reason.
+\end{itemize}
+
+\textbf{Unit tests:}
+\begin{itemize}
+  \item \texttt{test\_runner\_stops\_eventually()}: with a relaxed epsilon (e.g., 0.20), it stops quickly.
+  \item \texttt{test\_runner\_writes\_n\_rows()}: if you run exactly N fixed trials (optional mode), CSV has N rows.
+  \item \texttt{test\_runner\_stats\_match\_rows()}: aggregator totals equal number of logged records.
+\end{itemize}
+
+\section{A testing mindset for first-year programmers}
+Every unit test should follow the same three-beat rhythm:
+\begin{enumerate}
+  \item \textbf{Arrange:} set up inputs (especially a fixed RNG seed).
+  \item \textbf{Act:} call exactly one method.
+  \item \textbf{Assert:} verify one clear outcome.
+\end{enumerate}
+
+Two friendly rules:
+\begin{itemize}
+  \item If a method is hard to test, it is probably doing too much.
+  \item Put randomness behind an injected RNG so tests can be deterministic.
+\end{itemize}
+
+\section{Stretch goals (optional, but excellent)}
+If a team finishes early, here are upgrades that deepen learning without changing the core design:
+\begin{itemize}
+  \item Add a \texttt{FixedTrialSequenceRNG} for tests that need predictable outputs.
+  \item Add more strategies (e.g., \texttt{SwitchUnlessPickedDoor1}).
+  \item Produce a summary CSV with final win rates and CI halfwidths.
+  \item Add a ``max trials'' safety cap so experiments never run forever.
+\end{itemize}
+
+\section{Where we go next}
+With this design in place, the implementation becomes mostly mechanical:
+each class has a small job, each method has unit tests, and the full program is just
+these parts working together.
+We are now ready to implement the code, generate CSV datasets, and create plots that support
+a real empirical claim.
+
