@@ -14,6 +14,9 @@ This chapter produces two practical deliverables:
   \item A clear \textbf{Data-Collection FSM} that spells out what happens, when it happens, what we log, and when we stop.
 \end{enumerate}
 
+Designing this chapter first makes the FSM the \emph{contract} for the implementation
+and for unit tests, ensuring both correctness and clarity.
+
 \section{The per-trial log (one row per game)}
 We record one row per simulated trial. These fields are the minimum needed to:
 verify randomness, debug mistakes, and compute meaningful statistics.
@@ -48,7 +51,6 @@ Each field serves a purpose:
 
 \section{What we aggregate as we go (running totals)}
 Along with the detailed per-trial row, we maintain running counters for three reasons:
-
 \begin{enumerate}
   \item Display progress without rereading the entire log.
   \item Build plots efficiently from incremental values.
@@ -129,18 +131,14 @@ enough to be worth graphing or reporting.
     estimate, not to an arbitrary trial count.
 \end{itemize}
 
-
-% Start of new dump.
 \subsection{A warm-up: coin tosses (confidence in action)}
 A coin toss is the simplest possible version of what we are doing in Monty Hall.
 Each toss is a Bernoulli trial (success/failure). If we define:
-
 \begin{itemize}
   \item \textbf{success} = Heads,
   \item \textbf{failure} = Tails,
   \item and $\hat{p}$ = the observed fraction of Heads,
 \end{itemize}
-
 then the true probability is $p=0.5$, but our estimate $\hat{p}$ starts off wildly unstable.
 After one toss, $\hat{p}$ is either $0$ or $1$. After two tosses, $\hat{p}$ can be $0$, $0.5$, or $1$.
 As $n$ grows, $\hat{p}$ tends to drift toward $0.5$ (law of large numbers), but the key idea is:
@@ -149,14 +147,12 @@ As $n$ grows, $\hat{p}$ tends to drift toward $0.5$ (law of large numbers), but 
 \emph{We do not just want $\hat{p}$ to be near $0.5$; we want to know how confident we are in that estimate.}
 \end{quote}
 
-The same halfwidth formula from above applies:
-
+The same halfwidth formula applies:
 \[
   \mathrm{halfwidth} = z \sqrt{\frac{\hat{p}(1-\hat{p})}{n}}
 \]
 
 Two big takeaways fall right out of this equation:
-
 \begin{enumerate}
   \item \textbf{More trials shrink uncertainty.} Halfwidth scales like $1/\sqrt{n}$, so gains are fast early and slower later.
   \item \textbf{Worst-case uncertainty happens near $\hat{p}=0.5$.} Because $\hat{p}(1-\hat{p})$ is maximized at $0.25$,
@@ -164,39 +160,197 @@ Two big takeaways fall right out of this equation:
 \end{enumerate}
 
 In the worst case ($\hat{p}\approx 0.5$), the halfwidth is approximately:
-
 \[
   \mathrm{halfwidth} \approx z \sqrt{\frac{0.25}{n}} = \frac{z}{2\sqrt{n}}
 \]
 
 So if we want a 95\% confidence interval with tolerance $\epsilon=0.01$ (about $\pm 1\%$),
 we solve:
-
 \[
   \frac{z}{2\sqrt{n}} \le \epsilon
   \quad \Rightarrow \quad
   n \ge \frac{z^2}{4\epsilon^2}
 \]
-
 For 95\% confidence, $z \approx 1.96$, so:
-
 \[
   n \gtrsim \frac{(1.96)^2}{4(0.01)^2} \approx 9604.
 \]
 
 That number is the whole lesson: if we only flip a coin 50 times and get 60\% Heads,
-that does \emph{not} mean the coin is biased—it usually means the sample is still small and the
+that does \emph{not} mean the coin is biased---it usually means the sample is still small and the
 confidence interval is still wide.
 
 Figure~\ref{fig:coin-ci-demo} shows (1) the running estimate $\hat{p}$ approaching $0.5$ and
 (2) how the confidence interval “whiskers” tighten as $n$ increases.
 
-% Stop of new dump
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=\linewidth]{coin_toss_ci_demo.pdf}
+  \caption{Coin-toss warm-up: running estimate of $\hat{p}$ (Heads rate) and its confidence interval tightening as $n$ grows.}
+  \label{fig:coin-ci-demo}
+\end{figure}
+
+\subsection{The coin-toss experiment script (included in this report)}
+To regenerate Figure~\ref{fig:coin-ci-demo}, run:
+\begin{quote}
+\texttt{python scripts/coin\_toss\_ci\_demo.py}
+\end{quote}
+The script writes \texttt{figures/coin\_toss\_ci\_demo.pdf}.
+
+\begin{quote}
+\textbf{File: \texttt{scripts/coin\_toss\_ci\_demo.py}}
+\end{quote}
+
+\begin{verbatim}
+#!/usr/bin/env python3
+"""
+coin_toss_ci_demo.py
+
+Generate a simple, classroom-friendly visualization of:
+  1) the running estimate p_hat = (#Heads)/n
+  2) the confidence interval "whiskers" that tighten as n grows
+
+Output:
+  figures/coin_toss_ci_demo.pdf
+
+This is intentionally small and dependency-light:
+  - Python 3.x
+  - matplotlib
+
+Usage:
+  python scripts/coin_toss_ci_demo.py
+  python scripts/coin_toss_ci_demo.py --n 2000 --confidence 0.95 --seed 123
+"""
+
+from __future__ import annotations
+
+import argparse
+import math
+from pathlib import Path
+from typing import List, Tuple
+
+import random
+
+import matplotlib.pyplot as plt
+
+
+def z_value(confidence: float) -> float:
+    """
+    Two-sided z critical values (common classroom defaults).
+    If you want arbitrary confidence->z, you'd typically use scipy.stats,
+    but we keep this lightweight and explicit.
+    """
+    if abs(confidence - 0.90) < 1e-9:
+        return 1.645
+    if abs(confidence - 0.95) < 1e-9:
+        return 1.96
+    if abs(confidence - 0.99) < 1e-9:
+        return 2.576
+    raise ValueError("confidence must be one of: 0.90, 0.95, 0.99")
+
+
+def halfwidth(p_hat: float, n: int, z: float) -> float:
+    """
+    Approximate halfwidth of a CI for a proportion:
+        z * sqrt(p_hat * (1 - p_hat) / n)
+
+    Guarded for n=0.
+    """
+    if n <= 0:
+        return float("inf")
+    return z * math.sqrt((p_hat * (1.0 - p_hat)) / n)
+
+
+def run_coin_tosses(n: int, rng: random.Random) -> Tuple[List[int], List[float], List[float], List[float]]:
+    """
+    Simulate n fair coin tosses.
+    Returns:
+      ns:      [1..n]
+      p_hats:  running estimate of P(Heads)
+      lows:    p_hat - halfwidth
+      highs:   p_hat + halfwidth
+    """
+    heads = 0
+    ns: List[int] = []
+    p_hats: List[float] = []
+    lows: List[float] = []
+    highs: List[float] = []
+    return ns, p_hats, lows, highs
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Coin toss CI warm-up plot generator.")
+    parser.add_argument("--n", type=int, default=2000, help="Number of tosses to simulate.")
+    parser.add_argument("--confidence", type=float, default=0.95, choices=[0.90, 0.95, 0.99],
+                        help="Confidence level (two-sided): 0.90, 0.95, or 0.99.")
+    parser.add_argument("--seed", type=int, default=None, help="Optional RNG seed for reproducibility.")
+    parser.add_argument("--out", type=str, default="figures/coin_toss_ci_demo.pdf",
+                        help="Output PDF path.")
+    args = parser.parse_args()
+
+    rng = random.Random(args.seed)
+    z = z_value(args.confidence)
+
+    # Running stats
+    heads = 0
+    ns: List[int] = []
+    p_hats: List[float] = []
+    lows: List[float] = []
+    highs: List[float] = []
+
+    for i in range(1, args.n + 1):
+        toss_is_heads = (rng.random() < 0.5)
+        if toss_is_heads:
+            heads += 1
+
+        p_hat = heads / i
+        hw = halfwidth(p_hat, i, z)
+
+        ns.append(i)
+        p_hats.append(p_hat)
+        lows.append(max(0.0, p_hat - hw))
+        highs.append(min(1.0, p_hat + hw))
+
+    # Worst-case sample size estimate (p_hat ~ 0.5)
+    # halfwidth ≈ z / (2*sqrt(n)) <= epsilon  =>  n >= z^2 / (4*epsilon^2)
+    # We print this as a nice "sense of scale" note for students.
+    epsilon = 0.01
+    n_needed = (z * z) / (4.0 * epsilon * epsilon)
+
+    out_path = Path(args.out)
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+
+    plt.figure()
+    plt.plot(ns, p_hats, label=r"$\hat{p}$ (Heads rate)")
+    plt.plot(ns, lows, label="CI lower")
+    plt.plot(ns, highs, label="CI upper")
+    plt.axhline(0.5, linestyle="--", label="True p = 0.5")
+    plt.title(f"Coin Toss CI Tightening (confidence={args.confidence:.2f}, n={args.n})")
+    plt.xlabel("Number of tosses (n)")
+    plt.ylabel("Probability")
+    plt.ylim(0.0, 1.0)
+    plt.legend()
+
+    # Add a small annotation about worst-case n for +/-1%
+    plt.text(
+        x=max(1, args.n // 10),
+        y=0.08,
+        s=f"Worst-case n for ±1% at this confidence ≈ {n_needed:.0f}",
+    )
+
+    plt.tight_layout()
+    plt.savefig(out_path, format="pdf")
+    print(f"Wrote: {out_path}")
+    print(f"Worst-case n for ±1% at confidence={args.confidence:.2f}: {n_needed:.0f}")
+
+
+if __name__ == "__main__":
+    main()
+\end{verbatim}
 
 \section{Worst-case estimate of needed trials}
 Because $\hat{p}(1-\hat{p})$ is largest when $\hat{p}=0.5$, we can derive a
-conservative bound on how many trials might be necessary.
-
+conservative bound on how many trials might be necessary:
 \[
  n \ge \frac{z^2}{4\epsilon^2}
 \]
@@ -208,18 +362,17 @@ Derivation sketch:
 \end{itemize}
 
 Example: for 99\% confidence ($z \approx 2.576$) and $\epsilon = 0.01$,
-
 \[
  n \gtrsim \frac{(2.576)^2}{4(0.01)^2} \approx 16588.
 \]
 
-This number is intentionally large to demonstrate why a few hundred trials can still
+This is intentionally large to demonstrate why a few hundred trials can still
 be noisy for tight tolerances. It is a worst-case estimate; actual needed $n$ could
 be smaller if the observed $\hat{p}$ is far from $0.5$, but it gives students a
 sense of scale.
 
 \section{The data-collection FSM (EFSM-style)}
-When we track extra variables such as \texttt{prize\_door} and \texttt{player\_choice},
+When we track extra variables such as \texttt{prize\_door} and \texttt{player\_door},
 we're really building an \emph{extended} FSM, or EFSM. Our Data-Collection FSM uses
 the same clean state backbone as in Chapter~\ref{ch:fsm-basics}, but now annotates
 each step with:
@@ -255,3 +408,4 @@ The new difference is that actions include:
 
 Designing this chapter first makes the FSM the contract for the implementation
 and for unit tests, ensuring both correctness and clarity.
+
