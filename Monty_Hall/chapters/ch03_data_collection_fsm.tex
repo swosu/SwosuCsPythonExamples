@@ -312,7 +312,7 @@ def main() -> None:
         highs.append(min(1.0, p_hat + hw))
 
     # Worst-case sample size estimate (p_hat ~ 0.5)
-    # halfwidth ≈ z / (2*sqrt(n)) <= epsilon  =>  n >= z^2 / (4*epsilon^2)
+    # halfwidth ~=  z / (2*sqrt(n)) <= epsilon  =>  n >= z^2 / (4*epsilon^2)
     # We print this as a nice "sense of scale" note for students.
     epsilon = 0.01
     n_needed = (z * z) / (4.0 * epsilon * epsilon)
@@ -335,13 +335,13 @@ def main() -> None:
     plt.text(
         x=max(1, args.n // 10),
         y=0.08,
-        s=f"Worst-case n for ±1% at this confidence ≈ {n_needed:.0f}",
+        s=f"Worst-case n for +/-1% at this confidence ~= {n_needed:.0f}",
     )
 
     plt.tight_layout()
     plt.savefig(out_path, format="pdf")
     print(f"Wrote: {out_path}")
-    print(f"Worst-case n for ±1% at confidence={args.confidence:.2f}: {n_needed:.0f}")
+    print(f"Worst-case n for +/-1% at confidence={args.confidence:.2f}: {n_needed:.0f}")
 
 
 if __name__ == "__main__":
