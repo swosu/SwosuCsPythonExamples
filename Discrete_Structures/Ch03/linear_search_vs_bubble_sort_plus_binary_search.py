@@ -2,9 +2,21 @@ import random
 import time
 import string
 
+import random
+
 def generate_random_list(size):
-    """Generate a random list of integers."""
-    return [random.randint(1, 1000) for _ in range(size)]
+    """Generate a random list of integers using a simple loop."""
+    min_value = 1
+    max_value = size * 1000
+
+    numbers = []
+
+    for index in range(size):
+        value = random.randint(min_value, max_value)
+        numbers.append(value)
+
+    return numbers
+
 
 def linear_search(arr, target):
     """Perform a linear search on the array."""
