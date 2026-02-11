@@ -1,0 +1,19 @@
+name = input("What’s your name? ")
+print("Hello, {}. This is a document for class. ".format(name))
+
+parking = input("Please enter your parking spot number: ")
+print(f"Thank you! Your parking spot number is {parking}.")
+
+
+answer = input("would you like to see a cat? (yes/no) ")
+if answer.lower() == "yes":
+    print("      /\\_/\\")
+    print(" /\\  / o o \\")
+    print("//\\\\ \\~(*)~/")
+    print("`  \\/   ^ /")
+    print("   | \\|| ||")
+    print("   \\ '|| ||")
+    print("    \\)()-())")
+    print("This is mittens!")
+else: 
+    print("Sad, but understandable. It's a really good cat though.")
