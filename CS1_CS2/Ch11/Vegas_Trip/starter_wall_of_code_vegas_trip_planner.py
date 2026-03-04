@@ -1,32 +1,14 @@
 from trip_greeting import print_greeting
+from trip_inputs import (
+    ask_food_cost_per_day,
+    ask_hotel_price,
+    ask_number_of_rooms,
+    ask_number_of_travelers,
+    ask_trip_length_days,
+)
 
 
 # Input Functions
-def ask_number_of_travelers() -> int:
-    """Prompt for and return the number of people traveling."""
-    return int(input("How many people are traveling? "))
-
-
-def ask_trip_length_days() -> int:
-    """Prompt for and return the number of days the trip will last."""
-    return int(input("How many days will the trip last? "))
-
-
-def ask_hotel_price() -> float:
-    """Prompt for and return the hotel price per night."""
-    return float(input("What is the hotel price per night? "))
-
-
-def ask_number_of_rooms() -> int:
-    """Prompt for and return the number of hotel rooms needed."""
-    return int(input("How many hotel rooms are needed? "))
-
-
-def ask_food_cost_per_day() -> float:
-    """Prompt for and return expected food cost per person per day."""
-    return float(input("How much does each traveler expect to spend on food per day? "))
-
-
 def ask_parking_cost_per_day() -> float:
     """Prompt for and return parking cost per day."""
     return float(input("How much does hotel or casino parking cost per day? "))

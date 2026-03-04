@@ -7,7 +7,7 @@ from pathlib import Path
 TASK_FILE = "codex_refactor_vegas_trip_tasks.json"
 SOURCE_FILE = "starter_wall_of_code_vegas_trip_planner.py"
 
-MAX_TASKS_PER_RUN = 2
+MAX_TASKS_PER_RUN = 5
 MAX_RETRIES = 3
 
 

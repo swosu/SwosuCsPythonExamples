@@ -34,7 +34,8 @@
     "id": "R-004",
     "title": "Move greeting functionality into greeting module",
     "description": "Extract the print_greeting() function from the original file and place it into trip_greeting.py.",
-    "expected_output": "Greeting functionality isolated in trip_greeting.py."
+    "expected_output": "Greeting functionality isolated in trip_greeting.py.",
+    "status": "done"
   },
   {
     "id": "R-005",
