@@ -25,28 +25,42 @@ def get_pending_tasks(data):
     pending = [t for t in data["tasks"] if t["status"] == "todo"]
     return pending[:MAX_TASKS_PER_RUN]
 
-
 def build_prompt(task):
     """Create prompt sent to Codex."""
+
+    with open(TARGET_FILE, "r") as f:
+        current_code = f.read()
+
     return f"""
-You are helping build a Python program.
+You are editing an existing Python file.
 
-Current file: {TARGET_FILE}
-
-Task:
+TASK
 {task['title']}
 
-Description:
+DESCRIPTION
 {task['description']}
 
-Rules:
-- Write clean Python code
-- do not add python fences for markdown
-- add the code in the appropriate location in the file
-- Only implement what the task requires
-- Return only the code that should be added or modified
-"""
+CURRENT FILE CONTENT
+--------------------
+{current_code}
 
+STYLE RULES
+-----------
+- All function definitions must appear ABOVE the line:
+  if __name__ == "__main__":
+- Never place functions below main
+- Avoid duplicate functions
+- Keep imports at the top
+- Follow clean Python style
+
+INSTRUCTIONS
+------------
+Modify the program to complete the task.
+
+Return the ENTIRE updated file.
+Do not include markdown fences.
+Return only Python code.
+"""
 
 def run_codex(prompt):
     """Execute Codex CLI with a prompt."""

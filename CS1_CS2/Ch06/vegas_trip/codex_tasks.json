@@ -24,13 +24,13 @@
       "id": "T-004",
       "title": "Create function to ask number of trip days",
       "description": "Write ask_trip_length_days() that asks the user how many days the trip will last.",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-005",
       "title": "Create function to ask travel method",
       "description": "Write ask_travel_method() that asks the user if they want to drive or fly.",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-006",
