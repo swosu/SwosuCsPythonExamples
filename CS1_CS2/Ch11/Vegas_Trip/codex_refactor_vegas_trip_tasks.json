@@ -27,7 +27,8 @@
       "trip_calculations.py",
       "trip_summary.py",
       "tests/"
-    ]
+    ],
+    "status": "done"
   },
   {
     "id": "R-004",
