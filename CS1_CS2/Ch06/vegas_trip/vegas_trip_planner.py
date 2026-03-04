@@ -28,6 +28,11 @@ def ask_food_cost_per_day() -> float:
     return float(input("How much does each traveler expect to spend on food per day? "))
 
 
+def ask_entertainment_budget() -> float:
+    """Prompt for and return the total gambling and entertainment budget."""
+    return float(input("What is your total gambling and entertainment budget? "))
+
+
 def ask_travel_method() -> str:
     """Prompt for and return whether the travelers will drive or fly."""
     while True:
