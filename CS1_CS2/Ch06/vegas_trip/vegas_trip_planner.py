@@ -13,6 +13,11 @@ def ask_trip_length_days() -> int:
     return int(input("How many days will the trip last? "))
 
 
+def ask_hotel_price() -> float:
+    """Prompt for and return the hotel price per night."""
+    return float(input("What is the hotel price per night? "))
+
+
 def ask_travel_method() -> str:
     """Prompt for and return whether the travelers will drive or fly."""
     while True:
