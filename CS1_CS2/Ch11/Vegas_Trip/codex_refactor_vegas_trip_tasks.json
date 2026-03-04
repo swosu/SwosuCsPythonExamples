@@ -111,7 +111,8 @@
     "id": "R-015",
     "title": "Write unit tests for miscellaneous cost logic",
     "description": "Create tests/test_miscellaneous.py verifying vehicle maintenance and parking ticket calculations.",
-    "expected_output": "miscellaneous costs verified."
+    "expected_output": "miscellaneous costs verified.",
+    "status": "done"
   },
   {
     "id": "R-016",
