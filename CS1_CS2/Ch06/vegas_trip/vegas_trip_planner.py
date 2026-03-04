@@ -37,6 +37,11 @@ def ask_fuel_price() -> float:
     return float(input("What is the price of fuel per gallon? "))
 
 
+def calculate_gallons_needed(distance: float, mpg: float) -> float:
+    """Calculate the total gallons of fuel needed for the trip."""
+    return distance / mpg
+
+
 def main() -> None:
     """Run the Vegas trip planner program."""
     pass
