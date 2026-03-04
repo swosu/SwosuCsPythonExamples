@@ -104,7 +104,8 @@
     "id": "R-014",
     "title": "Write unit tests for transportation logic",
     "description": "Create tests/test_transportation.py verifying driving and flying cost selection.",
-    "expected_output": "transportation logic tested."
+    "expected_output": "transportation logic tested.",
+    "status": "done"
   },
   {
     "id": "R-015",
