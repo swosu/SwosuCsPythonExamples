@@ -43,6 +43,11 @@ def ask_souvenir_budget() -> float:
     return float(input("How much do you expect to spend on souvenirs? "))
 
 
+def ask_emergency_fund() -> float:
+    """Prompt for and return the amount reserved for unexpected expenses."""
+    return float(input("How much money do you want to reserve for unexpected expenses? "))
+
+
 def ask_travel_method() -> str:
     """Prompt for and return whether the travelers will drive or fly."""
     while True:
@@ -112,10 +117,16 @@ def calculate_parking_cost(parking_per_day: float, days: int) -> float:
 
 
 def calculate_total_trip_cost(
-    transport: float, lodging: float, food: float, parking: float, entertainment: float, souvenirs: float
+    transport: float,
+    lodging: float,
+    food: float,
+    parking: float,
+    entertainment: float,
+    souvenirs: float,
+    emergency_fund: float,
 ) -> float:
     """Calculate and return the total trip cost."""
-    return transport + lodging + food + parking + entertainment + souvenirs
+    return transport + lodging + food + parking + entertainment + souvenirs + emergency_fund
 
 
 def calculate_cost_per_person(total_cost: float, travelers: int) -> float:
@@ -139,6 +150,7 @@ def plan_vegas_trip() -> None:
     parking_per_day = ask_parking_cost_per_day()
     entertainment_budget = ask_entertainment_budget()
     souvenir_budget = ask_souvenir_budget()
+    emergency_fund = ask_emergency_fund()
     travel_method = ask_travel_method()
 
     fuel_cost = 0.0
@@ -159,7 +171,13 @@ def plan_vegas_trip() -> None:
     food_cost = calculate_food_cost(food_per_day, travelers, days)
     parking_cost = calculate_parking_cost(parking_per_day, days)
     total_cost = calculate_total_trip_cost(
-        transportation_cost, lodging_cost, food_cost, parking_cost, entertainment_budget, souvenir_budget
+        transportation_cost,
+        lodging_cost,
+        food_cost,
+        parking_cost,
+        entertainment_budget,
+        souvenir_budget,
+        emergency_fund,
     )
     cost_per_person = calculate_cost_per_person(total_cost, travelers)
 
