@@ -77,6 +77,15 @@ def calculate_flight_cost(ticket_price: float, travelers: int) -> float:
     return ticket_price * travelers
 
 
+def calculate_transportation_cost(method: str, fuel_cost: float, flight_cost: float) -> float:
+    """Select and return transportation cost based on the chosen travel method."""
+    if method == "drive":
+        return fuel_cost
+    if method == "fly":
+        return flight_cost
+    raise ValueError("method must be 'drive' or 'fly'")
+
+
 def calculate_lodging_cost(price_per_night: float, rooms: int, nights: int) -> float:
     """Calculate total hotel lodging cost."""
     return price_per_night * rooms * nights
