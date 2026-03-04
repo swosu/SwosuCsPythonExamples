@@ -52,6 +52,11 @@ def calculate_fuel_cost(gallons: float, fuel_price: float) -> float:
     return gallons * fuel_price
 
 
+def calculate_flight_cost(ticket_price: float, travelers: int) -> float:
+    """Calculate total airfare cost for all travelers."""
+    return ticket_price * travelers
+
+
 def main() -> None:
     """Run the Vegas trip planner program."""
     pass
