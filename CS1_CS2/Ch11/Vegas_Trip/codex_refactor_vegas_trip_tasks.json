@@ -55,7 +55,8 @@
     "id": "R-007",
     "title": "Move entertainment and extra budget inputs",
     "description": "Move gambling loss, souvenirs, emergency fund, parking tickets, vehicle maintenance, entertainment budget, and local transportation functions into budget_inputs.py.",
-    "expected_output": "budget_inputs.py handles optional spending inputs."
+    "expected_output": "budget_inputs.py handles optional spending inputs.",
+    "status": "done"
   },
   {
     "id": "R-008",
