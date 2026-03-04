@@ -83,7 +83,8 @@
     "id": "R-011",
     "title": "Ensure modules import correctly",
     "description": "Update imports across modules so that functions are referenced correctly and the program runs from main.py.",
-    "expected_output": "Running python main.py successfully runs the Vegas Trip Planner."
+    "expected_output": "Running python main.py successfully runs the Vegas Trip Planner.",
+    "status": "done"
   },
   {
     "id": "R-012",
