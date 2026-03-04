@@ -202,24 +202,26 @@ def plan_vegas_trip() -> None:
     hotel_price = ask_hotel_price()
     rooms = ask_number_of_rooms()
     food_per_day = ask_food_cost_per_day()
+
     parking_per_day = ask_parking_cost_per_day()
-    parking_ticket_budget = ask_parking_ticket_budget()
-    local_transport_budget = ask_local_transport_budget()
-    entertainment_budget = ask_entertainment_budget()
-    gambling_loss = ask_expected_gambling_loss()
     souvenir_budget = ask_souvenir_budget()
     emergency_fund = ask_emergency_fund()
+    gambling_loss = ask_expected_gambling_loss()
+
+    parking_ticket_budget = ask_parking_ticket_budget()
+    vehicle_maintenance_budget = ask_vehicle_maintenance_budget()
+
+    local_transport_budget = ask_local_transport_budget()
+    entertainment_budget = ask_entertainment_budget()
     travel_method = ask_travel_method()
 
     fuel_cost = 0.0
     flight_cost = 0.0
-    vehicle_maintenance_budget = 0.0
 
     if travel_method == "drive":
         driving_distance = ask_driving_distance()
         vehicle_mpg = ask_vehicle_mpg()
         fuel_price = ask_fuel_price()
-        vehicle_maintenance_budget = ask_vehicle_maintenance_budget()
         gallons_needed = calculate_gallons_needed(driving_distance, vehicle_mpg)
         fuel_cost = calculate_fuel_cost(gallons_needed, fuel_price)
     else:
