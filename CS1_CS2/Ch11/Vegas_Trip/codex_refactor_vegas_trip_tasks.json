@@ -62,7 +62,8 @@
     "id": "R-008",
     "title": "Move calculation logic into calculation module",
     "description": "Move all calculation functions such as fuel cost, lodging cost, food cost, parking cost, miscellaneous cost, total trip cost, and cost per person into trip_calculations.py.",
-    "expected_output": "trip_calculations.py contains pure calculation logic."
+    "expected_output": "trip_calculations.py contains pure calculation logic.",
+    "status": "done"
   },
   {
     "id": "R-009",
