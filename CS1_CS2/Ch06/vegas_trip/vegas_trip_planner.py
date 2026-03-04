@@ -42,6 +42,11 @@ def calculate_gallons_needed(distance: float, mpg: float) -> float:
     return distance / mpg
 
 
+def calculate_fuel_cost(gallons: float, fuel_price: float) -> float:
+    """Calculate total fuel cost for the trip."""
+    return gallons * fuel_price
+
+
 def main() -> None:
     """Run the Vegas trip planner program."""
     pass
