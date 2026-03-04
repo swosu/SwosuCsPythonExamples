@@ -67,6 +67,11 @@ def calculate_flight_cost(ticket_price: float, travelers: int) -> float:
     return ticket_price * travelers
 
 
+def calculate_lodging_cost(price_per_night: float, rooms: int, nights: int) -> float:
+    """Calculate total hotel lodging cost."""
+    return price_per_night * rooms * nights
+
+
 def main() -> None:
     """Run the Vegas trip planner program."""
     pass
