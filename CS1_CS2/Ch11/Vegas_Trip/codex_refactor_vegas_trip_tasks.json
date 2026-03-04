@@ -97,7 +97,8 @@
     "id": "R-013",
     "title": "Write unit tests for calculation module",
     "description": "Create tests/test_calculations.py that verifies fuel cost, lodging cost, food cost, parking cost, total trip cost, and cost per person calculations.",
-    "expected_output": "All calculation functions tested."
+    "expected_output": "All calculation functions tested.",
+    "status": "done"
   },
   {
     "id": "R-014",
