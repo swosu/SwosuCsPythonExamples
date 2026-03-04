@@ -145,6 +145,78 @@
       "title": "Call orchestrator from main",
       "description": "Update main() to call print_greeting() and plan_vegas_trip().",
       "status": "done"
+    },
+    {
+      "id": "T-025",
+      "title": "Create function to ask parking cost",
+      "description": "Write ask_parking_cost_per_day() that asks the user how much hotel or casino parking costs per day.",
+      "status": "done"
+    },
+    {
+      "id": "T-026",
+      "title": "Create function to calculate total parking cost",
+      "description": "Write calculate_parking_cost(parking_per_day, days) that returns the total parking cost.",
+      "status": "done"
+    },
+    {
+      "id": "T-027",
+      "title": "Create function to ask souvenir budget",
+      "description": "Write ask_souvenir_budget() that asks the user how much money they expect to spend on souvenirs.",
+      "status": "done"
+    },
+    {
+      "id": "T-028",
+      "title": "Create function to ask emergency fund",
+      "description": "Write ask_emergency_fund() that asks the user how much money they want to reserve for unexpected expenses.",
+      "status": "done"
+    },
+    {
+      "id": "T-029",
+      "title": "Create function to ask gambling loss estimate",
+      "description": "Write ask_expected_gambling_loss() that asks the user how much money they expect to lose gambling.",
+      "status": "done"
+    },
+    {
+      "id": "T-030",
+      "title": "Create function to ask local transportation budget",
+      "description": "Write ask_local_transport_budget() that asks the user how much they expect to spend on taxis, Uber, or monorail rides in Las Vegas.",
+      "status": "todo"
+    },
+    {
+      "id": "T-031",
+      "title": "Create function to ask parking ticket risk",
+      "description": "Write ask_parking_ticket_budget() that asks the user how much money they want to reserve for parking tickets or fines.",
+      "status": "todo"
+    },
+    {
+      "id": "T-032",
+      "title": "Create function to ask vehicle maintenance buffer",
+      "description": "Write ask_vehicle_maintenance_budget() that asks the user how much money they want to reserve for vehicle maintenance or repairs during the trip.",
+      "status": "todo"
+    },
+    {
+      "id": "T-033",
+      "title": "Create function to calculate miscellaneous costs",
+      "description": "Write calculate_miscellaneous_costs(...) that combines souvenirs, emergency funds, gambling losses, parking tickets, and vehicle maintenance costs.",
+      "status": "todo"
+    },
+    {
+      "id": "T-034",
+      "title": "Update total trip cost calculation",
+      "description": "Modify calculate_total_trip_cost() so that it includes parking, souvenirs, emergency funds, gambling losses, and miscellaneous travel costs.",
+      "status": "todo"
+    },
+    {
+      "id": "T-035",
+      "title": "Update trip summary output",
+      "description": "Update print_trip_summary() so the output includes parking costs, souvenir spending, emergency reserves, gambling losses, and miscellaneous expenses.",
+      "status": "todo"
+    },
+    {
+      "id": "T-036",
+      "title": "Update orchestration function",
+      "description": "Modify plan_vegas_trip() to gather inputs for parking, souvenirs, emergency funds, gambling losses, and miscellaneous travel costs.",
+      "status": "todo"
     }
   ]
 }
