@@ -27,6 +27,11 @@ def ask_driving_distance() -> float:
     return float(input("How many miles is the trip if traveling by car? "))
 
 
+def ask_vehicle_mpg() -> float:
+    """Prompt for and return the vehicle fuel efficiency in miles per gallon."""
+    return float(input("What is your vehicle's fuel efficiency (mpg)? "))
+
+
 def main() -> None:
     """Run the Vegas trip planner program."""
     pass
