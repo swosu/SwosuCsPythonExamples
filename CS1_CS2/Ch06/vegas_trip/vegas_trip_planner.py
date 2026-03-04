@@ -101,11 +101,16 @@ def calculate_food_cost(food_per_day: float, travelers: int, days: int) -> float
     return food_per_day * travelers * days
 
 
+def calculate_parking_cost(parking_per_day: float, days: int) -> float:
+    """Calculate total parking cost over the trip."""
+    return parking_per_day * days
+
+
 def calculate_total_trip_cost(
-    transport: float, lodging: float, food: float, entertainment: float
+    transport: float, lodging: float, food: float, parking: float, entertainment: float
 ) -> float:
     """Calculate and return the total trip cost."""
-    return transport + lodging + food + entertainment
+    return transport + lodging + food + parking + entertainment
 
 
 def calculate_cost_per_person(total_cost: float, travelers: int) -> float:
@@ -126,6 +131,7 @@ def plan_vegas_trip() -> None:
     hotel_price = ask_hotel_price()
     rooms = ask_number_of_rooms()
     food_per_day = ask_food_cost_per_day()
+    parking_per_day = ask_parking_cost_per_day()
     entertainment_budget = ask_entertainment_budget()
     travel_method = ask_travel_method()
 
@@ -145,8 +151,9 @@ def plan_vegas_trip() -> None:
     transportation_cost = calculate_transportation_cost(travel_method, fuel_cost, flight_cost)
     lodging_cost = calculate_lodging_cost(hotel_price, rooms, days)
     food_cost = calculate_food_cost(food_per_day, travelers, days)
+    parking_cost = calculate_parking_cost(parking_per_day, days)
     total_cost = calculate_total_trip_cost(
-        transportation_cost, lodging_cost, food_cost, entertainment_budget
+        transportation_cost, lodging_cost, food_cost, parking_cost, entertainment_budget
     )
     cost_per_person = calculate_cost_per_person(total_cost, travelers)
 
