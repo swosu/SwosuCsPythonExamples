@@ -114,9 +114,45 @@ def print_trip_summary(total_cost: float, cost_per_person: float) -> None:
     print(f"Cost per traveler: ${cost_per_person:.2f}")
 
 
+def plan_vegas_trip() -> None:
+    """Orchestrate prompts, calculations, and output for the Vegas trip planner."""
+    print_greeting()
+
+    travelers = ask_number_of_travelers()
+    days = ask_trip_length_days()
+    hotel_price = ask_hotel_price()
+    rooms = ask_number_of_rooms()
+    food_per_day = ask_food_cost_per_day()
+    entertainment_budget = ask_entertainment_budget()
+    travel_method = ask_travel_method()
+
+    fuel_cost = 0.0
+    flight_cost = 0.0
+
+    if travel_method == "drive":
+        driving_distance = ask_driving_distance()
+        vehicle_mpg = ask_vehicle_mpg()
+        fuel_price = ask_fuel_price()
+        gallons_needed = calculate_gallons_needed(driving_distance, vehicle_mpg)
+        fuel_cost = calculate_fuel_cost(gallons_needed, fuel_price)
+    else:
+        plane_ticket_price = ask_plane_ticket_price()
+        flight_cost = calculate_flight_cost(plane_ticket_price, travelers)
+
+    transportation_cost = calculate_transportation_cost(travel_method, fuel_cost, flight_cost)
+    lodging_cost = calculate_lodging_cost(hotel_price, rooms, days)
+    food_cost = calculate_food_cost(food_per_day, travelers, days)
+    total_cost = calculate_total_trip_cost(
+        transportation_cost, lodging_cost, food_cost, entertainment_budget
+    )
+    cost_per_person = calculate_cost_per_person(total_cost, travelers)
+
+    print_trip_summary(total_cost, cost_per_person)
+
+
 def main() -> None:
     """Run the Vegas trip planner program."""
-    pass
+    plan_vegas_trip()
 
 
 if __name__ == "__main__":
