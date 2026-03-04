@@ -99,6 +99,8 @@ CODING RULES
 4. Use meaningful module names.
 5. main.py must orchestrate the program.
 6. Modules should contain logically grouped functions.
+7. When extracting functions into modules, do not leave duplicate definitions
+in the original file.
 
 STYLE RULES
 -----------

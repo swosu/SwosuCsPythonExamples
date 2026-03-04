@@ -10,7 +10,8 @@
     "id": "R-002",
     "title": "Insert high-level comments in original file",
     "description": "Modify starter_wall_of_code_vegas_trip_planner.py by inserting comment headers separating the code into logical sections: Greeting, Input Functions, Transportation Input, Cost Calculations, Output Functions, and Program Orchestration.",
-    "expected_output": "Original file clearly labeled with section comments."
+    "expected_output": "Original file clearly labeled with section comments.",
+    "status": "done"
   },
   {
     "id": "R-003",
