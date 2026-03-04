@@ -48,7 +48,8 @@
     "id": "R-006",
     "title": "Move transportation input functions",
     "description": "Move travel method selection, driving distance, mpg, fuel price, and plane ticket price functions into transportation_inputs.py.",
-    "expected_output": "transportation_inputs.py handles transportation related input."
+    "expected_output": "transportation_inputs.py handles transportation related input.",
+    "status": "done"
   },
   {
     "id": "R-007",
