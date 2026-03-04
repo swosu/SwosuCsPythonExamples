@@ -38,6 +38,11 @@ def ask_parking_ticket_budget() -> float:
     return float(input("How much money do you want to reserve for parking tickets or fines? "))
 
 
+def ask_vehicle_maintenance_budget() -> float:
+    """Prompt for and return money reserved for vehicle maintenance or repairs."""
+    return float(input("How much money do you want to reserve for vehicle maintenance or repairs during the trip? "))
+
+
 def ask_local_transport_budget() -> float:
     """Prompt for and return local transportation budget in Las Vegas."""
     return float(input("How much do you expect to spend on taxis, Uber, or monorail rides in Las Vegas? "))
@@ -137,6 +142,7 @@ def calculate_total_trip_cost(
     food: float,
     parking: float,
     parking_tickets: float,
+    vehicle_maintenance: float,
     local_transport: float,
     entertainment: float,
     souvenirs: float,
@@ -149,6 +155,7 @@ def calculate_total_trip_cost(
         + food
         + parking
         + parking_tickets
+        + vehicle_maintenance
         + local_transport
         + entertainment
         + souvenirs
@@ -184,11 +191,13 @@ def plan_vegas_trip() -> None:
 
     fuel_cost = 0.0
     flight_cost = 0.0
+    vehicle_maintenance_budget = 0.0
 
     if travel_method == "drive":
         driving_distance = ask_driving_distance()
         vehicle_mpg = ask_vehicle_mpg()
         fuel_price = ask_fuel_price()
+        vehicle_maintenance_budget = ask_vehicle_maintenance_budget()
         gallons_needed = calculate_gallons_needed(driving_distance, vehicle_mpg)
         fuel_cost = calculate_fuel_cost(gallons_needed, fuel_price)
     else:
@@ -205,6 +214,7 @@ def plan_vegas_trip() -> None:
         food_cost,
         parking_cost,
         parking_ticket_budget,
+        vehicle_maintenance_budget,
         local_transport_budget,
         entertainment_budget,
         souvenir_budget,
