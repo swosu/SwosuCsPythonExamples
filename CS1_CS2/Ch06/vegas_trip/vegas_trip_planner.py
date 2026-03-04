@@ -176,8 +176,21 @@ def calculate_cost_per_person(total_cost: float, travelers: int) -> float:
     return total_cost / travelers
 
 
-def print_trip_summary(total_cost: float, cost_per_person: float) -> None:
-    """Print a summary of total trip cost and cost per traveler."""
+def print_trip_summary(
+    total_cost: float,
+    cost_per_person: float,
+    parking_cost: float,
+    souvenir_spending: float,
+    emergency_reserve: float,
+    gambling_losses: float,
+    miscellaneous_expenses: float,
+) -> None:
+    """Print a summary of key trip costs and per-traveler totals."""
+    print(f"Parking costs: ${parking_cost:.2f}")
+    print(f"Souvenir spending: ${souvenir_spending:.2f}")
+    print(f"Emergency reserves: ${emergency_reserve:.2f}")
+    print(f"Gambling losses: ${gambling_losses:.2f}")
+    print(f"Miscellaneous expenses: ${miscellaneous_expenses:.2f}")
     print(f"Total trip cost: ${total_cost:.2f}")
     print(f"Cost per traveler: ${cost_per_person:.2f}")
 
@@ -235,7 +248,15 @@ def plan_vegas_trip() -> None:
     )
     cost_per_person = calculate_cost_per_person(total_cost, travelers)
 
-    print_trip_summary(total_cost, cost_per_person)
+    print_trip_summary(
+        total_cost,
+        cost_per_person,
+        parking_cost,
+        souvenir_budget,
+        emergency_fund,
+        gambling_loss,
+        miscellaneous_travel_costs,
+    )
 
 
 def main() -> None:
