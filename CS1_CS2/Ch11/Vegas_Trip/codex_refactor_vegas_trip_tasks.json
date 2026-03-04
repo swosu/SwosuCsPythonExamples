@@ -118,6 +118,7 @@
     "id": "R-016",
     "title": "Run pytest test suite",
     "description": "Execute pytest and ensure all modules import correctly and tests pass.",
-    "expected_output": "All tests pass successfully."
+    "expected_output": "All tests pass successfully.",
+    "status": "done"
   }
 ]
