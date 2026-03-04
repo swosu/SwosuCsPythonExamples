@@ -1,0 +1,108 @@
+[
+  {
+    "id": "R-001",
+    "title": "Analyze original wall-of-code file",
+    "description": "Open starter_wall_of_code_vegas_trip_planner.py and analyze all functions. Identify logical categories of functionality such as greeting, user input collection, transportation input, cost calculations, summary output, and orchestration logic.",
+    "expected_output": "Codex understands the functional groupings in the original file."
+  },
+  {
+    "id": "R-002",
+    "title": "Insert high-level comments in original file",
+    "description": "Modify starter_wall_of_code_vegas_trip_planner.py by inserting comment headers separating the code into logical sections: Greeting, Input Functions, Transportation Input, Cost Calculations, Output Functions, and Program Orchestration.",
+    "expected_output": "Original file clearly labeled with section comments."
+  },
+  {
+    "id": "R-003",
+    "title": "Create modular project structure",
+    "description": "Create a clean project layout including src directory and module files that will contain refactored code.",
+    "expected_output": "Directory structure created with empty modules.",
+    "files_to_create": [
+      "main.py",
+      "trip_greeting.py",
+      "trip_inputs.py",
+      "transportation_inputs.py",
+      "budget_inputs.py",
+      "trip_calculations.py",
+      "trip_summary.py",
+      "tests/"
+    ]
+  },
+  {
+    "id": "R-004",
+    "title": "Move greeting functionality into greeting module",
+    "description": "Extract the print_greeting() function from the original file and place it into trip_greeting.py.",
+    "expected_output": "Greeting functionality isolated in trip_greeting.py."
+  },
+  {
+    "id": "R-005",
+    "title": "Move general input functions into trip_inputs module",
+    "description": "Move traveler count, trip length, hotel price, room count, and food cost functions into trip_inputs.py.",
+    "expected_output": "trip_inputs.py contains general trip input prompts."
+  },
+  {
+    "id": "R-006",
+    "title": "Move transportation input functions",
+    "description": "Move travel method selection, driving distance, mpg, fuel price, and plane ticket price functions into transportation_inputs.py.",
+    "expected_output": "transportation_inputs.py handles transportation related input."
+  },
+  {
+    "id": "R-007",
+    "title": "Move entertainment and extra budget inputs",
+    "description": "Move gambling loss, souvenirs, emergency fund, parking tickets, vehicle maintenance, entertainment budget, and local transportation functions into budget_inputs.py.",
+    "expected_output": "budget_inputs.py handles optional spending inputs."
+  },
+  {
+    "id": "R-008",
+    "title": "Move calculation logic into calculation module",
+    "description": "Move all calculation functions such as fuel cost, lodging cost, food cost, parking cost, miscellaneous cost, total trip cost, and cost per person into trip_calculations.py.",
+    "expected_output": "trip_calculations.py contains pure calculation logic."
+  },
+  {
+    "id": "R-009",
+    "title": "Move summary printing logic",
+    "description": "Move print_trip_summary() into trip_summary.py.",
+    "expected_output": "trip_summary.py contains functions responsible for displaying results."
+  },
+  {
+    "id": "R-010",
+    "title": "Create program orchestrator main.py",
+    "description": "Create main.py that imports modules and orchestrates the full program flow. It should call greeting, collect inputs, perform calculations, and print the summary.",
+    "expected_output": "main.py clearly shows the high-level execution flow of the application."
+  },
+  {
+    "id": "R-011",
+    "title": "Ensure modules import correctly",
+    "description": "Update imports across modules so that functions are referenced correctly and the program runs from main.py.",
+    "expected_output": "Running python main.py successfully runs the Vegas Trip Planner."
+  },
+  {
+    "id": "R-012",
+    "title": "Create unit test directory",
+    "description": "Create tests folder for pytest-based unit tests.",
+    "expected_output": "tests directory created."
+  },
+  {
+    "id": "R-013",
+    "title": "Write unit tests for calculation module",
+    "description": "Create tests/test_calculations.py that verifies fuel cost, lodging cost, food cost, parking cost, total trip cost, and cost per person calculations.",
+    "expected_output": "All calculation functions tested."
+  },
+  {
+    "id": "R-014",
+    "title": "Write unit tests for transportation logic",
+    "description": "Create tests/test_transportation.py verifying driving and flying cost selection.",
+    "expected_output": "transportation logic tested."
+  },
+  {
+    "id": "R-015",
+    "title": "Write unit tests for miscellaneous cost logic",
+    "description": "Create tests/test_miscellaneous.py verifying vehicle maintenance and parking ticket calculations.",
+    "expected_output": "miscellaneous costs verified."
+  },
+  {
+    "id": "R-016",
+    "title": "Run pytest test suite",
+    "description": "Execute pytest and ensure all modules import correctly and tests pass.",
+    "expected_output": "All tests pass successfully."
+  }
+]
