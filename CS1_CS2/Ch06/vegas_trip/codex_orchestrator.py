@@ -41,6 +41,8 @@ Description:
 
 Rules:
 - Write clean Python code
+- do not add python fences for markdown
+- add the code in the appropriate location in the file
 - Only implement what the task requires
 - Return only the code that should be added or modified
 """

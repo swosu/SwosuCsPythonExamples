@@ -12,13 +12,13 @@
       "id": "T-002",
       "title": "Create greeting function",
       "description": "Write a function print_greeting() that prints a welcome message explaining the Vegas trip planner program.",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-003",
       "title": "Create function to ask number of travelers",
       "description": "Write ask_number_of_travelers() that prompts the user for the number of people traveling.",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-004",
