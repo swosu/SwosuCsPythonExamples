@@ -28,6 +28,11 @@ def ask_food_cost_per_day() -> float:
     return float(input("How much does each traveler expect to spend on food per day? "))
 
 
+def ask_parking_cost_per_day() -> float:
+    """Prompt for and return parking cost per day."""
+    return float(input("How much does hotel or casino parking cost per day? "))
+
+
 def ask_entertainment_budget() -> float:
     """Prompt for and return the total gambling and entertainment budget."""
     return float(input("What is your total gambling and entertainment budget? "))
