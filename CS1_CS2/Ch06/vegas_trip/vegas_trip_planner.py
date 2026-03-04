@@ -32,6 +32,11 @@ def ask_vehicle_mpg() -> float:
     return float(input("What is your vehicle's fuel efficiency (mpg)? "))
 
 
+def ask_fuel_price() -> float:
+    """Prompt for and return the price of fuel per gallon."""
+    return float(input("What is the price of fuel per gallon? "))
+
+
 def main() -> None:
     """Run the Vegas trip planner program."""
     pass
