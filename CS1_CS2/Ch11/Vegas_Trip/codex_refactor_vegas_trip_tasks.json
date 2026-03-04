@@ -3,7 +3,8 @@
     "id": "R-001",
     "title": "Analyze original wall-of-code file",
     "description": "Open starter_wall_of_code_vegas_trip_planner.py and analyze all functions. Identify logical categories of functionality such as greeting, user input collection, transportation input, cost calculations, summary output, and orchestration logic.",
-    "expected_output": "Codex understands the functional groupings in the original file."
+    "expected_output": "Codex understands the functional groupings in the original file.",
+    "status": "done"
   },
   {
     "id": "R-002",

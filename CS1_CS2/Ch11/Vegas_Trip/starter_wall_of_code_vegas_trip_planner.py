@@ -1,8 +1,10 @@
+# Greeting
 def print_greeting() -> None:
     """Print a welcome message for the Vegas trip planner program."""
     print("Welcome to the Vegas Trip Planner! This program helps you plan your Vegas getaway.")
 
 
+# Input Functions
 def ask_number_of_travelers() -> int:
     """Prompt for and return the number of people traveling."""
     return int(input("How many people are traveling? "))
@@ -68,6 +70,7 @@ def ask_emergency_fund() -> float:
     return float(input("How much money do you want to reserve for unexpected expenses? "))
 
 
+# Transportation Input
 def ask_travel_method() -> str:
     """Prompt for and return whether the travelers will drive or fly."""
     while True:
@@ -97,6 +100,7 @@ def ask_fuel_price() -> float:
     return float(input("What is the price of fuel per gallon? "))
 
 
+# Cost Calculations
 def calculate_gallons_needed(distance: float, mpg: float) -> float:
     """Calculate the total gallons of fuel needed for the trip."""
     return distance / mpg
@@ -176,6 +180,7 @@ def calculate_cost_per_person(total_cost: float, travelers: int) -> float:
     return total_cost / travelers
 
 
+# Output Functions
 def print_trip_summary(
     total_cost: float,
     cost_per_person: float,
@@ -195,6 +200,7 @@ def print_trip_summary(
     print(f"Cost per traveler: ${cost_per_person:.2f}")
 
 
+# Program Orchestration
 def plan_vegas_trip() -> None:
     """Orchestrate prompts, calculations, and output for the Vegas trip planner."""
     travelers = ask_number_of_travelers()
