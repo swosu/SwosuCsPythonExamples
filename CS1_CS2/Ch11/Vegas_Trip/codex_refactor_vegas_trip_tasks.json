@@ -76,7 +76,8 @@
     "id": "R-010",
     "title": "Create program orchestrator main.py",
     "description": "Create main.py that imports modules and orchestrates the full program flow. It should call greeting, collect inputs, perform calculations, and print the summary.",
-    "expected_output": "main.py clearly shows the high-level execution flow of the application."
+    "expected_output": "main.py clearly shows the high-level execution flow of the application.",
+    "status": "done"
   },
   {
     "id": "R-011",
