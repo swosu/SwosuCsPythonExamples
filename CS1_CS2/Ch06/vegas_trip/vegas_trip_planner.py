@@ -136,31 +136,28 @@ def calculate_parking_cost(parking_per_day: float, days: int) -> float:
     return parking_per_day * days
 
 
+def calculate_miscellaneous_costs(
+    souvenirs: float,
+    emergency_fund: float,
+    gambling_losses: float,
+    parking_tickets: float,
+    vehicle_maintenance: float,
+) -> float:
+    """Calculate combined miscellaneous costs for the trip."""
+    return souvenirs + emergency_fund + gambling_losses + parking_tickets + vehicle_maintenance
+
+
 def calculate_total_trip_cost(
     transport: float,
     lodging: float,
     food: float,
     parking: float,
-    parking_tickets: float,
-    vehicle_maintenance: float,
     local_transport: float,
     entertainment: float,
-    souvenirs: float,
-    emergency_fund: float,
+    miscellaneous: float,
 ) -> float:
     """Calculate and return the total trip cost."""
-    return (
-        transport
-        + lodging
-        + food
-        + parking
-        + parking_tickets
-        + vehicle_maintenance
-        + local_transport
-        + entertainment
-        + souvenirs
-        + emergency_fund
-    )
+    return transport + lodging + food + parking + local_transport + entertainment + miscellaneous
 
 
 def calculate_cost_per_person(total_cost: float, travelers: int) -> float:
@@ -185,6 +182,7 @@ def plan_vegas_trip() -> None:
     parking_ticket_budget = ask_parking_ticket_budget()
     local_transport_budget = ask_local_transport_budget()
     entertainment_budget = ask_entertainment_budget()
+    gambling_loss = ask_expected_gambling_loss()
     souvenir_budget = ask_souvenir_budget()
     emergency_fund = ask_emergency_fund()
     travel_method = ask_travel_method()
@@ -208,17 +206,21 @@ def plan_vegas_trip() -> None:
     lodging_cost = calculate_lodging_cost(hotel_price, rooms, days)
     food_cost = calculate_food_cost(food_per_day, travelers, days)
     parking_cost = calculate_parking_cost(parking_per_day, days)
+    miscellaneous_cost = calculate_miscellaneous_costs(
+        souvenir_budget,
+        emergency_fund,
+        gambling_loss,
+        parking_ticket_budget,
+        vehicle_maintenance_budget,
+    )
     total_cost = calculate_total_trip_cost(
         transportation_cost,
         lodging_cost,
         food_cost,
         parking_cost,
-        parking_ticket_budget,
-        vehicle_maintenance_budget,
         local_transport_budget,
         entertainment_budget,
-        souvenir_budget,
-        emergency_fund,
+        miscellaneous_cost,
     )
     cost_per_person = calculate_cost_per_person(total_cost, travelers)
 
