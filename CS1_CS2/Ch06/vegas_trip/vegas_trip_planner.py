@@ -77,6 +77,11 @@ def calculate_lodging_cost(price_per_night: float, rooms: int, nights: int) -> f
     return price_per_night * rooms * nights
 
 
+def calculate_food_cost(food_per_day: float, travelers: int, days: int) -> float:
+    """Calculate total food spending for all travelers over the trip."""
+    return food_per_day * travelers * days
+
+
 def main() -> None:
     """Run the Vegas trip planner program."""
     pass
