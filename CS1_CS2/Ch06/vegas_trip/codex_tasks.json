@@ -36,31 +36,31 @@
       "id": "T-006",
       "title": "Create function to ask driving distance",
       "description": "Write ask_driving_distance() that asks how many miles the trip is if traveling by car.",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-007",
       "title": "Create function to ask vehicle fuel efficiency",
       "description": "Write ask_vehicle_mpg() that asks the user for the miles per gallon of the vehicle.",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-008",
       "title": "Create function to ask fuel price",
       "description": "Write ask_fuel_price() that asks the user for the price of fuel per gallon.",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-009",
       "title": "Create function to calculate gallons needed",
       "description": "Write calculate_gallons_needed(distance, mpg) that computes total gallons needed for the trip.",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-010",
       "title": "Create function to calculate fuel cost",
       "description": "Write calculate_fuel_cost(gallons, fuel_price) that returns total fuel expense.",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-011",
