@@ -103,6 +103,11 @@ def calculate_total_trip_cost(
     return transport + lodging + food + entertainment
 
 
+def calculate_cost_per_person(total_cost: float, travelers: int) -> float:
+    """Calculate and return the cost per traveler."""
+    return total_cost / travelers
+
+
 def main() -> None:
     """Run the Vegas trip planner program."""
     pass
