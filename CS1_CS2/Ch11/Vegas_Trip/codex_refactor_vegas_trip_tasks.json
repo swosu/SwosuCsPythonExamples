@@ -90,7 +90,8 @@
     "id": "R-012",
     "title": "Create unit test directory",
     "description": "Create tests folder for pytest-based unit tests.",
-    "expected_output": "tests directory created."
+    "expected_output": "tests directory created.",
+    "status": "done"
   },
   {
     "id": "R-013",
