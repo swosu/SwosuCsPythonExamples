@@ -108,6 +108,12 @@ def calculate_cost_per_person(total_cost: float, travelers: int) -> float:
     return total_cost / travelers
 
 
+def print_trip_summary(total_cost: float, cost_per_person: float) -> None:
+    """Print a summary of total trip cost and cost per traveler."""
+    print(f"Total trip cost: ${total_cost:.2f}")
+    print(f"Cost per traveler: ${cost_per_person:.2f}")
+
+
 def main() -> None:
     """Run the Vegas trip planner program."""
     pass
