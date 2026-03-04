@@ -1,6 +1,11 @@
 """Budget-related input functions for the Vegas trip planner."""
 
 
+def ask_parking_cost_per_day() -> float:
+    """Prompt for and return parking cost per day."""
+    return float(input("How much does hotel or casino parking cost per day? "))
+
+
 def ask_parking_ticket_budget() -> float:
     """Prompt for and return money reserved for parking tickets or fines."""
     return float(input("How much money do you want to reserve for parking tickets or fines? "))

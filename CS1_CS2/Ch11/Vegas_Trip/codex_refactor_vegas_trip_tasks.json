@@ -69,7 +69,8 @@
     "id": "R-009",
     "title": "Move summary printing logic",
     "description": "Move print_trip_summary() into trip_summary.py.",
-    "expected_output": "trip_summary.py contains functions responsible for displaying results."
+    "expected_output": "trip_summary.py contains functions responsible for displaying results.",
+    "status": "done"
   },
   {
     "id": "R-010",
