@@ -41,7 +41,8 @@
     "id": "R-005",
     "title": "Move general input functions into trip_inputs module",
     "description": "Move traveler count, trip length, hotel price, room count, and food cost functions into trip_inputs.py.",
-    "expected_output": "trip_inputs.py contains general trip input prompts."
+    "expected_output": "trip_inputs.py contains general trip input prompts.",
+    "status": "done"
   },
   {
     "id": "R-006",
