@@ -18,6 +18,11 @@ def ask_hotel_price() -> float:
     return float(input("What is the hotel price per night? "))
 
 
+def ask_number_of_rooms() -> int:
+    """Prompt for and return the number of hotel rooms needed."""
+    return int(input("How many hotel rooms are needed? "))
+
+
 def ask_travel_method() -> str:
     """Prompt for and return whether the travelers will drive or fly."""
     while True:
