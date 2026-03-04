@@ -116,8 +116,6 @@ def print_trip_summary(total_cost: float, cost_per_person: float) -> None:
 
 def plan_vegas_trip() -> None:
     """Orchestrate prompts, calculations, and output for the Vegas trip planner."""
-    print_greeting()
-
     travelers = ask_number_of_travelers()
     days = ask_trip_length_days()
     hotel_price = ask_hotel_price()
@@ -152,6 +150,7 @@ def plan_vegas_trip() -> None:
 
 def main() -> None:
     """Run the Vegas trip planner program."""
+    print_greeting()
     plan_vegas_trip()
 
 
