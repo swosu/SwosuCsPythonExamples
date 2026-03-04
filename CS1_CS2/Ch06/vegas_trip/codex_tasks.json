@@ -66,85 +66,85 @@
       "id": "T-011",
       "title": "Create function to ask plane ticket price",
       "description": "Write ask_plane_ticket_price() that prompts the user for the cost of one plane ticket.",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-012",
       "title": "Create function to calculate flight cost",
       "description": "Write calculate_flight_cost(ticket_price, travelers) that calculates the total airfare cost.",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-013",
       "title": "Create function to ask hotel price per night",
       "description": "Write ask_hotel_price() that asks the user for the hotel price per night.",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-014",
       "title": "Create function to ask number of hotel rooms",
       "description": "Write ask_number_of_rooms() that asks the user how many hotel rooms are needed.",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-015",
       "title": "Create function to calculate lodging cost",
       "description": "Write calculate_lodging_cost(price_per_night, rooms, nights) that calculates the total hotel cost.",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-016",
       "title": "Create function to ask food cost per person per day",
       "description": "Write ask_food_cost_per_day() that asks the user how much each traveler expects to spend on food per day.",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-017",
       "title": "Create function to calculate food cost",
       "description": "Write calculate_food_cost(food_per_day, travelers, days) that returns total food spending.",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-018",
       "title": "Create function to ask entertainment budget",
       "description": "Write ask_entertainment_budget() that asks the user for the gambling and entertainment budget.",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-019",
       "title": "Create function to calculate transportation cost",
       "description": "Write calculate_transportation_cost(method, fuel_cost, flight_cost) that selects the correct cost depending on travel method.",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-020",
       "title": "Create function to calculate total trip cost",
       "description": "Write calculate_total_trip_cost(transport, lodging, food, entertainment) that returns the total cost of the trip.",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-021",
       "title": "Create function to calculate cost per person",
       "description": "Write calculate_cost_per_person(total_cost, travelers).",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-022",
       "title": "Create function to print trip summary",
       "description": "Write print_trip_summary(...) that displays the total trip cost and cost per traveler.",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-023",
       "title": "Create orchestrator function",
       "description": "Write plan_vegas_trip() that calls all helper functions in the correct order to gather inputs, perform calculations, and print results.",
-      "status": "todo"
+      "status": "done"
     },
     {
       "id": "T-024",
       "title": "Call orchestrator from main",
       "description": "Update main() to call print_greeting() and plan_vegas_trip().",
-      "status": "todo"
+      "status": "done"
     }
   ]
 }
