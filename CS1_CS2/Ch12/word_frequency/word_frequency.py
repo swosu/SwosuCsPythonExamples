@@ -1,40 +1,45 @@
 """
 word_frequency.py
 
-This program demonstrates several Python objects working together:
+This program demonstrates a pipeline of objects:
 
-1. Path objects (directory inspection)
-2. File objects
-3. CSV reader objects
-4. Dictionary objects
+FileExplorer  → finds CSV files
+CSVReader     → opens and reads CSV rows
+WordExtractor → extracts individual words
+FrequencyAnalyzer → counts word frequencies
 
-The program will:
-1. Look in the current directory
-2. Show available CSV files
-3. Let the user choose one
-4. Count word frequencies
+Each object does ONE job.
 """
 
 import csv
 from pathlib import Path
 
 
-class WordFrequencyAnalyzer:
+class CSVFileReader:
     """
-    Object responsible for analyzing word frequencies in a CSV file.
+    Responsible only for opening a CSV file
+    and returning the rows inside it.
     """
 
     def __init__(self, filename):
         self.filename = filename
-        self.word_counts = {}
-        self.word_order = []
 
-    def read_words(self):
+    def read_csv_file(self):
         """
-        Open the file and process words using csv.reader.
+        Opens the CSV file and returns rows.
+
+        We try UTF-8 first, then fall back to UTF-16
+        because some Windows tools save CSV files that way.
         """
 
-        with open(self.filename, newline="") as file_object:
+        rows = []
+
+        try:
+            file_object = open(self.filename, newline="", encoding="utf-8")
+        except UnicodeDecodeError:
+            file_object = open(self.filename, newline="", encoding="utf-16")
+
+        with file_object:
 
             print("\nFile object created:")
             print(type(file_object))
@@ -42,27 +47,52 @@ class WordFrequencyAnalyzer:
             reader = csv.reader(file_object)
 
             print("CSV reader object created:")
-            print(type(reader), "\n")
+            print(type(reader))
 
             for row in reader:
-                for word in row:
-                    self._process_word(word)
+                rows.append(row)
 
-    def _process_word(self, word):
-        """
-        Update the frequency table.
-        """
+        return rows
 
-        if word not in self.word_counts:
-            self.word_counts[word] = 1
-            self.word_order.append(word)
-        else:
-            self.word_counts[word] += 1
+
+class WordExtractor:
+    """
+    Responsible for extracting words from rows.
+    """
+
+    def extract_words(self, rows):
+
+        words = []
+
+        for row in rows:
+            for word in row:
+                words.append(word)
+
+        return words
+
+
+class WordFrequencyAnalyzer:
+    """
+    Responsible for counting word frequencies.
+    """
+
+    def __init__(self):
+        self.word_counts = {}
+        self.word_order = []
+
+    def process_words(self, words):
+
+        for word in words:
+
+            if word not in self.word_counts:
+
+                self.word_counts[word] = 1
+                self.word_order.append(word)
+
+            else:
+                self.word_counts[word] += 1
 
     def print_results(self):
-        """
-        Print word frequencies.
-        """
 
         print("\nWord Frequencies\n")
 
@@ -72,56 +102,52 @@ class WordFrequencyAnalyzer:
 
 class FileExplorer:
     """
-    Responsible for discovering CSV files in the directory.
+    Finds CSV files in the current directory.
     """
 
-    def __init__(self):
-        self.current_directory = Path(".")
-        self.csv_files = []
-
     def discover_csv_files(self):
-        """
-        Find all CSV files in the current directory.
-        """
 
-        for file in self.current_directory.glob("*.csv"):
-            self.csv_files.append(file)
+        directory = Path(".")
+        return list(directory.glob("*.csv"))
 
-    def display_files(self):
-        """
-        Show available files to the user.
-        """
+    def choose_file(self, files):
 
-        print("\nCSV files found in this directory:\n")
+        print("\nCSV files available:\n")
 
-        for i, file in enumerate(self.csv_files):
+        for i, file in enumerate(files):
             print(f"{i+1}. {file.name}")
 
-    def choose_file(self):
-        """
-        Ask the user to choose a file.
-        """
-
         while True:
+
             try:
-                choice = int(input("\nChoose a file number: "))
-                return self.csv_files[choice - 1]
+                choice = int(input("\nSelect file number: "))
+                return files[choice - 1]
+
             except (ValueError, IndexError):
-                print("Invalid selection. Try again.")
+                print("Invalid choice. Try again.")
 
 
 def main():
 
+    # discover files
     explorer = FileExplorer()
+    files = explorer.discover_csv_files()
 
-    explorer.discover_csv_files()
-    explorer.display_files()
+    chosen_file = explorer.choose_file(files)
 
-    chosen_file = explorer.choose_file()
+    # read CSV
+    reader = CSVFileReader(chosen_file)
+    rows = reader.read_csv_file()
 
-    analyzer = WordFrequencyAnalyzer(chosen_file)
+    # extract words
+    extractor = WordExtractor()
+    words = extractor.extract_words(rows)
 
-    analyzer.read_words()
+    # analyze frequencies
+    analyzer = WordFrequencyAnalyzer()
+    analyzer.process_words(words)
+
+    # print results
     analyzer.print_results()
 
 
