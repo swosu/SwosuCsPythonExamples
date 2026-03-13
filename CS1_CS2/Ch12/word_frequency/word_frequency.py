@@ -28,20 +28,30 @@ class CSVFileReader:
         """
         Opens the CSV file and returns rows.
 
-        We try UTF-8 first, then fall back to UTF-16
-        because some Windows tools save CSV files that way.
+        This method inspects the first few bytes of the file
+        to determine its encoding (UTF-8 vs UTF-16).
         """
 
         rows = []
 
-        try:
-            file_object = open(self.filename, newline="", encoding="utf-8")
-        except UnicodeDecodeError:
-            file_object = open(self.filename, newline="", encoding="utf-16")
+        # Step 1 — inspect the raw bytes
+        with open(self.filename, "rb") as raw_file:
+            start = raw_file.read(4)
 
-        with file_object:
+        # Step 2 — decide encoding
+        if start.startswith(b'\xff\xfe') or start.startswith(b'\xfe\xff'):
+            encoding = "utf-16"
+        else:
+            encoding = "utf-8"
 
-            print("\nFile object created:")
+        print("First bytes:", start)
+
+        print(f"\nDetected encoding: {encoding}")
+
+        # Step 3 — open the file normally
+        with open(self.filename, newline="", encoding=encoding) as file_object:
+
+            print("File object created:")
             print(type(file_object))
 
             reader = csv.reader(file_object)
@@ -53,6 +63,7 @@ class CSVFileReader:
                 rows.append(row)
 
         return rows
+
 
 
 class WordExtractor:
