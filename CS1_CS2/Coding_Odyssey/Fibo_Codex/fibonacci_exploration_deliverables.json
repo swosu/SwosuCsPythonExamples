@@ -1,0 +1,222 @@
+[
+  {
+    "id": "project-structure",
+    "title": "Project structure definition",
+    "category": "architecture",
+    "description": "Define and document the repository layout for the Fibonacci exploration project.",
+    "includes": [
+      "location of the main instructional markdown file",
+      "source-code directory structure",
+      "test directory structure",
+      "optional assets directory for future visual artifacts"
+    ],
+    "purpose": "Ensure file management is clear and responsibilities are separated from the start."
+  },
+  {
+    "id": "instructional-markdown-outline",
+    "title": "Instructional markdown outline",
+    "category": "documentation",
+    "description": "Create the full section outline for the final Fibonacci exploration markdown document.",
+    "includes": [
+      "introduction to the Fibonacci sequence",
+      "recursive implementation discussion",
+      "iterative implementation discussion",
+      "comparison section",
+      "Big O analysis section",
+      "visualization section",
+      "design decisions section",
+      "testing strategy section"
+    ],
+    "purpose": "Provide a complete teaching structure before implementation details are written."
+  },
+  {
+    "id": "recursive-strategy-unit",
+    "title": "Recursive Fibonacci implementation unit",
+    "category": "implementation",
+    "description": "Create a dedicated unit responsible only for naive recursive Fibonacci calculation.",
+    "includes": [
+      "clear input contract",
+      "base-case handling",
+      "single-responsibility logic",
+      "no formatting or reporting code"
+    ],
+    "purpose": "Keep recursive logic isolated, readable, and testable."
+  },
+  {
+    "id": "iterative-strategy-unit",
+    "title": "Iterative Fibonacci implementation unit",
+    "category": "implementation",
+    "description": "Create a dedicated unit responsible only for iterative Fibonacci calculation.",
+    "includes": [
+      "clear input contract",
+      "loop-based state updates",
+      "single-responsibility logic",
+      "no formatting or reporting code"
+    ],
+    "purpose": "Keep iterative logic isolated, efficient, and testable."
+  },
+  {
+    "id": "shared-input-validation",
+    "title": "Shared input validation approach",
+    "category": "implementation",
+    "description": "Define how input validation will be handled so both strategies behave consistently.",
+    "includes": [
+      "accepted input rules",
+      "invalid input behavior",
+      "placement of validation logic",
+      "reuse across implementations when appropriate"
+    ],
+    "purpose": "Avoid duplicated validation logic and inconsistent error handling."
+  },
+  {
+    "id": "strategy-abstraction",
+    "title": "Strategy abstraction decision",
+    "category": "architecture",
+    "description": "Define the abstraction boundary for comparing multiple Fibonacci implementations.",
+    "includes": [
+      "decision on function-based or class-based design",
+      "responsibility boundaries for each strategy",
+      "rules for extending the design later",
+      "avoidance of unnecessary abstraction"
+    ],
+    "purpose": "Support clean growth without overengineering the initial solution."
+  },
+  {
+    "id": "comparison-data-support",
+    "title": "Comparison data preparation support",
+    "category": "implementation",
+    "description": "Create a focused unit that prepares side-by-side comparison data for recursive and iterative approaches.",
+    "includes": [
+      "comparison categories",
+      "structured comparison data",
+      "support for markdown table generation",
+      "no direct Fibonacci calculation duplication"
+    ],
+    "purpose": "Separate comparison assembly from the core calculation logic."
+  },
+  {
+    "id": "big-o-analysis-content",
+    "title": "Big O analysis content",
+    "category": "documentation",
+    "description": "Write the algorithm-complexity explanation for recursive and iterative Fibonacci.",
+    "includes": [
+      "time complexity for naive recursion",
+      "space complexity for naive recursion",
+      "time complexity for iteration",
+      "space complexity for iteration",
+      "plain-language explanation of repeated work"
+    ],
+    "purpose": "Ensure the project explains not just how the approaches work, but how they scale."
+  },
+  {
+    "id": "visualization-data-support",
+    "title": "Visualization data preparation support",
+    "category": "implementation",
+    "description": "Create a focused unit that prepares data for visualizing Fibonacci growth and algorithm cost growth.",
+    "includes": [
+      "selected input ranges",
+      "value growth data",
+      "algorithm-cost comparison data",
+      "separation between sequence values and computational effort"
+    ],
+    "purpose": "Support clear visual storytelling without mixing it into calculation functions."
+  },
+  {
+    "id": "markdown-visualizations",
+    "title": "Markdown-friendly visualizations",
+    "category": "documentation",
+    "description": "Add visual representations that work directly in markdown without requiring graphics code in the first version.",
+    "includes": [
+      "growth tables",
+      "ASCII bars or similar text visuals",
+      "small recursive call-tree sketch",
+      "comparison-oriented presentation"
+    ],
+    "purpose": "Make growth patterns and tradeoffs visible in a classroom-friendly format."
+  },
+  {
+    "id": "design-decision-notes",
+    "title": "Design decision notes",
+    "category": "documentation",
+    "description": "Document the reasoning behind file management, abstraction choices, and separation of responsibilities.",
+    "includes": [
+      "why recursive and iterative logic are separate",
+      "why display logic is isolated",
+      "why small functions are preferred",
+      "why tests are organized independently"
+    ],
+    "purpose": "Connect software design choices to maintainability and clarity."
+  },
+  {
+    "id": "unit-test-suite",
+    "title": "Unit test suite",
+    "category": "testing",
+    "description": "Create a unit test set that covers the main Fibonacci logic and supporting helpers.",
+    "includes": [
+      "base-case tests",
+      "small-input correctness tests",
+      "matching-result tests for recursive and iterative approaches",
+      "invalid-input tests if validation is implemented",
+      "tests for comparison or visualization helper behavior"
+    ],
+    "purpose": "Verify correctness and protect the separation of responsibilities with focused tests."
+  },
+  {
+    "id": "testing-strategy-documentation",
+    "title": "Testing strategy documentation",
+    "category": "documentation",
+    "description": "Document what is being tested, why it is being tested, and how tests align with clean design.",
+    "includes": [
+      "scope of unit tests",
+      "testing philosophy for small functions",
+      "boundary and edge-case coverage",
+      "guidance on avoiding tests tied too closely to formatting"
+    ],
+    "purpose": "Make the testing approach understandable to learners and future maintainers."
+  },
+  {
+    "id": "clean-code-review-pass",
+    "title": "Clean code review pass",
+    "category": "quality",
+    "description": "Perform a focused review for naming, function size, duplication, and module clarity.",
+    "includes": [
+      "function-length review",
+      "naming consistency review",
+      "duplication review",
+      "module responsibility review",
+      "comment quality review"
+    ],
+    "purpose": "Ensure the final work demonstrates the coding standards described in the plan."
+  },
+  {
+    "id": "final-fibonacci-exploration-document",
+    "title": "Final Fibonacci exploration document",
+    "category": "documentation",
+    "description": "Produce the finished markdown artifact that combines explanation, comparison, analysis, visualization, and design notes.",
+    "includes": [
+      "student-friendly sequence overview",
+      "recursive and iterative comparison",
+      "Big O analysis",
+      "visualizations",
+      "code organization notes",
+      "testing overview",
+      "conclusion"
+    ],
+    "purpose": "Deliver the complete educational and software-design-focused exploration."
+  },
+  {
+    "id": "commit-plan",
+    "title": "Planned commit sequence",
+    "category": "process",
+    "description": "Maintain an intentional commit plan that reflects the staged delivery of the work.",
+    "includes": [
+      "planning commit",
+      "project-structure commit",
+      "implementation commits",
+      "testing commit",
+      "documentation commit",
+      "refactor commit"
+    ],
+    "purpose": "Support a clean development history that matches the deliverable sequence."
+  }
+]
