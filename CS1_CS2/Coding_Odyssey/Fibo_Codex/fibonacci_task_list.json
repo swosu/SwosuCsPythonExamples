@@ -3,7 +3,7 @@
     "id": "plan-commit-sequence",
     "title": "Plan staged commit sequence",
     "description": "Draft the intended commit sequence for the project so work lands in a deliberate order: planning, project structure, implementation, testing, documentation, and refactor. Keep the plan aligned with the deliverable sequence rather than ad hoc development order.",
-    "status": "pending",
+    "status": "completed",
     "source_deliverables": [
       "commit-plan"
     ],
@@ -140,7 +140,7 @@
     "id": "define-invalid-input-behavior",
     "title": "Define invalid input behavior",
     "description": "Decide how invalid inputs will be reported, including exception type or error format and whether messages should be consistent across both strategies. Keep the behavior explicit so tests and documentation can rely on it.",
-    "status": "pending",
+    "status": "completed",
     "source_deliverables": [
       "shared-input-validation"
     ],
@@ -152,7 +152,7 @@
     "id": "design-validation-reuse-approach",
     "title": "Design shared validation reuse approach",
     "description": "Choose where validation logic should live and whether it should be factored into a shared helper or module used by both implementations. Keep the design simple enough to avoid duplication without obscuring the teaching value of each strategy.",
-    "status": "pending",
+    "status": "completed",
     "source_deliverables": [
       "shared-input-validation",
       "design-decision-notes"
@@ -180,7 +180,7 @@
     "id": "define-iterative-fibonacci-contract",
     "title": "Define iterative Fibonacci input contract",
     "description": "Specify the iterative unit's public interface, expected return value, and how it uses the shared validation approach. Keep the contract narrow so the unit stays easy to read and test.",
-    "status": "pending",
+    "status": "completed",
     "source_deliverables": [
       "iterative-strategy-unit",
       "shared-input-validation",
@@ -283,7 +283,7 @@
     "id": "add-shared-validation-tests",
     "title": "Add shared validation tests",
     "description": "Write focused tests that verify accepted inputs, rejected inputs, and consistent error behavior through the shared validation path. Cover the cases that both Fibonacci strategies are expected to handle identically.",
-    "status": "pending",
+    "status": "completed",
     "source_deliverables": [
       "shared-input-validation",
       "unit-test-suite",

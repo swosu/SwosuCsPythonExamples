@@ -1,0 +1,1498 @@
+{
+  "created_at": "2026-03-31T10:37:26-0500",
+  "tasks": {
+    "plan-commit-sequence": {
+      "status": "completed",
+      "attempts": 1,
+      "history": [
+        {
+          "event": "running",
+          "timestamp": "2026-03-31T10:37:30-0500",
+          "attempts": 1,
+          "resources": [
+            "process"
+          ],
+          "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/plan-commit-sequence/logs/attempt_1.log",
+          "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/plan-commit-sequence",
+          "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/plan-commit-sequence/worker_output.json",
+          "started_at": "2026-03-31T10:37:30-0500"
+        },
+        {
+          "event": "completed",
+          "timestamp": "2026-03-31T10:38:50-0500",
+          "summary": "Expanded the commit-planning section in `Fibo_Codex/fibonacci_exploration_plan.md` to define the staged commit order and scope by delivery phase: planning, project structure, implementation, testing, documentation, and refactor. Marked the `plan-commit-sequence` task as completed in `Fibo_Codex/fibonacci_task_list.json`.",
+          "blockers": [],
+          "tests_ran": [
+            "sed -n '256,320p' Fibo_Codex/fibonacci_exploration_plan.md",
+            "sed -n '1,20p' Fibo_Codex/fibonacci_task_list.json",
+            "git diff -- Fibo_Codex/fibonacci_exploration_plan.md Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "changed_files": [
+            "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/plan-commit-sequence/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+            "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/plan-commit-sequence/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "detected_changed_files": [
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "applied_files": [
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "finished_at": "2026-03-31T10:38:50-0500",
+          "duration_seconds": 79.81
+        }
+      ],
+      "resources": [
+        "process"
+      ],
+      "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/plan-commit-sequence/logs/attempt_1.log",
+      "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/plan-commit-sequence",
+      "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/plan-commit-sequence/worker_output.json",
+      "started_at": "2026-03-31T10:37:30-0500",
+      "summary": "Expanded the commit-planning section in `Fibo_Codex/fibonacci_exploration_plan.md` to define the staged commit order and scope by delivery phase: planning, project structure, implementation, testing, documentation, and refactor. Marked the `plan-commit-sequence` task as completed in `Fibo_Codex/fibonacci_task_list.json`.",
+      "blockers": [],
+      "tests_ran": [
+        "sed -n '256,320p' Fibo_Codex/fibonacci_exploration_plan.md",
+        "sed -n '1,20p' Fibo_Codex/fibonacci_task_list.json",
+        "git diff -- Fibo_Codex/fibonacci_exploration_plan.md Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "changed_files": [
+        "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/plan-commit-sequence/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+        "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/plan-commit-sequence/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "detected_changed_files": [
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "applied_files": [
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "finished_at": "2026-03-31T10:38:50-0500",
+      "duration_seconds": 79.81
+    },
+    "define-repository-layout": {
+      "status": "completed",
+      "attempts": 1,
+      "history": [
+        {
+          "event": "running",
+          "timestamp": "2026-03-31T10:37:28-0500",
+          "attempts": 1,
+          "resources": [
+            "repo-structure"
+          ],
+          "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-repository-layout/logs/attempt_1.log",
+          "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-repository-layout",
+          "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-repository-layout/worker_output.json",
+          "started_at": "2026-03-31T10:37:28-0500"
+        },
+        {
+          "event": "completed",
+          "timestamp": "2026-03-31T10:39:08-0500",
+          "summary": "Defined the Fibonacci exploration repository layout in `Fibo_Codex/repo_structure.md`, establishing a dedicated top-level `fibonacci_exploration/` area with `docs/`, `src/`, `tests/`, and optional `assets/`, plus naming and boundary conventions to keep instructional content, code, tests, and assets separated.",
+          "blockers": [],
+          "tests_ran": [
+            "sed -n '1,220p' Fibo_Codex/repo_structure.md",
+            "git status --short"
+          ],
+          "changed_files": [
+            "Fibo_Codex/repo_structure.md"
+          ],
+          "detected_changed_files": [],
+          "applied_files": [],
+          "finished_at": "2026-03-31T10:39:08-0500",
+          "duration_seconds": 99.57
+        }
+      ],
+      "resources": [
+        "repo-structure"
+      ],
+      "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-repository-layout/logs/attempt_1.log",
+      "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-repository-layout",
+      "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-repository-layout/worker_output.json",
+      "started_at": "2026-03-31T10:37:28-0500",
+      "summary": "Defined the Fibonacci exploration repository layout in `Fibo_Codex/repo_structure.md`, establishing a dedicated top-level `fibonacci_exploration/` area with `docs/`, `src/`, `tests/`, and optional `assets/`, plus naming and boundary conventions to keep instructional content, code, tests, and assets separated.",
+      "blockers": [],
+      "tests_ran": [
+        "sed -n '1,220p' Fibo_Codex/repo_structure.md",
+        "git status --short"
+      ],
+      "changed_files": [
+        "Fibo_Codex/repo_structure.md"
+      ],
+      "detected_changed_files": [],
+      "applied_files": [],
+      "finished_at": "2026-03-31T10:39:08-0500",
+      "duration_seconds": 99.57
+    },
+    "define-project-structure-commit-scope": {
+      "status": "blocked",
+      "attempts": 1,
+      "history": [
+        {
+          "event": "running",
+          "timestamp": "2026-03-31T10:39:12-0500",
+          "attempts": 1,
+          "resources": [
+            "process"
+          ],
+          "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-project-structure-commit-scope/logs/attempt_1.log",
+          "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-project-structure-commit-scope",
+          "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-project-structure-commit-scope/worker_output.json",
+          "started_at": "2026-03-31T10:39:12-0500"
+        },
+        {
+          "event": "blocked",
+          "timestamp": "2026-03-31T10:44:30-0500",
+          "summary": "Could not safely complete the task in the repository state provided. The dependency artifact described in context, `Fibo_Codex/repo_structure.md`, is not present in the workspace, so the project-structure commit scope cannot be grounded against the actual recorded layout document. I also hit an environment inconsistency: file edits reported as successful through the patch tool were not reflected when re-reading the same paths from the workspace, so I could not verify or trust a final change set.",
+          "blockers": [
+            "Missing dependency file: `Fibo_Codex/repo_structure.md` is not present in the repository despite being referenced as completed dependency output.",
+            "Workspace edit verification is unreliable: patch operations reported success, but subsequent reads of the same files did not show the edits, so I could not confirm a valid final state."
+          ],
+          "tests_ran": [
+            "python -m json.tool Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "changed_files": [],
+          "detected_changed_files": [
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "applied_files": [],
+          "finished_at": "2026-03-31T10:44:30-0500",
+          "duration_seconds": 317.92
+        }
+      ],
+      "resources": [
+        "process"
+      ],
+      "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-project-structure-commit-scope/logs/attempt_1.log",
+      "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-project-structure-commit-scope",
+      "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-project-structure-commit-scope/worker_output.json",
+      "started_at": "2026-03-31T10:39:12-0500",
+      "summary": "Could not safely complete the task in the repository state provided. The dependency artifact described in context, `Fibo_Codex/repo_structure.md`, is not present in the workspace, so the project-structure commit scope cannot be grounded against the actual recorded layout document. I also hit an environment inconsistency: file edits reported as successful through the patch tool were not reflected when re-reading the same paths from the workspace, so I could not verify or trust a final change set.",
+      "blockers": [
+        "Missing dependency file: `Fibo_Codex/repo_structure.md` is not present in the repository despite being referenced as completed dependency output.",
+        "Workspace edit verification is unreliable: patch operations reported success, but subsequent reads of the same files did not show the edits, so I could not confirm a valid final state."
+      ],
+      "tests_ran": [
+        "python -m json.tool Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "changed_files": [],
+      "detected_changed_files": [
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "applied_files": [],
+      "finished_at": "2026-03-31T10:44:30-0500",
+      "duration_seconds": 317.92
+    },
+    "place-main-instructional-markdown": {
+      "status": "failed",
+      "attempts": 1,
+      "history": [
+        {
+          "event": "running",
+          "timestamp": "2026-03-31T10:46:02-0500",
+          "attempts": 1,
+          "resources": [
+            "docs-main",
+            "repo-structure"
+          ],
+          "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/place-main-instructional-markdown/logs/attempt_1.log",
+          "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/place-main-instructional-markdown",
+          "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/place-main-instructional-markdown/worker_output.json",
+          "started_at": "2026-03-31T10:46:02-0500"
+        },
+        {
+          "event": "failed",
+          "timestamp": "2026-03-31T10:47:48-0500",
+          "summary": "Command failed (1): git apply --3way /data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/place-main-instructional-markdown/changes.patch\nerror: CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md: does not exist in index",
+          "blockers": [
+            "patch-apply-failed"
+          ],
+          "changed_files": [
+            "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/place-main-instructional-markdown/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md"
+          ],
+          "detected_changed_files": [
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md"
+          ],
+          "finished_at": "2026-03-31T10:47:48-0500"
+        }
+      ],
+      "resources": [
+        "docs-main",
+        "repo-structure"
+      ],
+      "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/place-main-instructional-markdown/logs/attempt_1.log",
+      "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/place-main-instructional-markdown",
+      "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/place-main-instructional-markdown/worker_output.json",
+      "started_at": "2026-03-31T10:46:02-0500",
+      "summary": "Command failed (1): git apply --3way /data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/place-main-instructional-markdown/changes.patch\nerror: CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md: does not exist in index",
+      "blockers": [
+        "patch-apply-failed"
+      ],
+      "changed_files": [
+        "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/place-main-instructional-markdown/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md"
+      ],
+      "detected_changed_files": [
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md"
+      ],
+      "finished_at": "2026-03-31T10:47:48-0500"
+    },
+    "create-source-directory-structure": {
+      "status": "completed",
+      "attempts": 1,
+      "history": [
+        {
+          "event": "running",
+          "timestamp": "2026-03-31T10:39:10-0500",
+          "attempts": 1,
+          "resources": [
+            "architecture",
+            "comparison-impl",
+            "iterative-impl",
+            "recursive-impl",
+            "repo-structure",
+            "validation-impl",
+            "visualization-impl"
+          ],
+          "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/create-source-directory-structure/logs/attempt_1.log",
+          "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/create-source-directory-structure",
+          "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/create-source-directory-structure/worker_output.json",
+          "started_at": "2026-03-31T10:39:10-0500"
+        },
+        {
+          "event": "completed",
+          "timestamp": "2026-03-31T10:40:20-0500",
+          "summary": "Created the Fibonacci exploration source layout under `fibonacci_exploration/src/` with a root package and dedicated subpackages for `strategies`, `validation`, `comparison`, and `visualization`, giving later recursive, iterative, shared-validation, and support modules clear implementation areas without adding unrelated code.",
+          "blockers": [],
+          "tests_ran": [
+            "find fibonacci_exploration/src -maxdepth 4 -type f | sort",
+            "python - <<'PY'\nfrom pathlib import Path\nrequired = [\n    Path('fibonacci_exploration/src/fibonacci_exploration'),\n    Path('fibonacci_exploration/src/fibonacci_exploration/strategies'),\n    Path('fibonacci_exploration/src/fibonacci_exploration/validation'),\n    Path('fibonacci_exploration/src/fibonacci_exploration/comparison'),\n    Path('fibonacci_exploration/src/fibonacci_exploration/visualization'),\n]\nmissing = [str(path) for path in required if not path.is_dir()]\nprint('missing=' + repr(missing))\nPY"
+          ],
+          "changed_files": [
+            "fibonacci_exploration/src/fibonacci_exploration/__init__.py",
+            "fibonacci_exploration/src/fibonacci_exploration/strategies/__init__.py",
+            "fibonacci_exploration/src/fibonacci_exploration/validation/__init__.py",
+            "fibonacci_exploration/src/fibonacci_exploration/comparison/__init__.py",
+            "fibonacci_exploration/src/fibonacci_exploration/visualization/__init__.py"
+          ],
+          "detected_changed_files": [],
+          "applied_files": [],
+          "finished_at": "2026-03-31T10:40:20-0500",
+          "duration_seconds": 69.59
+        }
+      ],
+      "resources": [
+        "architecture",
+        "comparison-impl",
+        "iterative-impl",
+        "recursive-impl",
+        "repo-structure",
+        "validation-impl",
+        "visualization-impl"
+      ],
+      "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/create-source-directory-structure/logs/attempt_1.log",
+      "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/create-source-directory-structure",
+      "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/create-source-directory-structure/worker_output.json",
+      "started_at": "2026-03-31T10:39:10-0500",
+      "summary": "Created the Fibonacci exploration source layout under `fibonacci_exploration/src/` with a root package and dedicated subpackages for `strategies`, `validation`, `comparison`, and `visualization`, giving later recursive, iterative, shared-validation, and support modules clear implementation areas without adding unrelated code.",
+      "blockers": [],
+      "tests_ran": [
+        "find fibonacci_exploration/src -maxdepth 4 -type f | sort",
+        "python - <<'PY'\nfrom pathlib import Path\nrequired = [\n    Path('fibonacci_exploration/src/fibonacci_exploration'),\n    Path('fibonacci_exploration/src/fibonacci_exploration/strategies'),\n    Path('fibonacci_exploration/src/fibonacci_exploration/validation'),\n    Path('fibonacci_exploration/src/fibonacci_exploration/comparison'),\n    Path('fibonacci_exploration/src/fibonacci_exploration/visualization'),\n]\nmissing = [str(path) for path in required if not path.is_dir()]\nprint('missing=' + repr(missing))\nPY"
+      ],
+      "changed_files": [
+        "fibonacci_exploration/src/fibonacci_exploration/__init__.py",
+        "fibonacci_exploration/src/fibonacci_exploration/strategies/__init__.py",
+        "fibonacci_exploration/src/fibonacci_exploration/validation/__init__.py",
+        "fibonacci_exploration/src/fibonacci_exploration/comparison/__init__.py",
+        "fibonacci_exploration/src/fibonacci_exploration/visualization/__init__.py"
+      ],
+      "detected_changed_files": [],
+      "applied_files": [],
+      "finished_at": "2026-03-31T10:40:20-0500",
+      "duration_seconds": 69.59
+    },
+    "create-test-directory-structure": {
+      "status": "completed",
+      "attempts": 1,
+      "history": [
+        {
+          "event": "running",
+          "timestamp": "2026-03-31T10:50:46-0500",
+          "attempts": 1,
+          "resources": [
+            "comparison-impl",
+            "docs-main",
+            "iterative-impl",
+            "recursive-impl",
+            "repo-structure",
+            "tests",
+            "validation-impl",
+            "visualization-impl"
+          ],
+          "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/create-test-directory-structure/logs/attempt_1.log",
+          "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/create-test-directory-structure",
+          "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/create-test-directory-structure/worker_output.json",
+          "started_at": "2026-03-31T10:50:46-0500"
+        },
+        {
+          "event": "completed",
+          "timestamp": "2026-03-31T10:52:00-0500",
+          "summary": "Created a dedicated `fibonacci_exploration/tests/` scaffold aligned to the planned Fibonacci project layout, with separate unit-test areas for strategy logic, shared validation, and support helpers. Added a short `tests/README.md` to document how future recursive, iterative, validation, comparison, and visualization tests should map into the structure.",
+          "blockers": [],
+          "tests_ran": [
+            "find fibonacci_exploration/tests -maxdepth 3 -print | sort",
+            "git status --short"
+          ],
+          "changed_files": [
+            "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/create-test-directory-structure/CS1_CS2/Coding_Odyssey/fibonacci_exploration/tests/README.md",
+            "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/create-test-directory-structure/CS1_CS2/Coding_Odyssey/fibonacci_exploration/tests/unit/strategies/.gitkeep",
+            "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/create-test-directory-structure/CS1_CS2/Coding_Odyssey/fibonacci_exploration/tests/unit/validation/.gitkeep",
+            "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/create-test-directory-structure/CS1_CS2/Coding_Odyssey/fibonacci_exploration/tests/unit/support/.gitkeep"
+          ],
+          "detected_changed_files": [],
+          "applied_files": [],
+          "finished_at": "2026-03-31T10:52:00-0500",
+          "duration_seconds": 73.76
+        }
+      ],
+      "resources": [
+        "comparison-impl",
+        "docs-main",
+        "iterative-impl",
+        "recursive-impl",
+        "repo-structure",
+        "tests",
+        "validation-impl",
+        "visualization-impl"
+      ],
+      "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/create-test-directory-structure/logs/attempt_1.log",
+      "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/create-test-directory-structure",
+      "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/create-test-directory-structure/worker_output.json",
+      "started_at": "2026-03-31T10:50:46-0500",
+      "summary": "Created a dedicated `fibonacci_exploration/tests/` scaffold aligned to the planned Fibonacci project layout, with separate unit-test areas for strategy logic, shared validation, and support helpers. Added a short `tests/README.md` to document how future recursive, iterative, validation, comparison, and visualization tests should map into the structure.",
+      "blockers": [],
+      "tests_ran": [
+        "find fibonacci_exploration/tests -maxdepth 3 -print | sort",
+        "git status --short"
+      ],
+      "changed_files": [
+        "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/create-test-directory-structure/CS1_CS2/Coding_Odyssey/fibonacci_exploration/tests/README.md",
+        "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/create-test-directory-structure/CS1_CS2/Coding_Odyssey/fibonacci_exploration/tests/unit/strategies/.gitkeep",
+        "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/create-test-directory-structure/CS1_CS2/Coding_Odyssey/fibonacci_exploration/tests/unit/validation/.gitkeep",
+        "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/create-test-directory-structure/CS1_CS2/Coding_Odyssey/fibonacci_exploration/tests/unit/support/.gitkeep"
+      ],
+      "detected_changed_files": [],
+      "applied_files": [],
+      "finished_at": "2026-03-31T10:52:00-0500",
+      "duration_seconds": 73.76
+    },
+    "add-assets-directory-placeholder": {
+      "status": "completed",
+      "attempts": 1,
+      "history": [
+        {
+          "event": "running",
+          "timestamp": "2026-03-31T10:40:27-0500",
+          "attempts": 1,
+          "resources": [
+            "repo-structure"
+          ],
+          "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/add-assets-directory-placeholder/logs/attempt_1.log",
+          "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/add-assets-directory-placeholder",
+          "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/add-assets-directory-placeholder/worker_output.json",
+          "started_at": "2026-03-31T10:40:27-0500"
+        },
+        {
+          "event": "completed",
+          "timestamp": "2026-03-31T10:41:40-0500",
+          "summary": "Created the minimal tracked placeholder for the optional assets area at `fibonacci_exploration/assets/.gitkeep`, establishing the dedicated assets path without changing unrelated source or test structure. The previously referenced `Fibo_Codex/repo_structure.md` is not present in this worktree, but the dependency summary provided enough path guidance to complete this task.",
+          "blockers": [],
+          "tests_ran": [
+            "find fibonacci_exploration -maxdepth 2 -print | sort",
+            "git status --short"
+          ],
+          "changed_files": [
+            "fibonacci_exploration/assets/.gitkeep"
+          ],
+          "detected_changed_files": [],
+          "applied_files": [],
+          "finished_at": "2026-03-31T10:41:40-0500",
+          "duration_seconds": 72.75
+        }
+      ],
+      "resources": [
+        "repo-structure"
+      ],
+      "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/add-assets-directory-placeholder/logs/attempt_1.log",
+      "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/add-assets-directory-placeholder",
+      "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/add-assets-directory-placeholder/worker_output.json",
+      "started_at": "2026-03-31T10:40:27-0500",
+      "summary": "Created the minimal tracked placeholder for the optional assets area at `fibonacci_exploration/assets/.gitkeep`, establishing the dedicated assets path without changing unrelated source or test structure. The previously referenced `Fibo_Codex/repo_structure.md` is not present in this worktree, but the dependency summary provided enough path guidance to complete this task.",
+      "blockers": [],
+      "tests_ran": [
+        "find fibonacci_exploration -maxdepth 2 -print | sort",
+        "git status --short"
+      ],
+      "changed_files": [
+        "fibonacci_exploration/assets/.gitkeep"
+      ],
+      "detected_changed_files": [],
+      "applied_files": [],
+      "finished_at": "2026-03-31T10:41:40-0500",
+      "duration_seconds": 72.75
+    },
+    "choose-strategy-abstraction-style": {
+      "status": "completed",
+      "attempts": 1,
+      "history": [
+        {
+          "event": "running",
+          "timestamp": "2026-03-31T10:40:24-0500",
+          "attempts": 1,
+          "resources": [
+            "architecture",
+            "docs-main"
+          ],
+          "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/choose-strategy-abstraction-style/logs/attempt_1.log",
+          "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/choose-strategy-abstraction-style",
+          "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/choose-strategy-abstraction-style/worker_output.json",
+          "started_at": "2026-03-31T10:40:24-0500"
+        },
+        {
+          "event": "completed",
+          "timestamp": "2026-03-31T10:41:31-0500",
+          "summary": "Recorded the strategy abstraction decision in `Fibo_Codex/strategy_abstraction_decision.md`. The note chooses plain module-level functions for the initial recursive and iterative Fibonacci strategies, explains why classes would be premature, and documents lightweight responsibility boundaries and an extension rule for future strategies. The dependency summary referenced a `fibonacci_exploration/src/` layout, but that directory is not present in this worktree, so the decision was recorded in the existing planning area instead of alongside source modules.",
+          "blockers": [],
+          "tests_ran": [
+            "sed -n '1,220p' Fibo_Codex/strategy_abstraction_decision.md",
+            "git status --short"
+          ],
+          "changed_files": [
+            "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/choose-strategy-abstraction-style/CS1_CS2/Coding_Odyssey/Fibo_Codex/strategy_abstraction_decision.md"
+          ],
+          "detected_changed_files": [],
+          "applied_files": [],
+          "finished_at": "2026-03-31T10:41:31-0500",
+          "duration_seconds": 66.23
+        }
+      ],
+      "resources": [
+        "architecture",
+        "docs-main"
+      ],
+      "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/choose-strategy-abstraction-style/logs/attempt_1.log",
+      "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/choose-strategy-abstraction-style",
+      "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/choose-strategy-abstraction-style/worker_output.json",
+      "started_at": "2026-03-31T10:40:24-0500",
+      "summary": "Recorded the strategy abstraction decision in `Fibo_Codex/strategy_abstraction_decision.md`. The note chooses plain module-level functions for the initial recursive and iterative Fibonacci strategies, explains why classes would be premature, and documents lightweight responsibility boundaries and an extension rule for future strategies. The dependency summary referenced a `fibonacci_exploration/src/` layout, but that directory is not present in this worktree, so the decision was recorded in the existing planning area instead of alongside source modules.",
+      "blockers": [],
+      "tests_ran": [
+        "sed -n '1,220p' Fibo_Codex/strategy_abstraction_decision.md",
+        "git status --short"
+      ],
+      "changed_files": [
+        "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/choose-strategy-abstraction-style/CS1_CS2/Coding_Odyssey/Fibo_Codex/strategy_abstraction_decision.md"
+      ],
+      "detected_changed_files": [],
+      "applied_files": [],
+      "finished_at": "2026-03-31T10:41:31-0500",
+      "duration_seconds": 66.23
+    },
+    "define-strategy-boundaries": {
+      "status": "completed",
+      "attempts": 1,
+      "history": [
+        {
+          "event": "running",
+          "timestamp": "2026-03-31T10:41:33-0500",
+          "attempts": 1,
+          "resources": [
+            "architecture",
+            "comparison-impl",
+            "docs-main",
+            "visualization-impl"
+          ],
+          "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-strategy-boundaries/logs/attempt_1.log",
+          "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-strategy-boundaries",
+          "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-strategy-boundaries/worker_output.json",
+          "started_at": "2026-03-31T10:41:33-0500"
+        },
+        {
+          "event": "completed",
+          "timestamp": "2026-03-31T10:42:50-0500",
+          "summary": "Added `Fibo_Codex/strategy_responsibility_boundaries.md` to define the plain-function strategy boundary for Fibonacci implementations, separate shared concerns that stay outside the strategy layer, document how comparison and visualization helpers should interact with strategies, and record lightweight extension rules for future strategies without expanding the initial abstraction prematurely.",
+          "blockers": [],
+          "tests_ran": [
+            "git diff --check"
+          ],
+          "changed_files": [
+            "Fibo_Codex/strategy_responsibility_boundaries.md"
+          ],
+          "detected_changed_files": [],
+          "applied_files": [],
+          "finished_at": "2026-03-31T10:42:50-0500",
+          "duration_seconds": 77.45
+        }
+      ],
+      "resources": [
+        "architecture",
+        "comparison-impl",
+        "docs-main",
+        "visualization-impl"
+      ],
+      "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-strategy-boundaries/logs/attempt_1.log",
+      "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-strategy-boundaries",
+      "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-strategy-boundaries/worker_output.json",
+      "started_at": "2026-03-31T10:41:33-0500",
+      "summary": "Added `Fibo_Codex/strategy_responsibility_boundaries.md` to define the plain-function strategy boundary for Fibonacci implementations, separate shared concerns that stay outside the strategy layer, document how comparison and visualization helpers should interact with strategies, and record lightweight extension rules for future strategies without expanding the initial abstraction prematurely.",
+      "blockers": [],
+      "tests_ran": [
+        "git diff --check"
+      ],
+      "changed_files": [
+        "Fibo_Codex/strategy_responsibility_boundaries.md"
+      ],
+      "detected_changed_files": [],
+      "applied_files": [],
+      "finished_at": "2026-03-31T10:42:50-0500",
+      "duration_seconds": 77.45
+    },
+    "define-shared-input-rules": {
+      "status": "completed",
+      "attempts": 1,
+      "history": [
+        {
+          "event": "running",
+          "timestamp": "2026-03-31T10:40:22-0500",
+          "attempts": 1,
+          "resources": [
+            "validation-impl"
+          ],
+          "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-shared-input-rules/logs/attempt_1.log",
+          "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-shared-input-rules",
+          "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-shared-input-rules/worker_output.json",
+          "started_at": "2026-03-31T10:40:22-0500"
+        },
+        {
+          "event": "completed",
+          "timestamp": "2026-03-31T10:42:25-0500",
+          "summary": "Defined the shared Fibonacci input baseline in a dedicated validation module. The rules now accept integer-like values via `__index__`, explicitly reject `bool`, strings, floats, and negative values, normalize accepted inputs to built-in `int`, and leave any strategy-specific performance limits outside shared validation. Because the scheduled worktree did not include the dependency\u2019s package path, I created only the minimal package/validation directories needed to place this task\u2019s baseline cleanly.",
+          "blockers": [],
+          "tests_ran": [
+            "PYTHONPATH=fibonacci_exploration/src python - <<'PY'\nfrom fibonacci_exploration.validation import FIBONACCI_INPUT_RULES, normalize_fibonacci_index\n\nassert normalize_fibonacci_index(0) == 0\nassert normalize_fibonacci_index(8) == 8\n\nfor invalid in (-1, True, 2.5, '5'):\n    try:\n        normalize_fibonacci_index(invalid)\n    except (TypeError, ValueError):\n        pass\n    else:\n        raise AssertionError(f'expected failure for {invalid!r}')\n\nprint(FIBONACCI_INPUT_RULES)\nPY"
+          ],
+          "changed_files": [
+            "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-shared-input-rules/CS1_CS2/Coding_Odyssey/fibonacci_exploration/src/fibonacci_exploration/__init__.py",
+            "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-shared-input-rules/CS1_CS2/Coding_Odyssey/fibonacci_exploration/src/fibonacci_exploration/validation/__init__.py",
+            "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-shared-input-rules/CS1_CS2/Coding_Odyssey/fibonacci_exploration/src/fibonacci_exploration/validation/input_rules.py"
+          ],
+          "detected_changed_files": [],
+          "applied_files": [],
+          "finished_at": "2026-03-31T10:42:25-0500",
+          "duration_seconds": 122.88
+        }
+      ],
+      "resources": [
+        "validation-impl"
+      ],
+      "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-shared-input-rules/logs/attempt_1.log",
+      "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-shared-input-rules",
+      "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-shared-input-rules/worker_output.json",
+      "started_at": "2026-03-31T10:40:22-0500",
+      "summary": "Defined the shared Fibonacci input baseline in a dedicated validation module. The rules now accept integer-like values via `__index__`, explicitly reject `bool`, strings, floats, and negative values, normalize accepted inputs to built-in `int`, and leave any strategy-specific performance limits outside shared validation. Because the scheduled worktree did not include the dependency\u2019s package path, I created only the minimal package/validation directories needed to place this task\u2019s baseline cleanly.",
+      "blockers": [],
+      "tests_ran": [
+        "PYTHONPATH=fibonacci_exploration/src python - <<'PY'\nfrom fibonacci_exploration.validation import FIBONACCI_INPUT_RULES, normalize_fibonacci_index\n\nassert normalize_fibonacci_index(0) == 0\nassert normalize_fibonacci_index(8) == 8\n\nfor invalid in (-1, True, 2.5, '5'):\n    try:\n        normalize_fibonacci_index(invalid)\n    except (TypeError, ValueError):\n        pass\n    else:\n        raise AssertionError(f'expected failure for {invalid!r}')\n\nprint(FIBONACCI_INPUT_RULES)\nPY"
+      ],
+      "changed_files": [
+        "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-shared-input-rules/CS1_CS2/Coding_Odyssey/fibonacci_exploration/src/fibonacci_exploration/__init__.py",
+        "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-shared-input-rules/CS1_CS2/Coding_Odyssey/fibonacci_exploration/src/fibonacci_exploration/validation/__init__.py",
+        "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-shared-input-rules/CS1_CS2/Coding_Odyssey/fibonacci_exploration/src/fibonacci_exploration/validation/input_rules.py"
+      ],
+      "detected_changed_files": [],
+      "applied_files": [],
+      "finished_at": "2026-03-31T10:42:25-0500",
+      "duration_seconds": 122.88
+    },
+    "define-invalid-input-behavior": {
+      "status": "completed",
+      "attempts": 1,
+      "history": [
+        {
+          "event": "running",
+          "timestamp": "2026-03-31T10:42:27-0500",
+          "attempts": 1,
+          "resources": [
+            "validation-impl"
+          ],
+          "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-invalid-input-behavior/logs/attempt_1.log",
+          "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-invalid-input-behavior",
+          "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-invalid-input-behavior/worker_output.json",
+          "started_at": "2026-03-31T10:42:27-0500"
+        },
+        {
+          "event": "completed",
+          "timestamp": "2026-03-31T10:43:46-0500",
+          "summary": "Defined the Fibonacci invalid-input contract in the planning document: both strategies must use shared validation, raise TypeError for non-integer-like inputs and bool, raise ValueError for negative integer-like inputs, normalize accepted values to built-in int, and use consistent message templates across strategies. Marked the target task as completed in the task list.",
+          "blockers": [],
+          "tests_ran": [
+            "python -m json.tool Fibo_Codex/fibonacci_task_list.json >/dev/null",
+            "sed -n '110,170p' Fibo_Codex/fibonacci_exploration_plan.md",
+            "sed -n '136,150p' Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "changed_files": [
+            "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-invalid-input-behavior/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+            "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-invalid-input-behavior/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "detected_changed_files": [
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "applied_files": [
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "finished_at": "2026-03-31T10:43:46-0500",
+          "duration_seconds": 79.12
+        }
+      ],
+      "resources": [
+        "validation-impl"
+      ],
+      "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-invalid-input-behavior/logs/attempt_1.log",
+      "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-invalid-input-behavior",
+      "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-invalid-input-behavior/worker_output.json",
+      "started_at": "2026-03-31T10:42:27-0500",
+      "summary": "Defined the Fibonacci invalid-input contract in the planning document: both strategies must use shared validation, raise TypeError for non-integer-like inputs and bool, raise ValueError for negative integer-like inputs, normalize accepted values to built-in int, and use consistent message templates across strategies. Marked the target task as completed in the task list.",
+      "blockers": [],
+      "tests_ran": [
+        "python -m json.tool Fibo_Codex/fibonacci_task_list.json >/dev/null",
+        "sed -n '110,170p' Fibo_Codex/fibonacci_exploration_plan.md",
+        "sed -n '136,150p' Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "changed_files": [
+        "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-invalid-input-behavior/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+        "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-invalid-input-behavior/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "detected_changed_files": [
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "applied_files": [
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "finished_at": "2026-03-31T10:43:46-0500",
+      "duration_seconds": 79.12
+    },
+    "design-validation-reuse-approach": {
+      "status": "completed",
+      "attempts": 1,
+      "history": [
+        {
+          "event": "running",
+          "timestamp": "2026-03-31T10:44:33-0500",
+          "attempts": 1,
+          "resources": [
+            "docs-main",
+            "validation-impl"
+          ],
+          "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/design-validation-reuse-approach/logs/attempt_1.log",
+          "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/design-validation-reuse-approach",
+          "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/design-validation-reuse-approach/worker_output.json",
+          "started_at": "2026-03-31T10:44:33-0500"
+        },
+        {
+          "event": "completed",
+          "timestamp": "2026-03-31T10:45:58-0500",
+          "summary": "Documented the shared validation reuse design in the Fibonacci planning document: use one small shared helper/module in the future Fibonacci source area, have each public strategy call it first, keep validation out of the recursive step logic, and centralize normalization plus consistent exception behavior. Updated the task list to mark both the dependency and this target task as completed.",
+          "blockers": [],
+          "tests_ran": [
+            "python -m json.tool Fibo_Codex/fibonacci_task_list.json >/dev/null",
+            "git diff -- Fibo_Codex/fibonacci_exploration_plan.md Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "changed_files": [
+            "Fibo_Codex/fibonacci_exploration_plan.md",
+            "Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "detected_changed_files": [
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "applied_files": [
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "finished_at": "2026-03-31T10:45:58-0500",
+          "duration_seconds": 84.11
+        }
+      ],
+      "resources": [
+        "docs-main",
+        "validation-impl"
+      ],
+      "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/design-validation-reuse-approach/logs/attempt_1.log",
+      "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/design-validation-reuse-approach",
+      "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/design-validation-reuse-approach/worker_output.json",
+      "started_at": "2026-03-31T10:44:33-0500",
+      "summary": "Documented the shared validation reuse design in the Fibonacci planning document: use one small shared helper/module in the future Fibonacci source area, have each public strategy call it first, keep validation out of the recursive step logic, and centralize normalization plus consistent exception behavior. Updated the task list to mark both the dependency and this target task as completed.",
+      "blockers": [],
+      "tests_ran": [
+        "python -m json.tool Fibo_Codex/fibonacci_task_list.json >/dev/null",
+        "git diff -- Fibo_Codex/fibonacci_exploration_plan.md Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "changed_files": [
+        "Fibo_Codex/fibonacci_exploration_plan.md",
+        "Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "detected_changed_files": [
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "applied_files": [
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "finished_at": "2026-03-31T10:45:58-0500",
+      "duration_seconds": 84.11
+    },
+    "define-recursive-fibonacci-contract": {
+      "status": "failed",
+      "attempts": 1,
+      "history": [
+        {
+          "event": "running",
+          "timestamp": "2026-03-31T10:47:17-0500",
+          "attempts": 1,
+          "resources": [
+            "architecture",
+            "recursive-impl",
+            "validation-impl"
+          ],
+          "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-recursive-fibonacci-contract/logs/attempt_1.log",
+          "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-recursive-fibonacci-contract",
+          "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-recursive-fibonacci-contract/worker_output.json",
+          "started_at": "2026-03-31T10:47:17-0500"
+        },
+        {
+          "event": "failed",
+          "timestamp": "2026-03-31T10:48:37-0500",
+          "summary": "Command failed (1): git apply --3way /data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-recursive-fibonacci-contract/changes.patch\nerror: CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md: does not exist in index\nApplied patch to 'CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json' cleanly.",
+          "blockers": [
+            "patch-apply-failed"
+          ],
+          "changed_files": [
+            "Fibo_Codex/fibonacci_exploration_plan.md",
+            "Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "detected_changed_files": [
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "finished_at": "2026-03-31T10:48:37-0500"
+        }
+      ],
+      "resources": [
+        "architecture",
+        "recursive-impl",
+        "validation-impl"
+      ],
+      "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-recursive-fibonacci-contract/logs/attempt_1.log",
+      "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-recursive-fibonacci-contract",
+      "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-recursive-fibonacci-contract/worker_output.json",
+      "started_at": "2026-03-31T10:47:17-0500",
+      "summary": "Command failed (1): git apply --3way /data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-recursive-fibonacci-contract/changes.patch\nerror: CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md: does not exist in index\nApplied patch to 'CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json' cleanly.",
+      "blockers": [
+        "patch-apply-failed"
+      ],
+      "changed_files": [
+        "Fibo_Codex/fibonacci_exploration_plan.md",
+        "Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "detected_changed_files": [
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "finished_at": "2026-03-31T10:48:37-0500"
+    },
+    "define-iterative-fibonacci-contract": {
+      "status": "failed",
+      "attempts": 1,
+      "history": [
+        {
+          "event": "running",
+          "timestamp": "2026-03-31T10:46:00-0500",
+          "attempts": 1,
+          "resources": [
+            "architecture",
+            "iterative-impl",
+            "validation-impl"
+          ],
+          "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-iterative-fibonacci-contract/logs/attempt_1.log",
+          "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-iterative-fibonacci-contract",
+          "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-iterative-fibonacci-contract/worker_output.json",
+          "started_at": "2026-03-31T10:46:00-0500"
+        },
+        {
+          "event": "failed",
+          "timestamp": "2026-03-31T10:47:15-0500",
+          "summary": "Command failed (1): git apply --3way /data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-iterative-fibonacci-contract/changes.patch\nApplied patch to 'CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md' with conflicts.\nApplied patch to 'CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json' cleanly.\nU CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+          "blockers": [
+            "patch-apply-failed"
+          ],
+          "changed_files": [
+            "Fibo_Codex/fibonacci_exploration_plan.md",
+            "Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "detected_changed_files": [
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "finished_at": "2026-03-31T10:47:15-0500"
+        }
+      ],
+      "resources": [
+        "architecture",
+        "iterative-impl",
+        "validation-impl"
+      ],
+      "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-iterative-fibonacci-contract/logs/attempt_1.log",
+      "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-iterative-fibonacci-contract",
+      "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-iterative-fibonacci-contract/worker_output.json",
+      "started_at": "2026-03-31T10:46:00-0500",
+      "summary": "Command failed (1): git apply --3way /data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-iterative-fibonacci-contract/changes.patch\nApplied patch to 'CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md' with conflicts.\nApplied patch to 'CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json' cleanly.\nU CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+      "blockers": [
+        "patch-apply-failed"
+      ],
+      "changed_files": [
+        "Fibo_Codex/fibonacci_exploration_plan.md",
+        "Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "detected_changed_files": [
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "finished_at": "2026-03-31T10:47:15-0500"
+    },
+    "define-comparison-categories": {
+      "status": "completed",
+      "attempts": 1,
+      "history": [
+        {
+          "event": "running",
+          "timestamp": "2026-03-31T10:42:53-0500",
+          "attempts": 1,
+          "resources": [
+            "comparison-impl",
+            "docs-main"
+          ],
+          "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-comparison-categories/logs/attempt_1.log",
+          "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-comparison-categories",
+          "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-comparison-categories/worker_output.json",
+          "started_at": "2026-03-31T10:42:53-0500"
+        },
+        {
+          "event": "completed",
+          "timestamp": "2026-03-31T10:44:31-0500",
+          "summary": "Defined the project's fixed recursive-vs-iterative comparison categories in `Fibo_Codex/comparison_categories.md`, including eight ordered category ids, reader-facing labels, concise category definitions, and usage rules that keep comparison helpers separate from Fibonacci calculation and aligned with the existing strategy-boundary summary. The referenced dependency file `strategy_responsibility_boundaries.md` was not present in this worktree, so the task was completed using the provided dependency summary and the existing exploration plan.",
+          "blockers": [],
+          "tests_ran": [
+            "`sed -n '1,240p' Fibo_Codex/comparison_categories.md`",
+            "`python - <<'PY' ... PY` to verify all 8 required category ids are present and count the ordered category list",
+            "`git status --short`"
+          ],
+          "changed_files": [
+            "Fibo_Codex/comparison_categories.md"
+          ],
+          "detected_changed_files": [],
+          "applied_files": [],
+          "finished_at": "2026-03-31T10:44:31-0500",
+          "duration_seconds": 98.37
+        }
+      ],
+      "resources": [
+        "comparison-impl",
+        "docs-main"
+      ],
+      "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-comparison-categories/logs/attempt_1.log",
+      "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/define-comparison-categories",
+      "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/define-comparison-categories/worker_output.json",
+      "started_at": "2026-03-31T10:42:53-0500",
+      "summary": "Defined the project's fixed recursive-vs-iterative comparison categories in `Fibo_Codex/comparison_categories.md`, including eight ordered category ids, reader-facing labels, concise category definitions, and usage rules that keep comparison helpers separate from Fibonacci calculation and aligned with the existing strategy-boundary summary. The referenced dependency file `strategy_responsibility_boundaries.md` was not present in this worktree, so the task was completed using the provided dependency summary and the existing exploration plan.",
+      "blockers": [],
+      "tests_ran": [
+        "`sed -n '1,240p' Fibo_Codex/comparison_categories.md`",
+        "`python - <<'PY' ... PY` to verify all 8 required category ids are present and count the ordered category list",
+        "`git status --short`"
+      ],
+      "changed_files": [
+        "Fibo_Codex/comparison_categories.md"
+      ],
+      "detected_changed_files": [],
+      "applied_files": [],
+      "finished_at": "2026-03-31T10:44:31-0500",
+      "duration_seconds": 98.37
+    },
+    "design-comparison-data-structure": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "define-visualization-input-ranges": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "design-visualization-data-structure": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "define-implementation-commit-slices": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "implement-shared-validation-logic": {
+      "status": "completed",
+      "attempts": 1,
+      "history": [
+        {
+          "event": "running",
+          "timestamp": "2026-03-31T10:48:39-0500",
+          "attempts": 1,
+          "resources": [
+            "validation-impl"
+          ],
+          "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/implement-shared-validation-logic/logs/attempt_1.log",
+          "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/implement-shared-validation-logic",
+          "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/implement-shared-validation-logic/worker_output.json",
+          "started_at": "2026-03-31T10:48:39-0500"
+        },
+        {
+          "event": "completed",
+          "timestamp": "2026-03-31T10:50:44-0500",
+          "summary": "Implemented the shared Fibonacci input validation module in the planned `fibonacci_exploration/src/fibonacci_exploration/validation/` package. The helper now centralizes normalization to built-in `int`, rejects `bool` and other non-`__index__` inputs with the agreed `TypeError`, rejects negative integer-like inputs with the agreed `ValueError`, and exports the shared rule metadata for later strategy reuse. Marked `implement-shared-validation-logic` as completed in the task list.",
+          "blockers": [],
+          "tests_ran": [
+            "PYTHONPATH=fibonacci_exploration/src python - <<'PY'\nfrom fibonacci_exploration.validation import (\n    FIBONACCI_INPUT_RULES,\n    RANGE_ERROR_MESSAGE,\n    TYPE_ERROR_MESSAGE,\n    normalize_fibonacci_index,\n)\n\nclass Indexable:\n    def __index__(self):\n        return 7\n\nassert normalize_fibonacci_index(0) == 0\nassert normalize_fibonacci_index(11) == 11\nassert normalize_fibonacci_index(Indexable()) == 7\nassert FIBONACCI_INPUT_RULES['type_error_message'] == TYPE_ERROR_MESSAGE\nassert FIBONACCI_INPUT_RULES['range_error_message'] == RANGE_ERROR_MESSAGE\n\nfor invalid in (True, 2.5, '8'):\n    try:\n        normalize_fibonacci_index(invalid)\n    except TypeError as exc:\n        assert str(exc) == TYPE_ERROR_MESSAGE\n    else:\n        raise AssertionError(f'expected TypeError for {invalid!r}')\n\ntry:\n    normalize_fibonacci_index(-1)\nexcept ValueError as exc:\n    assert str(exc) == RANGE_ERROR_MESSAGE\nelse:\n    raise AssertionError('expected ValueError for -1')\n\nprint('validation checks passed')\nPY",
+            "python -m json.tool Fibo_Codex/fibonacci_task_list.json >/dev/null"
+          ],
+          "changed_files": [
+            "fibonacci_exploration/src/fibonacci_exploration/__init__.py",
+            "fibonacci_exploration/src/fibonacci_exploration/validation/__init__.py",
+            "fibonacci_exploration/src/fibonacci_exploration/validation/input_rules.py",
+            "Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "detected_changed_files": [
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "applied_files": [
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "finished_at": "2026-03-31T10:50:44-0500",
+          "duration_seconds": 124.65
+        }
+      ],
+      "resources": [
+        "validation-impl"
+      ],
+      "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/implement-shared-validation-logic/logs/attempt_1.log",
+      "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/implement-shared-validation-logic",
+      "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/implement-shared-validation-logic/worker_output.json",
+      "started_at": "2026-03-31T10:48:39-0500",
+      "summary": "Implemented the shared Fibonacci input validation module in the planned `fibonacci_exploration/src/fibonacci_exploration/validation/` package. The helper now centralizes normalization to built-in `int`, rejects `bool` and other non-`__index__` inputs with the agreed `TypeError`, rejects negative integer-like inputs with the agreed `ValueError`, and exports the shared rule metadata for later strategy reuse. Marked `implement-shared-validation-logic` as completed in the task list.",
+      "blockers": [],
+      "tests_ran": [
+        "PYTHONPATH=fibonacci_exploration/src python - <<'PY'\nfrom fibonacci_exploration.validation import (\n    FIBONACCI_INPUT_RULES,\n    RANGE_ERROR_MESSAGE,\n    TYPE_ERROR_MESSAGE,\n    normalize_fibonacci_index,\n)\n\nclass Indexable:\n    def __index__(self):\n        return 7\n\nassert normalize_fibonacci_index(0) == 0\nassert normalize_fibonacci_index(11) == 11\nassert normalize_fibonacci_index(Indexable()) == 7\nassert FIBONACCI_INPUT_RULES['type_error_message'] == TYPE_ERROR_MESSAGE\nassert FIBONACCI_INPUT_RULES['range_error_message'] == RANGE_ERROR_MESSAGE\n\nfor invalid in (True, 2.5, '8'):\n    try:\n        normalize_fibonacci_index(invalid)\n    except TypeError as exc:\n        assert str(exc) == TYPE_ERROR_MESSAGE\n    else:\n        raise AssertionError(f'expected TypeError for {invalid!r}')\n\ntry:\n    normalize_fibonacci_index(-1)\nexcept ValueError as exc:\n    assert str(exc) == RANGE_ERROR_MESSAGE\nelse:\n    raise AssertionError('expected ValueError for -1')\n\nprint('validation checks passed')\nPY",
+        "python -m json.tool Fibo_Codex/fibonacci_task_list.json >/dev/null"
+      ],
+      "changed_files": [
+        "fibonacci_exploration/src/fibonacci_exploration/__init__.py",
+        "fibonacci_exploration/src/fibonacci_exploration/validation/__init__.py",
+        "fibonacci_exploration/src/fibonacci_exploration/validation/input_rules.py",
+        "Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "detected_changed_files": [
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "applied_files": [
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "finished_at": "2026-03-31T10:50:44-0500",
+      "duration_seconds": 124.65
+    },
+    "add-shared-validation-tests": {
+      "status": "completed",
+      "attempts": 1,
+      "history": [
+        {
+          "event": "running",
+          "timestamp": "2026-03-31T10:52:02-0500",
+          "attempts": 1,
+          "resources": [
+            "docs-main",
+            "tests",
+            "validation-impl"
+          ],
+          "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/add-shared-validation-tests/logs/attempt_1.log",
+          "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/add-shared-validation-tests",
+          "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/add-shared-validation-tests/worker_output.json",
+          "started_at": "2026-03-31T10:52:02-0500"
+        },
+        {
+          "event": "completed",
+          "timestamp": "2026-03-31T10:54:45-0500",
+          "summary": "Added focused shared-validation tests covering accepted integer-like inputs, rejected non-integer-like and negative inputs, and consistent exported error-message metadata. Marked `add-shared-validation-tests` as completed in the task list. Verification was partial: the new test file compiles, but pytest collection is currently blocked because this worktree does not contain the dependency-created `fibonacci_exploration/src/fibonacci_exploration/validation/` package referenced by the completed dependency context.",
+          "blockers": [
+            "`PYTHONPATH=fibonacci_exploration/src pytest fibonacci_exploration/tests/unit/validation/test_input_rules.py` fails during collection with `ModuleNotFoundError: No module named 'fibonacci_exploration'` because the current worktree is missing the dependency-created source package at `fibonacci_exploration/src/fibonacci_exploration/validation/`."
+          ],
+          "tests_ran": [
+            "python -m compileall fibonacci_exploration/tests/unit/validation/test_input_rules.py",
+            "PYTHONPATH=fibonacci_exploration/src pytest fibonacci_exploration/tests/unit/validation/test_input_rules.py",
+            "python -m json.tool Fibo_Codex/fibonacci_task_list.json >/dev/null"
+          ],
+          "changed_files": [
+            "fibonacci_exploration/tests/unit/validation/test_input_rules.py",
+            "Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "detected_changed_files": [
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "applied_files": [
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "finished_at": "2026-03-31T10:54:45-0500",
+          "duration_seconds": 162.41
+        }
+      ],
+      "resources": [
+        "docs-main",
+        "tests",
+        "validation-impl"
+      ],
+      "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/add-shared-validation-tests/logs/attempt_1.log",
+      "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/add-shared-validation-tests",
+      "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/add-shared-validation-tests/worker_output.json",
+      "started_at": "2026-03-31T10:52:02-0500",
+      "summary": "Added focused shared-validation tests covering accepted integer-like inputs, rejected non-integer-like and negative inputs, and consistent exported error-message metadata. Marked `add-shared-validation-tests` as completed in the task list. Verification was partial: the new test file compiles, but pytest collection is currently blocked because this worktree does not contain the dependency-created `fibonacci_exploration/src/fibonacci_exploration/validation/` package referenced by the completed dependency context.",
+      "blockers": [
+        "`PYTHONPATH=fibonacci_exploration/src pytest fibonacci_exploration/tests/unit/validation/test_input_rules.py` fails during collection with `ModuleNotFoundError: No module named 'fibonacci_exploration'` because the current worktree is missing the dependency-created source package at `fibonacci_exploration/src/fibonacci_exploration/validation/`."
+      ],
+      "tests_ran": [
+        "python -m compileall fibonacci_exploration/tests/unit/validation/test_input_rules.py",
+        "PYTHONPATH=fibonacci_exploration/src pytest fibonacci_exploration/tests/unit/validation/test_input_rules.py",
+        "python -m json.tool Fibo_Codex/fibonacci_task_list.json >/dev/null"
+      ],
+      "changed_files": [
+        "fibonacci_exploration/tests/unit/validation/test_input_rules.py",
+        "Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "detected_changed_files": [
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "applied_files": [
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "finished_at": "2026-03-31T10:54:45-0500",
+      "duration_seconds": 162.41
+    },
+    "implement-recursive-fibonacci-unit": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "add-recursive-fibonacci-unit-tests": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "implement-iterative-fibonacci-unit": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "add-iterative-fibonacci-unit-tests": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "add-strategy-result-parity-tests": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "implement-comparison-data-preparation-unit": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "add-comparison-data-tests": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "document-comparison-data-approach": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "implement-visualization-data-preparation-unit": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "add-visualization-data-tests": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "document-visualization-data-approach": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "review-unit-test-suite-coverage": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "define-testing-commit-scope": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "document-project-structure": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "document-shared-validation-approach": {
+      "status": "failed",
+      "attempts": 1,
+      "history": [
+        {
+          "event": "running",
+          "timestamp": "2026-03-31T10:54:47-0500",
+          "attempts": 1,
+          "resources": [
+            "docs-main",
+            "validation-impl"
+          ],
+          "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/document-shared-validation-approach/logs/attempt_1.log",
+          "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/document-shared-validation-approach",
+          "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/document-shared-validation-approach/worker_output.json",
+          "started_at": "2026-03-31T10:54:47-0500"
+        },
+        {
+          "event": "failed",
+          "timestamp": "2026-03-31T10:56:10-0500",
+          "summary": "Command failed (1): git apply --3way /data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/document-shared-validation-approach/changes.patch\nerror: CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md: does not exist in index\nApplied patch to 'CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json' cleanly.",
+          "blockers": [
+            "patch-apply-failed"
+          ],
+          "changed_files": [
+            "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/document-shared-validation-approach/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+            "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/document-shared-validation-approach/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "detected_changed_files": [
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+            "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+          ],
+          "finished_at": "2026-03-31T10:56:10-0500"
+        }
+      ],
+      "resources": [
+        "docs-main",
+        "validation-impl"
+      ],
+      "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/document-shared-validation-approach/logs/attempt_1.log",
+      "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/document-shared-validation-approach",
+      "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/document-shared-validation-approach/worker_output.json",
+      "started_at": "2026-03-31T10:54:47-0500",
+      "summary": "Command failed (1): git apply --3way /data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/document-shared-validation-approach/changes.patch\nerror: CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md: does not exist in index\nApplied patch to 'CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json' cleanly.",
+      "blockers": [
+        "patch-apply-failed"
+      ],
+      "changed_files": [
+        "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/document-shared-validation-approach/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+        "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/document-shared-validation-approach/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "detected_changed_files": [
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md",
+        "CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json"
+      ],
+      "finished_at": "2026-03-31T10:56:10-0500"
+    },
+    "document-strategy-abstraction-decision": {
+      "status": "completed",
+      "attempts": 1,
+      "history": [
+        {
+          "event": "running",
+          "timestamp": "2026-03-31T10:48:41-0500",
+          "attempts": 1,
+          "resources": [
+            "architecture",
+            "docs-main"
+          ],
+          "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/document-strategy-abstraction-decision/logs/attempt_1.log",
+          "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/document-strategy-abstraction-decision",
+          "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/document-strategy-abstraction-decision/worker_output.json",
+          "started_at": "2026-03-31T10:48:41-0500"
+        },
+        {
+          "event": "completed",
+          "timestamp": "2026-03-31T10:50:05-0500",
+          "summary": "Added `Fibo_Codex/strategy_abstraction_decision.md` to document the chosen plain-function strategy style, define what recursive and iterative strategies own versus shared comparison concerns, and record extension rules that keep the initial comparison layer minimal instead of overengineered. The dependency note files referenced in the task context were not present in this worktree, so this task used the provided dependency summaries as source context and recorded the decision directly in the existing `Fibo_Codex/` planning area.",
+          "blockers": [],
+          "tests_ran": [
+            "`sed -n '1,220p' Fibo_Codex/strategy_abstraction_decision.md`"
+          ],
+          "changed_files": [
+            "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/document-strategy-abstraction-decision/CS1_CS2/Coding_Odyssey/Fibo_Codex/strategy_abstraction_decision.md"
+          ],
+          "detected_changed_files": [],
+          "applied_files": [],
+          "finished_at": "2026-03-31T10:50:05-0500",
+          "duration_seconds": 84.05
+        }
+      ],
+      "resources": [
+        "architecture",
+        "docs-main"
+      ],
+      "log_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/document-strategy-abstraction-decision/logs/attempt_1.log",
+      "worker_dir": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/document-strategy-abstraction-decision",
+      "output_path": "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/tasks/document-strategy-abstraction-decision/worker_output.json",
+      "started_at": "2026-03-31T10:48:41-0500",
+      "summary": "Added `Fibo_Codex/strategy_abstraction_decision.md` to document the chosen plain-function strategy style, define what recursive and iterative strategies own versus shared comparison concerns, and record extension rules that keep the initial comparison layer minimal instead of overengineered. The dependency note files referenced in the task context were not present in this worktree, so this task used the provided dependency summaries as source context and recorded the decision directly in the existing `Fibo_Codex/` planning area.",
+      "blockers": [],
+      "tests_ran": [
+        "`sed -n '1,220p' Fibo_Codex/strategy_abstraction_decision.md`"
+      ],
+      "changed_files": [
+        "/data/git/SwosuCsPythonExamples/CS1_CS2/Coding_Odyssey/Fibo_Codex/.fibo_task_runner/worktrees/document-strategy-abstraction-decision/CS1_CS2/Coding_Odyssey/Fibo_Codex/strategy_abstraction_decision.md"
+      ],
+      "detected_changed_files": [],
+      "applied_files": [],
+      "finished_at": "2026-03-31T10:50:05-0500",
+      "duration_seconds": 84.05
+    },
+    "create-markdown-outline-scaffold": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "outline-fibonacci-introduction": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "draft-sequence-overview-section": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "outline-recursive-implementation-discussion": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "draft-recursive-implementation-discussion": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "outline-iterative-implementation-discussion": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "draft-iterative-implementation-discussion": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "outline-comparison-section": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "draft-recursive-iterative-comparison": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "outline-big-o-analysis-section": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "draft-recursive-big-o-analysis": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "draft-iterative-big-o-analysis": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "review-big-o-analysis-consistency": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "outline-visualization-section": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "define-markdown-visualization-format": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "draft-growth-tables": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "draft-ascii-growth-bars": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "draft-recursive-call-tree-sketch": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "write-visual-comparison-commentary": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "review-markdown-visualizations": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "outline-design-decisions-section": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "document-recursive-iterative-separation-rationale": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "document-display-isolation-rationale": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "document-small-function-rationale": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "document-test-organization-rationale": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "review-design-decision-notes": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "outline-testing-strategy-section": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "document-unit-test-scope": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "document-small-function-testing-philosophy": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "document-boundary-and-edge-case-coverage": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "document-format-independent-test-guidance": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "review-testing-strategy-documentation": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "review-instructional-outline-flow": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "define-documentation-commit-scope": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "assemble-final-fibonacci-exploration-document": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "write-conclusion-section": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "review-final-fibonacci-exploration-document": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "review-naming-and-module-clarity": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "define-refactor-commit-scope": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "refactor-function-size-and-duplication": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "review-comment-quality": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    },
+    "review-commit-plan-alignment": {
+      "status": "pending",
+      "attempts": 0,
+      "history": []
+    }
+  }
+}

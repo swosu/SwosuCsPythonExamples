@@ -1,0 +1,30 @@
+diff --git a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md
+index e666dc4..8f1fd55 100644
+--- a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md
++++ b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md
+@@ -54,11 +54,17 @@ The project should use a clear layout so readers can quickly find where each con
+ 
+ Suggested future structure:
+ 
+-- `README.md` or a dedicated markdown lesson file for the main explanation
++- `fibonacci_exploration/docs/README.md` as the canonical starting point for the lesson
+ - `src/` for implementation files
+ - `tests/` for unit tests
+ - `assets/` only if later visual artifacts are added
+ 
++Canonical instructional markdown decision:
++
++- Place the main instructional markdown file at `fibonacci_exploration/docs/README.md`.
++- Keep the lesson in `docs/` so explanatory content stays separate from code and tests.
++- Use `README.md` so readers immediately see the entry document when they open the documentation folder.
++
+ Suggested implementation file direction:
+ 
+ - one module for Fibonacci sequence generation
+@@ -276,6 +282,5 @@ Recommended commit sequence:
+ Before implementation, confirm:
+ 
+ - whether the final project should stay function-based or introduce small focused classes
+-- whether the main lesson should live in `README.md` or a dedicated markdown file
+ - whether the first visualization should remain pure markdown and ASCII
+ - how much design-pattern terminology is appropriate for the student audience

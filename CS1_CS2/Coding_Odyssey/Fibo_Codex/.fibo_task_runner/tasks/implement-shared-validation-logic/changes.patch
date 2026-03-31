@@ -1,0 +1,13 @@
+diff --git a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
+index b1b44ee..ebf0dbe 100644
+--- a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
++++ b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
+@@ -3,7 +3,7 @@
+     "id": "plan-commit-sequence",
+     "title": "Plan staged commit sequence",
+     "description": "Draft the intended commit sequence for the project so work lands in a deliberate order: planning, project structure, implementation, testing, documentation, and refactor. Keep the plan aligned with the deliverable sequence rather than ad hoc development order.",
+-    "status": "pending",
++    "status": "completed",
+     "source_deliverables": [
+       "commit-plan"
+     ],

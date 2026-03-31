@@ -123,6 +123,64 @@ The implementation should avoid large multi-purpose functions that:
 
 all in one place.
 
+<<<<<<< ours
+## Shared Validation Error Behavior
+
+Invalid Fibonacci inputs should fail through one shared validation path before either
+strategy starts calculation.
+
+Planned error contract:
+
+- raise `TypeError` when the value is not accepted as an integer input
+- raise `ValueError` when the value is integer-like but less than `0`
+- use the same exception types and message templates for both recursive and iterative
+  strategies
+- normalize accepted values to built-in `int` before calculation so later code does not
+  need to preserve the original input type
+
+Planned invalid-input categories:
+
+- `bool` values should raise `TypeError` even though `bool` is a subclass of `int`
+- strings, floats, and other non-integer-like values should raise `TypeError`
+- objects that implement `__index__` should be accepted, normalized to `int`, and then
+  checked for the non-negative rule
+- negative integer inputs should raise `ValueError`
+
+Planned message templates:
+
+- type failures: `fibonacci input must be a non-boolean integer or support __index__`
+- range failures: `fibonacci input must be greater than or equal to 0`
+
+This keeps failure behavior explicit enough for shared validation tests and later
+documentation to assert on exact exceptions and messages.
+=======
+## Iterative Fibonacci Contract
+
+The iterative strategy should expose one small public function for direct calculation:
+
+- `iterative_fibonacci(n: int) -> int`
+
+Contract rules:
+
+- accept the same public input shape as the recursive strategy so comparison code can call both strategies the same way
+- treat `n` as the Fibonacci position index, not as a request for a whole sequence or a formatted report
+- return one integer Fibonacci value for the validated index
+- preserve standard base cases: `0` returns `0` and `1` returns `1`
+- keep the unit focused on loop-based state updates after validation is complete
+
+Validation usage:
+
+- the public iterative function should call the shared Fibonacci validation helper before any loop logic runs
+- the shared helper should own normalization and consistent exception behavior
+- the iterative function should use the validated integer returned by that helper instead of re-checking types or ranges locally
+
+Boundary reminders for this unit:
+
+- no printing, markdown generation, benchmarking, or visualization preparation
+- no sequence-building return value, metadata wrapper, or comparison payload
+- no strategy-specific validation branch that would drift from the shared rules
+>>>>>>> theirs
+
 ## Planned Documentation Content
 
 The final markdown should include the following instructional sections:
@@ -195,6 +253,35 @@ Important distinction to preserve:
 
 - one visualization should focus on sequence value growth
 - another should focus on algorithm cost growth
+
+## Shared Validation Reuse Plan
+
+Validation should be implemented once and reused by both Fibonacci strategies.
+
+Recommended approach:
+
+- place validation in a small shared helper module inside the future Fibonacci source area rather than inside either strategy module
+- expose one helper function that validates and normalizes the incoming value before any recursive or iterative work begins
+- have each public strategy call that helper as its first step and then continue with its own teaching-focused algorithm body
+
+Shared helper responsibilities:
+
+- reject `bool` and other non-integer-like inputs with a consistent `TypeError`
+- reject negative integer-like inputs with a consistent `ValueError`
+- convert accepted integer-like values to built-in `int`
+- return the normalized `int` so both strategies operate on the same input form
+
+Why this design is preferred:
+
+- it removes duplicated validation branches from the recursive and iterative units
+- it keeps the algorithm examples easy for students to read because the strategy bodies can focus on base cases, recursion, loops, and state updates
+- it keeps the invalid-input contract in one place so tests and documentation only need one authoritative rule set
+
+Boundary guidance:
+
+- validation belongs at the public entry point for each strategy, not inside the recursive step logic itself
+- the shared helper should stay narrowly focused on input checking and normalization, without computing Fibonacci values or formatting messages beyond the agreed exception text
+- if the project stays small early on, the helper can remain a private utility within the Fibonacci package, but it should still be separated from the recursive and iterative implementation units
 
 ## Testing Plan
 
@@ -270,6 +357,28 @@ Recommended commit sequence:
 5. `test: add unit tests for fibonacci strategies and helpers`
 6. `docs: write fibonacci analysis and implementation walkthrough`
 7. `refactor: simplify function boundaries and improve naming`
+
+### Planned Commit Scope
+
+The commit order should follow deliverable stages instead of the order problems happen to be discovered during development.
+
+1. Planning commit
+   - capture the implementation plan, repository layout decisions, and commit sequence before code is added
+2. Project-structure commit
+   - create the agreed source, test, and optional asset locations
+   - place the main instructional markdown file in its final location
+3. Implementation commits
+   - add shared input validation before strategy-specific behavior depends on it
+   - add recursive and iterative Fibonacci units as separate behavior-focused changes
+   - add comparison and visualization support only after the core strategies exist
+4. Testing commit
+   - add automated tests after the main implementation units and helpers have stable interfaces
+5. Documentation commit
+   - complete the instructional markdown, Big O analysis, visualization writeup, design notes, and testing explanation after the behavior and tests are in place
+6. Refactor commit
+   - limit the final cleanup pass to naming, duplication removal, function boundaries, and other behavior-preserving improvements
+
+This sequence is intentional because it keeps planning artifacts first, foundational structure ahead of implementation, validation separate from explanation, and behavior-preserving cleanup at the end.
 
 ## Open Decisions For Review
 

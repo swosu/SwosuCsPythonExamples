@@ -1,0 +1,62 @@
+diff --git a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md
+index e666dc4..f5e5370 100644
+--- a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md
++++ b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md
+@@ -196,6 +196,35 @@ Important distinction to preserve:
+ - one visualization should focus on sequence value growth
+ - another should focus on algorithm cost growth
+ 
++## Shared Validation Reuse Plan
++
++Validation should be implemented once and reused by both Fibonacci strategies.
++
++Recommended approach:
++
++- place validation in a small shared helper module inside the future Fibonacci source area rather than inside either strategy module
++- expose one helper function that validates and normalizes the incoming value before any recursive or iterative work begins
++- have each public strategy call that helper as its first step and then continue with its own teaching-focused algorithm body
++
++Shared helper responsibilities:
++
++- reject `bool` and other non-integer-like inputs with a consistent `TypeError`
++- reject negative integer-like inputs with a consistent `ValueError`
++- convert accepted integer-like values to built-in `int`
++- return the normalized `int` so both strategies operate on the same input form
++
++Why this design is preferred:
++
++- it removes duplicated validation branches from the recursive and iterative units
++- it keeps the algorithm examples easy for students to read because the strategy bodies can focus on base cases, recursion, loops, and state updates
++- it keeps the invalid-input contract in one place so tests and documentation only need one authoritative rule set
++
++Boundary guidance:
++
++- validation belongs at the public entry point for each strategy, not inside the recursive step logic itself
++- the shared helper should stay narrowly focused on input checking and normalization, without computing Fibonacci values or formatting messages beyond the agreed exception text
++- if the project stays small early on, the helper can remain a private utility within the Fibonacci package, but it should still be separated from the recursive and iterative implementation units
++
+ ## Testing Plan
+ 
+ Unit testing should be part of the design from the beginning, not added at the end.
+diff --git a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
+index b1b44ee..0ef8fff 100644
+--- a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
++++ b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
+@@ -140,7 +140,7 @@
+     "id": "define-invalid-input-behavior",
+     "title": "Define invalid input behavior",
+     "description": "Decide how invalid inputs will be reported, including exception type or error format and whether messages should be consistent across both strategies. Keep the behavior explicit so tests and documentation can rely on it.",
+-    "status": "pending",
++    "status": "completed",
+     "source_deliverables": [
+       "shared-input-validation"
+     ],
+@@ -152,7 +152,7 @@
+     "id": "design-validation-reuse-approach",
+     "title": "Design shared validation reuse approach",
+     "description": "Choose where validation logic should live and whether it should be factored into a shared helper or module used by both implementations. Keep the design simple enough to avoid duplication without obscuring the teaching value of each strategy.",
+-    "status": "pending",
++    "status": "completed",
+     "source_deliverables": [
+       "shared-input-validation",
+       "design-decision-notes"

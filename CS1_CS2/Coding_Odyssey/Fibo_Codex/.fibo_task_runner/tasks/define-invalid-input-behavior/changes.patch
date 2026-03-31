@@ -1,0 +1,54 @@
+diff --git a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md
+index e666dc4..d613cf4 100644
+--- a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md
++++ b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md
+@@ -123,6 +123,36 @@ The implementation should avoid large multi-purpose functions that:
+ 
+ all in one place.
+ 
++## Shared Validation Error Behavior
++
++Invalid Fibonacci inputs should fail through one shared validation path before either
++strategy starts calculation.
++
++Planned error contract:
++
++- raise `TypeError` when the value is not accepted as an integer input
++- raise `ValueError` when the value is integer-like but less than `0`
++- use the same exception types and message templates for both recursive and iterative
++  strategies
++- normalize accepted values to built-in `int` before calculation so later code does not
++  need to preserve the original input type
++
++Planned invalid-input categories:
++
++- `bool` values should raise `TypeError` even though `bool` is a subclass of `int`
++- strings, floats, and other non-integer-like values should raise `TypeError`
++- objects that implement `__index__` should be accepted, normalized to `int`, and then
++  checked for the non-negative rule
++- negative integer inputs should raise `ValueError`
++
++Planned message templates:
++
++- type failures: `fibonacci input must be a non-boolean integer or support __index__`
++- range failures: `fibonacci input must be greater than or equal to 0`
++
++This keeps failure behavior explicit enough for shared validation tests and later
++documentation to assert on exact exceptions and messages.
++
+ ## Planned Documentation Content
+ 
+ The final markdown should include the following instructional sections:
+diff --git a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
+index b1b44ee..96cdd25 100644
+--- a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
++++ b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
+@@ -140,7 +140,7 @@
+     "id": "define-invalid-input-behavior",
+     "title": "Define invalid input behavior",
+     "description": "Decide how invalid inputs will be reported, including exception type or error format and whether messages should be consistent across both strategies. Keep the behavior explicit so tests and documentation can rely on it.",
+-    "status": "pending",
++    "status": "completed",
+     "source_deliverables": [
+       "shared-input-validation"
+     ],

@@ -1,0 +1,35 @@
+diff --git a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md
+index e666dc4..64d58ac 100644
+--- a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md
++++ b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md
+@@ -123,6 +123,17 @@ The implementation should avoid large multi-purpose functions that:
+ 
+ all in one place.
+ 
++## Shared Validation Note
++
++Both public Fibonacci strategies should rely on the same validation helper before any calculation begins.
++
++- Accept integer-like inputs that provide `__index__`.
++- Reject `bool`, strings, floats, and other non-integer-like values with `TypeError`.
++- Reject negative integer-like values with `ValueError`.
++- Normalize accepted inputs to the built-in `int` so both strategies receive the same type.
++- Keep this logic in a small shared validation module, not inside the recursive step logic or iterative loop.
++- Future strategies should call the same helper first so accepted inputs, exception types, and messages stay consistent.
++
+ ## Planned Documentation Content
+ 
+ The final markdown should include the following instructional sections:
+diff --git a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
+index b1b44ee..1a410b4 100644
+--- a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
++++ b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
+@@ -526,7 +526,7 @@
+     "id": "document-shared-validation-approach",
+     "title": "Document shared validation approach",
+     "description": "Document the accepted input rules, invalid input behavior, validation code placement, and how both strategies reuse the same logic. Keep the write-up concise so future contributors can extend either implementation consistently.",
+-    "status": "pending",
++    "status": "completed",
+     "source_deliverables": [
+       "shared-input-validation",
+       "design-decision-notes",

@@ -1,0 +1,13 @@
+diff --git a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
+index b1b44ee..37e8d4b 100644
+--- a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
++++ b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
+@@ -283,7 +283,7 @@
+     "id": "add-shared-validation-tests",
+     "title": "Add shared validation tests",
+     "description": "Write focused tests that verify accepted inputs, rejected inputs, and consistent error behavior through the shared validation path. Cover the cases that both Fibonacci strategies are expected to handle identically.",
+-    "status": "pending",
++    "status": "completed",
+     "source_deliverables": [
+       "shared-input-validation",
+       "unit-test-suite",

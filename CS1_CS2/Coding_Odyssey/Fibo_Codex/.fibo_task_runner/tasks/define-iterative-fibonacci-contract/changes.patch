@@ -1,0 +1,50 @@
+diff --git a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md
+index e666dc4..2752bd2 100644
+--- a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md
++++ b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md
+@@ -123,6 +123,32 @@ The implementation should avoid large multi-purpose functions that:
+ 
+ all in one place.
+ 
++## Iterative Fibonacci Contract
++
++The iterative strategy should expose one small public function for direct calculation:
++
++- `iterative_fibonacci(n: int) -> int`
++
++Contract rules:
++
++- accept the same public input shape as the recursive strategy so comparison code can call both strategies the same way
++- treat `n` as the Fibonacci position index, not as a request for a whole sequence or a formatted report
++- return one integer Fibonacci value for the validated index
++- preserve standard base cases: `0` returns `0` and `1` returns `1`
++- keep the unit focused on loop-based state updates after validation is complete
++
++Validation usage:
++
++- the public iterative function should call the shared Fibonacci validation helper before any loop logic runs
++- the shared helper should own normalization and consistent exception behavior
++- the iterative function should use the validated integer returned by that helper instead of re-checking types or ranges locally
++
++Boundary reminders for this unit:
++
++- no printing, markdown generation, benchmarking, or visualization preparation
++- no sequence-building return value, metadata wrapper, or comparison payload
++- no strategy-specific validation branch that would drift from the shared rules
++
+ ## Planned Documentation Content
+ 
+ The final markdown should include the following instructional sections:
+diff --git a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
+index b1b44ee..7bcc3b5 100644
+--- a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
++++ b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
+@@ -180,7 +180,7 @@
+     "id": "define-iterative-fibonacci-contract",
+     "title": "Define iterative Fibonacci input contract",
+     "description": "Specify the iterative unit's public interface, expected return value, and how it uses the shared validation approach. Keep the contract narrow so the unit stays easy to read and test.",
+-    "status": "pending",
++    "status": "completed",
+     "source_deliverables": [
+       "iterative-strategy-unit",
+       "shared-input-validation",

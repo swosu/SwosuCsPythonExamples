@@ -1,0 +1,58 @@
+diff --git a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md
+index e666dc4..afa3b96 100644
+--- a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md
++++ b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md
+@@ -271,6 +271,31 @@ Recommended commit sequence:
+ 6. `docs: write fibonacci analysis and implementation walkthrough`
+ 7. `refactor: simplify function boundaries and improve naming`
+ 
++### Planned Commit Scope
++
++The commit order should follow deliverable stages instead of the order problems happen to be discovered during development.
++
++1. Planning commit
++   - capture the implementation plan, repository layout decisions, and commit sequence before code is added
++2. Project-structure commit
++   - limit the change to repository layout, directory scaffolding, and canonical file placement
++   - establish the top-level `fibonacci_exploration/` area with `docs/`, `src/`, `tests/`, and optional `assets/`
++   - create only the minimal placeholder files or directory markers needed to make that structure explicit
++   - place the main instructional markdown file in its final path without drafting its full teaching content yet
++   - do not add Fibonacci strategy code, shared validation logic, comparison helpers, visualization helpers, test cases, or final documentation prose in this commit
++3. Implementation commits
++   - add shared input validation before strategy-specific behavior depends on it
++   - add recursive and iterative Fibonacci units as separate behavior-focused changes
++   - add comparison and visualization support only after the core strategies exist
++4. Testing commit
++   - add automated tests after the main implementation units and helpers have stable interfaces
++5. Documentation commit
++   - complete the instructional markdown, Big O analysis, visualization writeup, design notes, and testing explanation after the behavior and tests are in place
++6. Refactor commit
++   - limit the final cleanup pass to naming, duplication removal, function boundaries, and other behavior-preserving improvements
++
++This sequence is intentional because it keeps planning artifacts first, foundational structure ahead of implementation, validation separate from explanation, and behavior-preserving cleanup at the end.
++
+ ## Open Decisions For Review
+ 
+ Before implementation, confirm:
+diff --git a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
+index b1b44ee..ca69b5e 100644
+--- a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
++++ b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
+@@ -3,7 +3,7 @@
+     "id": "plan-commit-sequence",
+     "title": "Plan staged commit sequence",
+     "description": "Draft the intended commit sequence for the project so work lands in a deliberate order: planning, project structure, implementation, testing, documentation, and refactor. Keep the plan aligned with the deliverable sequence rather than ad hoc development order.",
+-    "status": "pending",
++    "status": "completed",
+     "source_deliverables": [
+       "commit-plan"
+     ],
+@@ -23,7 +23,7 @@
+     "id": "define-project-structure-commit-scope",
+     "title": "Define project-structure commit scope",
+     "description": "Identify which repository layout, directory scaffolding, and file-placement tasks belong in the dedicated project-structure commit. Keep the scope narrow so foundational organization lands cleanly before implementation work begins.",
+-    "status": "pending",
++    "status": "completed",
+     "source_deliverables": [
+       "commit-plan"
+     ],

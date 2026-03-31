@@ -1,0 +1,51 @@
+diff --git a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md
+index e666dc4..846c4c7 100644
+--- a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md
++++ b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_exploration_plan.md
+@@ -123,6 +123,33 @@ The implementation should avoid large multi-purpose functions that:
+ 
+ all in one place.
+ 
++## Recursive Strategy Contract
++
++The recursive Fibonacci strategy should expose one small public function:
++
++- `recursive_fibonacci(n: int) -> int`
++
++Contract for this function:
++
++- accept one requested Fibonacci position as its only public input
++- return a single integer representing the Fibonacci value at that position
++- treat `0` as returning `0`
++- treat `1` as returning `1`
++- treat larger valid inputs as the sum of the two preceding Fibonacci values
++
++Validation expectations:
++
++- the public function should call the shared validation helper before any recursive work begins
++- the shared helper should own normalization and invalid-input exceptions so recursive and iterative strategies stay consistent
++- the recursive step logic should work only with the validated integer returned by that helper
++- recursive calls inside the unit should not repeat public validation on every branch
++
++Design boundary for readability and testing:
++
++- keep the public contract limited to calculation and return value only
++- keep printing, formatting, comparison, and visualization concerns outside this unit
++- if a private helper is introduced for recursion, it should assume the input is already validated and remain inaccessible outside the module
++
+ ## Planned Documentation Content
+ 
+ The final markdown should include the following instructional sections:
+diff --git a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
+index b1b44ee..b1e2a0a 100644
+--- a/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
++++ b/CS1_CS2/Coding_Odyssey/Fibo_Codex/fibonacci_task_list.json
+@@ -165,7 +165,7 @@
+     "id": "define-recursive-fibonacci-contract",
+     "title": "Define recursive Fibonacci input contract",
+     "description": "Specify the recursive unit's public interface, expected return value, and how it uses the shared validation approach. Keep the contract narrow so the unit stays easy to read and test.",
+-    "status": "pending",
++    "status": "completed",
+     "source_deliverables": [
+       "recursive-strategy-unit",
+       "shared-input-validation",
