@@ -1,0 +1,229 @@
+[
+  {
+    "deliverable_id": "SDELIV-01",
+    "title": "Core Experiment Skeleton",
+    "purpose": "Create one small, reusable experiment module that defines defaults and gives the project a single place to run an experiment later with different city counts.",
+    "why_simpler": [
+      "Merges the old project skeleton and configuration work into one deliverable",
+      "Avoids building a large project structure too early",
+      "Lets the notebook and code grow around one clear entry point"
+    ],
+    "scope": [
+      "Choose one city-labeling convention",
+      "Define default fixed start city",
+      "Define brute-force city cap",
+      "Define the intended main experiment function shape"
+    ],
+    "outputs": [
+      "One small starter module or notebook code section with shared defaults",
+      "Documented default settings"
+    ],
+    "replaces_or_merges": [
+      "DELIV-01"
+    ],
+    "depends_on": [],
+    "acceptance_criteria": [
+      "Defaults are defined in one place",
+      "The project has a clear reusable entry point in mind",
+      "Nothing depends on a big package layout to get started"
+    ]
+  },
+  {
+    "deliverable_id": "SDELIV-02",
+    "title": "Distance Table Utilities",
+    "purpose": "Implement the smallest complete set of table tools: representation, generation, loading, and selection by flag.",
+    "why_simpler": [
+      "Merges the old data model, generator, and loader into one practical deliverable",
+      "Keeps all table logic together instead of spreading it across multiple milestones",
+      "Supports both generated and saved tables without extra architecture ceremony"
+    ],
+    "scope": [
+      "Define the table format",
+      "Generate a new asymmetric distance table",
+      "Load a saved table",
+      "Use a flag to choose generate versus load",
+      "Perform basic table validation"
+    ],
+    "outputs": [
+      "Distance table utility functions",
+      "Working generate-or-load behavior"
+    ],
+    "replaces_or_merges": [
+      "DELIV-02",
+      "DELIV-03",
+      "DELIV-04"
+    ],
+    "depends_on": [
+      "SDELIV-01"
+    ],
+    "acceptance_criteria": [
+      "A valid asymmetric table can be generated for city count n",
+      "A saved table can be loaded",
+      "The same function or workflow can choose between generated and saved input"
+    ]
+  },
+  {
+    "deliverable_id": "SDELIV-03",
+    "title": "Path Rules and Scoring",
+    "purpose": "Create the shared path validation and scoring logic used by every algorithm.",
+    "why_simpler": [
+      "Merges validation and scoring because they are naturally tested together",
+      "Reduces duplicate checks inside algorithm code",
+      "Creates one source of truth for correctness"
+    ],
+    "scope": [
+      "Validate that a path starts at the fixed start city",
+      "Validate that a path visits every city exactly once",
+      "Compute total directed path cost"
+    ],
+    "outputs": [
+      "Path validation function",
+      "Path scoring function"
+    ],
+    "replaces_or_merges": [
+      "DELIV-05",
+      "DELIV-06"
+    ],
+    "depends_on": [
+      "SDELIV-02"
+    ],
+    "acceptance_criteria": [
+      "Known valid paths pass validation",
+      "Invalid paths fail validation",
+      "Known sample paths produce correct total costs"
+    ]
+  },
+  {
+    "deliverable_id": "SDELIV-04",
+    "title": "Three Baseline Algorithms",
+    "purpose": "Implement guess-and-check, greedy, and brute force as the first comparison set.",
+    "why_simpler": [
+      "Groups the three easiest-to-explain algorithms into one milestone",
+      "Gives a working comparison sooner",
+      "Lets brute force act as the truth check for small cases before annealing is added"
+    ],
+    "scope": [
+      "Implement guess-and-check from the fixed start city",
+      "Implement greedy from the fixed start city",
+      "Implement brute force with the city-count safety cap"
+    ],
+    "outputs": [
+      "Guess-and-check algorithm",
+      "Greedy algorithm",
+      "Brute-force algorithm with skip behavior"
+    ],
+    "replaces_or_merges": [
+      "DELIV-07",
+      "DELIV-08",
+      "DELIV-09"
+    ],
+    "depends_on": [
+      "SDELIV-03"
+    ],
+    "acceptance_criteria": [
+      "All three algorithms return valid paths",
+      "Brute force returns the best path on small known examples",
+      "Brute force skips cleanly above the configured cap"
+    ]
+  },
+  {
+    "deliverable_id": "SDELIV-05",
+    "title": "Annealing Algorithm",
+    "purpose": "Add the fourth algorithm after the baseline comparison is already working.",
+    "why_simpler": [
+      "Keeps annealing isolated because it is the most parameter-heavy piece",
+      "Prevents annealing complexity from blocking the simpler baseline milestone",
+      "Makes debugging much easier"
+    ],
+    "scope": [
+      "Build a valid annealing workflow starting from the fixed start city",
+      "Use neighbor changes that preserve path validity",
+      "Track current and best-so-far paths"
+    ],
+    "outputs": [
+      "Annealing algorithm"
+    ],
+    "replaces_or_merges": [
+      "DELIV-10"
+    ],
+    "depends_on": [
+      "SDELIV-03",
+      "SDELIV-04"
+    ],
+    "acceptance_criteria": [
+      "Returned annealing result is a valid Hamiltonian path",
+      "Best-so-far tracking works correctly",
+      "Algorithm can run on the same table as the baseline algorithms"
+    ]
+  },
+  {
+    "deliverable_id": "SDELIV-06",
+    "title": "Unified Experiment Runner",
+    "purpose": "Wrap the table selection and all four algorithms into one reusable function and one consistent result format.",
+    "why_simpler": [
+      "Merges result schema, comparison building, and main experiment orchestration into one deliverable",
+      "Avoids over-designing internal abstractions too early",
+      "Produces the thing the notebook actually needs: one call that returns usable results"
+    ],
+    "scope": [
+      "Run the selected table workflow",
+      "Run all four algorithms under shared rules",
+      "Normalize each result into one common structure",
+      "Build one comparison-ready summary"
+    ],
+    "outputs": [
+      "Main experiment function",
+      "Normalized result objects",
+      "Comparison-ready summary table or structure"
+    ],
+    "replaces_or_merges": [
+      "DELIV-11",
+      "DELIV-12",
+      "DELIV-13"
+    ],
+    "depends_on": [
+      "SDELIV-02",
+      "SDELIV-03",
+      "SDELIV-04",
+      "SDELIV-05"
+    ],
+    "acceptance_criteria": [
+      "One function call can run the full experiment",
+      "The function works with different city counts",
+      "The same workflow supports generated and saved tables",
+      "The summary clearly shows each algorithm result and any skipped brute-force run"
+    ]
+  },
+  {
+    "deliverable_id": "SDELIV-07",
+    "title": "Notebook Demo with Embedded Sanity Checks",
+    "purpose": "Create one clean notebook that demonstrates the experiment and includes a few tiny correctness checks instead of a separate testing deliverable.",
+    "why_simpler": [
+      "Merges notebook demonstration and correctness testing into one practical final step",
+      "Avoids a separate test framework deliverable during MVP buildout",
+      "Keeps the proof of correctness close to the classroom-facing artifact"
+    ],
+    "scope": [
+      "Explain the objective briefly",
+      "Show one generated or loaded table",
+      "Run the unified experiment function",
+      "Display the comparison output",
+      "Include a few small hand-checkable validation cells"
+    ],
+    "outputs": [
+      "Working notebook demonstration"
+    ],
+    "replaces_or_merges": [
+      "DELIV-14",
+      "DELIV-15"
+    ],
+    "depends_on": [
+      "SDELIV-06"
+    ],
+    "acceptance_criteria": [
+      "Notebook runs top to bottom",
+      "Notebook shows one complete experiment clearly",
+      "Notebook includes a few sanity checks for path validation, scoring, or tiny known cases"
+    ]
+  }
+]

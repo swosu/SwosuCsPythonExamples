@@ -1,0 +1,433 @@
+[
+  {
+    "deliverable_id": "DELIV-01",
+    "title": "Project Skeleton and Configuration",
+    "purpose": "Create the initial package or notebook-friendly project structure so the work is organized around reusable functions instead of one long notebook script.",
+    "scope": [
+      "Create folders for source code, notebooks, data, and saved tables",
+      "Choose one city-labeling convention and document it",
+      "Define default settings such as fixed start city and brute-force city cap"
+    ],
+    "inputs": [],
+    "outputs": [
+      "Project directory structure",
+      "Configuration constants or settings object",
+      "Short README or notes describing defaults"
+    ],
+    "depends_on": [],
+    "acceptance_criteria": [
+      "Project has a clear structure for code, notebooks, and data",
+      "Default start city is defined",
+      "Brute-force safety cap is defined",
+      "A future experiment can import shared code instead of copying it"
+    ]
+  },
+  {
+    "deliverable_id": "DELIV-02",
+    "title": "Asymmetric Distance Table Data Model",
+    "purpose": "Define how cities and asymmetric distance tables are represented in memory and, later, on disk.",
+    "scope": [
+      "Choose table representation such as list of lists or NumPy array",
+      "Represent invalid diagonal entries consistently",
+      "Document the meaning of rows, columns, and directed distances"
+    ],
+    "inputs": [
+      "City count n"
+    ],
+    "outputs": [
+      "Distance table specification",
+      "Validation rules for shape and values"
+    ],
+    "depends_on": [
+      "DELIV-01"
+    ],
+    "acceptance_criteria": [
+      "Table representation is documented",
+      "Asymmetry is allowed by design",
+      "Diagonal handling is clearly defined",
+      "The same table format can be used by all algorithms"
+    ]
+  },
+  {
+    "deliverable_id": "DELIV-03",
+    "title": "Distance Table Generator",
+    "purpose": "Build the function that creates a new asymmetric distance table for a chosen number of cities.",
+    "scope": [
+      "Generate random positive distances for all off-diagonal entries",
+      "Support optional seed for reproducibility",
+      "Honor the chosen city-labeling convention"
+    ],
+    "inputs": [
+      "City count n",
+      "Optional random seed"
+    ],
+    "outputs": [
+      "Generated asymmetric distance table"
+    ],
+    "depends_on": [
+      "DELIV-01",
+      "DELIV-02"
+    ],
+    "acceptance_criteria": [
+      "Generated table is n x n",
+      "Diagonal is invalid or ignored as specified",
+      "All off-diagonal entries are positive",
+      "Table may be asymmetric",
+      "Using the same seed reproduces the same table"
+    ]
+  },
+  {
+    "deliverable_id": "DELIV-04",
+    "title": "Saved Table Loader and Save/Use Flag",
+    "purpose": "Support the workflow where experiments can either generate a new table or use a saved table.",
+    "scope": [
+      "Define file format for saved tables",
+      "Create load function",
+      "Define and document the flag that chooses generation versus loading"
+    ],
+    "inputs": [
+      "Generate-or-load flag",
+      "Optional saved table path"
+    ],
+    "outputs": [
+      "Loaded distance table when requested",
+      "Documented behavior for table source selection"
+    ],
+    "depends_on": [
+      "DELIV-02",
+      "DELIV-03"
+    ],
+    "acceptance_criteria": [
+      "A saved table can be loaded and reused",
+      "The system clearly chooses between new-table mode and saved-table mode",
+      "Loaded tables are validated before use"
+    ]
+  },
+  {
+    "deliverable_id": "DELIV-05",
+    "title": "Path Validation Function",
+    "purpose": "Create a shared validator that checks whether a proposed Hamiltonian path is legal under the project rules.",
+    "scope": [
+      "Confirm path begins at the fixed start city",
+      "Confirm every city appears exactly once",
+      "Reject missing cities, duplicates, or malformed paths"
+    ],
+    "inputs": [
+      "Candidate path",
+      "City count n",
+      "Fixed start city"
+    ],
+    "outputs": [
+      "Validation result",
+      "Optional validation message"
+    ],
+    "depends_on": [
+      "DELIV-01",
+      "DELIV-02"
+    ],
+    "acceptance_criteria": [
+      "Valid paths are accepted",
+      "Paths with repeated cities are rejected",
+      "Paths with the wrong start city are rejected",
+      "Paths with the wrong number of cities are rejected"
+    ]
+  },
+  {
+    "deliverable_id": "DELIV-06",
+    "title": "Path Scoring Function",
+    "purpose": "Create the shared function that computes the total cost of a valid Hamiltonian path using the asymmetric distance table.",
+    "scope": [
+      "Sum directed edge costs along the path",
+      "Use the same scoring logic for all algorithms",
+      "Handle invalid paths cleanly"
+    ],
+    "inputs": [
+      "Candidate path",
+      "Distance table"
+    ],
+    "outputs": [
+      "Total path cost"
+    ],
+    "depends_on": [
+      "DELIV-02",
+      "DELIV-05"
+    ],
+    "acceptance_criteria": [
+      "Scoring follows path order exactly",
+      "Directed edges use row-to-column cost correctly",
+      "Known sample paths produce correct totals",
+      "Invalid paths are rejected or handled consistently"
+    ]
+  },
+  {
+    "deliverable_id": "DELIV-07",
+    "title": "Guess-and-Check Algorithm",
+    "purpose": "Implement the random-search baseline that generates valid Hamiltonian paths from the fixed start city and keeps the best one found.",
+    "scope": [
+      "Generate valid random paths",
+      "Run for a configurable number of trials",
+      "Return best path and best cost found"
+    ],
+    "inputs": [
+      "Distance table",
+      "Fixed start city",
+      "Number of trials",
+      "Optional random seed"
+    ],
+    "outputs": [
+      "Best guess-and-check path",
+      "Best guess-and-check cost",
+      "Optional metadata such as trials completed"
+    ],
+    "depends_on": [
+      "DELIV-05",
+      "DELIV-06"
+    ],
+    "acceptance_criteria": [
+      "Algorithm only evaluates valid paths",
+      "Best-so-far result updates correctly",
+      "Result starts at the fixed start city",
+      "Repeated runs with the same seed reproduce the same sequence if designed that way"
+    ]
+  },
+  {
+    "deliverable_id": "DELIV-08",
+    "title": "Greedy Algorithm",
+    "purpose": "Implement the nearest-unvisited-city heuristic from the fixed start city.",
+    "scope": [
+      "At each step choose the cheapest outgoing edge to an unvisited city",
+      "Build a complete Hamiltonian path",
+      "Return path and cost"
+    ],
+    "inputs": [
+      "Distance table",
+      "Fixed start city"
+    ],
+    "outputs": [
+      "Greedy path",
+      "Greedy path cost"
+    ],
+    "depends_on": [
+      "DELIV-05",
+      "DELIV-06"
+    ],
+    "acceptance_criteria": [
+      "Algorithm starts at the fixed start city",
+      "Each next choice is the cheapest legal unvisited move",
+      "Output is a valid Hamiltonian path",
+      "Reported cost matches the shared scoring function"
+    ]
+  },
+  {
+    "deliverable_id": "DELIV-09",
+    "title": "Brute-Force Algorithm with Safety Cap",
+    "purpose": "Implement the exhaustive search that checks every valid Hamiltonian path beginning at the fixed start city, but only for small city counts.",
+    "scope": [
+      "Generate all legal permutations from the fixed start city",
+      "Evaluate every candidate path",
+      "Return optimal path and optimal cost",
+      "Skip execution when city count exceeds the safety cap"
+    ],
+    "inputs": [
+      "Distance table",
+      "Fixed start city",
+      "Brute-force cap"
+    ],
+    "outputs": [
+      "Optimal path when run",
+      "Optimal cost when run",
+      "Skipped status and reason when not run"
+    ],
+    "depends_on": [
+      "DELIV-05",
+      "DELIV-06"
+    ],
+    "acceptance_criteria": [
+      "Algorithm checks every valid candidate consistent with the fixed start city",
+      "Best path returned is truly minimal for tested small cases",
+      "The algorithm is skipped cleanly when n exceeds the cap",
+      "Skip reason is reported clearly"
+    ]
+  },
+  {
+    "deliverable_id": "DELIV-10",
+    "title": "Annealing Algorithm",
+    "purpose": "Implement the heuristic improvement algorithm that begins with a valid path from the fixed start city and explores neighboring paths while occasionally accepting worse moves.",
+    "scope": [
+      "Create initial valid path",
+      "Create neighboring paths while preserving fixed start city",
+      "Track current path and best-ever path",
+      "Support basic annealing parameters"
+    ],
+    "inputs": [
+      "Distance table",
+      "Fixed start city",
+      "Initial temperature",
+      "Cooling rate",
+      "Iteration count",
+      "Optional random seed"
+    ],
+    "outputs": [
+      "Best annealing path",
+      "Best annealing cost",
+      "Optional metadata such as iterations completed"
+    ],
+    "depends_on": [
+      "DELIV-05",
+      "DELIV-06"
+    ],
+    "acceptance_criteria": [
+      "Neighbor generation preserves a valid Hamiltonian path structure",
+      "Fixed start city remains fixed",
+      "Best-ever path is tracked correctly",
+      "Returned result is valid and score-consistent"
+    ]
+  },
+  {
+    "deliverable_id": "DELIV-11",
+    "title": "Unified Result Schema",
+    "purpose": "Define one common result format for all algorithms so the comparison layer can treat them consistently.",
+    "scope": [
+      "Standardize fields such as algorithm name, ran or skipped status, path, cost, and notes",
+      "Support missing values for skipped algorithms",
+      "Make result objects easy to turn into a summary table later"
+    ],
+    "inputs": [
+      "Raw outputs from each algorithm"
+    ],
+    "outputs": [
+      "Normalized result objects"
+    ],
+    "depends_on": [
+      "DELIV-07",
+      "DELIV-08",
+      "DELIV-09",
+      "DELIV-10"
+    ],
+    "acceptance_criteria": [
+      "All algorithm results can be represented in the same schema",
+      "Skipped algorithms have a clean representation",
+      "Comparison logic does not need special-case chaos"
+    ]
+  },
+  {
+    "deliverable_id": "DELIV-12",
+    "title": "Comparison Table Builder",
+    "purpose": "Build the code that assembles normalized results into a clean human-readable comparison table.",
+    "scope": [
+      "Display algorithm name, ran status, best path, path cost, guaranteed-optimal note, and notes",
+      "Sort or present results consistently",
+      "Keep the output classroom-friendly"
+    ],
+    "inputs": [
+      "Normalized result objects"
+    ],
+    "outputs": [
+      "Comparison table or equivalent summary object"
+    ],
+    "depends_on": [
+      "DELIV-11"
+    ],
+    "acceptance_criteria": [
+      "All four algorithms appear in the same comparison output",
+      "Skipped brute-force runs are shown clearly",
+      "Best paths and costs are readable and consistent"
+    ]
+  },
+  {
+    "deliverable_id": "DELIV-13",
+    "title": "Main Experiment Function",
+    "purpose": "Wrap the whole workflow into one reusable function that can later be called with different city counts and settings.",
+    "scope": [
+      "Accept city count, fixed start city, and table-source flag",
+      "Prepare the table by generating or loading it",
+      "Run all four algorithms under shared rules",
+      "Return the table used and the comparison-ready results"
+    ],
+    "inputs": [
+      "City count n",
+      "Fixed start city",
+      "Generate-or-load flag",
+      "Optional saved table path",
+      "Algorithm settings"
+    ],
+    "outputs": [
+      "Distance table used",
+      "Per-algorithm normalized results",
+      "Comparison-ready summary"
+    ],
+    "depends_on": [
+      "DELIV-04",
+      "DELIV-07",
+      "DELIV-08",
+      "DELIV-09",
+      "DELIV-10",
+      "DELIV-11",
+      "DELIV-12"
+    ],
+    "acceptance_criteria": [
+      "One function call can run the complete experiment",
+      "The function works for different city counts within project limits",
+      "The same function supports both generated and saved tables",
+      "The return value is structured and reusable"
+    ]
+  },
+  {
+    "deliverable_id": "DELIV-14",
+    "title": "Notebook Demonstration",
+    "purpose": "Create the first clean notebook that demonstrates the full MVP on one city count and one table.",
+    "scope": [
+      "Explain the objective and vocabulary",
+      "Show the chosen or generated table",
+      "Run the main experiment function",
+      "Display the comparison output"
+    ],
+    "inputs": [
+      "Main experiment function",
+      "Chosen city count and settings"
+    ],
+    "outputs": [
+      "Notebook demonstration of the MVP"
+    ],
+    "depends_on": [
+      "DELIV-13"
+    ],
+    "acceptance_criteria": [
+      "Notebook runs from top to bottom",
+      "Notebook shows one complete experiment clearly",
+      "Notebook is readable enough for classroom discussion"
+    ]
+  },
+  {
+    "deliverable_id": "DELIV-15",
+    "title": "Correctness Test Cases",
+    "purpose": "Create small, known examples that verify table handling, path validation, scoring, and algorithm behavior on manageable inputs.",
+    "scope": [
+      "Build tiny hand-checkable tables",
+      "Write expected valid paths and costs",
+      "Verify brute force returns the known optimum on small examples"
+    ],
+    "inputs": [
+      "Small fixed tables",
+      "Expected results"
+    ],
+    "outputs": [
+      "Test cases and expected outputs"
+    ],
+    "depends_on": [
+      "DELIV-04",
+      "DELIV-05",
+      "DELIV-06",
+      "DELIV-07",
+      "DELIV-08",
+      "DELIV-09",
+      "DELIV-10"
+    ],
+    "acceptance_criteria": [
+      "Path validation passes and fails where expected",
+      "Path scoring matches hand calculations",
+      "Brute force confirms known optima on tiny cases",
+      "At least one sanity-check example exists for each algorithm"
+    ]
+  }
+]
