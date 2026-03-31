@@ -1,0 +1,1201 @@
+[
+  {
+    "id": "plan-commit-sequence",
+    "title": "Plan staged commit sequence",
+    "description": "Draft the intended commit sequence for the project so work lands in a deliberate order: planning, project structure, implementation, testing, documentation, and refactor. Keep the plan aligned with the deliverable sequence rather than ad hoc development order.",
+    "status": "pending",
+    "source_deliverables": [
+      "commit-plan"
+    ],
+    "dependencies": []
+  },
+  {
+    "id": "define-repository-layout",
+    "title": "Define repository layout",
+    "description": "Specify the top-level repository structure, including where instructional content, source code, tests, and optional assets will live. Capture naming conventions so responsibilities stay separated from the start.",
+    "status": "pending",
+    "source_deliverables": [
+      "project-structure"
+    ],
+    "dependencies": []
+  },
+  {
+    "id": "define-project-structure-commit-scope",
+    "title": "Define project-structure commit scope",
+    "description": "Identify which repository layout, directory scaffolding, and file-placement tasks belong in the dedicated project-structure commit. Keep the scope narrow so foundational organization lands cleanly before implementation work begins.",
+    "status": "pending",
+    "source_deliverables": [
+      "commit-plan"
+    ],
+    "dependencies": [
+      "plan-commit-sequence",
+      "define-repository-layout"
+    ]
+  },
+  {
+    "id": "place-main-instructional-markdown",
+    "title": "Choose instructional markdown location",
+    "description": "Decide the canonical path and filename for the main instructional markdown file so readers know where to begin. Ensure its placement matches the overall repository layout.",
+    "status": "pending",
+    "source_deliverables": [
+      "project-structure",
+      "instructional-markdown-outline",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "define-repository-layout"
+    ]
+  },
+  {
+    "id": "create-source-directory-structure",
+    "title": "Create source directory structure",
+    "description": "Set up the source-code directory layout for Fibonacci exploration code, keeping implementation areas clearly organized. Use folder names that can scale as examples or modules are added.",
+    "status": "pending",
+    "source_deliverables": [
+      "project-structure",
+      "recursive-strategy-unit",
+      "iterative-strategy-unit",
+      "shared-input-validation",
+      "strategy-abstraction",
+      "comparison-data-support",
+      "visualization-data-support"
+    ],
+    "dependencies": [
+      "define-repository-layout"
+    ]
+  },
+  {
+    "id": "create-test-directory-structure",
+    "title": "Create test directory structure",
+    "description": "Set up a dedicated test directory structure that mirrors or cleanly maps to the source layout. Keep test files isolated so validation work remains easy to find and maintain.",
+    "status": "pending",
+    "source_deliverables": [
+      "project-structure",
+      "recursive-strategy-unit",
+      "iterative-strategy-unit",
+      "shared-input-validation",
+      "comparison-data-support",
+      "visualization-data-support",
+      "design-decision-notes",
+      "unit-test-suite",
+      "testing-strategy-documentation"
+    ],
+    "dependencies": [
+      "define-repository-layout"
+    ]
+  },
+  {
+    "id": "add-assets-directory-placeholder",
+    "title": "Add assets directory placeholder",
+    "description": "Create an optional assets area for future visual or supporting artifacts without mixing those files into source or test directories. Keep the structure minimal so it remains easy to extend later.",
+    "status": "pending",
+    "source_deliverables": [
+      "project-structure"
+    ],
+    "dependencies": [
+      "define-repository-layout"
+    ]
+  },
+  {
+    "id": "choose-strategy-abstraction-style",
+    "title": "Choose strategy abstraction style",
+    "description": "Decide whether Fibonacci strategies should be represented with plain functions, classes, or another minimal pattern for the initial comparison. Record the reasoning so the design stays simple and avoids premature abstraction.",
+    "status": "pending",
+    "source_deliverables": [
+      "strategy-abstraction",
+      "design-decision-notes"
+    ],
+    "dependencies": [
+      "create-source-directory-structure"
+    ]
+  },
+  {
+    "id": "define-strategy-boundaries",
+    "title": "Define strategy responsibility boundaries",
+    "description": "Specify what each Fibonacci strategy owns, what shared concerns stay outside the strategy layer, and how comparison code should interact with implementations. Include lightweight rules for adding future strategies without changing the initial design unnecessarily.",
+    "status": "pending",
+    "source_deliverables": [
+      "strategy-abstraction",
+      "comparison-data-support",
+      "visualization-data-support",
+      "design-decision-notes"
+    ],
+    "dependencies": [
+      "choose-strategy-abstraction-style"
+    ]
+  },
+  {
+    "id": "define-shared-input-rules",
+    "title": "Define shared Fibonacci input rules",
+    "description": "Specify the accepted input rules for Fibonacci calculations, including supported types, valid value ranges, and any normalization decisions. Use this as the single validation baseline for both recursive and iterative strategies.",
+    "status": "pending",
+    "source_deliverables": [
+      "shared-input-validation"
+    ],
+    "dependencies": [
+      "create-source-directory-structure"
+    ]
+  },
+  {
+    "id": "define-invalid-input-behavior",
+    "title": "Define invalid input behavior",
+    "description": "Decide how invalid inputs will be reported, including exception type or error format and whether messages should be consistent across both strategies. Keep the behavior explicit so tests and documentation can rely on it.",
+    "status": "pending",
+    "source_deliverables": [
+      "shared-input-validation"
+    ],
+    "dependencies": [
+      "define-shared-input-rules"
+    ]
+  },
+  {
+    "id": "design-validation-reuse-approach",
+    "title": "Design shared validation reuse approach",
+    "description": "Choose where validation logic should live and whether it should be factored into a shared helper or module used by both implementations. Keep the design simple enough to avoid duplication without obscuring the teaching value of each strategy.",
+    "status": "pending",
+    "source_deliverables": [
+      "shared-input-validation",
+      "design-decision-notes"
+    ],
+    "dependencies": [
+      "define-invalid-input-behavior"
+    ]
+  },
+  {
+    "id": "define-recursive-fibonacci-contract",
+    "title": "Define recursive Fibonacci input contract",
+    "description": "Specify the recursive unit's public interface, expected return value, and how it uses the shared validation approach. Keep the contract narrow so the unit stays easy to read and test.",
+    "status": "pending",
+    "source_deliverables": [
+      "recursive-strategy-unit",
+      "shared-input-validation",
+      "strategy-abstraction"
+    ],
+    "dependencies": [
+      "define-strategy-boundaries",
+      "design-validation-reuse-approach"
+    ]
+  },
+  {
+    "id": "define-iterative-fibonacci-contract",
+    "title": "Define iterative Fibonacci input contract",
+    "description": "Specify the iterative unit's public interface, expected return value, and how it uses the shared validation approach. Keep the contract narrow so the unit stays easy to read and test.",
+    "status": "pending",
+    "source_deliverables": [
+      "iterative-strategy-unit",
+      "shared-input-validation",
+      "strategy-abstraction"
+    ],
+    "dependencies": [
+      "define-strategy-boundaries",
+      "design-validation-reuse-approach"
+    ]
+  },
+  {
+    "id": "define-comparison-categories",
+    "title": "Define comparison categories",
+    "description": "Choose the fixed categories the project will use to compare recursive and iterative approaches, such as readability, performance, or teaching value. Keep the categories explicit so comparison output stays consistent across documentation and code.",
+    "status": "pending",
+    "source_deliverables": [
+      "comparison-data-support",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "define-strategy-boundaries"
+    ]
+  },
+  {
+    "id": "design-comparison-data-structure",
+    "title": "Design comparison data structure",
+    "description": "Define the structured format that will hold side-by-side comparison entries for both strategies and support later markdown rendering. Ensure the schema references strategy outputs or metadata instead of re-implementing Fibonacci calculation logic.",
+    "status": "pending",
+    "source_deliverables": [
+      "comparison-data-support",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "define-comparison-categories",
+      "define-recursive-fibonacci-contract",
+      "define-iterative-fibonacci-contract"
+    ]
+  },
+  {
+    "id": "define-visualization-input-ranges",
+    "title": "Define visualization input ranges",
+    "description": "Choose the input ranges that visualization data will cover for sequence growth and algorithm-cost views. Keep the ranges explicit so charts remain readable and do not overstate what naive recursion can handle comfortably.",
+    "status": "pending",
+    "source_deliverables": [
+      "visualization-data-support",
+      "markdown-visualizations",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "define-strategy-boundaries",
+      "define-recursive-fibonacci-contract",
+      "define-iterative-fibonacci-contract"
+    ]
+  },
+  {
+    "id": "design-visualization-data-structure",
+    "title": "Design visualization data structure",
+    "description": "Define the schema for visualization-ready datasets, separating Fibonacci sequence values from computational-effort measurements or estimates. Make the structure easy for later charting code or markdown examples to consume without recalculating results.",
+    "status": "pending",
+    "source_deliverables": [
+      "visualization-data-support",
+      "markdown-visualizations",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "define-visualization-input-ranges",
+      "define-recursive-fibonacci-contract",
+      "define-iterative-fibonacci-contract"
+    ]
+  },
+  {
+    "id": "define-implementation-commit-slices",
+    "title": "Define implementation commit slices",
+    "description": "Group implementation work into a small set of intentional commits that separate shared validation, Fibonacci strategies, comparison support, and visualization support. Keep each planned commit behavior-focused and independently reviewable.",
+    "status": "pending",
+    "source_deliverables": [
+      "commit-plan"
+    ],
+    "dependencies": [
+      "plan-commit-sequence",
+      "define-strategy-boundaries",
+      "design-validation-reuse-approach",
+      "design-comparison-data-structure",
+      "design-visualization-data-structure"
+    ]
+  },
+  {
+    "id": "implement-shared-validation-logic",
+    "title": "Implement shared validation logic",
+    "description": "Add the agreed validation code in its planned location so both Fibonacci strategies can enforce the same rules and error behavior. Keep the validation responsibility separate from calculation logic.",
+    "status": "pending",
+    "source_deliverables": [
+      "shared-input-validation"
+    ],
+    "dependencies": [
+      "design-validation-reuse-approach"
+    ]
+  },
+  {
+    "id": "add-shared-validation-tests",
+    "title": "Add shared validation tests",
+    "description": "Write focused tests that verify accepted inputs, rejected inputs, and consistent error behavior through the shared validation path. Cover the cases that both Fibonacci strategies are expected to handle identically.",
+    "status": "pending",
+    "source_deliverables": [
+      "shared-input-validation",
+      "unit-test-suite",
+      "testing-strategy-documentation"
+    ],
+    "dependencies": [
+      "create-test-directory-structure",
+      "implement-shared-validation-logic"
+    ]
+  },
+  {
+    "id": "implement-recursive-fibonacci-unit",
+    "title": "Implement recursive Fibonacci unit",
+    "description": "Create a dedicated module or function that performs only naive recursive Fibonacci calculation with explicit base-case handling. Exclude formatting, printing, and reporting logic so the unit remains single-responsibility.",
+    "status": "pending",
+    "source_deliverables": [
+      "recursive-strategy-unit",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "define-recursive-fibonacci-contract",
+      "implement-shared-validation-logic"
+    ]
+  },
+  {
+    "id": "add-recursive-fibonacci-unit-tests",
+    "title": "Add recursive Fibonacci unit tests",
+    "description": "Write tests that validate the recursive unit against its input contract, base cases, representative Fibonacci values, and shared invalid-input behavior. Keep the test scope focused on correctness and isolation of the recursive logic.",
+    "status": "pending",
+    "source_deliverables": [
+      "recursive-strategy-unit",
+      "shared-input-validation",
+      "unit-test-suite",
+      "testing-strategy-documentation"
+    ],
+    "dependencies": [
+      "create-test-directory-structure",
+      "define-recursive-fibonacci-contract",
+      "implement-recursive-fibonacci-unit",
+      "add-shared-validation-tests"
+    ]
+  },
+  {
+    "id": "implement-iterative-fibonacci-unit",
+    "title": "Implement iterative Fibonacci unit",
+    "description": "Create a dedicated module or function that performs only loop-based Fibonacci calculation with explicit state updates. Exclude formatting, printing, and reporting logic so the unit remains single-responsibility and efficient.",
+    "status": "pending",
+    "source_deliverables": [
+      "iterative-strategy-unit",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "define-iterative-fibonacci-contract",
+      "implement-shared-validation-logic"
+    ]
+  },
+  {
+    "id": "add-iterative-fibonacci-unit-tests",
+    "title": "Add iterative Fibonacci unit tests",
+    "description": "Write tests that validate the iterative unit against its input contract, edge cases, representative Fibonacci values, and shared invalid-input behavior. Keep the test scope focused on correctness, loop behavior, and isolation of the iterative logic.",
+    "status": "pending",
+    "source_deliverables": [
+      "iterative-strategy-unit",
+      "shared-input-validation",
+      "unit-test-suite",
+      "testing-strategy-documentation"
+    ],
+    "dependencies": [
+      "create-test-directory-structure",
+      "define-iterative-fibonacci-contract",
+      "implement-iterative-fibonacci-unit",
+      "add-shared-validation-tests"
+    ]
+  },
+  {
+    "id": "add-strategy-result-parity-tests",
+    "title": "Add recursive and iterative parity tests",
+    "description": "Write tests that confirm the recursive and iterative Fibonacci units return matching results for an agreed set of small valid inputs. Keep these comparisons separate from per-unit tests so cross-strategy consistency stays explicit.",
+    "status": "pending",
+    "source_deliverables": [
+      "unit-test-suite",
+      "testing-strategy-documentation",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "create-test-directory-structure",
+      "implement-recursive-fibonacci-unit",
+      "implement-iterative-fibonacci-unit",
+      "add-recursive-fibonacci-unit-tests",
+      "add-iterative-fibonacci-unit-tests"
+    ]
+  },
+  {
+    "id": "implement-comparison-data-preparation-unit",
+    "title": "Implement comparison data preparation unit",
+    "description": "Create a focused unit that assembles comparison data for recursive and iterative approaches from existing strategy information. Keep assembly logic separate from calculation code and avoid duplicating Fibonacci computation in the comparison layer.",
+    "status": "pending",
+    "source_deliverables": [
+      "comparison-data-support",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "design-comparison-data-structure",
+      "implement-recursive-fibonacci-unit",
+      "implement-iterative-fibonacci-unit"
+    ]
+  },
+  {
+    "id": "add-comparison-data-tests",
+    "title": "Add comparison data preparation tests",
+    "description": "Write tests that verify category coverage, structured output shape, and that markdown-oriented data can be produced from the comparison unit. Include checks that the comparison layer relies on existing strategy units rather than embedding duplicate calculation behavior.",
+    "status": "pending",
+    "source_deliverables": [
+      "comparison-data-support",
+      "unit-test-suite"
+    ],
+    "dependencies": [
+      "create-test-directory-structure",
+      "implement-comparison-data-preparation-unit",
+      "add-recursive-fibonacci-unit-tests",
+      "add-iterative-fibonacci-unit-tests"
+    ]
+  },
+  {
+    "id": "document-comparison-data-approach",
+    "title": "Document comparison data approach",
+    "description": "Document the comparison categories, data structure, and how the preparation unit supports markdown table generation without owning Fibonacci calculation. Keep the write-up concise so future contributors can extend comparison output safely.",
+    "status": "pending",
+    "source_deliverables": [
+      "comparison-data-support",
+      "design-decision-notes",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "define-comparison-categories",
+      "design-comparison-data-structure",
+      "implement-comparison-data-preparation-unit"
+    ]
+  },
+  {
+    "id": "implement-visualization-data-preparation-unit",
+    "title": "Implement visualization data preparation unit",
+    "description": "Create a focused unit that prepares selected input ranges, value growth data, and algorithm-cost comparison data. Keep the assembly logic outside the calculation functions and preserve a clear separation between sequence values and computational effort.",
+    "status": "pending",
+    "source_deliverables": [
+      "visualization-data-support",
+      "markdown-visualizations",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "design-visualization-data-structure",
+      "implement-recursive-fibonacci-unit",
+      "implement-iterative-fibonacci-unit"
+    ]
+  },
+  {
+    "id": "add-visualization-data-tests",
+    "title": "Add visualization data preparation tests",
+    "description": "Write tests that verify range selection, output shape, and the separation between Fibonacci values and cost-growth data. Include checks that the visualization layer consumes strategy results without mixing chart-preparation concerns into calculation units.",
+    "status": "pending",
+    "source_deliverables": [
+      "visualization-data-support",
+      "markdown-visualizations",
+      "unit-test-suite"
+    ],
+    "dependencies": [
+      "create-test-directory-structure",
+      "implement-visualization-data-preparation-unit",
+      "add-recursive-fibonacci-unit-tests",
+      "add-iterative-fibonacci-unit-tests"
+    ]
+  },
+  {
+    "id": "document-visualization-data-approach",
+    "title": "Document visualization data approach",
+    "description": "Document the supported input ranges, dataset structure, and the rationale for separating value growth from computational-effort data. Keep the write-up concise so future contributors can extend visual storytelling without moving presentation concerns into core Fibonacci code.",
+    "status": "pending",
+    "source_deliverables": [
+      "visualization-data-support",
+      "markdown-visualizations",
+      "design-decision-notes",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "define-visualization-input-ranges",
+      "design-visualization-data-structure",
+      "implement-visualization-data-preparation-unit"
+    ]
+  },
+  {
+    "id": "review-unit-test-suite-coverage",
+    "title": "Review unit test suite coverage",
+    "description": "Review the unit tests as a set to confirm coverage of base cases, small-input correctness, cross-strategy result matching, validation behavior when enabled, and helper-unit behavior. Tighten overlaps so each test group has a clear responsibility and the suite remains maintainable.",
+    "status": "pending",
+    "source_deliverables": [
+      "unit-test-suite",
+      "testing-strategy-documentation",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "add-shared-validation-tests",
+      "add-recursive-fibonacci-unit-tests",
+      "add-iterative-fibonacci-unit-tests",
+      "add-strategy-result-parity-tests",
+      "add-comparison-data-tests",
+      "add-visualization-data-tests"
+    ]
+  },
+  {
+    "id": "define-testing-commit-scope",
+    "title": "Define testing commit scope",
+    "description": "Identify which automated tests, coverage reviews, and test-structure updates belong in the dedicated testing commit. Keep testing changes grouped separately from feature implementation so validation history stays easy to audit.",
+    "status": "pending",
+    "source_deliverables": [
+      "commit-plan"
+    ],
+    "dependencies": [
+      "plan-commit-sequence",
+      "review-unit-test-suite-coverage"
+    ]
+  },
+  {
+    "id": "document-project-structure",
+    "title": "Document project structure",
+    "description": "Write concise documentation describing the repository layout, the purpose of each major directory, and where new files should be added. Include the main instructional markdown location in that documentation.",
+    "status": "pending",
+    "source_deliverables": [
+      "project-structure",
+      "design-decision-notes",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "place-main-instructional-markdown",
+      "create-source-directory-structure",
+      "create-test-directory-structure",
+      "add-assets-directory-placeholder"
+    ]
+  },
+  {
+    "id": "document-shared-validation-approach",
+    "title": "Document shared validation approach",
+    "description": "Document the accepted input rules, invalid input behavior, validation code placement, and how both strategies reuse the same logic. Keep the write-up concise so future contributors can extend either implementation consistently.",
+    "status": "pending",
+    "source_deliverables": [
+      "shared-input-validation",
+      "design-decision-notes",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "define-shared-input-rules",
+      "define-invalid-input-behavior",
+      "design-validation-reuse-approach",
+      "implement-shared-validation-logic"
+    ]
+  },
+  {
+    "id": "document-strategy-abstraction-decision",
+    "title": "Document strategy abstraction decision",
+    "description": "Document the chosen strategy style, the responsibility boundaries for each strategy, and the rules for extending the design later. Include the rationale for keeping the initial abstraction minimal so future contributors do not overengineer the comparison layer.",
+    "status": "pending",
+    "source_deliverables": [
+      "strategy-abstraction",
+      "design-decision-notes",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "choose-strategy-abstraction-style",
+      "define-strategy-boundaries"
+    ]
+  },
+  {
+    "id": "create-markdown-outline-scaffold",
+    "title": "Create markdown outline scaffold",
+    "description": "Create the top-level instructional markdown outline with the ordered major sections and placeholder headings. Establish the document structure before any section details are expanded.",
+    "status": "pending",
+    "source_deliverables": [
+      "instructional-markdown-outline",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "place-main-instructional-markdown"
+    ]
+  },
+  {
+    "id": "outline-fibonacci-introduction",
+    "title": "Outline Fibonacci introduction",
+    "description": "Draft the introduction section outline covering what the Fibonacci sequence is, why it matters, and how the document will approach the topic. Keep the structure instructional and beginner-friendly.",
+    "status": "pending",
+    "source_deliverables": [
+      "instructional-markdown-outline",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "create-markdown-outline-scaffold"
+    ]
+  },
+  {
+    "id": "draft-sequence-overview-section",
+    "title": "Draft student-friendly sequence overview",
+    "description": "Write the introductory sequence overview in beginner-friendly language, including what the Fibonacci sequence is, a few early terms, and why it is useful for the rest of the exploration. Keep the explanation aligned with the implemented examples and later comparison sections.",
+    "status": "pending",
+    "source_deliverables": [
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "outline-fibonacci-introduction",
+      "implement-recursive-fibonacci-unit",
+      "implement-iterative-fibonacci-unit"
+    ]
+  },
+  {
+    "id": "outline-recursive-implementation-discussion",
+    "title": "Outline recursive implementation section",
+    "description": "Define the subsection structure for explaining the recursive Fibonacci approach, including how it works, where it is intuitive, and what tradeoffs it introduces. Leave clear placeholders for later examples and discussion.",
+    "status": "pending",
+    "source_deliverables": [
+      "instructional-markdown-outline",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "create-markdown-outline-scaffold"
+    ]
+  },
+  {
+    "id": "draft-recursive-implementation-discussion",
+    "title": "Draft recursive implementation discussion",
+    "description": "Write the recursive implementation explanation with a clear walk-through of base cases, repeated work, and why the approach is educational but limited in practice. Keep the discussion tied to the actual recursive unit rather than abstract pseudocode.",
+    "status": "pending",
+    "source_deliverables": [
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "outline-recursive-implementation-discussion",
+      "implement-recursive-fibonacci-unit",
+      "add-recursive-fibonacci-unit-tests"
+    ]
+  },
+  {
+    "id": "outline-iterative-implementation-discussion",
+    "title": "Outline iterative implementation section",
+    "description": "Define the subsection structure for explaining the iterative Fibonacci approach, including state updates, readability considerations, and practical benefits. Keep it parallel enough to the recursive section to support later comparison.",
+    "status": "pending",
+    "source_deliverables": [
+      "instructional-markdown-outline",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "create-markdown-outline-scaffold"
+    ]
+  },
+  {
+    "id": "draft-iterative-implementation-discussion",
+    "title": "Draft iterative implementation discussion",
+    "description": "Write the iterative implementation explanation with a clear walk-through of loop state, efficiency, and practical tradeoffs. Keep the discussion parallel to the recursive section so the comparison remains easy to follow.",
+    "status": "pending",
+    "source_deliverables": [
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "outline-iterative-implementation-discussion",
+      "implement-iterative-fibonacci-unit",
+      "add-iterative-fibonacci-unit-tests"
+    ]
+  },
+  {
+    "id": "outline-comparison-section",
+    "title": "Outline implementation comparison section",
+    "description": "Create the comparison section outline that directly contrasts recursive and iterative approaches across clarity, performance, and teaching value. Organize the headings so readers can evaluate both methods side by side.",
+    "status": "pending",
+    "source_deliverables": [
+      "instructional-markdown-outline",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "outline-recursive-implementation-discussion",
+      "outline-iterative-implementation-discussion"
+    ]
+  },
+  {
+    "id": "draft-recursive-iterative-comparison",
+    "title": "Draft recursive and iterative comparison",
+    "description": "Write the main side-by-side comparison section using the agreed categories and prepared comparison data. Emphasize tradeoffs, similarities, and when each approach is most appropriate for learning or practice.",
+    "status": "pending",
+    "source_deliverables": [
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "outline-comparison-section",
+      "implement-comparison-data-preparation-unit",
+      "document-comparison-data-approach",
+      "draft-recursive-implementation-discussion",
+      "draft-iterative-implementation-discussion"
+    ]
+  },
+  {
+    "id": "outline-big-o-analysis-section",
+    "title": "Outline Big O analysis section",
+    "description": "Create the section outline for time and space complexity analysis of the Fibonacci approaches. Separate the analytical points clearly so later implementation details and examples can be inserted without restructuring.",
+    "status": "pending",
+    "source_deliverables": [
+      "instructional-markdown-outline",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "outline-recursive-implementation-discussion",
+      "outline-iterative-implementation-discussion"
+    ]
+  },
+  {
+    "id": "draft-recursive-big-o-analysis",
+    "title": "Draft recursive Big O analysis",
+    "description": "Write the complexity explanation for naive recursive Fibonacci, covering time complexity, space complexity, and plain-language repeated work. Keep the explanation accurate for beginners and tied directly to the recursive implementation shown in the project.",
+    "status": "pending",
+    "source_deliverables": [
+      "big-o-analysis-content",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "outline-big-o-analysis-section",
+      "implement-recursive-fibonacci-unit",
+      "add-recursive-fibonacci-unit-tests"
+    ]
+  },
+  {
+    "id": "draft-iterative-big-o-analysis",
+    "title": "Draft iterative Big O analysis",
+    "description": "Write the complexity explanation for iterative Fibonacci, covering time complexity and space complexity in concise instructional language. Make the discussion parallel to the recursive analysis so readers can compare the approaches directly.",
+    "status": "pending",
+    "source_deliverables": [
+      "big-o-analysis-content",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "outline-big-o-analysis-section",
+      "implement-iterative-fibonacci-unit",
+      "add-iterative-fibonacci-unit-tests"
+    ]
+  },
+  {
+    "id": "review-big-o-analysis-consistency",
+    "title": "Review Big O analysis for consistency",
+    "description": "Review the completed Big O content to confirm terminology, comparison framing, and complexity claims stay consistent across the recursive and iterative sections. Resolve overlap with the broader comparison section so scaling guidance is clear and non-duplicative.",
+    "status": "pending",
+    "source_deliverables": [
+      "big-o-analysis-content",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "draft-recursive-big-o-analysis",
+      "draft-iterative-big-o-analysis",
+      "outline-comparison-section"
+    ]
+  },
+  {
+    "id": "outline-visualization-section",
+    "title": "Outline markdown visualization section",
+    "description": "Define the structure for a markdown-first visualization section that uses tables, ASCII visuals, and simple text sketches to explain sequence growth and algorithm behavior. Keep the outline aligned with the first-version constraint of avoiding graphics code.",
+    "status": "pending",
+    "source_deliverables": [
+      "instructional-markdown-outline",
+      "markdown-visualizations",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "create-markdown-outline-scaffold"
+    ]
+  },
+  {
+    "id": "define-markdown-visualization-format",
+    "title": "Define markdown visualization formats",
+    "description": "Choose the specific markdown-friendly formats the project will use for growth tables, ASCII bars, recursive call-tree sketches, and side-by-side comparisons. Set clear formatting rules so the visuals stay readable in plain markdown and terminal-friendly viewers.",
+    "status": "pending",
+    "source_deliverables": [
+      "markdown-visualizations",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "outline-visualization-section",
+      "design-comparison-data-structure",
+      "design-visualization-data-structure"
+    ]
+  },
+  {
+    "id": "draft-growth-tables",
+    "title": "Draft growth tables",
+    "description": "Create concise markdown tables that show Fibonacci value growth and selected algorithm-cost growth across the agreed input range. Keep the tables small enough for classroom discussion while still making progression obvious.",
+    "status": "pending",
+    "source_deliverables": [
+      "markdown-visualizations",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "define-markdown-visualization-format",
+      "implement-visualization-data-preparation-unit",
+      "implement-comparison-data-preparation-unit"
+    ]
+  },
+  {
+    "id": "draft-ascii-growth-bars",
+    "title": "Draft ASCII growth bars",
+    "description": "Create text-based bar visuals or a similar markdown-safe representation that highlights growth differences without requiring images or custom rendering code. Keep scaling choices explicit so the visual comparison is honest and easy to read.",
+    "status": "pending",
+    "source_deliverables": [
+      "markdown-visualizations",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "define-markdown-visualization-format",
+      "implement-visualization-data-preparation-unit"
+    ]
+  },
+  {
+    "id": "draft-recursive-call-tree-sketch",
+    "title": "Draft recursive call-tree sketch",
+    "description": "Create a small text sketch of the recursive call tree for a classroom-friendly input value to illustrate repeated work. Keep the example compact enough to fit comfortably inside markdown while still showing branching clearly.",
+    "status": "pending",
+    "source_deliverables": [
+      "markdown-visualizations",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "define-markdown-visualization-format",
+      "implement-recursive-fibonacci-unit"
+    ]
+  },
+  {
+    "id": "write-visual-comparison-commentary",
+    "title": "Write visualization comparison commentary",
+    "description": "Add concise explanatory text that ties the markdown visuals back to the recursive-versus-iterative tradeoffs. Focus on comparison-oriented interpretation rather than repeating implementation details already covered elsewhere.",
+    "status": "pending",
+    "source_deliverables": [
+      "markdown-visualizations",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "draft-growth-tables",
+      "draft-ascii-growth-bars",
+      "draft-recursive-call-tree-sketch",
+      "draft-recursive-big-o-analysis",
+      "draft-iterative-big-o-analysis"
+    ]
+  },
+  {
+    "id": "review-markdown-visualizations",
+    "title": "Review markdown visualizations for clarity",
+    "description": "Review the markdown visualizations as a set to confirm they render cleanly in plain markdown, stay consistent with the project data and analysis, and remain classroom-friendly. Remove redundancy across tables, ASCII visuals, and commentary so each element has a distinct purpose.",
+    "status": "pending",
+    "source_deliverables": [
+      "markdown-visualizations",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "write-visual-comparison-commentary",
+      "document-visualization-data-approach",
+      "document-comparison-data-approach"
+    ]
+  },
+  {
+    "id": "outline-design-decisions-section",
+    "title": "Outline design decisions section",
+    "description": "Create the section outline for documenting design choices such as implementation boundaries, file organization, display isolation, small-function preferences, and test separation. Make the headings specific enough to support concise rationale notes later.",
+    "status": "pending",
+    "source_deliverables": [
+      "instructional-markdown-outline",
+      "design-decision-notes",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "document-project-structure",
+      "document-shared-validation-approach",
+      "document-strategy-abstraction-decision",
+      "document-comparison-data-approach",
+      "document-visualization-data-approach",
+      "create-markdown-outline-scaffold"
+    ]
+  },
+  {
+    "id": "document-recursive-iterative-separation-rationale",
+    "title": "Document recursive and iterative separation rationale",
+    "description": "Write the design note explaining why recursive and iterative Fibonacci logic live in separate units instead of being blended into one implementation. Connect the decision to clarity, comparison value, and maintainability.",
+    "status": "pending",
+    "source_deliverables": [
+      "design-decision-notes",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "document-strategy-abstraction-decision",
+      "implement-recursive-fibonacci-unit",
+      "implement-iterative-fibonacci-unit",
+      "outline-design-decisions-section"
+    ]
+  },
+  {
+    "id": "document-display-isolation-rationale",
+    "title": "Document display isolation rationale",
+    "description": "Write the design note explaining why display and presentation logic stay outside the Fibonacci calculation units. Tie the reasoning to single responsibility, easier testing, and cleaner reuse of comparison and visualization data.",
+    "status": "pending",
+    "source_deliverables": [
+      "design-decision-notes",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "document-comparison-data-approach",
+      "document-visualization-data-approach",
+      "outline-design-decisions-section"
+    ]
+  },
+  {
+    "id": "document-small-function-rationale",
+    "title": "Document small-function rationale",
+    "description": "Write the design note explaining why small focused functions are preferred for validation, calculation, and data preparation responsibilities. Connect the choice to readability, targeted testing, and easier future extension.",
+    "status": "pending",
+    "source_deliverables": [
+      "design-decision-notes",
+      "testing-strategy-documentation",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "document-strategy-abstraction-decision",
+      "document-shared-validation-approach",
+      "document-comparison-data-approach",
+      "document-visualization-data-approach",
+      "outline-design-decisions-section"
+    ]
+  },
+  {
+    "id": "document-test-organization-rationale",
+    "title": "Document test organization rationale",
+    "description": "Write the design note explaining why tests are organized independently from source files and how that structure supports maintenance and contributor clarity. Reference the mapping between implementation areas and test coverage.",
+    "status": "pending",
+    "source_deliverables": [
+      "design-decision-notes",
+      "unit-test-suite",
+      "testing-strategy-documentation",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "create-test-directory-structure",
+      "add-shared-validation-tests",
+      "add-recursive-fibonacci-unit-tests",
+      "add-iterative-fibonacci-unit-tests",
+      "add-strategy-result-parity-tests",
+      "add-comparison-data-tests",
+      "add-visualization-data-tests",
+      "outline-design-decisions-section"
+    ]
+  },
+  {
+    "id": "review-design-decision-notes",
+    "title": "Review design decision notes for clarity",
+    "description": "Review the design decision notes as a set to confirm they are non-duplicative, grounded in the implemented structure, and clearly tied to maintainability and separation of responsibilities. Tighten overlaps with related project-structure and strategy documentation.",
+    "status": "pending",
+    "source_deliverables": [
+      "design-decision-notes",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "document-recursive-iterative-separation-rationale",
+      "document-display-isolation-rationale",
+      "document-small-function-rationale",
+      "document-test-organization-rationale"
+    ]
+  },
+  {
+    "id": "outline-testing-strategy-section",
+    "title": "Outline testing strategy section",
+    "description": "Define the section structure for explaining what is tested, why it is tested, how small-function design shapes the test approach, which boundary and edge cases matter, and how to avoid brittle formatting-coupled tests. Keep the outline aligned with the planned test directory structure and the implemented suite.",
+    "status": "pending",
+    "source_deliverables": [
+      "instructional-markdown-outline",
+      "shared-input-validation",
+      "comparison-data-support",
+      "visualization-data-support",
+      "unit-test-suite",
+      "testing-strategy-documentation",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "create-test-directory-structure",
+      "create-markdown-outline-scaffold",
+      "add-shared-validation-tests",
+      "add-comparison-data-tests",
+      "add-visualization-data-tests"
+    ]
+  },
+  {
+    "id": "document-unit-test-scope",
+    "title": "Document unit test scope",
+    "description": "Write the testing-strategy section that explains which Fibonacci units, validation helpers, and data-preparation helpers are covered by unit tests and why those boundaries were chosen. Keep the scope explicit so learners can distinguish unit testing from presentation or formatting checks.",
+    "status": "pending",
+    "source_deliverables": [
+      "testing-strategy-documentation",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "outline-testing-strategy-section",
+      "review-unit-test-suite-coverage",
+      "document-test-organization-rationale"
+    ]
+  },
+  {
+    "id": "document-small-function-testing-philosophy",
+    "title": "Document small-function testing philosophy",
+    "description": "Explain how small focused functions support straightforward unit tests, cleaner responsibilities, and easier maintenance. Tie the philosophy directly to the project's validation, calculation, and data-preparation units rather than describing testing in the abstract.",
+    "status": "pending",
+    "source_deliverables": [
+      "testing-strategy-documentation",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "outline-testing-strategy-section",
+      "document-small-function-rationale",
+      "review-unit-test-suite-coverage"
+    ]
+  },
+  {
+    "id": "document-boundary-and-edge-case-coverage",
+    "title": "Document boundary and edge-case coverage",
+    "description": "Describe the key boundary and edge cases covered by the suite, including base cases, invalid inputs, and agreed small-input comparisons between strategies. Make it clear why these cases are included and how they protect the design from regressions.",
+    "status": "pending",
+    "source_deliverables": [
+      "testing-strategy-documentation",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "outline-testing-strategy-section",
+      "review-unit-test-suite-coverage"
+    ]
+  },
+  {
+    "id": "document-format-independent-test-guidance",
+    "title": "Document format-independent test guidance",
+    "description": "Add guidance on avoiding tests that depend too heavily on markdown layout, printed wording, or incidental formatting. Emphasize checking returned values, data shape, and behavior so tests stay stable as presentation evolves.",
+    "status": "pending",
+    "source_deliverables": [
+      "testing-strategy-documentation",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "outline-testing-strategy-section",
+      "document-display-isolation-rationale",
+      "review-unit-test-suite-coverage"
+    ]
+  },
+  {
+    "id": "review-testing-strategy-documentation",
+    "title": "Review testing strategy documentation",
+    "description": "Review the completed testing-strategy write-up to confirm it clearly explains what is tested, why those tests exist, how the approach reflects clean design, and where formatting-sensitive tests are intentionally avoided. Remove overlap with design-decision notes so the section stays focused and practical.",
+    "status": "pending",
+    "source_deliverables": [
+      "testing-strategy-documentation",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "document-unit-test-scope",
+      "document-small-function-testing-philosophy",
+      "document-boundary-and-edge-case-coverage",
+      "document-format-independent-test-guidance"
+    ]
+  },
+  {
+    "id": "review-instructional-outline-flow",
+    "title": "Review outline flow and completeness",
+    "description": "Review the full markdown outline to confirm section order, coverage of all required topics, and consistency in instructional depth. Resolve overlaps or missing transitions before detailed writing begins.",
+    "status": "pending",
+    "source_deliverables": [
+      "instructional-markdown-outline",
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "outline-fibonacci-introduction",
+      "outline-recursive-implementation-discussion",
+      "outline-iterative-implementation-discussion",
+      "outline-comparison-section",
+      "outline-big-o-analysis-section",
+      "outline-visualization-section",
+      "outline-design-decisions-section",
+      "outline-testing-strategy-section"
+    ]
+  },
+  {
+    "id": "define-documentation-commit-scope",
+    "title": "Define documentation commit scope",
+    "description": "Identify which instructional markdown, design notes, and testing-strategy writeups belong in the dedicated documentation commit. Keep the documentation commit focused on narrative and explanatory artifacts rather than mixing in unfinished code changes.",
+    "status": "pending",
+    "source_deliverables": [
+      "commit-plan"
+    ],
+    "dependencies": [
+      "plan-commit-sequence",
+      "review-instructional-outline-flow"
+    ]
+  },
+  {
+    "id": "assemble-final-fibonacci-exploration-document",
+    "title": "Assemble final Fibonacci exploration document",
+    "description": "Combine the completed overview, implementation explanations, comparison, Big O analysis, visualizations, design notes, testing overview, and conclusion into the finished markdown artifact. Ensure section transitions, headings, and terminology are consistent throughout the document.",
+    "status": "pending",
+    "source_deliverables": [
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "review-instructional-outline-flow",
+      "draft-sequence-overview-section",
+      "draft-recursive-implementation-discussion",
+      "draft-iterative-implementation-discussion",
+      "draft-recursive-iterative-comparison",
+      "review-big-o-analysis-consistency",
+      "review-markdown-visualizations",
+      "review-design-decision-notes",
+      "review-testing-strategy-documentation",
+      "write-conclusion-section"
+    ]
+  },
+  {
+    "id": "write-conclusion-section",
+    "title": "Write conclusion section",
+    "description": "Write the closing section that summarizes the Fibonacci exploration, reinforces the recursive-versus-iterative lessons, and points back to the project's design and testing choices. Keep the conclusion concise and synthesis-focused rather than introducing new material.",
+    "status": "pending",
+    "source_deliverables": [
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "draft-recursive-iterative-comparison",
+      "review-big-o-analysis-consistency",
+      "review-markdown-visualizations",
+      "review-design-decision-notes",
+      "review-testing-strategy-documentation"
+    ]
+  },
+  {
+    "id": "review-final-fibonacci-exploration-document",
+    "title": "Review final exploration document for completeness",
+    "description": "Perform a final pass on the finished markdown artifact to confirm it fully covers the required educational and software-design topics, reads clearly for students, and stays aligned with the implemented code and tests. Remove remaining duplication and fix any broken references or uneven section depth.",
+    "status": "pending",
+    "source_deliverables": [
+      "final-fibonacci-exploration-document"
+    ],
+    "dependencies": [
+      "assemble-final-fibonacci-exploration-document"
+    ]
+  },
+  {
+    "id": "review-naming-and-module-clarity",
+    "title": "Review naming and module clarity",
+    "description": "Perform a focused pass on identifiers, exported interfaces, and module boundaries to confirm names are consistent and each file has a clear responsibility. Capture any mismatches between implementation structure and the documented design decisions before refactoring.",
+    "status": "pending",
+    "source_deliverables": [
+      "clean-code-review-pass"
+    ],
+    "dependencies": [
+      "implement-shared-validation-logic",
+      "implement-recursive-fibonacci-unit",
+      "implement-iterative-fibonacci-unit",
+      "implement-comparison-data-preparation-unit",
+      "implement-visualization-data-preparation-unit",
+      "document-project-structure",
+      "document-strategy-abstraction-decision"
+    ]
+  },
+  {
+    "id": "define-refactor-commit-scope",
+    "title": "Define refactor commit scope",
+    "description": "Identify the cleanup and behavior-preserving refactor tasks that should land together after implementation, tests, and documentation are in place. Keep the refactor commit limited to clarity, naming, duplication, and maintainability improvements.",
+    "status": "pending",
+    "source_deliverables": [
+      "commit-plan"
+    ],
+    "dependencies": [
+      "plan-commit-sequence",
+      "review-naming-and-module-clarity"
+    ]
+  },
+  {
+    "id": "refactor-function-size-and-duplication",
+    "title": "Refactor oversized and duplicated code",
+    "description": "Break down functions that have grown beyond a single clear responsibility and remove repeated logic across modules where a shared helper or clearer structure is warranted. Keep the refactor behavior-preserving and aligned with the teaching goals of the project.",
+    "status": "pending",
+    "source_deliverables": [
+      "clean-code-review-pass"
+    ],
+    "dependencies": [
+      "review-naming-and-module-clarity",
+      "review-unit-test-suite-coverage"
+    ]
+  },
+  {
+    "id": "review-comment-quality",
+    "title": "Review comment quality and intent",
+    "description": "Review inline comments and docstrings to remove redundant narration, clarify non-obvious reasoning, and keep instructional notes accurate after refactoring. Ensure comments support understanding without compensating for unclear code structure.",
+    "status": "pending",
+    "source_deliverables": [
+      "clean-code-review-pass"
+    ],
+    "dependencies": [
+      "refactor-function-size-and-duplication"
+    ]
+  },
+  {
+    "id": "review-commit-plan-alignment",
+    "title": "Review commit plan alignment",
+    "description": "Review the full planned commit sequence to confirm each commit has a distinct purpose and that the overall history mirrors the intended staged delivery of the project. Remove overlaps between commit scopes so the development history remains clean and explainable.",
+    "status": "pending",
+    "source_deliverables": [
+      "commit-plan"
+    ],
+    "dependencies": [
+      "define-project-structure-commit-scope",
+      "define-implementation-commit-slices",
+      "define-testing-commit-scope",
+      "define-documentation-commit-scope",
+      "define-refactor-commit-scope"
+    ]
+  }
+]
