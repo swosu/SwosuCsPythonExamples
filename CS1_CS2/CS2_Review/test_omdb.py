@@ -1,6 +1,6 @@
 import requests
 
-API_KEY = "7ad6b576"
+
 BASE_URL = "http://www.omdbapi.com/"
 
 print("API_KEY repr:", repr(API_KEY))

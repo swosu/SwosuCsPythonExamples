@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /c/Users/evertj/git/SwosuCsPythonExamples/CS1_CS2 -type f -name \"*.py\" ! -path \"*/.venv/*\" ! -path \"*/.git/*\" -exec sh -c 'wc -l \"$1\" | awk \"{ if \\(\\\\$1 < 5\\) print \\\\$2 \\\\\" \\(\\\\\" \\\\$1 \\\\\" lines\\)\\\\\" }\"' _ {} \\\\;)",
+      "Bash(find /c/Users/evertj/git/SwosuCsPythonExamples -type f \\\\\\( -name \"*.py\" -o -name \"*.txt\" -o -name \"*.md\" \\\\\\) ! -path \"*/.venv/*\" ! -path \"*/.git/*\" -exec grep -l \"@gmail\\\\|@yahoo\\\\|@hotmail\\\\|ssn\\\\|social.security\\\\|dob\\\\|date.of.birth\" {} \\\\;)",
+      "Bash(grep -ri \"damn\\\\|hell\\\\|crap\\\\|ass\\\\|bitch\" /c/Users/evertj/git/SwosuCsPythonExamples --include=\"*.py\" ! -path \"*/.venv/*\" ! -path \"*/.git/*\")",
+      "Bash(grep -r \"jeremy\\\\.evert\\\\|\\\\.edu\\\\|\\\\.com\\\\|phone\\\\|contact\\\\|email\" /c/Users/evertj/git/SwosuCsPythonExamples --include=\"*.py\" --include=\"*.md\" ! -path \"*/.venv/*\" ! -path \"*/.git/*\")",
+      "Bash(find /c/Users/evertj/git/SwosuCsPythonExamples -type f -name \"*.py\" ! -path \"*/.venv/*\" ! -path \"*/.git/*\" -exec wc -l {} +)",
+      "Bash(find /c/Users/evertj/git/SwosuCsPythonExamples -type f -name \"*.py\" ! -path \"*/.venv/*\" ! -path \"*/.git/*\" -exec grep -l \"student\\\\|Student\" {} \\\\;)",
+      "Bash(sed 's/.*\\\\.//')"
+    ]
+  }
+}
