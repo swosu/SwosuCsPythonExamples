@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python build_notebook.py)",
+      "Bash(pip install:*)",
+      "Bash(python /c/Users/evertj/git/SwosuCsPythonExamples/CS1_CS2/Ch14/build_notebook.py)"
+    ]
+  }
+}
