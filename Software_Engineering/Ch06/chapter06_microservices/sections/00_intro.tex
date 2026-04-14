@@ -2,18 +2,154 @@
 
 \begin{frame}{Learning Objectives}
 \begin{itemize}
-    \item Define microservices architecture.
-    \item Explain how microservices differ from monolithic systems.
-    \item Identify major advantages and challenges.
-    \item Evaluate when microservices are a good design choice.
+    \item Define a software service and microservices architecture.
+    \item Explain why microservices became important in modern software systems.
+    \item Identify the essential characteristics of microservices.
+    \item Describe the importance of low coupling and high cohesion.
+    \item Explain practical guidelines for deciding the scope of a microservice.
 \end{itemize}
 \end{frame}
 
-\begin{frame}{What is Microservices Architecture?}
+\begin{frame}{Why System Decomposition Matters}
 \begin{itemize}
-    \item A software system is built as a set of small, independent services.
-    \item Each service supports a specific business capability.
-    \item Services communicate through APIs or messaging.
-    \item Services can often be deployed and scaled independently.
+    \item One of the most important software architecture decisions is how a system is decomposed into components.
+    \item Good decomposition supports:
+    \begin{itemize}
+        \item parallel development by different teams,
+        \item easier replacement or reuse of components,
+        \item scalability and elasticity in cloud environments,
+        \item improved reliability through isolation.
+    \end{itemize}
+    \item In distributed cloud systems, components must be easy to replicate, move, and update.
 \end{itemize}
+\end{frame}
+
+\begin{frame}{What Is a Software Service?}
+\begin{itemize}
+    \item A software service is a component that can be accessed remotely over the Internet.
+    \item A request is sent to the service, and the service returns a result.
+    \item The service exposes a published interface.
+    \item Internal implementation details are hidden from the service user.
+    \item The manager of a service is called the \textbf{service provider}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Why Services Fit Cloud-Based Software}
+\begin{itemize}
+    \item Services are especially useful in cloud-based systems because they can be:
+    \begin{itemize}
+        \item distributed across multiple computers,
+        \item replicated to handle higher loads,
+        \item updated independently,
+        \item moved from one server to another.
+    \end{itemize}
+    \item Services typically avoid maintaining local internal state.
+    \item Persistent information is usually stored in a database or maintained by the service requester.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{From Service-Oriented Architecture to Microservices}
+\begin{itemize}
+    \item The idea of service-oriented architecture is not new.
+    \item Earlier service systems often relied on heavyweight web-service standards such as:
+    \begin{itemize}
+        \item SOAP
+        \item WSDL
+        \item XML-based messaging
+    \end{itemize}
+    \item These approaches were often complex and created performance overhead.
+    \item Modern microservices favor simpler interfaces and lighter communication mechanisms.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{What Are Microservices?}
+\begin{itemize}
+    \item Microservices are small, independent services that can be combined to create applications.
+    \item Each microservice should focus on a single business capability or closely related responsibility.
+    \item A microservice should be modifiable and redeployable without forcing changes to the rest of the system.
+    \item Microservices exchange messages to request services and return responses.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Essential Characteristics of Microservices}
+\begin{itemize}
+    \item \textbf{Self-contained:} a service manages its own data and user-facing behavior.
+    \item \textbf{Lightweight:} services communicate with low-overhead protocols.
+    \item \textbf{Implementation independent:} different services may use different languages or technologies.
+    \item \textbf{Independently deployable:} each service can run and be updated on its own.
+    \item \textbf{Business-oriented:} services are organized around business needs, not just technical utilities.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Core Design Goal: Low Coupling}
+\begin{itemize}
+    \item \textbf{Coupling} measures how much one component depends on other components.
+    \item Low coupling means a service has few relationships with other services.
+    \item This is important because:
+    \begin{itemize}
+        \item services can change more independently,
+        \item updates are less likely to break the rest of the system,
+        \item systems are easier to scale and maintain.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Core Design Goal: High Cohesion}
+\begin{itemize}
+    \item \textbf{Cohesion} measures how closely related the responsibilities inside a component are.
+    \item High cohesion means the parts of a service all contribute to one focused purpose.
+    \item High cohesion is desirable because:
+    \begin{itemize}
+        \item the service is easier to understand,
+        \item the service is easier to test,
+        \item fewer cross-service calls are needed during execution.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Single Responsibility in Practice}
+\begin{itemize}
+    \item Microservice design is strongly influenced by the single responsibility principle.
+    \item Each service should do one thing well.
+    \item However, ``one thing'' should be interpreted carefully.
+    \item Responsibilities should be grouped in ways that reduce unnecessary shared databases and excessive service-to-service communication.
+    \item The goal is not the smallest possible service.
+    \item The goal is the \textbf{right boundary} for an independently useful service.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{How Big Should a Microservice Be?}
+\begin{itemize}
+    \item There is no perfect size rule for microservices.
+    \item A practical guideline is the \textbf{rule of twos}:
+    \begin{itemize}
+        \item a microservice should be developable, testable, and deployable in about two weeks or less,
+        \item the development team should be small, often no larger than a ``two-pizza team.''
+    \end{itemize}
+    \item Size should be judged by responsibility, independence, and manageability, not by lines of code.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Key Takeaways from the Introduction}
+\begin{itemize}
+    \item Microservices grew out of service-based software ideas but use simpler, lighter communication styles.
+    \item They are designed to support scalability, flexibility, and independent deployment.
+    \item Good microservice design aims for:
+    \begin{itemize}
+        \item low coupling,
+        \item high cohesion,
+        \item strong business alignment,
+        \item practical service boundaries.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Looking Ahead}
+\centering
+\Large Next: Section 6.1 Microservices
+
+\vspace{1em}
+
+\normalsize
+We will now look more closely at the detailed characteristics, design tradeoffs, and examples of microservices.
 \end{frame}
