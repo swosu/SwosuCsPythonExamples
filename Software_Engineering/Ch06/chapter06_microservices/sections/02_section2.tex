@@ -1,5 +1,370 @@
-\section{Section 3}
+\section{Microservices Architecture}
 
-\begin{frame}{Section 3 Placeholder}
-This section is under construction.
+\begin{frame}{Section 6.2: Microservices Architecture}
+\begin{itemize}
+    \item A microservices architecture is an \textbf{architectural style}, not a fixed layered template.
+    \item It is commonly used for web-based client-server systems.
+    \item The server side is implemented as a set of interacting microservices.
+    \item This style is intended to address key problems in distributed systems design.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Microservices Architecture as a Style}
+\begin{itemize}
+    \item A layered architecture defines a common set of components used across similar applications.
+    \item A microservices architecture does something different.
+    \item It provides a tried-and-tested \textbf{way of organizing} distributed software.
+    \item In web systems, the client interacts with an application whose server-side behavior is split across multiple services.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Why Use Microservices Architecture?}
+\begin{itemize}
+    \item It can improve scalability.
+    \item It can improve resilience.
+    \item It can support independent deployment of services.
+    \item It can allow services to be restarted or updated without bringing down the whole system.
+    \item In cloud environments, scaling out by replicating services is often cheaper than scaling up a single large server.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example Architecture: Client, Gateway, and Services}
+\begin{itemize}
+    \item A common design uses:
+    \begin{itemize}
+        \item a client application,
+        \item an API gateway,
+        \item a collection of backend services.
+    \end{itemize}
+    \item The gateway routes and translates requests from the client into calls to the appropriate microservices.
+    \item This lets internal services change without forcing immediate changes to the client app.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{A Photo-Printing Example}
+\begin{itemize}
+    \item The book uses a photo-printing system as an example.
+    \item Possible services include:
+    \begin{itemize}
+        \item registration,
+        \item authentication,
+        \item upload,
+        \item payment,
+        \item printing,
+        \item dispatch.
+    \end{itemize}
+    \item An API gateway sits between the mobile app and these backend services.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Architectural Design Decisions}
+\begin{itemize}
+    \item In a microservices system, the development teams for services are autonomous.
+    \item However, the overall system still has to work as a coordinated whole.
+    \item Key architectural questions include:
+    \begin{itemize}
+        \item How should the system be decomposed?
+        \item How should services communicate?
+        \item How should data be distributed and shared?
+        \item How should the system be coordinated?
+        \item How should failures be detected and managed?
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{How Should the System Be Decomposed?}
+\begin{itemize}
+    \item Too many microservices increase communication overhead and complexity.
+    \item Too few microservices make services less autonomous and harder to change independently.
+    \item Decomposition should balance:
+    \begin{itemize}
+        \item performance,
+        \item independence,
+        \item maintainability,
+        \item business capability alignment.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Guidelines for Decomposition}
+\begin{enumerate}
+    \item \textbf{Balance fine-grain functionality and performance.}
+    \item \textbf{Follow the common closure principle.}
+    \item \textbf{Associate services with business capabilities.}
+    \item \textbf{Design services to own the data they need.}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{Common Closure and Business Capability}
+\begin{itemize}
+    \item The \textbf{common closure principle} says that elements likely to change together should be located together.
+    \item This reduces the chance that a single requirement change forces changes across several services.
+    \item Services should also be aligned with \textbf{business capabilities}, not arbitrary technical fragments.
+    \item A useful service boundary usually reflects a coherent real-world responsibility.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Starting from a Monolith}
+\begin{itemize}
+    \item A practical way to identify microservices is to begin with an existing monolithic architecture.
+    \item Then identify parts of the system that encapsulate distinct responsibilities.
+    \item These responsibilities can be extracted into services over time.
+    \item In other words, refactoring a monolith can be a realistic path to microservices.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Service Communications}
+\begin{itemize}
+    \item Services communicate by exchanging messages.
+    \item Important design choices include:
+    \begin{itemize}
+        \item synchronous or asynchronous interaction,
+        \item direct service-to-service communication or message broker middleware,
+        \item the protocol and message structure to use.
+    \end{itemize}
+    \item These choices affect performance, flexibility, and complexity.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Synchronous vs. Asynchronous Communication}
+\begin{itemize}
+    \item \textbf{Synchronous communication:}
+    \begin{itemize}
+        \item a service waits for a reply before continuing,
+        \item simpler to understand,
+        \item easier to develop initially.
+    \end{itemize}
+    \item \textbf{Asynchronous communication:}
+    \begin{itemize}
+        \item services do not have to wait for immediate responses,
+        \item can improve resilience and decoupling,
+        \item often requires more infrastructure and coordination.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Direct Communication vs. Message Brokers}
+\begin{itemize}
+    \item With \textbf{direct communication}, one service calls another service directly.
+    \item This is often easier to understand and faster to implement.
+    \item With a \textbf{message broker}, services communicate through middleware.
+    \item Brokers can support buffering, decoupling, and asynchronous behavior.
+    \item However, brokers add infrastructure complexity.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Communication Protocols}
+\begin{itemize}
+    \item A message protocol defines:
+    \begin{itemize}
+        \item how messages are structured,
+        \item what information is included,
+        \item how senders and receivers interpret the message.
+    \end{itemize}
+    \item Modern systems often use:
+    \begin{itemize}
+        \item HTTP
+        \item JSON
+        \item REST-style interfaces
+    \end{itemize}
+    \item The protocol should be standard enough that all services can interoperate consistently.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Data Distribution and Sharing}
+\begin{itemize}
+    \item In principle, each microservice should manage its own data.
+    \item In reality, complete data independence is difficult.
+    \item Different services often need related or overlapping data.
+    \item This creates one of the hardest problems in microservices:
+    \begin{itemize}
+        \item how to share data while preserving autonomy and consistency.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Data Design Guidelines}
+\begin{enumerate}
+    \item Isolate data within each service as much as possible.
+    \item If sharing is unavoidable, make shared data read-only when possible.
+    \item If services are replicated, include a mechanism to keep replicas consistent.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{ACID Consistency vs. Microservice Independence}
+\begin{itemize}
+    \item Traditional multi-tier systems often use a shared database with ACID transactions.
+    \item ACID transactions ensure updates are completed as a single consistent unit.
+    \item This works well for strong consistency.
+    \item However, shared databases reduce microservice independence.
+    \item If strict consistency is required, you may need to accept tighter coupling.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Eventual Consistency}
+\begin{itemize}
+    \item In many microservices systems, replicas may not be immediately identical.
+    \item Instead, the system aims for \textbf{eventual consistency}.
+    \item Updates are recorded, propagated, and applied across replicas over time.
+    \item This improves scalability and service autonomy,
+    \item but it means the system may be temporarily inconsistent.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Dealing with Inconsistency}
+\begin{itemize}
+    \item Two important data problems are:
+    \begin{itemize}
+        \item \textbf{dependent data inconsistency} caused by actions or failures in one service,
+        \item \textbf{replica inconsistency} when replicated databases temporarily disagree.
+    \end{itemize}
+    \item A common technique is to use a \textbf{transaction log} of pending updates.
+    \item Compensating actions may also be needed when part of a multi-service workflow fails.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Service Coordination}
+\begin{itemize}
+    \item Many business operations involve several services working together in a workflow.
+    \item Example:
+    \begin{itemize}
+        \item user login,
+        \item password checks,
+        \item lockout rules,
+        \item authentication success or failure.
+    \end{itemize}
+    \item The architectural question becomes:
+    \begin{itemize}
+        \item who controls the workflow?
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Orchestration}
+\begin{itemize}
+    \item In \textbf{orchestration}, a central controller manages the workflow.
+    \item The controller tells each service when to act.
+    \item Advantages:
+    \begin{itemize}
+        \item easier to understand the overall process,
+        \item easier to debug,
+        \item easier to identify failures.
+    \end{itemize}
+    \item Disadvantage:
+    \begin{itemize}
+        \item adds a central coordinating component.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Choreography}
+\begin{itemize}
+    \item In \textbf{choreography}, there is no central controller.
+    \item Services observe events and decide for themselves when to act next.
+    \item This can reduce central control and loosen coupling.
+    \item However:
+    \begin{itemize}
+        \item workflows are harder to understand,
+        \item debugging is harder,
+        \item recovery from failure can be harder.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Failure Management}
+\begin{itemize}
+    \item Failures are normal in distributed systems.
+    \item Even if individual services are reliable, failures become inevitable at scale.
+    \item The architecture must be designed to:
+    \begin{itemize}
+        \item detect failures,
+        \item report failures,
+        \item recover from failures,
+        \item degrade gracefully when recovery is not immediate.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Common Failure Types}
+\begin{itemize}
+    \item \textbf{Internal service failures:}
+    \begin{itemize}
+        \item bugs,
+        \item invalid data handling,
+        \item broken internal links or logic.
+    \end{itemize}
+    \item \textbf{External service failures:}
+    \begin{itemize}
+        \item dependency unavailable,
+        \item dependency too slow,
+        \item dependency returns an error.
+    \end{itemize}
+    \item \textbf{Performance failures:}
+    \begin{itemize}
+        \item degraded responsiveness under load,
+        \item overload conditions,
+        \item timeout problems.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Failure Responses}
+\begin{itemize}
+    \item A simple approach is to use standard status codes and agreed-upon error responses.
+    \item Systems may use:
+    \begin{itemize}
+        \item timeouts,
+        \item retries,
+        \item fallback behaviors,
+        \item logging and monitoring.
+    \end{itemize}
+    \item The architecture should make failures visible and diagnosable.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Circuit Breakers}
+\begin{itemize}
+    \item A \textbf{circuit breaker} prevents repeated calls to a failing service.
+    \item If a service repeatedly times out or fails:
+    \begin{itemize}
+        \item the breaker marks it as unavailable,
+        \item later requests are blocked or rerouted,
+        \item the system periodically tests whether the service has recovered.
+    \end{itemize}
+    \item This prevents one struggling service from dragging the rest of the system into the swamp.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Monitoring and Observability}
+\begin{itemize}
+    \item In practice, microservices need strong monitoring support.
+    \item Useful observations include:
+    \begin{itemize}
+        \item service response times,
+        \item bottlenecks,
+        \item frequency of failures,
+        \item patterns of degraded performance.
+    \end{itemize}
+    \item Logs and dashboards help system managers understand where improvements are needed.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Section 6.2 Recap}
+\begin{itemize}
+    \item Microservices architecture is a distributed architectural style built from interacting services.
+    \item Architects must make decisions about decomposition, communication, data sharing, coordination, and failure handling.
+    \item These decisions involve tradeoffs between simplicity, autonomy, consistency, and resilience.
+    \item A good architecture is not just a set of services.
+    \item It is a set of services that can work together without collapsing into distributed chaos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Looking Ahead}
+\centering
+\Large Next: Section 6.3 RESTful Services
+
+\vspace{1em}
+
+\normalsize
+We next examine REST as a common communication style for service interaction.
 \end{frame}

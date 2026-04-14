@@ -1,18 +1,130 @@
-\section{Summary and Further Reading}
+\section{Microservices in Practice}
 
-\begin{frame}{Key Takeaways}
+\begin{frame}{Microservices in Practice}
 \begin{itemize}
-    \item Microservices split a system into independently deployable services.
-    \item They improve modularity, scalability, and team autonomy.
-    \item They also introduce distributed-system complexity.
-    \item They work best when supported by automation, monitoring, and strong design practices.
+    \item Microservices are not just a programming pattern.
+    \item They are a way of organizing software, teams, deployment, and system evolution.
+    \item Their goal is to make large systems easier to change, scale, and maintain.
+    \item But they do this by introducing new architectural and operational complexity.
 \end{itemize}
+\end{frame}
+
+\begin{frame}{The Big Idea}
+\begin{itemize}
+    \item A microservices system is built from independent services.
+    \item Each service owns a focused responsibility.
+    \item Each service communicates with others through lightweight interfaces.
+    \item The hope is that independent parts can evolve without breaking the whole system.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Why Teams Use Microservices}
+\begin{itemize}
+    \item To scale parts of a system independently
+    \item To let teams work more autonomously
+    \item To deploy and update services separately
+    \item To improve resilience by isolating failures
+    \item To support modern cloud-based software systems
+\end{itemize}
+\end{frame}
+
+\begin{frame}{What Microservices Demand in Return}
+\begin{itemize}
+    \item More network communication
+    \item More coordination between services
+    \item Harder data consistency problems
+    \item More deployment and monitoring complexity
+    \item More responsibility placed on development teams
+\end{itemize}
+\end{frame}
+
+\begin{frame}{The Core Design Tension}
+\begin{itemize}
+    \item Microservices promise independence.
+    \item Real systems still need communication, shared workflows, and consistent data.
+    \item So the architect's job is always a balancing act:
+    \begin{itemize}
+        \item independence vs. coordination
+        \item flexibility vs. complexity
+        \item speed vs. consistency
+        \item autonomy vs. control
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{What Good Microservice Design Tries to Achieve}
+\begin{itemize}
+    \item Low coupling between services
+    \item High cohesion within each service
+    \item Clear business-oriented boundaries
+    \item Lightweight communication
+    \item Independent deployment
+    \item Sensible ownership of data and responsibility
+\end{itemize}
+\end{frame}
+
+\begin{frame}{A Practical Warning}
+\begin{itemize}
+    \item Microservices are not automatically better than monoliths.
+    \item A badly designed microservices system can be harder to understand, test, deploy, and debug than a monolithic system.
+    \item Splitting a system into services is only helpful when the service boundaries are meaningful.
+    \item Small pieces are useful only when they reduce pain rather than multiply it.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{When Microservices Make Sense}
+\begin{itemize}
+    \item The system is large and likely to evolve
+    \item Different parts of the system change at different rates
+    \item Different teams need to work independently
+    \item Some services need to scale much more than others
+    \item The organization has the tooling and discipline to handle distributed systems
+\end{itemize}
+\end{frame}
+
+\begin{frame}{When Microservices May Be the Wrong Choice}
+\begin{itemize}
+    \item The system is still small or simple
+    \item The team is small and highly centralized
+    \item The deployment environment is immature
+    \item Strong consistency is required everywhere
+    \item The cost of coordination is greater than the value of independence
+\end{itemize}
+\end{frame}
+
+\begin{frame}{What Students Should Remember Most}
+\begin{enumerate}
+    \item A microservice is a focused, independently deployable service.
+    \item Communication, coordination, and data management become central design problems.
+    \item REST is one common communication style, but not the only one.
+    \item Deployment, monitoring, rollback, and DevOps are part of the architecture.
+    \item Good microservices are not just small. They are well-bounded.
+\end{enumerate}
+\end{frame}
+
+\begin{frame}{The Practical Takeaway}
+\begin{itemize}
+    \item Microservices are a powerful architectural style for building large, evolving systems.
+    \item They work best when the system is carefully decomposed and supported by strong engineering practices.
+    \item In the real world, success depends just as much on testing, deployment, monitoring, and team discipline as on code design.
+    \item Architecture is not just about structure.
+    \item It is about making change survivable.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Discussion Questions}
+\begin{enumerate}
+    \item Why might a company choose microservices instead of a monolithic architecture?
+    \item What new problems appear when a system is split into many services?
+    \item Why are low coupling and high cohesion so important in microservices?
+    \item When might a monolithic system actually be the better engineering decision?
+\end{enumerate}
 \end{frame}
 
 \begin{frame}{Further Reading}
 \begin{itemize}
     \item Sommerville, \textit{Software Engineering}
-    \item Martin Fowler on Microservices
     \item Sam Newman, \textit{Building Microservices}
+    \item Martin Fowler on Microservices
 \end{itemize}
 \end{frame}

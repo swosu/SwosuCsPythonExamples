@@ -1,5 +1,208 @@
-\section{Section 4}
+\section{Service Deployment}
 
-\begin{frame}{Section 4 Placeholder}
-This section is under construction.
+\begin{frame}{Section 6.4: Service Deployment}
+\begin{itemize}
+    \item After a system is built, it must be deployed, monitored, and updated.
+    \item In microservices systems, deployment is more complex than in monolithic systems.
+    \item Different services may use different languages, libraries, databases, and runtime environments.
+    \item This makes deployment a major architectural and operational concern.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Why Deployment Is Harder with Microservices}
+\begin{itemize}
+    \item A microservices system may contain tens or hundreds of services.
+    \item Each service may have:
+    \begin{itemize}
+        \item its own dependencies,
+        \item its own runtime requirements,
+        \item its own update cycle.
+    \end{itemize}
+    \item There is no single standard deployment configuration for all services.
+    \item A separate operations team can easily become a deployment bottleneck.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{From Separate Ops to DevOps}
+\begin{itemize}
+    \item Traditionally, operations and development were separate activities.
+    \item In microservices systems, it is common for development teams to take responsibility for:
+    \begin{itemize}
+        \item deployment,
+        \item service management,
+        \item ongoing operational support.
+    \end{itemize}
+    \item This combined approach is commonly called \textbf{DevOps}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Continuous Deployment}
+\begin{itemize}
+    \item A general principle of microservice-based development is that teams own deployment of their service.
+    \item A common practice is \textbf{continuous deployment}.
+    \item When a change is made and validated, the modified service is re-deployed automatically.
+    \item This contrasts with older release models where changes were bundled into occasional large releases.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{A Continuous Deployment Pipeline}
+\begin{itemize}
+    \item A typical pipeline includes:
+    \begin{itemize}
+        \item commit code changes,
+        \item run unit tests,
+        \item build the test system,
+        \item run integration tests,
+        \item package the service,
+        \item deploy the new version,
+        \item run acceptance or whole-system tests,
+        \item replace the current service if all tests pass.
+    \end{itemize}
+    \item If a step fails, the change is rejected.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Why Automation Matters}
+\begin{itemize}
+    \item Continuous deployment depends on automation.
+    \item Automated tests must check that:
+    \begin{itemize}
+        \item the modified service works correctly,
+        \item it still interacts correctly with other services,
+        \item the whole system remains stable after deployment.
+    \end{itemize}
+    \item Without automation, rapid deployment quickly becomes dangerous chaos.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Containers as Deployment Units}
+\begin{itemize}
+    \item Containers are often the preferred way to package microservices for deployment.
+    \item A container includes the executable service and the software environment it needs.
+    \item This makes deployment more portable across servers.
+    \item Containers reduce the need for service teams to worry about low-level server configuration differences.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Why Containers Help}
+\begin{itemize}
+    \item Containers allow dependencies to be defined in advance.
+    \item A service can often be deployed by:
+    \begin{itemize}
+        \item building the container image,
+        \item loading it onto a server or cloud platform,
+        \item starting the containerized service.
+    \end{itemize}
+    \item This makes deployment more repeatable and easier to automate.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Managing Many Containers}
+\begin{itemize}
+    \item Large microservice systems may involve tens, hundreds, or thousands of containers.
+    \item Managing them manually is difficult.
+    \item Container-management systems help automate:
+    \begin{itemize}
+        \item deployment,
+        \item scheduling,
+        \item service discovery,
+        \item load balancing,
+        \item resource management.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Kubernetes and Container Orchestration}
+\begin{itemize}
+    \item The book highlights \textbf{Kubernetes} as an example of a container-management platform.
+    \item Kubernetes helps manage container deployment across clusters of servers.
+    \item It supports:
+    \begin{itemize}
+        \item automated deployment,
+        \item scheduling,
+        \item service discovery,
+        \item load balancing.
+    \end{itemize}
+    \item This kind of orchestration becomes essential at scale.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Deployment Risk}
+\begin{itemize}
+    \item A major deployment risk is that a new service version may interact badly with existing services.
+    \item Even when tests pass, unexpected behavior may still appear in production.
+    \item Testing reduces risk, but it cannot eliminate it completely.
+    \item Therefore, deployed services must be monitored carefully after release.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Monitoring New Versions}
+\begin{itemize}
+    \item After deployment, the system should watch for:
+    \begin{itemize}
+        \item failures,
+        \item degraded performance,
+        \item unexpected interactions,
+        \item incorrect responses.
+    \end{itemize}
+    \item Monitoring helps detect whether a new version is safe to keep in production.
+    \item If serious problems appear, the system should be able to roll back.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Rollback and Version Switching}
+\begin{itemize}
+    \item One practical strategy is to keep the old version available while introducing the new version.
+    \item If the monitoring system detects problems, traffic can be switched back to the older version.
+    \item This makes rollback faster and safer than rebuilding the old version from scratch.
+    \item API gateways can help route requests to the currently active service version.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Versioned Services}
+\begin{itemize}
+    \item In some systems, service versions are identified explicitly.
+    \item For example, an API change may require clients or gateways to distinguish between:
+    \begin{itemize}
+        \item version 001,
+        \item version 002,
+        \item and later versions.
+    \end{itemize}
+    \item Over time, clients and gateways can be updated to use the newer service version.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Big Picture: What Deployment Requires}
+\begin{itemize}
+    \item Effective microservice deployment depends on:
+    \begin{itemize}
+        \item team ownership,
+        \item automation,
+        \item testing,
+        \item containers,
+        \item monitoring,
+        \item safe rollback mechanisms.
+    \end{itemize}
+    \item Deployment is not an afterthought.
+    \item It is part of the architecture.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Section 6.4 Recap}
+\begin{itemize}
+    \item Microservice deployment is more complex than monolithic deployment because services are independently developed and updated.
+    \item DevOps and continuous deployment help teams manage this complexity.
+    \item Containers provide a portable deployment unit, and Kubernetes helps manage containers at scale.
+    \item Monitoring and rollback are essential because even tested deployments can fail in production.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Looking Ahead}
+\centering
+\Large Next: Summary and Further Reading
+
+\vspace{1em}
+
+\normalsize
+We now move from chapter content into final takeaways and recommended reading.
 \end{frame}

@@ -1,5 +1,238 @@
-\section{Section 3}
+\section{RESTful Services}
 
-\begin{frame}{Section 3 Placeholder}
-This section is under construction.
+\begin{frame}{Section 6.3: RESTful Services}
+\begin{itemize}
+    \item Microservices may communicate synchronously or asynchronously using different protocols.
+    \item One of the most widely used approaches for service interaction is \textbf{REST}.
+    \item RESTful services follow a set of conventions built on top of HTTP.
+    \item In practice, REST is one of the most common ways for microservices to exchange information.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{What REST Really Is}
+\begin{itemize}
+    \item Strictly speaking, REST is not a single formal protocol.
+    \item It is an \textbf{architectural style} for service communication.
+    \item RESTful services:
+    \begin{itemize}
+        \item use HTTP,
+        \item organize information as resources,
+        \item exchange representations of those resources.
+    \end{itemize}
+    \item REST stands for \textbf{Representational State Transfer}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Core Idea Behind REST}
+\begin{itemize}
+    \item REST is based on transferring representations of digital resources between server and client.
+    \item A resource could be:
+    \begin{itemize}
+        \item a book,
+        \item a customer record,
+        \item a traffic incident,
+        \item an uploaded image,
+        \item an order.
+    \end{itemize}
+    \item The same resource may have different representations, such as JSON, XML, or HTML.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{RESTful Service Principles}
+\begin{itemize}
+    \item \textbf{Use HTTP verbs} to express operations.
+    \item \textbf{Be stateless:} the server should not rely on remembered client session state.
+    \item \textbf{Use URI-addressable resources:} each resource should have a unique identifier.
+    \item \textbf{Use structured representations:} typically JSON, and sometimes XML.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Why Statelessness Matters}
+\begin{itemize}
+    \item In a stateless service, each request contains the information needed to process it.
+    \item The server does not depend on stored interaction state from earlier requests.
+    \item This supports:
+    \begin{itemize}
+        \item scalability,
+        \item easier replication,
+        \item simpler failure recovery.
+    \end{itemize}
+    \item Statelessness fits well with cloud-based microservices.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Resources and URIs}
+\begin{itemize}
+    \item In REST, a resource is accessed through a \textbf{URI}.
+    \item URIs should reflect a meaningful hierarchical structure.
+    \item Example idea:
+    \begin{itemize}
+        \item road incidents organized by road, place, direction, and incident number
+    \end{itemize}
+    \item A good URI structure makes resources easier to identify and operate on.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{CRUD Operations in REST}
+\begin{itemize}
+    \item RESTful services commonly support four fundamental operations:
+    \begin{itemize}
+        \item \textbf{Create}
+        \item \textbf{Read}
+        \item \textbf{Update}
+        \item \textbf{Delete}
+    \end{itemize}
+    \item These are often mapped onto standard HTTP verbs.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{HTTP Verbs and REST Operations}
+\begin{table}
+\centering
+\begin{tabular}{ll}
+\toprule
+Operation & Typical HTTP Verb \\
+\midrule
+Create & POST \\
+Read & GET \\
+Update & PUT \\
+Delete & DELETE \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\vspace{0.5em}
+\begin{itemize}
+    \item This mapping gives RESTful services a consistent structure.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example: Traffic Incident Service}
+\begin{itemize}
+    \item Imagine a service that stores traffic incidents.
+    \item Example operations might include:
+    \begin{itemize}
+        \item \textbf{GET} to retrieve incident information,
+        \item \textbf{POST} to add a new incident,
+        \item \textbf{PUT} to update an incident,
+        \item \textbf{DELETE} to remove an incident.
+    \end{itemize}
+    \item This is a good example of a resource-oriented REST design.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Request and Response Processing}
+\begin{itemize}
+    \item A RESTful microservice accepts an HTTP request,
+    \item processes the request,
+    \item performs the required service actions,
+    \item and generates an HTTP response.
+    \item This creates a predictable request/response flow.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{HTTP Request and Response Structure}
+\begin{itemize}
+    \item A typical HTTP request includes:
+    \begin{itemize}
+        \item an HTTP verb,
+        \item a URI,
+        \item an HTTP version,
+        \item request headers,
+        \item optionally, a request body.
+    \end{itemize}
+    \item A typical HTTP response includes:
+    \begin{itemize}
+        \item an HTTP version,
+        \item a response code,
+        \item response headers,
+        \item optionally, a response body.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Important HTTP Header Information}
+\begin{itemize}
+    \item \textbf{Accept} specifies what response content types the client can handle.
+    \item \textbf{Content-Type} specifies the type of the request or response body.
+    \item \textbf{Content-Length} specifies the size of the message body.
+    \item These headers help clients and services interpret exchanged data correctly.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{JSON vs. XML}
+\begin{itemize}
+    \item RESTful services often return structured data in \textbf{JSON}.
+    \item XML can also be used, but JSON is usually preferred in modern systems.
+    \item JSON is popular because it is:
+    \begin{itemize}
+        \item simpler,
+        \item lighter weight,
+        \item easier to parse in many environments.
+    \end{itemize}
+    \item XML is more flexible, but often more verbose.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example Resource Representation}
+\begin{itemize}
+    \item A traffic incident resource might include:
+    \begin{itemize}
+        \item incident ID,
+        \item date,
+        \item time,
+        \item road ID,
+        \item place,
+        \item direction,
+        \item severity,
+        \item description.
+    \end{itemize}
+    \item REST returns a representation of that resource, not just a vague blob of text.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Why REST Works Well for Microservices}
+\begin{itemize}
+    \item REST is widely understood and widely supported.
+    \item It fits naturally with web technologies and HTTP infrastructure.
+    \item It encourages:
+    \begin{itemize}
+        \item simple interfaces,
+        \item stateless interaction,
+        \item consistent operations on resources.
+    \end{itemize}
+    \item This makes it a practical communication style for many microservice systems.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Limits of REST}
+\begin{itemize}
+    \item REST is useful, but it is not always the only or best choice.
+    \item Some systems may need:
+    \begin{itemize}
+        \item asynchronous messaging,
+        \item event-based communication,
+        \item specialized protocols.
+    \end{itemize}
+    \item REST is best seen as one important tool in the microservices toolbox.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Section 6.3 Recap}
+\begin{itemize}
+    \item RESTful services use HTTP and treat information as resources.
+    \item Resources are identified by URIs and manipulated using standard HTTP verbs.
+    \item REST emphasizes stateless interaction and structured representations.
+    \item JSON is commonly preferred for modern microservice communication.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Looking Ahead}
+\centering
+\Large Next: Section 6.4 Service Deployment
+
+\vspace{1em}
+
+\normalsize
+We next examine what happens after development, when services must actually be deployed, updated, and operated.
 \end{frame}
