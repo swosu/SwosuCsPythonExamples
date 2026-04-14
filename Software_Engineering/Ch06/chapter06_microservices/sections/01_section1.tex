@@ -1,25 +1,203 @@
-\section{Core Concepts}
+\section{Microservices}
 
-\begin{frame}{Key Characteristics of Microservices}
+\begin{frame}{Section 6.1: Microservices}
 \begin{itemize}
-    \item Small and focused services
-    \item Independent deployment
-    \item Clear service boundaries
-    \item Decentralized data and control
-    \item Lightweight communication mechanisms
+    \item Microservices are small, independent services that can be combined to create applications.
+    \item A service should be changeable and redeployable without forcing changes to other services.
+    \item Microservices communicate through message exchange.
+    \item Good microservice design aims for:
+    \begin{itemize}
+        \item low coupling,
+        \item high cohesion,
+        \item clear business responsibility.
+    \end{itemize}
 \end{itemize}
 \end{frame}
 
-\begin{frame}{Microservices and Business Capabilities}
+\begin{frame}{Essential Characteristics of Microservices}
 \begin{itemize}
-    \item Services are usually organized around business functions.
-    \item Examples:
-    \begin{itemize}
-        \item User accounts
-        \item Orders
-        \item Payments
-        \item Inventory
-    \end{itemize}
-    \item This can improve maintainability and team ownership.
+    \item \textbf{Self-contained:} the service manages its own data and user-facing behavior.
+    \item \textbf{Lightweight:} communication overhead should be low.
+    \item \textbf{Implementation independent:} services may use different languages or technologies.
+    \item \textbf{Independently deployable:} each service can run and be updated on its own.
+    \item \textbf{Business-oriented:} services should implement business capabilities, not just technical fragments.
 \end{itemize}
+\end{frame}
+
+\begin{frame}{Microservices Communicate by Exchanging Messages}
+\begin{itemize}
+    \item Services interact by sending requests and receiving responses.
+    \item A message may include:
+    \begin{itemize}
+        \item administrative information,
+        \item the requested service,
+        \item the data needed to perform that service.
+    \end{itemize}
+    \item The reply contains the result of the request.
+    \item Example:
+    \begin{itemize}
+        \item an authentication service may send login information,
+        \item a login service may return a token or an error.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Core Design Goal: Low Coupling}
+\begin{itemize}
+    \item \textbf{Coupling} measures how much one component depends on other components.
+    \item Low coupling means a service has relatively few relationships with other services.
+    \item This matters because:
+    \begin{itemize}
+        \item services can be changed independently,
+        \item updates are less likely to ripple through the system,
+        \item maintenance and scaling become easier.
+    \end{itemize}
+    \item As long as the interface stays stable, a loosely coupled service can evolve without forcing change elsewhere.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Core Design Goal: High Cohesion}
+\begin{itemize}
+    \item \textbf{Cohesion} measures how closely related the responsibilities inside a component are.
+    \item High cohesion means all parts of the component contribute to one focused purpose.
+    \item This matters because:
+    \begin{itemize}
+        \item the service is easier to understand,
+        \item the service is easier to test,
+        \item fewer cross-service calls are needed during execution.
+    \end{itemize}
+    \item High cohesion reduces communication overhead and keeps service boundaries meaningful.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Single Responsibility, with a Warning Label}
+\begin{itemize}
+    \item Microservice design is influenced by the \textbf{single responsibility principle}.
+    \item Each service should do one thing well.
+    \item However, ``one thing'' should not be interpreted too narrowly.
+    \item If responsibilities are split too aggressively, services may:
+    \begin{itemize}
+        \item depend on shared databases,
+        \item communicate too often,
+        \item become more tightly coupled.
+    \end{itemize}
+    \item The goal is not the smallest service.
+    \item The goal is the \textbf{right service boundary}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{How Big Should a Microservice Be?}
+\begin{itemize}
+    \item There is no perfect formula for microservice size.
+    \item Lines of code are not a useful measure.
+    \item A practical guideline is the \textbf{rule of twos}:
+    \begin{itemize}
+        \item a service should be developable, testable, and deployable in about two weeks or less,
+        \item the team should be small, often no larger than a ``two-pizza team.''
+    \end{itemize}
+    \item Microservice size should be judged by independence, manageability, and responsibility.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Microservices Are Not Tiny Functions}
+\begin{itemize}
+    \item A microservice may have a single responsibility, but that does not mean it is just one short function.
+    \item A real service often includes:
+    \begin{itemize}
+        \item service logic,
+        \item data management,
+        \item security code,
+        \item interface code,
+        \item testing and deployment support.
+    \end{itemize}
+    \item Teams may need significant effort to make a service fully independent and production-ready.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example: Password Management Microservice}
+\begin{itemize}
+    \item A password-management service may include user-facing functions such as:
+    \begin{itemize}
+        \item create password,
+        \item change password,
+        \item check password,
+        \item recover password.
+    \end{itemize}
+    \item It may also include supporting functions such as:
+    \begin{itemize}
+        \item password validity checks,
+        \item backup and recovery,
+        \item database integrity checks,
+        \item repair operations.
+    \end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Support Code Inside a Microservice}
+\begin{itemize}
+    \item To remain independent, a microservice needs more than core business logic.
+    \item Common supporting responsibilities include:
+    \begin{itemize}
+        \item message management,
+        \item failure management,
+        \item user interface implementation,
+        \item data consistency management.
+    \end{itemize}
+    \item In many systems, the supporting code can be as important as the main service functionality.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Why Testing and Operations Matter}
+\begin{itemize}
+    \item Service teams are usually responsible for more than initial coding.
+    \item They may also handle:
+    \begin{itemize}
+        \item automated testing,
+        \item interaction testing with other services,
+        \item deployment support,
+        \item ongoing maintenance after release.
+    \end{itemize}
+    \item Independent deployment only works well when testing and operational support are built in.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Section 6.1 Recap}
+\begin{itemize}
+    \item Microservices are independent, business-oriented services that collaborate through message exchange.
+    \item Strong microservice design aims for low coupling and high cohesion.
+    \item Microservices should be small enough to manage, but large enough to own a complete responsibility.
+    \item A production microservice includes both service functionality and substantial support code.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Microservice Support Code at a Glance}
+\centering
+\fbox{
+\parbox{0.78\textwidth}{
+\centering
+\textbf{Microservice X}
+
+\vspace{0.5em}
+\textbf{Service Functionality}
+
+\vspace{0.5em}
+Message management \hfill Failure management
+
+\vspace{0.5em}
+UI implementation \hfill Data consistency management
+}
+}
+\end{frame}
+
+
+
+\begin{frame}{Looking Ahead}
+\centering
+\Large Next: Section 6.2 Microservices Architecture
+
+\vspace{1em}
+
+\normalsize
+We now move from the characteristics of individual microservices to the broader architectural style built from those services.
 \end{frame}
