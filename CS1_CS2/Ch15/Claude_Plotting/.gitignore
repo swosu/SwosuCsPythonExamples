@@ -1,0 +1,24 @@
+# Executed notebook artifacts
+notebooks/*_executed.ipynb
+
+# Matplotlib figure outputs at project root (lab-compat filenames)
+output_fig.png
+subplots.png
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Virtual environments
+.venv/
+env/
+venv/
+
+# OS files
+.DS_Store
+Thumbs.db
