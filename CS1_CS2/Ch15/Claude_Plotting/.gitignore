@@ -1,5 +1,6 @@
 # Executed notebook artifacts
 notebooks/*_executed.ipynb
+prompts/
 
 # Matplotlib figure outputs at project root (lab-compat filenames)
 output_fig.png
